@@ -1,0 +1,22 @@
+@import "../../assets/tokens/index.less";
+
+.button {
+  padding: var(--space-8) var(--space-16);
+  color: var(--greyscale-0);
+  border: none;
+  border-radius: var(--radius-4);
+  cursor: pointer;
+  opacity: 1;
+  font-family: var(--font-inter);
+
+  &--variant-primary {
+    background-color: var(--btn-primary-active);
+  }
+  &--variant-secondary {
+    background-color: var(--btn-secondary-active);
+  }
+  &--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
