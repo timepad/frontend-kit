@@ -10,7 +10,11 @@
     "dev": "echo 'Development mode - no build needed'",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf node_modules packages/*/node_modules",
-    "test": "echo 'No tests in source mode'"
+    "test": "echo 'No tests in source mode'",
+
+    "utils": "yarn workspace @frontend-kit/utils",
+    "ui": "yarn workspace @frontend-kit/ui",
+    "hooks": "yarn workspace @frontend-kit/hooks"
   },
   "devDependencies": {
     "typescript": "^5.0.0",
