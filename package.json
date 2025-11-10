@@ -1,28 +1,5 @@
 {
   "name": "frontend-kit",
   "private": true,
-  "version": "1.0.0",
-  "type": "module",
-  "workspaces": [
-    "packages/*"
-  ],
-  "scripts": {
-    "dev": "echo 'Development mode - no build needed'",
-    "type-check": "tsc --noEmit",
-    "clean": "rm -rf node_modules packages/*/node_modules",
-    "test": "echo 'No tests in source mode'",
-
-    "utils": "yarn workspace @frontend-kit/utils",
-    "ui": "yarn workspace @frontend-kit/ui",
-    "hooks": "yarn workspace @frontend-kit/hooks"
-  },
-  "devDependencies": {
-    "typescript": "^5.0.0",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0"
-  },
-  "peerDependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
-  }
+  "workspaces": ["packages/*"]
 }
