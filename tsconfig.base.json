@@ -1,30 +1,22 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "lib": ["DOM", "DOM.Iterable", "ES6"],
-    "allowJs": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2020"],
+    "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "Bundler",
     "module": "ESNext",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "frontend-kit/hooks": ["./packages/hooks/src"],
-      "frontend-kit/ui": ["./packages/ui/src"],
-      "frontend-kit/utils": ["./packages/utils/src"],
-
-      // Алиасы для импорта между пакетами
-      "@frontend-kit/*": ["./packages/*/src"]
+      "@frontend-kit/*": ["packages/*/src"]
     }
   },
   "include": ["packages/**/*"],
