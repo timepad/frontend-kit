@@ -21,7 +21,10 @@
     "paths": {
       "frontend-kit/hooks": ["./packages/hooks/src"],
       "frontend-kit/ui": ["./packages/ui/src"],
-      "frontend-kit/utils": ["./packages/utils/src"]
+      "frontend-kit/utils": ["./packages/utils/src"],
+
+      // Алиасы для импорта между пакетами
+      "@frontend-kit/*": ["./packages/*/src"]
     }
   },
   "include": ["packages/**/*"],
