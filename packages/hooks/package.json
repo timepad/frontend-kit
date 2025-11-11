@@ -1,16 +1,9 @@
 {
-  "name": "frontend-kit-hooks",
+  "name": "@frontend-kit/hooks",
   "version": "1.0.0",
   "type": "module",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
-  "dependencies": {
-  },
-  "peerDependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
-  },
-  "scripts": {
-    "type-check": "tsc --noEmit"
-  }
+  "files": ["src"],
+  "sideEffects": false,
+  "exports": { ".": "./src/index.ts", "./*": "./src/*.ts" },
+  "peerDependencies": { "react": "^18", "react-dom": "^18" }
 }

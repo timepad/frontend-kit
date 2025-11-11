@@ -1,17 +1,17 @@
 {
-  "name": "frontend-kit-ui",
+  "name": "@frontend-kit/ui",
   "version": "1.0.0",
   "type": "module",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
-  "dependencies": {
-    "@frontend-kit/hooks": "workspace:*"
-  },
+  "files": ["src"],
+  "sideEffects": false,
+  "exports": { ".": "./src/index.tsx", "./*": "./src/*.tsx" },
   "peerDependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react": "^18",
+    "react-dom": "^18",
+    "@frontend-kit/hooks": "*",
+    "@frontend-kit/utils": "*"
   },
-  "scripts": {
-    "type-check": "tsc --noEmit"
+  "devDependencies": {
+    "@frontend-kit/hooks": "1.0.0"
   }
 }
