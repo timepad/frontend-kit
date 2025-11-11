@@ -1,5 +1,7 @@
 {
   "name": "frontend-kit",
   "private": true,
-  "workspaces": ["packages/*"]
+  "workspaces": [
+    "packages/*"
+  ]
 }
