@@ -1,12 +1,16 @@
 {
   "name": "frontend-kit",
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
+    "@types/node": "^20.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@vitejs/plugin-react": "^4.7.0",
-    "less": "^4.4.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "typescript": "^5.0.0",
     "vite": "^6.4.1",
     "vite-plugin-svgr": "^4.5.0"
