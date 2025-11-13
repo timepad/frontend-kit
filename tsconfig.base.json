@@ -8,7 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "Bundler",
+    "moduleResolution": "node",
     "module": "ESNext",
     "resolveJsonModule": true,
     "isolatedModules": true,
