@@ -7,7 +7,7 @@ export const TypographyHeader: FC<
   PropsWithChildren<ITypographyCommonProps<HeaderSize>>
 > = ({ children, size = 1, ...props }) => {
   return (
-    <TypographyBase {...props} variant="paragraph" size={size}>
+    <TypographyBase {...props} variant="header" size={size}>
       {children}
     </TypographyBase>
   );

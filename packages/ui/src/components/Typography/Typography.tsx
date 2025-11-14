@@ -20,33 +20,30 @@ export const TypographyBase: FC<PropsWithChildren<ITypographyProps>> = ({
   innerRef,
   ...props
 }) => {
-  const elementClassNames = classNames(
+  const typographyClassName = classNames(
+    // typography variant with size modifier: ctypography__paragraph ctypography__paragraph--2
     component(
       "typography",
       variant
     )({
       [`${size}`]: !!size,
-    })
-  );
-
-  const commonClassNames = classNames(
-    component("typography")({
-      [fontWeight!]: !!fontWeight,
-      uppercase: !!uppercase,
-      [`font-${fontType}`]: !!fontType,
     }),
-    elementClassNames,
+    // font-weight, text-transform, font-family styles: ctypography ctypography--bold ctypography--font-accent ctypography--uppercase
+    component("typography")({
+      [fontWeight!]: true,
+      [`font-${fontType}`]: true,
+      uppercase: !!uppercase,
+    }),
     className
   );
 
   return React.createElement(
     as,
-    { ref: innerRef, className: commonClassNames, ...props },
+    { ref: innerRef, className: typographyClassName, ...props },
     children
   );
 };
 
-/** Compound export */
 export const Typography = Object.assign(TypographyBase, {
   Lead: TypographyLead,
   Paragraph: TypographyParagraph,
