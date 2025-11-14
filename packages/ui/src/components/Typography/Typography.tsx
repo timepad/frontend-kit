@@ -21,13 +21,8 @@ export const TypographyBase: FC<PropsWithChildren<ITypographyProps>> = ({
   ...props
 }) => {
   const typographyClassName = classNames(
-    // typography variant with size modifier: ctypography__paragraph ctypography__paragraph--2
-    component(
-      "typography",
-      variant
-    )({
-      [`${size}`]: !!size,
-    }),
+    // typography variant with size modifier: ctypography__lead ctypography__lead--1
+    component("typography", variant)({ [`${size}`]: !!size }),
     // font-weight, text-transform, font-family styles: ctypography ctypography--bold ctypography--font-accent ctypography--uppercase
     component("typography")({
       [fontWeight!]: true,

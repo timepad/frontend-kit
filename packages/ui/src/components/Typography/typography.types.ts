@@ -71,10 +71,10 @@ export interface ITypographyCommonProps<TSize = undefined>
   > {
   fontType: FontType;
   fontWeight: FontWeight;
+  size: TSize;
   as?: keyof ReactHTML;
   innerRef?: LegacyRef<HTMLElement>;
   uppercase?: boolean;
-  size?: TSize;
 }
 /**
  * Variant-specific definitions used to enforce correct
@@ -83,10 +83,10 @@ export interface ITypographyCommonProps<TSize = undefined>
  * Each variant restricts the `size` prop to the valid
  * numeric levels of that variant.
  */
-type LeadVariant = { variant: "lead"; size?: LeadSize };
-type HeaderVariant = { variant: "header"; size?: HeaderSize };
-type ParagraphVariant = { variant: "paragraph"; size?: ParagraphSize };
-type CaptionVariant = { variant: "caption"; size?: CaptionSize };
+type LeadVariant = { variant: "lead"; size: LeadSize };
+type HeaderVariant = { variant: "header"; size: HeaderSize };
+type ParagraphVariant = { variant: "paragraph"; size: ParagraphSize };
+type CaptionVariant = { variant: "caption"; size: CaptionSize };
 
 export type ITypographyProps = ITypographyCommonProps<
   LeadSize | HeaderSize | ParagraphSize | CaptionSize
