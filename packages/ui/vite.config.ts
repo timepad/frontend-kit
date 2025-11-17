@@ -4,7 +4,16 @@ import svgr from "vite-plugin-svgr";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), svgr()],
+  plugins: [
+    react(),
+    svgr({
+      svgrOptions: {
+        replaceAttrValues: {
+          "#1C1C1C": "currentColor",
+        },
+      },
+    }),
+  ],
   css: {
     preprocessorOptions: {
       less: {

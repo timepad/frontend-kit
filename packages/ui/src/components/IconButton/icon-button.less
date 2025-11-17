@@ -1,0 +1,106 @@
+@import "../../assets/tokens/index.less";
+
+.cicon-button {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.05s ease-out;
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: var(--btn-hover);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease-out;
+    z-index: 0;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+  }
+
+  &__primary {
+    color: var(--greyscale-0);
+    background-color: var(--btn-primary-active);
+  }
+
+  &__primary-alternate {
+    color: var(--greyscale-0);
+    background-color: var(--btn-secondary-active);
+  }
+
+  &__secondary {
+    color: var(--dark-purple);
+    background-color: var(--btn-tertiary-active);
+  }
+
+  &__negative {
+    color: var(--dark-red);
+    background-color: var(--btn-tertiary-active);
+  }
+
+  &__disable,
+  &:disabled {
+    color: var(--greyscale-400);
+    background-color: var(--btn-inactive);
+    pointer-events: none;
+    transform: none;
+
+    .cicon-button__overlay {
+      opacity: 0;
+    }
+  }
+
+  &__transparent {
+    background-color: transparent;
+    color: var(--icon-primary);
+  }
+
+  &--size-m {
+    height: 40px;
+    width: 40px;
+    padding: var(--space-4);
+    border-radius: var(--radius-8);
+  }
+
+  &--size-s {
+    height: 32px;
+    width: 32px;
+    padding: var(--space-8);
+    border-radius: var(--radius-10);
+  }
+
+  &--size-xs {
+    height: 24px;
+    width: 24px;
+    padding: var(--space-4);
+    border-radius: var(--radius-6);
+  }
+
+  &:hover:not(.cicon-button--disabled):not(:disabled) {
+    .cicon-button__overlay {
+      opacity: 1;
+    }
+  }
+
+  &:active:not(.cicon-button--disabled):not(:disabled) {
+    &.cicon-button--size-m {
+      transform: scaleY(0.95); // 40px → ~38px
+    }
+
+    &.cicon-button--size-s {
+      transform: scaleY(0.9375); // 32px → ~30px
+    }
+
+    &.cicon-button--size-xs {
+      transform: scaleY(0.917); // 24px → ~22px
+    }
+  }
+}
