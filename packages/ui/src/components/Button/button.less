@@ -6,6 +6,8 @@
   border: none;
   cursor: pointer;
   transition: transform 0.05s ease-out;
+  font-family: var(--font-inter);
+  font-weight: 700;
 
   &__overlay {
     position: absolute;
@@ -28,37 +30,21 @@
   &__primary {
     color: var(--greyscale-0);
     background-color: var(--btn-primary-active);
-
-    svg {
-      fill: var(--greyscale-0);
-    }
   }
 
   &__primary-alternate {
     color: var(--greyscale-0);
     background-color: var(--btn-secondary-active);
-
-    svg {
-      fill: var(--greyscale-0);
-    }
   }
 
   &__secondary {
     color: var(--dark-purple);
     background-color: var(--btn-tertiary-active);
-
-    svg {
-      fill: var(--dark-purple);
-    }
   }
 
   &__negative {
     color: var(--dark-red);
     background-color: var(--btn-tertiary-active);
-
-    svg {
-      fill: var(--dark-red);
-    }
   }
 
   &__disable,
@@ -71,18 +57,12 @@
     .cbutton__overlay {
       opacity: 0;
     }
-
-    svg {
-      fill: var(--greyscale-400);
-    }
   }
 
   &--size-m {
     height: 40px;
     padding: var(--space-8) var(--space-12);
     border-radius: var(--radius-10);
-    font-family: var(--font-inter);
-    font-weight: 700;
     font-size: 14px;
     line-height: 20px;
 
@@ -95,8 +75,6 @@
     height: 32px;
     padding: var(--space-8) var(--space-10);
     border-radius: var(--radius-8);
-    font-family: var(--font-inter);
-    font-weight: 700;
     font-size: 12px;
     line-height: 16px;
 
