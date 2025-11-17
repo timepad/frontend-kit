@@ -1,4 +1,4 @@
-import { LegacyRef, ReactHTML } from "react";
+import { DetailedHTMLProps, HTMLAttributes, LegacyRef, ReactHTML } from "react";
 
 /**
  * Font weight modifiers supported by the typography system.
@@ -65,10 +65,7 @@ export type CaptionSize = 1;
  * Inherits all native HTMLElement attributes (id, className, onClick, etc.)
  */
 export interface ITypographyCommonProps<TSize = undefined>
-  extends React.DetailedHTMLProps<
-    React.HTMLAttributes<HTMLElement>,
-    HTMLElement
-  > {
+  extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
   fontType: FontType;
   fontWeight: FontWeight;
   size: TSize;
