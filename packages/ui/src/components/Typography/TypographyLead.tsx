@@ -7,7 +7,13 @@ export const TypographyLead: FC<
   PropsWithChildren<ITypographyCommonProps<LeadSize>>
 > = ({ children, size = 1, ...props }) => {
   return (
-    <TypographyBase {...props} variant="lead" size={size}>
+    <TypographyBase
+      variant="lead"
+      size={size}
+      fontType="accent"
+      fontWeight="bold"
+      {...props}
+    >
       {children}
     </TypographyBase>
   );

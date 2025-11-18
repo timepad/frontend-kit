@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from "react";
+import { createElement, FC, PropsWithChildren } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./typography.less";
@@ -32,7 +32,7 @@ export const TypographyBase: FC<PropsWithChildren<ITypographyProps>> = ({
     className
   );
 
-  return React.createElement(
+  return createElement(
     as,
     { ref: innerRef, className: typographyClassName, ...props },
     children

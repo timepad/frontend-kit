@@ -7,7 +7,13 @@ export const TypographyCaption: FC<
   PropsWithChildren<ITypographyCommonProps<CaptionSize>>
 > = ({ children, size = 1, ...props }) => {
   return (
-    <TypographyBase {...props} variant="caption" size={size}>
+    <TypographyBase
+      variant="caption"
+      size={size}
+      fontType="regular"
+      fontWeight="regular"
+      {...props}
+    >
       {children}
     </TypographyBase>
   );
