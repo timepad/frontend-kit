@@ -94,40 +94,6 @@
   dark-purple: var(--7D5BFF);
   normal-purple: var(--B1BFFE);
   light-purple: var(--F0F3FF);
-
-  /* space */
-  space-2: @space[2];
-  space-4: @space[4];
-  space-8: @space[8];
-  space-10: @space[10];
-  space-12: @space[12];
-  space-16: @space[16];
-  space-20: @space[20];
-  space-24: @space[24];
-  space-32: @space[32];
-  space-36: @space[36];
-  space-40: @space[40];
-  space-48: @space[48];
-  space-56: @space[56];
-  space-64: @space[64];
-  space-80: @space[80];
-
-  /* radii */
-  radius-2: @radii[2];
-  radius-4: @radii[4];
-  radius-6: @radii[6];
-  radius-8: @radii[8];
-  radius-10: @radii[10];
-  radius-12: @radii[12];
-  radius-16: @radii[16];
-  radius-20: @radii[20];
-  radius-24: @radii[24];
-  radius-32: @radii[32];
-  radius-40: @radii[40];
-
-  /* fonts  */
-  font-tt-backwards-sans: @fonts[tt-backwards-sans];
-  font-inter: @fonts[inter];
 };
 
 /* -----------------------------
@@ -222,40 +188,6 @@
   dark-purple: var(--7D5BFF);
   normal-purple: var(--B1BFFE);
   light-purple: var(--F0F3FF);
-
-  /* space */
-  space-2: @space[2];
-  space-4: @space[4];
-  space-8: @space[8];
-  space-10: @space[10];
-  space-12: @space[12];
-  space-16: @space[16];
-  space-20: @space[20];
-  space-24: @space[24];
-  space-32: @space[32];
-  space-36: @space[36];
-  space-40: @space[40];
-  space-48: @space[48];
-  space-56: @space[56];
-  space-64: @space[64];
-  space-80: @space[80];
-
-  /* radii */
-  radius-2: @radii[2];
-  radius-4: @radii[4];
-  radius-6: @radii[6];
-  radius-8: @radii[8];
-  radius-10: @radii[10];
-  radius-12: @radii[12];
-  radius-16: @radii[16];
-  radius-20: @radii[20];
-  radius-24: @radii[24];
-  radius-32: @radii[32];
-  radius-40: @radii[40];
-
-  /* fonts  */
-  font-tt-backwards-sans: @fonts[tt-backwards-sans];
-  font-inter: @fonts[inter];
 };
 
 @emit-theme: {
@@ -272,6 +204,9 @@
 
 :root {
   @emit-theme();
+  @emit-radius();
+  @emit-space();
+  @emit-fonts();
 }
 
 [data-theme="dark"] {

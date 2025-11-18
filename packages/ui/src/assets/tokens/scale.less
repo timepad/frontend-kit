@@ -18,8 +18,8 @@
   80: 80px;
 };
 
-/* radii (px) */
-@radii: {
+/* radius (px) */
+@radius: {
   2: 2px;
   4: 4px;
   6: 6px;
@@ -31,4 +31,16 @@
   24: 24px;
   32: 32px;
   40: 40px;
+};
+
+@emit-radius: {
+  each(@radius, {
+     --radius-@{key}: @{value};
+  });
+};
+
+@emit-space: {
+  each(@space, {
+     --space-@{key}: @{value};
+  });
 };
