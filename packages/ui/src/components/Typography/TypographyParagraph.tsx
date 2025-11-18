@@ -7,7 +7,13 @@ export const TypographyParagraph: FC<
   PropsWithChildren<ITypographyCommonProps<ParagraphSize>>
 > = ({ children, size = 1, ...props }) => {
   return (
-    <TypographyBase {...props} variant="paragraph" size={size}>
+    <TypographyBase
+      variant="paragraph"
+      size={size}
+      fontType="regular"
+      fontWeight="regular"
+      {...props}
+    >
       {children}
     </TypographyBase>
   );
