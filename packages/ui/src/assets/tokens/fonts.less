@@ -27,6 +27,12 @@
 }
 
 @fonts: {
-  tt-backwards-sans: "TT Backwards Sans Bold";
-  inter: "Inter";
+  accent: "TT Backwards Sans Bold";
+  regular: "Inter";
+};
+
+@emit-fonts: {
+  each(@fonts, {
+     --font-@{key}: @{value};
+  });
 };
