@@ -32,3 +32,15 @@
   32: 32px;
   40: 40px;
 };
+
+@emit-radius: {
+  each(@radius, {
+     --radius-@{key}: @{value};
+  });
+};
+
+@emit-space: {
+  each(@space, {
+     --space-@{key}: @{value};
+  });
+};
