@@ -1,14 +1,14 @@
-import { createElement, FC, PropsWithChildren } from "react";
+import { createElement, FC } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./typography.less";
-import { ITypographyProps } from "./typography.types";
+import { ITypographyBaseProps } from "./typography.types";
 import { TypographyLead } from "./TypographyLead";
+import { TypographyHeader } from "./TypographyHeader";
 import { TypographyParagraph } from "./TypographyParagraph";
 import { TypographyCaption } from "./TypographyCaption";
-import { TypographyHeader } from "./TypographyHeader";
 
-export const TypographyBase: FC<PropsWithChildren<ITypographyProps>> = ({
+export const TypographyBase: FC<ITypographyBaseProps> = ({
   children,
   className,
   as = "div",
@@ -25,7 +25,7 @@ export const TypographyBase: FC<PropsWithChildren<ITypographyProps>> = ({
     component("typography", variant)({ [`${size}`]: !!size }),
     // font-weight, text-transform, font-family styles: ctypography ctypography--bold ctypography--font-accent ctypography--uppercase
     component("typography")({
-      [fontWeight!]: true,
+      [fontWeight]: true,
       [`font-${fontType}`]: true,
       uppercase: !!uppercase,
     }),
