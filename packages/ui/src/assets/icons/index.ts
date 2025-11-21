@@ -78,7 +78,7 @@ import IconLock32Fill from "./actions/Lock-32-Fill.svg?react";
 import IconLock32Outline from "./actions/Lock-32-Outline.svg?react";
 import IconLogin32Outline from "./actions/Login-32-Outline.svg?react";
 import IconLogout32Outline from "./actions/Logout-32-Outline.svg?react";
-import IconMinimize32Outline from "./actions/Minimize-32-Outline.svg";
+import IconMinimize32Outline from "./actions/Minimize-32-Outline.svg?react";
 import IconMinus16Outline from "./actions/Minus-16-Outline.svg?react";
 import IconMinus24Outline from "./actions/Minus-24-Outline.svg?react";
 import IconMinus32Outline from "./actions/Minus-32-Outline.svg?react";

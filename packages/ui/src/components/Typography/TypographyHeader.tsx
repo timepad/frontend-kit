@@ -1,17 +1,23 @@
-import { FC, PropsWithChildren } from "react";
+import { FC } from "react";
 
 import { TypographyBase } from "./Typography";
-import { ITypographyCommonProps, HeaderSize } from "./typography.types";
+import {
+  ITypographyHeaderProps,
+  HEADER_VARIANT_CONFIG,
+} from "./typography.types";
 
-export const TypographyHeader: FC<
-  PropsWithChildren<ITypographyCommonProps<HeaderSize>>
-> = ({ children, size = 1, ...props }) => {
+export const TypographyHeader: FC<ITypographyHeaderProps> = ({
+  tag,
+  children,
+  ...props
+}) => {
+  const { size, fontType, fontWeight } = HEADER_VARIANT_CONFIG[tag];
   return (
     <TypographyBase
       variant="header"
       size={size}
-      fontType="regular"
-      fontWeight="bold"
+      fontType={fontType}
+      fontWeight={fontWeight}
       {...props}
     >
       {children}
