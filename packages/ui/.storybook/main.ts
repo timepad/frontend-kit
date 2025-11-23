@@ -14,16 +14,7 @@ const config: StorybookConfig = {
   },
   async viteFinal(config) {
     // Ensure the plugin is present in Storybook's Vite pipeline
-    config.plugins = [
-      ...(config.plugins ?? []),
-      svgr({
-        svgrOptions: {
-          replaceAttrValues: {
-            "#1C1C1C": "currentColor",
-          },
-        },
-      }),
-    ];
+    config.plugins = [...(config.plugins ?? []), svgr()];
     return config;
   },
   docs: {
