@@ -2,19 +2,19 @@ import { ButtonHTMLAttributes, ReactElement, RefObject, SVGProps } from "react";
 
 /**
  * Button size options.
- * - **S**: Compact button, small text & padding.
- * - **M**: Default button size.
+ * - **s**: Compact button, small text & padding.
+ * - **m**: Default button size.
  */
-export type ButtonSize = "S" | "M";
+export type ButtonSize = "s" | "m";
 
 /**
  * Visual style (design variant) of the button.
  * Matches the design system semantics:
- * - **Primary**: Main action, high emphasis.
- * - **Primary Alternate**: Inverse version of primary.
- * - **Secondary**: Neutral, lower emphasis.
- * - **Negative**: Destructive actions (delete, remove, cancel).
- * - **Disable**: Visually disabled, non-interactive state.
+ * - **primary**: Main action, high emphasis.
+ * - **primary-alternate**: Inverse version of primary.
+ * - **secondary**: Neutral, lower emphasis.
+ * - **negative**: Destructive actions (delete, remove, cancel).
+ * - **disable**: Visually disabled, non-interactive state.
  */
 export type ButtonVariant =
   | "primary"
@@ -25,16 +25,16 @@ export type ButtonVariant =
 
 /**
  * Icon placement relative to button text.
- * - **Left**: Icon appears before label.
- * - **Right**: Icon appears after label.
+ * - **left**: Icon appears before label.
+ * - **right**: Icon appears after label.
  */
 export type IconPosition = "left" | "right";
 
 export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  label: string;
   size?: ButtonSize;
   variant?: ButtonVariant;
   icon?: ReactElement<SVGProps<SVGSVGElement>>;
   iconPosition?: IconPosition;
-  label?: string;
   buttonRef?: RefObject<HTMLButtonElement>;
 }

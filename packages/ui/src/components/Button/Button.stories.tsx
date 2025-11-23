@@ -22,7 +22,7 @@ const variantOptions = [
   "disable",
 ] as const satisfies ButtonVariant[];
 
-const sizeOptions = ["M", "S"] as const satisfies ButtonSize[];
+const sizeOptions = ["m", "s"] as const satisfies ButtonSize[];
 
 const iconPositionOptions = ["left", "right"] as const satisfies IconPosition[];
 

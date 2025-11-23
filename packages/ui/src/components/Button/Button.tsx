@@ -1,16 +1,16 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./button.less";
 import { ButtonVariant, IButtonProps } from "./button.types";
+import { Typography } from "../Typography";
 
 export const Button: FC<IButtonProps> = ({
-  size = "M",
+  size = "m",
   variant = "primary",
   icon,
   iconPosition = "left",
   label,
-  children,
   className,
   disabled,
   type = "button",
@@ -19,18 +19,17 @@ export const Button: FC<IButtonProps> = ({
 }) => {
   const isDisabled = !!disabled || variant === "disable";
   const btnVariant: ButtonVariant = isDisabled ? "disable" : variant;
+  const hasIcon = !!icon;
 
   const buttonClassName = classNames(
     // button variant: cbutton__primary
     component("button", btnVariant)(),
     // button size: cbutton cbutton--size-m
     component("button")({
-      [`size-${size.toLowerCase()}`]: true,
+      [`size-${size}`]: true,
     }),
     className
   );
-
-  const hasChildren = children !== undefined && children !== null;
 
   return (
     <button
@@ -42,15 +41,47 @@ export const Button: FC<IButtonProps> = ({
     >
       <div className={component("button", "overlay")()} />
 
-      <div className={component("button", "content")()}>
-        {icon && iconPosition === "left" && icon}
+      <div
+        className={component(
+          "button",
+          "content"
+        )({ "icon-position-left": hasIcon && iconPosition === "left" })}
+      >
+        <ButtonLabel size={size}>{label}</ButtonLabel>
 
-        <span className={component("button", "label")()}>
-          {hasChildren ? children : label}
-        </span>
-
-        {icon && iconPosition === "right" && icon}
+        {hasIcon && icon}
       </div>
     </button>
+  );
+};
+
+interface IButtonLabelProps {
+  size: IButtonProps["size"];
+  children: ReactNode;
+}
+
+const ButtonLabel: FC<IButtonLabelProps> = ({ size, children }) => {
+  const buttonLabelClassName = component("button", "label")();
+
+  if (size === "m") {
+    return (
+      <Typography.Paragraph
+        tag="P4 BOLD"
+        as="span"
+        className={buttonLabelClassName}
+      >
+        {children}
+      </Typography.Paragraph>
+    );
+  }
+
+  return (
+    <Typography.Caption
+      tag="C1 BOLD"
+      as="span"
+      className={buttonLabelClassName}
+    >
+      {children}
+    </Typography.Caption>
   );
 };

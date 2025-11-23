@@ -6,8 +6,6 @@
   border: none;
   cursor: pointer;
   transition: transform 0.05s ease-out;
-  font-family: var(--font-regular);
-  font-weight: 700;
 
   &__overlay {
     position: absolute;
@@ -25,6 +23,14 @@
     z-index: 1;
     display: inline-flex;
     align-items: center;
+
+    &--icon-position-left {
+      flex-direction: row-reverse;
+    }
+  }
+
+  &__label {
+    color: inherit !important;
   }
 
   &__primary {
@@ -53,18 +59,12 @@
     background-color: var(--btn-inactive);
     pointer-events: none;
     transform: none;
-
-    .cbutton__overlay {
-      opacity: 0;
-    }
   }
 
   &--size-m {
     height: 40px;
     padding: var(--space-8) var(--space-12);
     border-radius: var(--radius-10);
-    font-size: 14px;
-    line-height: 20px;
 
     .cbutton__label {
       padding: var(--space-2) var(--space-8);
@@ -75,21 +75,19 @@
     height: 32px;
     padding: var(--space-8) var(--space-10);
     border-radius: var(--radius-8);
-    font-size: 12px;
-    line-height: 16px;
 
     .cbutton__label {
       padding: 0 var(--space-4);
     }
   }
 
-  &:hover:not(.cbutton--disabled):not(:disabled) {
+  &:hover:not(.cbutton__disable):not(:disabled) {
     .cbutton__overlay {
       opacity: 1;
     }
   }
 
-  &:active:not(.cbutton--disabled):not(:disabled) {
+  &:active:not(.cbutton__disable):not(:disabled) {
     &.cbutton--size-m {
       transform: scaleY(0.95); // 40px → ~38px
     }
