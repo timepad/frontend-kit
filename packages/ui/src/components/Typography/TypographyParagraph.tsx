@@ -1,17 +1,24 @@
-import { FC, PropsWithChildren } from "react";
+import { FC } from "react";
 
 import { TypographyBase } from "./Typography";
-import { ITypographyCommonProps, ParagraphSize } from "./typography.types";
+import {
+  ITypographyParagraphProps,
+  PARAGRAPH_VARIANT_CONFIG,
+} from "./typography.types";
 
-export const TypographyParagraph: FC<
-  PropsWithChildren<ITypographyCommonProps<ParagraphSize>>
-> = ({ children, size = 1, ...props }) => {
+export const TypographyParagraph: FC<ITypographyParagraphProps> = ({
+  tag,
+  children,
+  ...props
+}) => {
+  const { size, fontWeight, uppercase } = PARAGRAPH_VARIANT_CONFIG[tag];
   return (
     <TypographyBase
       variant="paragraph"
       size={size}
       fontType="regular"
-      fontWeight="regular"
+      fontWeight={fontWeight}
+      uppercase={uppercase}
       {...props}
     >
       {children}

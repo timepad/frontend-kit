@@ -1,4 +1,20 @@
-import { DetailedHTMLProps, HTMLAttributes, LegacyRef, ReactHTML } from "react";
+import {
+  DetailedHTMLProps,
+  HTMLAttributes,
+  LegacyRef,
+  ReactHTML,
+  ReactNode,
+} from "react";
+
+/**
+ * High-level typography variants used by the base component.
+ *
+ * Each variant has its own allowed combination of:
+ * - size
+ * - fontType
+ * - fontWeight
+ */
+export type TypographyVariant = "lead" | "header" | "paragraph" | "caption";
 
 /**
  * Font weight modifiers supported by the typography system.
@@ -17,74 +33,215 @@ export type FontWeight = "bold" | "semi-bold" | "medium" | "regular";
 export type FontType = "accent" | "regular";
 
 /**
- * Size levels for the `lead` variant.it
- * - **1** – Largest lead text.
- * - **2** – Medium lead text.
- * - **3** – Smallest lead text.
+ * Size levels for Typography.
+ * - **1** – Largest text.
+ * - **2** – Medium text.
+ * - **3** – Smallest text.
+ * - **4** – Extra small text.
  */
-export type LeadSize = 1 | 2 | 3;
+export type Size = 1 | 2 | 3 | 4;
 
 /**
- * Size levels for the `header` variant.
- * - **1** – Page title / largest header.
- * - **2** – Section title.
- * - **3** – Subsection title.
- * - **4** – Small header.
+ * Variant-specific definitions used to enforce correct
+ * size levels, font-family and font-weight based on the selected typography variant.
+ *
+ * Each variant restricts the `size, fontType, fontWeight` props to the valid
+ * numeric levels of that variant.
  */
-export type HeaderSize = 1 | 2 | 3 | 4;
+interface ILeadVariant {
+  variant: Extract<TypographyVariant, "lead">;
+  size: Exclude<Size, 4>;
+  fontType: Extract<FontType, "accent">;
+  fontWeight: Extract<FontWeight, "bold">;
+}
 
-/**
- * Size levels for the `paragraph` variant.
- * - **1** – Large paragraph text.
- * - **2** – Default paragraph text.
- * - **3** – Small paragraph.
- * - **4** – Extra small paragraph.
- */
-export type ParagraphSize = 1 | 2 | 3 | 4;
+interface IHeaderVariant {
+  variant: Extract<TypographyVariant, "header">;
+  size: Size;
+  fontType: FontType;
+  fontWeight: Extract<FontWeight, "bold" | "medium">;
+}
 
-/**
- * Size level for the `caption` variant.
- * - **1** – Caption text (used for tiny labels, hints, footnotes).
- */
-export type CaptionSize = 1;
+interface IParagraphVariant {
+  variant: Extract<TypographyVariant, "paragraph">;
+  size: Size;
+  fontType: Extract<FontType, "regular">;
+  fontWeight: Exclude<FontWeight, "medium">;
+}
+
+interface ICaptionVariant {
+  variant: Extract<TypographyVariant, "caption">;
+  size: Extract<Size, 1>;
+  fontType: Extract<FontType, "regular">;
+  fontWeight: Exclude<FontWeight, "medium">;
+}
+
+/* ──────────────────────────────────────────────────────────
+ * LEAD TAGS & CONFIG
+ * ──────────────────────────────────────────────────────── */
+export type LeadVariantTag =
+  | "L1 UPP BOLD"
+  | "L1 BOLD"
+  | "L2 UPP BOLD"
+  | "L2 BOLD"
+  | "L3 UPP BOLD"
+  | "L3 BOLD";
+
+type LeadVariantConfig = {
+  size: ILeadVariant["size"];
+  uppercase?: boolean;
+};
+
+export const LEAD_VARIANT_CONFIG: Record<LeadVariantTag, LeadVariantConfig> = {
+  "L1 UPP BOLD": { size: 1, uppercase: true },
+  "L1 BOLD": { size: 1 },
+
+  "L2 UPP BOLD": { size: 2, uppercase: true },
+  "L2 BOLD": { size: 2 },
+
+  "L3 UPP BOLD": { size: 3, uppercase: true },
+  "L3 BOLD": { size: 3 },
+};
+
+/* ──────────────────────────────────────────────────────────
+ * HEADER TAGS & CONFIG
+ * ──────────────────────────────────────────────────────── */
+export type HeaderVariantTag =
+  | "H1 ACCENT BOLD"
+  | "H1 BOLD"
+  | "H2 ACCENT BOLD"
+  | "H2 BOLD"
+  | "H3 ACCENT BOLD"
+  | "H3 BOLD"
+  | "H3 MEDIUM"
+  | "H4 ACCENT BOLD"
+  | "H4 BOLD"
+  | "H4 MEDIUM";
+
+type HeaderVariantConfig = {
+  size: Size;
+  fontType: FontType;
+  fontWeight: IHeaderVariant["fontWeight"];
+};
+
+export const HEADER_VARIANT_CONFIG: Record<
+  HeaderVariantTag,
+  HeaderVariantConfig
+> = {
+  "H1 ACCENT BOLD": { size: 1, fontType: "accent", fontWeight: "bold" },
+  "H1 BOLD": { size: 1, fontType: "regular", fontWeight: "bold" },
+
+  "H2 ACCENT BOLD": { size: 2, fontType: "accent", fontWeight: "bold" },
+  "H2 BOLD": { size: 2, fontType: "regular", fontWeight: "bold" },
+
+  "H3 ACCENT BOLD": { size: 3, fontType: "accent", fontWeight: "bold" },
+  "H3 BOLD": { size: 3, fontType: "regular", fontWeight: "bold" },
+  "H3 MEDIUM": { size: 3, fontType: "regular", fontWeight: "medium" },
+
+  "H4 ACCENT BOLD": { size: 4, fontType: "accent", fontWeight: "bold" },
+  "H4 BOLD": { size: 4, fontType: "regular", fontWeight: "bold" },
+  "H4 MEDIUM": { size: 4, fontType: "regular", fontWeight: "medium" },
+};
+
+/* ──────────────────────────────────────────────────────────
+ * PARAGRAPH TAGS & CONFIG
+ * ──────────────────────────────────────────────────────── */
+export type ParagraphVariantTag =
+  | "P1 REGULAR"
+  | "P2 REGULAR"
+  | "P3 BOLD"
+  | "P3 SEMIBOLD"
+  | "P3 REGULAR"
+  | "P4 UPP BOLD"
+  | "P4 BOLD"
+  | "P4 SEMIBOLD"
+  | "P4 REGULAR";
+
+type ParagraphVariantConfig = {
+  size: Size;
+  fontWeight: IParagraphVariant["fontWeight"];
+  uppercase?: boolean;
+};
+
+export const PARAGRAPH_VARIANT_CONFIG: Record<
+  ParagraphVariantTag,
+  ParagraphVariantConfig
+> = {
+  "P1 REGULAR": { size: 1, fontWeight: "regular" },
+
+  "P2 REGULAR": { size: 2, fontWeight: "regular" },
+
+  "P3 BOLD": { size: 3, fontWeight: "bold" },
+  "P3 SEMIBOLD": { size: 3, fontWeight: "semi-bold" },
+  "P3 REGULAR": { size: 3, fontWeight: "regular" },
+
+  "P4 UPP BOLD": { size: 4, fontWeight: "bold", uppercase: true },
+  "P4 BOLD": { size: 4, fontWeight: "bold" },
+  "P4 SEMIBOLD": { size: 4, fontWeight: "semi-bold" },
+  "P4 REGULAR": { size: 4, fontWeight: "regular" },
+};
+
+/* ──────────────────────────────────────────────────────────
+ * CAPTION TAGS & CONFIG
+ * ──────────────────────────────────────────────────────── */
+export type CaptionVariantTag =
+  | "C1 UPP BOLD"
+  | "C1 BOLD"
+  | "C1 UPP SEMIBOLD"
+  | "C1 SEMIBOLD"
+  | "C1 REGULAR";
+
+type CaptionVariantConfig = {
+  size: ICaptionVariant["size"];
+  fontWeight: ICaptionVariant["fontWeight"];
+  uppercase?: boolean;
+};
+
+export const CAPTION_VARIANT_CONFIG: Record<
+  CaptionVariantTag,
+  CaptionVariantConfig
+> = {
+  "C1 UPP BOLD": { size: 1, fontWeight: "bold", uppercase: true },
+  "C1 BOLD": { size: 1, fontWeight: "bold" },
+  "C1 UPP SEMIBOLD": { size: 1, fontWeight: "semi-bold", uppercase: true },
+  "C1 SEMIBOLD": { size: 1, fontWeight: "semi-bold" },
+  "C1 REGULAR": { size: 1, fontWeight: "regular" },
+};
 
 /**
  * Common props shared across all typography components.
  *
- * @template TSize – Variant-specific size constraint
- *
  * Includes:
+ * - **children** – All renderable React content.
  * - **as** – Changes the rendered HTML tag (span, p, h1, etc.).
  * - **innerRef** – Forwarded ref to the underlying DOM element.
- * - **fontWeight** – Optional weight override.
  * - **uppercase** – Transforms text to uppercase when true.
- * - **fontType** – Selects accent/regular typeface.
- * - **size** – Variant-specific size level.
  *
  * Inherits all native HTMLElement attributes (id, className, onClick, etc.)
  */
-export interface ITypographyCommonProps<TSize = undefined>
+interface ITypographyCommonProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
-  fontType?: FontType;
-  fontWeight?: FontWeight;
-  size?: TSize;
+  children: ReactNode;
   as?: keyof ReactHTML;
   innerRef?: LegacyRef<HTMLElement>;
   uppercase?: boolean;
 }
-/**
- * Variant-specific definitions used to enforce correct
- * size levels based on the selected typography variant.
- *
- * Each variant restricts the `size` prop to the valid
- * numeric levels of that variant.
- */
-type LeadVariant = { variant: "lead"; size?: LeadSize };
-type HeaderVariant = { variant: "header"; size?: HeaderSize };
-type ParagraphVariant = { variant: "paragraph"; size?: ParagraphSize };
-type CaptionVariant = { variant: "caption"; size?: CaptionSize };
 
-export type ITypographyProps = ITypographyCommonProps<
-  LeadSize | HeaderSize | ParagraphSize | CaptionSize
-> &
-  (LeadVariant | HeaderVariant | ParagraphVariant | CaptionVariant);
+export interface ITypographyLeadProps extends ITypographyCommonProps {
+  tag: LeadVariantTag;
+}
+
+export interface ITypographyHeaderProps extends ITypographyCommonProps {
+  tag: HeaderVariantTag;
+}
+
+export interface ITypographyParagraphProps extends ITypographyCommonProps {
+  tag: ParagraphVariantTag;
+}
+
+export interface ITypographyCaptionProps extends ITypographyCommonProps {
+  tag: CaptionVariantTag;
+}
+
+export type ITypographyBaseProps = ITypographyCommonProps &
+  (ILeadVariant | IHeaderVariant | IParagraphVariant | ICaptionVariant);
