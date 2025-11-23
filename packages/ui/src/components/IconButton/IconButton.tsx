@@ -6,7 +6,7 @@ import { IconButtonVariant, IIconButtonProps } from "./icon-button.types";
 
 export const IconButton: FC<IIconButtonProps> = (
   {
-    size = "M",
+    size = "m",
     variant = "primary",
     icon,
     className,
@@ -24,7 +24,7 @@ export const IconButton: FC<IIconButtonProps> = (
     component("icon-button", iconBtnVariant)(),
     // button size: cicon-button cicon-button--size-xs
     component("icon-button")({
-      [`size-${size.toLowerCase()}`]: true,
+      [`size-${size}`]: true,
     }),
     className
   );

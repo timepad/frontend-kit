@@ -23,7 +23,7 @@ const variantOptions = [
   "transparent",
 ] as const satisfies IconButtonVariant[];
 
-const sizeOptions = ["XS", "M", "S"] as const satisfies IconButtonSize[];
+const sizeOptions = ["xs", "m", "s"] as const satisfies IconButtonSize[];
 
 const meta = {
   title: "Components/IconButton",
