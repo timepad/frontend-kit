@@ -3,6 +3,7 @@ import { classNames, component } from "@frontend-kit/utils";
 
 import "./breadcrumbs.less";
 import { IBreadcrumbItem, IBreadcrumbsProps } from "./breadcrumbs.types";
+import { Typography } from "../Typography";
 import { IconLineArrowLeft16Outline } from "../../assets/icons";
 
 export const Breadcrumbs: FC<IBreadcrumbsProps> = ({
@@ -64,7 +65,13 @@ const BreadcrumbNode: FC<IBreadcrumbNodeProps> = ({ item, isCurrent }) => {
       href={href}
       onClick={onClick}
     >
-      {label}
+      <Typography.Caption
+        tag="C1 REGULAR"
+        as="span"
+        className={component("breadcrumbs", "link-text")()}
+      >
+        {label}
+      </Typography.Caption>
     </a>
   );
 };

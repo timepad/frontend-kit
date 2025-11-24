@@ -1,12 +1,6 @@
 @import "../../assets/tokens/index.less";
 
 .cbreadcrumbs {
-  color: var(--text-link-secondary);
-  font-family: var(--font-regular);
-  font-size: 14px;
-  line-height: 16px;
-  font-weight: 400;
-
   &__list {
     display: flex;
     align-items: center;
@@ -22,11 +16,13 @@
 
   &__separator {
     display: inline-flex;
+    color: var(--text-link-secondary);
   }
 
   &__link {
+    display: inline-flex;
+    color: var(--text-link-secondary);
     text-decoration: none;
-    color: inherit;
     cursor: pointer;
 
     &:hover:not(.cbreadcrumbs__link--current) {
@@ -39,5 +35,9 @@
       color: var(--text-primary);
       pointer-events: none;
     }
+  }
+
+  &__link-text {
+    color: inherit !important;
   }
 }
