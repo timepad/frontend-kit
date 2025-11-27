@@ -1,0 +1,28 @@
+@import "../../assets/tokens/index.less";
+
+.ctertiary-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: var(--space-8) var(--space-10);
+  border-radius: 10px;
+
+  &--base {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+  }
+
+  &--inverted {
+    background-color: var(--bg-inverted);
+    color: var(--text-inverted);
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    margin-top: -6px;
+  }
+
+  &__text {
+    color: inherit !important;
+  }
+}
