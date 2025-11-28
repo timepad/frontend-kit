@@ -1,0 +1,54 @@
+@import "./palette.less";
+
+@color-constants: {
+  brand-timepad: var(--7D5BFF);
+  
+  greyscale-900: var(--000000);
+  greyscale-800: var(--1C1C1C);
+  greyscale-700: var(--2B2E31);
+  greyscale-600: var(--42464B);
+  greyscale-500: var(--696D73);
+  greyscale-400: var(--9B9FA6);
+  greyscale-300: var(--C7CACE);
+  greyscale-200: var(--E2E4E7);
+  greyscale-100: var(--F4F2F8);
+  greyscale-0: var(--FFFFFF);
+
+  darkest-red: var(--EF4444);
+  dark-red: var(--F05656);
+  normal-red: var(--F16888);
+  light-red: var(--F6B1B1);
+
+  darkest-pink: var(--DA42D0);
+  dark-pink: var(--EF66E6);
+  normal-pink: var(--FA85EB);
+  light-pink: var(--E0AFFF);
+
+  darkest-yellow: var(--FB8115);
+  dark-yellow: var(--FAC000);
+  normal-yellow: var(--FFF177);
+  light-yellow: var(--FEECA3);
+
+  darkest-green: var(--3A8E26);
+  dark-green: var(--59C836);
+  normal-green: var(--77EF45);
+  light-green: var(--C8FFB1);
+
+  dark-blue: var(--3B82F6);
+
+  darkest-chocolate: var(--281621);
+  dark-chocolate: var(--382631);
+  normal-chocolate: var(--4E3B47);
+  light-chocolate: var(--7E6B77);
+
+  darkest-purple: var(--7133D3);
+  dark-purple: var(--7D5BFF);
+  normal-purple: var(--B1BFFE);
+  light-purple: var(--F0F3FF);
+};
+
+@emit-color-constants: {
+  each(@color-constants, {
+      --@{key}: @{value};
+    });
+};

@@ -1,0 +1,132 @@
+@import "./color-constants";
+@import "./fonts.less";
+@import "./palette.less";
+@import "./scale.less";
+
+/* -----------------------------
+   LIGHT THEME ALIASES
+   ----------------------------- */
+@light-theme: {
+  /* TEXT */
+  text-primary: var(--1C1C1C);
+  text-primary-alt: var(--382631);
+  text-secondary: var(--696D73);
+  text-tertiary: var(--9B9FA6);
+  text-inverted: var(--F4F2F8);
+  text-positive: var(--59C836);
+  text-negative: var(--F05656);
+  text-link-primary: var(--7D5BFF);
+  text-link-secondary: var(--696D73);
+
+  /* BACKGROUND */
+  bg-primary: var(--FFFFFF);
+  bg-primary-alt: var(--F0F3FF);
+  bg-secondary: var(--F4F2F8);
+  bg-modal: var(--FFFFFF);
+  bg-stroke: var(--C7CACE-50);
+  bg-inverted: var(--1C1C1C);
+
+  /* ICONS */
+  icon-primary: var(--1C1C1C);
+  icon-secondary: var(--696D73);
+  icon-tertiary: var(--9B9FA6);
+  icon-inverted: var(--F4F2F8);
+
+  /* BUTTONS */
+  btn-primary-active: var(--7D5BFF);
+  btn-secondary-active: var(--382631);
+  btn-tertiary-active: var(--F4F2F8);
+  btn-inactive: var(--C7CACE-50);
+  btn-alternative: var(--FFFFFF);
+  btn-hover: var(--42464B-10);
+
+  /* ACCENT */
+  accent-positive: var(--59C836);
+  accent-warning: var(--FAC000);
+  accent-negative: var(--F05656);
+  accent-positive-inverted: var(--C8FFB1);
+  accent-warning-inverted: var(--FEECA3);
+  accent-negative-inverted: var(--F6B1B1);
+  accent-notification: var(--7D5BFF);
+};
+
+/* -----------------------------
+   DARK THEME ALIASES
+   ----------------------------- */
+@dark-theme: {
+  /* TEXT */
+  text-primary: var(--F4F2F8);
+  text-primary-alt: var(--F4F2F8);
+  text-secondary: var(--9B9FA6);
+  text-tertiary: var(--696D73);
+  text-inverted: var(--1C1C1C);
+  text-positive: var(--C8FFB1);
+  text-negative: var(--F6B1B1);
+  text-link-primary: var(--7D5BFF);
+  text-link-secondary: var(--9B9FA6);
+
+  /* BACKGROUND */
+  bg-primary: var(--1C1C1C);
+  bg-primary-alt: rgba(255, 0, 94, 1);
+  bg-secondary: rgba(255, 0, 94, 1);
+  bg-modal: var(--2B2E31);
+  bg-stroke: var(--C7CACE-50);
+  bg-inverted: var(--FFFFFF);
+
+  /* ICONS */
+  icon-primary: var(--F4F2F8);
+  icon-secondary: var(--9B9FA6);
+  icon-tertiary: var(--696D73);
+  icon-inverted: var(--1C1C1C);
+
+  /* BUTTONS */
+  btn-primary-active: var(--7D5BFF);
+  btn-secondary-active: var(--4E3B47);
+  btn-tertiary-active: var(--F4F2F8);
+  btn-inactive: var(--C7CACE-50);
+  btn-alternative: var(--9B9FA6);
+  btn-hover: var(--42464B-10);
+
+  /* ACCENT */
+  accent-positive: var(--C8FFB1);
+  accent-warning: var(--FEECA3);
+  accent-negative: var(--F6B1B1);
+  accent-positive-inverted: var(--59C836);
+  accent-warning-inverted: var(--FAC000);
+  accent-negative-inverted: var(--F05656);
+  accent-notification: var(--7D5BFF);
+};
+
+/* 
+  @emit-function — a generic generator that transforms a Less map into
+  a list of CSS custom properties. This detached ruleset works
+  like a function: it iterates over all key/value pairs in the
+  provided map and outputs them as:
+      --token-name: value;
+      --text-primary: var(--F4F2F8);
+      --bg-primary: var(--1C1C1C);
+*/
+
+@emit-theme: {
+  each(@light-theme, {
+      --@{key}: @{value};
+    });
+};
+
+@emit-theme-dark: {
+  each(@dark-theme, {
+      --@{key}: @{value};
+    });
+};
+
+:root {
+  @emit-theme();
+  @emit-color-constants();
+  @emit-radius();
+  @emit-space();
+  @emit-fonts();
+}
+
+[data-theme="dark"] {
+  @emit-theme-dark();
+}
