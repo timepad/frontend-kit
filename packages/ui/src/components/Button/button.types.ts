@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, ReactElement, RefObject, SVGProps } from "react";
+import { ButtonHTMLAttributes, ReactElement, SVGProps } from "react";
 
 /**
  * Button size options.
@@ -36,5 +36,4 @@ export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   icon?: ReactElement<SVGProps<SVGSVGElement>>;
   iconPosition?: IconPosition;
-  buttonRef?: RefObject<HTMLButtonElement>;
 }

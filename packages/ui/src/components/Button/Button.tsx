@@ -14,7 +14,6 @@ export const Button: FC<IButtonProps> = ({
   className,
   disabled,
   type = "button",
-  buttonRef,
   ...rest
 }) => {
   const isDisabled = !!disabled || variant === "disable";
@@ -36,10 +35,9 @@ export const Button: FC<IButtonProps> = ({
       className={buttonClassName}
       type={type}
       disabled={isDisabled}
-      ref={buttonRef}
       {...rest}
     >
-      <div className={component("button", "overlay")()} />
+      <div className={component("button", "hover-layer")()} />
 
       <div
         className={component(
