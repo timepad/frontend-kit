@@ -1,20 +1,18 @@
 import {DetailedHTMLProps, HTMLAttributes, ReactNode} from "react";
 
-/**
- *
- * Matches the design system semantics:
- * - **base**: .
- * - **inverted**: .
- */
 export type TertiaryBannerVariant =
-    | "base"
-    | "inverted"
+    | "info"
+    | "warning"
+    | "error"
+    | "success"
 
-export interface ITertiaryBannerProps {
+export type Modifier = "base" | "inverted"
+
+export interface ITertiaryBannerBaseProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   variant?: TertiaryBannerVariant;
+  modifier?: Modifier;
+  icon?: ReactNode;
   children: ReactNode;
 }
 
-export interface ITertiaryBannerBaseProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  variant: TertiaryBannerVariant;
-}
+export interface ITertiaryBannerVariantProps extends Omit<ITertiaryBannerBaseProps, "variant" | "icon"> {}

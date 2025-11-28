@@ -1,16 +1,13 @@
 import { FC } from "react";
-import { component } from "@frontend-kit/utils";
 
-import { Typography } from "../Typography";
 import { TertiaryBannerBase } from "./TertiaryBanner";
 import { IconCrossCircle24Fill } from "../../assets/icons";
-import { ITertiaryBannerProps } from "./tertiary-banner.types";
+import { ITertiaryBannerVariantProps } from "./tertiary-banner.types";
 
-export const TertiaryBannerError: FC<ITertiaryBannerProps> = ({ variant = "base", children, ...props }) => {
+export const TertiaryBannerError: FC<ITertiaryBannerVariantProps> = ({  modifier, children, ...props }) => {
     return (
-        <TertiaryBannerBase variant={variant} {...props}>
-            <IconCrossCircle24Fill className={component("tertiary-banner", "icon")()} color={variant === "base" ? "var(--dark-red)" : "var(--light-red)"} />
-            <Typography.Caption className={component("tertiary-banner", "text")()} tag="C1 REGULAR">{children}</Typography.Caption>
+        <TertiaryBannerBase variant="error" modifier={modifier} icon={<IconCrossCircle24Fill />} {...props}>
+            {children}
         </TertiaryBannerBase>
     )
 }

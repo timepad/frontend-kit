@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { TertiaryBanner } from "./TertiaryBanner";
-import { TertiaryBannerVariant } from "./tertiary-banner.types";
+import {Modifier} from "./tertiary-banner.types";
 
-const variantOptions = ["base", "inverted"] as const satisfies TertiaryBannerVariant[];
+const modifierOptions = ["base", "inverted"] as const satisfies Modifier[];
 
 const meta = {
     title: "Components/TertiaryBanner",
@@ -13,14 +13,24 @@ const meta = {
     },
     tags: ["autodocs"],
     argTypes: {
-        variant: {
+        modifier: {
             control: "select",
-            options: variantOptions,
-            description: "Выбор темы баннера",
+            options: modifierOptions,
+            description: "Модификатор стиля",
         },
         children: {
             control: "text",
             description: "Текст баннера",
+        },
+        variant: {
+            table: {
+                disable: true,
+            },
+        },
+        icon: {
+            table: {
+                disable: true,
+            },
         },
     },
 } satisfies Meta<typeof TertiaryBanner>;
@@ -31,24 +41,24 @@ type Story = StoryObj<typeof meta>;
 // Info
 export const InfoBase: Story = {
     render: (args) => (
-        <TertiaryBanner.Info variant={args.variant}>
+        <TertiaryBanner.Info modifier={args.modifier}>
             {args.children}
         </TertiaryBanner.Info>
     ),
     args: {
-        variant: "base",
+        modifier: "base",
         children: "Banner info. Светлая тема.",
     },
 };
 
 export const InfoInverted: Story = {
     render: (args) => (
-        <TertiaryBanner.Info variant={args.variant}>
+        <TertiaryBanner.Info modifier={args.modifier}>
             {args.children}
         </TertiaryBanner.Info>
     ),
     args: {
-        variant: "inverted",
+        modifier: "inverted",
         children: "Banner info. Темная тема.",
     },
 };
@@ -56,24 +66,24 @@ export const InfoInverted: Story = {
 // Warning
 export const WarningBase: Story = {
     render: (args) => (
-        <TertiaryBanner.Warning variant={args.variant}>
+        <TertiaryBanner.Warning modifier={args.modifier}>
             {args.children}
         </TertiaryBanner.Warning>
     ),
     args: {
-        variant: "base",
+        modifier: "base",
         children: "Banner Warning. Светлая тема.",
     },
 };
 
 export const WarningInverted: Story = {
     render: (args) => (
-        <TertiaryBanner.Warning variant={args.variant}>
+        <TertiaryBanner.Warning modifier={args.modifier}>
             {args.children}
         </TertiaryBanner.Warning>
     ),
     args: {
-        variant: "inverted",
+        modifier: "inverted",
         children: "Banner Warning. Темная тема.",
     },
 };
@@ -81,24 +91,24 @@ export const WarningInverted: Story = {
 // Error
 export const ErrorBase: Story = {
     render: (args) => (
-        <TertiaryBanner.Error variant={args.variant}>
+        <TertiaryBanner.Error modifier={args.modifier}>
             {args.children}
         </TertiaryBanner.Error>
     ),
     args: {
-        variant: "base",
+        modifier: "base",
         children: "Banner Error. Светлая тема.",
     },
 };
 
 export const ErrorInverted: Story = {
     render: (args) => (
-        <TertiaryBanner.Error variant={args.variant}>
+        <TertiaryBanner.Error modifier={args.modifier}>
             {args.children}
         </TertiaryBanner.Error>
     ),
     args: {
-        variant: "inverted",
+        modifier: "inverted",
         children: "Banner Error. Темная тема.",
     },
 };
@@ -106,24 +116,24 @@ export const ErrorInverted: Story = {
 // Success
 export const SuccessBase: Story = {
     render: (args) => (
-        <TertiaryBanner.Success variant={args.variant}>
+        <TertiaryBanner.Success modifier={args.modifier}>
             {args.children}
         </TertiaryBanner.Success>
     ),
     args: {
-        variant: "base",
+        modifier: "base",
         children: "Banner Success. Светлая тема.",
     },
 };
 
 export const SuccessInverted: Story = {
     render: (args) => (
-        <TertiaryBanner.Success variant={args.variant}>
+        <TertiaryBanner.Success modifier={args.modifier}>
             {args.children}
         </TertiaryBanner.Success>
     ),
     args: {
-        variant: "inverted",
+        modifier: "inverted",
         children: "Banner Success. Темная тема.",
     },
 };
