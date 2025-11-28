@@ -9,7 +9,7 @@
   cursor: pointer;
   transition: transform 0.05s ease-out;
 
-  &__overlay {
+  &__hover-layer {
     position: absolute;
     inset: 0;
     border-radius: inherit;
@@ -81,7 +81,7 @@
   }
 
   &:hover:not(.cicon-button__disable):not(:disabled) {
-    .cicon-button__overlay {
+    .cicon-button__hover-layer {
       opacity: 1;
     }
   }

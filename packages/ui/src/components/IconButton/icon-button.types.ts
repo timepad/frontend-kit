@@ -34,5 +34,4 @@ export interface IIconButtonProps
   icon: ReactElement<SVGProps<SVGSVGElement>>;
   size?: IconButtonSize;
   variant?: IconButtonVariant;
-  buttonRef?: RefObject<HTMLButtonElement>;
 }

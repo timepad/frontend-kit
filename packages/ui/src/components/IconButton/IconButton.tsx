@@ -4,18 +4,15 @@ import { classNames, component } from "@frontend-kit/utils";
 import "./icon-button.less";
 import { IconButtonVariant, IIconButtonProps } from "./icon-button.types";
 
-export const IconButton: FC<IIconButtonProps> = (
-  {
-    size = "m",
-    variant = "primary",
-    icon,
-    className,
-    disabled,
-    type = "button",
-    buttonRef,
-    ...rest
-  },
-) => {
+export const IconButton: FC<IIconButtonProps> = ({
+  size = "m",
+  variant = "primary",
+  icon,
+  className,
+  disabled,
+  type = "button",
+  ...rest
+}) => {
   const isDisabled = !!disabled || variant === "disable";
   const iconBtnVariant: IconButtonVariant = isDisabled ? "disable" : variant;
 
@@ -34,10 +31,9 @@ export const IconButton: FC<IIconButtonProps> = (
       className={iconButtonClassName}
       type={type}
       disabled={isDisabled}
-      ref={buttonRef}
       {...rest}
     >
-      <div className={component("icon-button", "overlay")()} />
+      <div className={component("icon-button", "hover-layer")()} />
 
       <div className={component("icon-button", "content")()}>{icon}</div>
     </button>
