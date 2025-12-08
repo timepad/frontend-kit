@@ -30,14 +30,8 @@ export const Button: React.FC<ButtonProps> = ({
     disabled ? "button--disabled" : ""
   }`;
   return (
-      <>
-        <button onClick={onClick} disabled={disabled} className={className}>
-          {label}
-        </button>
-        <button onClick={onClick} disabled={disabled} className={className}>
-          {label}
-        </button>
-      </>
-
+    <button onClick={onClick} disabled={disabled} className={className}>
+      {label}
+    </button>
   );
 };

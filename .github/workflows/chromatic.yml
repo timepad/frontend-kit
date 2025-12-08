@@ -6,9 +6,6 @@ on:
       - '.github/workflows/chromatic.yml'
       - 'package.json'
       - 'yarn.lock'
-  pull_request:
-    paths:
-      - 'packages/ui/**'
 jobs:
   chromatic-deployment:
     runs-on: ubuntu-latest
