@@ -2,11 +2,11 @@ name: ESLint
 on:
   push:
     paths:
-      - 'packages/ui/src/**'
+      - '../../packages/ui/src'
       - '.github/workflows/eslint.yml'
   pull_request:
     paths:
-      - 'packages/ui/src/**'
+      - '../../packages/ui/src'
 jobs:
   build:
     runs-on: ubuntu-latest

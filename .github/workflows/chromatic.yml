@@ -2,11 +2,11 @@ name: Chromatic
 on:
   push:
     paths:
-      - 'packages/ui/**'
+      - '../../packages/ui'
       - '.github/workflows/chromatic.yml'
   pull_request:
     paths:
-      - 'packages/ui/**'
+      - '../../packages/ui'
 jobs:
   chromatic-deployment:
     runs-on: ubuntu-latest
