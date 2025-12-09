@@ -31,7 +31,7 @@ export const Button: React.FC<ButtonProps> = ({
   }`;
   return (
     <button onClick={onClick} disabled={disabled} className={className}>
-      {label}123
+      {label}
     </button>
   );
 };
