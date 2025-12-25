@@ -54,6 +54,11 @@
     font-weight: 400;
     line-height: 20px;
 
+    position: relative;
+    background: transparent;
+    color: transparent;          // <-- ВАЖНО
+    caret-color: var(--text-primary);
+
     &:focus,
     &:focus-visible {
       outline-color: var(--btn-primary-active);
@@ -88,5 +93,32 @@
     cursor: pointer;
     border: 0;
     background: none;
+  }
+
+  &__mask-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    display: flex;
+    align-items: center;
+
+    font: inherit;
+    font-family: var(--font-regular);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    
+    padding: var(--space-4) var(--space-32) var(--space-4) var(--space-10);
+    white-space: pre;
+  }
+
+  &__mask-char {
+    color: var(--text-primary);
+  }
+
+  &__mask-char--rest {
+    color: var(--text-tertiary);
   }
 }
