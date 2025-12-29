@@ -73,11 +73,6 @@ const meta = {
         disable: true,
       },
     },
-    buttonRef: {
-      table: {
-        disable: true,
-      },
-    },
   },
 } satisfies Meta<typeof IconButton>;
 
