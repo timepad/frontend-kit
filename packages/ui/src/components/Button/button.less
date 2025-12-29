@@ -1,22 +1,99 @@
 @import "../../assets/tokens/index.less";
 
-.button {
-  padding: var(--space-8) var(--space-16);
+.cbutton {
+  position: relative;
+  display: inline-flex;
   border: none;
-  border-radius: var(--radius-4);
   cursor: pointer;
-  opacity: 1;
-  color: var(--text-inverted);
-  font-family: var(--font-regular);
+  transition: transform 0.05s ease-out;
 
-  &--variant-primary {
+  &__hover-layer {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: var(--btn-hover);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease-out;
+    z-index: 0;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+
+    &--icon-position-left {
+      flex-direction: row-reverse;
+    }
+  }
+
+  &__label {
+    color: inherit !important;
+  }
+
+  &__primary {
+    color: var(--greyscale-0);
     background-color: var(--btn-primary-active);
   }
-  &--variant-secondary {
+
+  &__primary-alternate {
+    color: var(--greyscale-0);
     background-color: var(--btn-secondary-active);
   }
-  &--disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+
+  &__secondary {
+    color: var(--dark-purple);
+    background-color: var(--btn-tertiary-active);
+  }
+
+  &__negative {
+    color: var(--dark-red);
+    background-color: var(--btn-tertiary-active);
+  }
+
+  &__disable,
+  &:disabled {
+    color: var(--greyscale-400);
+    background-color: var(--btn-inactive);
+    pointer-events: none;
+    transform: none;
+  }
+
+  &--size-m {
+    height: 40px;
+    padding: var(--space-8) var(--space-12);
+    border-radius: var(--radius-10);
+
+    .cbutton__label {
+      padding: var(--space-2) var(--space-8);
+    }
+  }
+
+  &--size-s {
+    height: 32px;
+    padding: var(--space-8) var(--space-10);
+    border-radius: var(--radius-8);
+
+    .cbutton__label {
+      padding: 0 var(--space-4);
+    }
+  }
+
+  &:hover:not(.cbutton__disable):not(:disabled) {
+    .cbutton__hover-layer {
+      opacity: 1;
+    }
+  }
+
+  &:active:not(.cbutton__disable):not(:disabled) {
+    &.cbutton--size-m {
+      transform: scaleY(0.95); // 40px → ~38px
+    }
+
+    &.cbutton--size-s {
+      transform: scaleY(0.9375); // 32px → ~30px
+    }
   }
 }

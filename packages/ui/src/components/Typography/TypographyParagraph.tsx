@@ -1,10 +1,12 @@
 import { FC } from "react";
 
 import { TypographyBase } from "./Typography";
-import {
-  ITypographyParagraphProps,
-  PARAGRAPH_VARIANT_CONFIG,
-} from "./typography.types";
+import { PARAGRAPH_VARIANT_CONFIG, ParagraphVariantTag } from "./configs";
+import { ITypographyCommonProps } from "./typography.types";
+
+interface ITypographyParagraphProps extends ITypographyCommonProps {
+  tag: ParagraphVariantTag;
+}
 
 export const TypographyParagraph: FC<ITypographyParagraphProps> = ({
   tag,

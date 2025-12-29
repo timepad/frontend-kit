@@ -1,10 +1,12 @@
 import { FC } from "react";
 
 import { TypographyBase } from "./Typography";
-import {
-  ITypographyHeaderProps,
-  HEADER_VARIANT_CONFIG,
-} from "./typography.types";
+import { HEADER_VARIANT_CONFIG, HeaderVariantTag } from "./configs";
+import { ITypographyCommonProps } from "./typography.types";
+
+interface ITypographyHeaderProps extends ITypographyCommonProps {
+  tag: HeaderVariantTag;
+}
 
 export const TypographyHeader: FC<ITypographyHeaderProps> = ({
   tag,
