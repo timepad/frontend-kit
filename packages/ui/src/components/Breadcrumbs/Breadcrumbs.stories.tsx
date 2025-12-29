@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Breadcrumbs } from "./Breadcrumbs";
 import type { IBreadcrumbItem } from "./breadcrumbs.types";
-import { IconLineArrowRight16Outline } from "../../assets/icons";
 
 const defaultItems: IBreadcrumbItem[] = [
   { label: "Home", href: "/" },
@@ -54,15 +53,6 @@ Controls how the component behaves and renders.
         defaultValue: { summary: "default" },
       },
     },
-    separator: {
-      control: "text",
-      description:
-        "Separator displayed between breadcrumb items in `default` mode.",
-      table: {
-        type: { summary: "ReactNode" },
-        defaultValue: { summary: "undefined" },
-      },
-    },
     items: {
       control: false,
       description: "Breadcrumb items array. Configured per story.",
@@ -82,7 +72,6 @@ export const Basic: Story = {
   args: {
     type: "default",
     items: defaultItems,
-    separator: <IconLineArrowRight16Outline />,
   },
 };
 
@@ -93,7 +82,6 @@ export const LongTrail: Story = {
   args: {
     type: "default",
     items: longItems,
-    separator: <IconLineArrowRight16Outline />,
   },
 };
 
@@ -106,7 +94,7 @@ export const Backstep: Story = {
     type: "backstep",
     items: [
       {
-        label: "Back to events",
+        label: "Breadcrumb",
         onClick: () => {
           console.log("[Breadcrumbs] Backstep clicked");
         },

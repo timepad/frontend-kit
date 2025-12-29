@@ -4,11 +4,13 @@ import { classNames, component } from "@frontend-kit/utils";
 import "./breadcrumbs.less";
 import { IBreadcrumbItem, IBreadcrumbsProps } from "./breadcrumbs.types";
 import { Typography } from "../Typography";
-import { IconLineArrowLeft16Outline } from "../../assets/icons";
+import {
+  IconLineArrowLeft16Outline,
+  IconLineArrowRight16Outline,
+} from "../../assets/icons";
 
 export const Breadcrumbs: FC<IBreadcrumbsProps> = ({
   items,
-  separator,
   className,
   type = "default",
   ...rest
@@ -18,11 +20,15 @@ export const Breadcrumbs: FC<IBreadcrumbsProps> = ({
     className
   );
 
+  const itemClassName = component("breadcrumbs", "item")();
+
+  const separatorClassName = component("breadcrumbs", "separator")();
+
   return (
-    <div className={breadcrumbsClassName} {...rest}>
+    <nav className={breadcrumbsClassName} aria-label="Breadcrumbs" {...rest}>
       {type === "backstep" ? (
-        <div className={component("breadcrumbs", "item")()}>
-          <span className={component("breadcrumbs", "separator")()}>
+        <div className={itemClassName}>
+          <span className={separatorClassName} aria-hidden="true">
             <IconLineArrowLeft16Outline />
           </span>
           <BreadcrumbNode item={items[0]} isCurrent={!!items[0].isCurrent} />
@@ -34,12 +40,12 @@ export const Breadcrumbs: FC<IBreadcrumbsProps> = ({
             const isCurrent = item.isCurrent ?? isLast;
 
             return (
-              <div className={component("breadcrumbs", "item")()} key={index}>
+              <div className={itemClassName} key={index}>
                 <BreadcrumbNode item={item} isCurrent={isCurrent} />
 
-                {!isLast && separator && (
-                  <span className={component("breadcrumbs", "separator")()}>
-                    {separator}
+                {!isLast && (
+                  <span className={separatorClassName} aria-hidden="true">
+                    <IconLineArrowRight16Outline />
                   </span>
                 )}
               </div>
@@ -47,7 +53,7 @@ export const Breadcrumbs: FC<IBreadcrumbsProps> = ({
           })}
         </div>
       )}
-    </div>
+    </nav>
   );
 };
 
@@ -64,10 +70,10 @@ const BreadcrumbNode: FC<IBreadcrumbNodeProps> = ({ item, isCurrent }) => {
       className={component("breadcrumbs", "link")({ current: isCurrent })}
       href={href}
       onClick={onClick}
+      aria-current={isCurrent ? "page" : "false"}
     >
       <Typography.Caption
         tag="C1 REGULAR"
-        as="span"
         className={component("breadcrumbs", "link-text")()}
       >
         {label}

@@ -2,7 +2,7 @@ import {
   DetailedHTMLProps,
   HTMLAttributes,
   ReactNode,
-  SyntheticEvent,
+  MouseEvent,
 } from "react";
 
 export interface IBreadcrumbItem {
@@ -14,15 +14,13 @@ export interface IBreadcrumbItem {
    * When not set, the last item is treated as current if there is more than one item.
    */
   isCurrent?: boolean;
-  onClick?: (event: SyntheticEvent) => void;
+  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
 }
 
 export interface IBreadcrumbsProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   /** Ordered list of breadcrumb items. */
   items: IBreadcrumbItem[];
-  /** Custom separator between items. */
-  separator?: React.ReactNode;
   /**
    * Defines the visual and behavioral mode of the Breadcrumbs component.
    *
