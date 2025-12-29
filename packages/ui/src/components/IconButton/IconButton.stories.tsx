@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from "./Button";
-import { ButtonSize, ButtonVariant, IconPosition } from "./button.types";
+import { IconButton } from "./IconButton";
+import { IconButtonSize, IconButtonVariant } from "./icon-button.types";
 import {
   IconCross16Outline,
   IconCross24Outline,
@@ -20,15 +20,14 @@ const variantOptions = [
   "secondary",
   "negative",
   "disable",
-] as const satisfies ButtonVariant[];
+  "transparent",
+] as const satisfies IconButtonVariant[];
 
-const sizeOptions = ["m", "s"] as const satisfies ButtonSize[];
-
-const iconPositionOptions = ["left", "right"] as const satisfies IconPosition[];
+const sizeOptions = ["xs", "m", "s"] as const satisfies IconButtonSize[];
 
 const meta = {
-  title: "Components/Button",
-  component: Button,
+  title: "Components/IconButton",
+  component: IconButton,
   parameters: {
     layout: "centered",
   },
@@ -41,10 +40,6 @@ const meta = {
     size: {
       control: "select",
       options: sizeOptions,
-    },
-    iconPosition: {
-      control: "select",
-      options: iconPositionOptions,
     },
     icon: {
       control: "select",
@@ -79,42 +74,49 @@ const meta = {
       },
     },
   },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof IconButton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    label: "Primary",
     variant: "primary",
+    icon: <IconCross16Outline />,
   },
 };
 
 export const PrimaryAlternate: Story = {
   args: {
-    label: "Primary Alternate",
     variant: "primary-alternate",
+    icon: <IconCross16Outline />,
   },
 };
 
 export const Secondary: Story = {
   args: {
-    label: "Secondary",
     variant: "secondary",
+    icon: <IconCross16Outline />,
   },
 };
 
 export const Negative: Story = {
   args: {
-    label: "Negative",
     variant: "negative",
+    icon: <IconCross16Outline />,
   },
 };
 
 export const Disable: Story = {
   args: {
-    label: "Disable",
     variant: "disable",
+    icon: <IconCross16Outline />,
+  },
+};
+
+export const Transparent: Story = {
+  args: {
+    variant: "transparent",
+    icon: <IconCross16Outline />,
   },
 };
