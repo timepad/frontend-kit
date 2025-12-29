@@ -5,7 +5,8 @@
   "main": "src/index.ts",
   "types": "src/index.ts",
   "dependencies": {
-    "@frontend-kit/hooks": "1.0.0"
+    "@frontend-kit/hooks": "1.0.0",
+    "@frontend-kit/utils": "1.0.0"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^8.6.14",

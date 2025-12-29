@@ -1,3 +1,4 @@
 export { Button } from "./components/Button";
+export { Typography } from "./components/Typography";
 export * from "./assets/icons";
-export * from './P';
+export * from "./P";

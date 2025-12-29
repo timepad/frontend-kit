@@ -2,10 +2,16 @@
   "name": "@frontend-kit/utils",
   "version": "1.0.0",
   "type": "module",
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "sideEffects": false,
   "exports": {
     ".": "./src/index.ts",
     "./*": "./src/*.ts"
+  },
+  "dependencies": {
+    "@bem-react/classname": "^1.7.0",
+    "classnames": "^2.5.1"
   }
 }
