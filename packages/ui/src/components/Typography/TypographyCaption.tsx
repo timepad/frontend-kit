@@ -1,10 +1,12 @@
 import { FC } from "react";
 
 import { TypographyBase } from "./Typography";
-import {
-  ITypographyCaptionProps,
-  CAPTION_VARIANT_CONFIG,
-} from "./typography.types";
+import { CAPTION_VARIANT_CONFIG, CaptionVariantTag } from "./configs";
+import { ITypographyCommonProps } from "./typography.types";
+
+interface ITypographyCaptionProps extends ITypographyCommonProps {
+  tag: CaptionVariantTag;
+}
 
 export const TypographyCaption: FC<ITypographyCaptionProps> = ({
   tag,

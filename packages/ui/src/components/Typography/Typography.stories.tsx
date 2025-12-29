@@ -10,7 +10,7 @@ import {
   LeadVariantTag,
   PARAGRAPH_VARIANT_CONFIG,
   ParagraphVariantTag,
-} from "./typography.types";
+} from "./configs";
 
 const meta = {
   title: "Components/Typography",
@@ -240,6 +240,7 @@ export const TypographyLeadAllVariant: Story = {
       ))}
     </div>
   ),
+  tags: ["!autodocs"],
   args: {
     children: "",
     variant: "lead",
@@ -273,6 +274,7 @@ export const TypographyHeaderAllVariant: Story = {
       ))}
     </div>
   ),
+  tags: ["!autodocs"],
   args: {
     children: "",
     variant: "header",
@@ -306,6 +308,7 @@ export const TypographyParagraphAllVariant: Story = {
       ))}
     </div>
   ),
+  tags: ["!autodocs"],
   args: {
     children: "",
     variant: "paragraph",
@@ -339,6 +342,7 @@ export const TypographyCaptionAllVariant: Story = {
       ))}
     </div>
   ),
+  tags: ["!autodocs"],
   args: {
     children: "",
     variant: "caption",

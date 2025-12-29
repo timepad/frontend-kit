@@ -1,8 +1,10 @@
 @import "../../assets/tokens/index.less";
 
-.cbutton {
+.cicon-button {
   position: relative;
   display: inline-flex;
+  justify-content: center;
+  align-items: center;
   border: none;
   cursor: pointer;
   transition: transform 0.05s ease-out;
@@ -22,15 +24,6 @@
     position: relative;
     z-index: 1;
     display: inline-flex;
-    align-items: center;
-
-    &--icon-position-left {
-      flex-direction: row-reverse;
-    }
-  }
-
-  &__label {
-    color: inherit !important;
   }
 
   &__primary {
@@ -61,39 +54,49 @@
     transform: none;
   }
 
+  &__transparent {
+    background-color: transparent;
+    color: var(--icon-primary);
+  }
+
   &--size-m {
     height: 40px;
-    padding: var(--space-8) var(--space-12);
-    border-radius: var(--radius-10);
-
-    .cbutton__label {
-      padding: var(--space-2) var(--space-8);
-    }
+    width: 40px;
+    padding: var(--space-4);
+    border-radius: var(--radius-8);
   }
 
   &--size-s {
     height: 32px;
-    padding: var(--space-8) var(--space-10);
-    border-radius: var(--radius-8);
-
-    .cbutton__label {
-      padding: 0 var(--space-4);
-    }
+    width: 32px;
+    padding: var(--space-8);
+    border-radius: var(--radius-10);
   }
 
-  &:hover:not(.cbutton__disable):not(:disabled) {
-    .cbutton__hover-layer {
+  &--size-xs {
+    height: 24px;
+    width: 24px;
+    padding: var(--space-4);
+    border-radius: var(--radius-6);
+  }
+
+  &:hover:not(.cicon-button__disable):not(:disabled) {
+    .cicon-button__hover-layer {
       opacity: 1;
     }
   }
 
-  &:active:not(.cbutton__disable):not(:disabled) {
-    &.cbutton--size-m {
+  &:active:not(.cicon-button__disable):not(:disabled) {
+    &.cicon-button--size-m {
       transform: scaleY(0.95); // 40px → ~38px
     }
 
-    &.cbutton--size-s {
+    &.cicon-button--size-s {
       transform: scaleY(0.9375); // 32px → ~30px
+    }
+
+    &.cicon-button--size-xs {
+      transform: scaleY(0.917); // 24px → ~22px
     }
   }
 }
