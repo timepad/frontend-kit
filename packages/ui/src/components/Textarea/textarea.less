@@ -7,7 +7,7 @@
   color: var(--text-secondary);
 
   &__label {
-    display: inline-flex;
+    display: flex;
     color: inherit !important;
     column-gap: var(--space-4);
 
@@ -22,7 +22,6 @@
     &--required::after {
       content: "*";
       color: var(--text-negative);
-      font-weight: inherit;
     }
   }
 
@@ -49,7 +48,6 @@
       &::placeholder {
         color: var(--text-tertiary);
       }
-  
     }
 
     &--size-m {
@@ -66,7 +64,6 @@
   }
 
   &__caption {
-    display: inline-flex;
     color: inherit !important;
 
     &--error {

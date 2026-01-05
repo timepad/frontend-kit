@@ -1,4 +1,4 @@
-import { FocusEvent, forwardRef, useState } from "react";
+import { FocusEvent, forwardRef, useId, useState } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./textarea.less";
@@ -15,6 +15,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
       onFocus,
       onBlur,
       required,
+      id,
       value = "",
       resize = false,
       size = "m",
@@ -27,26 +28,28 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
   ) => {
     const [isFocused, setIsFocused] = useState(false);
 
-    const defaultDescription =
-      description || (maxSymbols ? `Не более ${maxSymbols} символов` : "");
+    const defaultId = useId();
 
-    const symbolsCount = `${value.length} / ${maxSymbols}`;
+    const textareaId = id ?? defaultId;
 
-    const caption =
-      error || (isFocused && maxSymbols ? symbolsCount : defaultDescription);
+    const valueLength = value.length;
 
-    const lengthError = maxSymbols ? value.length > maxSymbols : false;
+    const caption = error || description;
+
+    const lengthError = maxSymbols ? valueLength > maxSymbols : false;
 
     const isError = !!error || lengthError;
 
+    const captionId = caption ? `${textareaId}-caption` : undefined;
+
     const handleTextareaFocus = (event: FocusEvent<HTMLTextAreaElement>) => {
-      setIsFocused(true);
       onFocus?.(event);
+      if (!!maxSymbols) setIsFocused(true);
     };
 
     const handleTextareaBlur = (event: FocusEvent<HTMLTextAreaElement>) => {
-      setIsFocused(false);
       onBlur?.(event);
+      if (!!maxSymbols) setIsFocused(false);
     };
 
     const textareaClassName = classNames(component("textarea")(), className);
@@ -54,7 +57,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
     const labelClassName = component(
       "textarea",
       "label"
-    )({ error: isError, required: required && !disabled });
+    )({ error: isError, required: required });
 
     const fieldClassName = component(
       "textarea",
@@ -64,19 +67,23 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
     const captionClassName = component(
       "textarea",
       "caption"
-    )({ error: isError });
+    )({ error: !!error });
+
+    const symbolsCountClassName = component(
+      "textarea",
+      "caption"
+    )({ error: lengthError });
 
     return (
-      <label className={textareaClassName}>
-        <Typography.Paragraph
-          tag="P4 REGULAR"
-          as="span"
-          className={labelClassName}
-        >
-          {label}
-          {!required && disabled && <IconLock16Fill />}
-        </Typography.Paragraph>
+      <div className={textareaClassName}>
+        <label htmlFor={textareaId}>
+          <Typography.Paragraph tag="P4 REGULAR" className={labelClassName}>
+            {label}
+            {disabled && <IconLock16Fill />}
+          </Typography.Paragraph>
+        </label>
         <textarea
+          id={textareaId}
           className={fieldClassName}
           ref={ref}
           value={value}
@@ -84,14 +91,30 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
           required={required}
           onFocus={handleTextareaFocus}
           onBlur={handleTextareaBlur}
+          aria-invalid={isError || undefined}
+          aria-describedby={captionId}
           {...rest}
         />
         {caption && (
-          <Typography.Caption tag="C1 REGULAR" className={captionClassName}>
+          <Typography.Caption
+            id={captionId}
+            tag="C1 REGULAR"
+            className={captionClassName}
+          >
             {caption}
           </Typography.Caption>
         )}
-      </label>
+        {maxSymbols > 0 && (
+          <Typography.Caption
+            tag="C1 REGULAR"
+            className={symbolsCountClassName}
+          >
+            {isFocused || valueLength > 0
+              ? `${valueLength} / ${maxSymbols}`
+              : `Не более ${maxSymbols} символов`}
+          </Typography.Caption>
+        )}
+      </div>
     );
   }
 );
