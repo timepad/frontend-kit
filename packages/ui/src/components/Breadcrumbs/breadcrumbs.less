@@ -1,0 +1,44 @@
+@import "../../assets/tokens/index.less";
+
+.cbreadcrumbs {
+  display: flex;
+  
+  &__list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    column-gap: var(--space-2);
+  }
+
+  &__separator {
+    display: inline-flex;
+    color: var(--text-link-secondary);
+  }
+
+  &__link {
+    color: var(--text-link-secondary);
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover:not(.cbreadcrumbs__link--current) {
+      text-decoration: underline;
+      text-decoration-color: var(--text-link-secondary);
+    }
+
+    &--current {
+      cursor: default;
+      color: var(--text-primary);
+      pointer-events: none;
+    }
+  }
+
+  &__link-text {
+    color: inherit !important;
+  }
+}
