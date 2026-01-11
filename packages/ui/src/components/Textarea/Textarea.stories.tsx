@@ -8,6 +8,9 @@ const meta: Meta<typeof Textarea> = {
   title: "Components/Textarea",
   component: Textarea,
   tags: ["autodocs"],
+  parameters: {
+    layout: "centered",
+  },
   argTypes: {
     label: {
       control: "text",
