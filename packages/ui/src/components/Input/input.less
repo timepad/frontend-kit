@@ -1,14 +1,13 @@
 @import "../../assets/tokens/index.less";
 
 .cinput {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   row-gap: var(--space-4);
-  color: var(--text-secondary);
 
   &__label {
-    display: inline-flex;
-    color: inherit !important;
+    display: flex;
+    color: var(--text-secondary) !important;
     column-gap: var(--space-4);
 
     svg {
@@ -22,13 +21,12 @@
     &--required::after {
       content: "*";
       color: var(--text-negative);
-      font-weight: inherit;
     }
   }
 
   &__caption {
-    display: inline-flex;
-    color: inherit !important;
+    display: flex;
+    color: var(--text-secondary) !important;
 
     &--error {
       color: var(--text-negative) !important;
@@ -65,28 +63,21 @@
     }
   }
 
-  &__icon {
-    display: inline-flex;
-    padding: 4px;
-    position: absolute;
-    top: 50%;
+  &__action-icon {
+    position: absolute !important;
     right: 0;
+    top: 50%;
     transform: translateY(-50%);
-    color: var(--icon-tertiary);
+    color: var(--icon-tertiary) !important;
   }
 
-  &--error {
-    color: var(--text-negative);
-
-    svg {
-      color: var(--accent-negative);
-    }
-  }
-
-  //TODO удалить потом, временно когда заменим на IconButton
-  button {
-    cursor: pointer;
-    border: 0;
-    background: none;
+  &__error-icon {
+    display: inline-flex;
+    position: absolute !important;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 4px;
+    color: var(--accent-negative) !important;
   }
 }

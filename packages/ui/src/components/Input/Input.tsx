@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useId } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./input.less";
@@ -10,6 +10,7 @@ import {
   IconCross24Outline,
   IconCopy24Fill,
 } from "../../assets/icons";
+import { IconButton } from "../IconButton";
 
 export const Input = forwardRef<HTMLInputElement, IInputProps>(
   (
@@ -22,83 +23,110 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
       value,
       onClearField,
       required,
+      id,
       ...rest
     },
     ref
   ) => {
+    const defaultId = useId();
+
+    const inputId = id ?? defaultId;
+
     const hasError = !!error;
+    const hasValue = !!value;
 
     const showErrorIcon = !disabled && hasError;
-    const showCopyBtn = !showErrorIcon && disabled && !!value;
+    const showCopyBtn = disabled && hasValue && !showErrorIcon;
     const showClearBtn =
-      !showErrorIcon && !disabled && !!value && !!onClearField;
+      !disabled && hasValue && !!onClearField && !showErrorIcon;
 
     const caption = error || description;
 
+    const captionId = caption ? `${inputId}-caption` : undefined;
+
     const handleCopyTextToClipboard = async () => {
-      await navigator.clipboard.writeText(value as string);
+      try {
+        await navigator.clipboard?.writeText?.(value);
+      } catch {}
     };
 
-    const inputClassName = classNames(
-      component("input")({ error: hasError }),
-      className
-    );
+    const inputClassName = classNames(component("input")(), className);
 
     const labelClassName = component(
       "input",
       "label"
-    )({ error: hasError, required: required && !disabled });
+    )({ error: hasError, required: required });
 
-    const captionClassName = component("input", "label")({ error: hasError });
+    const fieldContainerClassName = component("input", "field-container")();
 
-    const inputIconClassName = component("input", "icon")({ error: hasError });
+    const fieldClassName = component("input", "field")();
+
+    const errorIconClassName = component("input", "error-icon")();
+
+    const actionIconClassName = component("input", "action-icon")();
+
+    const captionClassName = component("input", "caption")({ error: hasError });
 
     return (
-      <label className={inputClassName}>
-        <Typography.Paragraph
-          tag="P4 REGULAR"
-          as="span"
-          className={labelClassName}
-        >
-          {label}
-          {!required && disabled && <IconLock16Fill />}
-        </Typography.Paragraph>
+      <div className={inputClassName}>
+        <label htmlFor={inputId}>
+          <Typography.Paragraph tag="P4 REGULAR" className={labelClassName}>
+            {label}
+            {disabled && <IconLock16Fill />}
+          </Typography.Paragraph>
+        </label>
 
-        <div className={component("input", "field-container")()}>
+        <div className={fieldContainerClassName}>
           <input
-            className={component("input", "field")()}
+            className={fieldClassName}
             ref={ref}
+            id={inputId}
             value={value}
             disabled={disabled}
+            required={required}
+            aria-invalid={hasError || undefined}
+            aria-describedby={captionId}
             {...rest}
           />
           {showErrorIcon && (
-            <span className={inputIconClassName}>
+            <span className={errorIconClassName} aria-hidden="true">
               <IconWarningCircle24Fill />
             </span>
           )}
-          {/*TODO Заменить на IconButton */}
           {showCopyBtn && (
-            <button
+            <IconButton
+              className={actionIconClassName}
               onClick={handleCopyTextToClipboard}
-              className={inputIconClassName}
-            >
-              <IconCopy24Fill />
-            </button>
+              icon={<IconCopy24Fill />}
+              variant="transparent"
+              size="s"
+              aria-label="Copy"
+              title="Копировать"
+            />
           )}
           {showClearBtn && (
-            <button onClick={onClearField} className={inputIconClassName}>
-              <IconCross24Outline />
-            </button>
+            <IconButton
+              className={actionIconClassName}
+              onClick={onClearField}
+              icon={<IconCross24Outline />}
+              variant="transparent"
+              size="s"
+              aria-label="Clear"
+              title="Очистить"
+            />
           )}
         </div>
 
         {caption && (
-          <Typography.Caption tag="C1 REGULAR" className={captionClassName}>
+          <Typography.Caption
+            tag="C1 REGULAR"
+            className={captionClassName}
+            id={captionId}
+          >
             {caption}
           </Typography.Caption>
         )}
-      </label>
+      </div>
     );
   }
 );
