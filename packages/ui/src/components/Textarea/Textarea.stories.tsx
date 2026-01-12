@@ -33,6 +33,9 @@ const meta: Meta<typeof Textarea> = {
     size: {
       control: "inline-radio",
     },
+    onChange: { action: "change" },
+    onFocus: { action: "focus" },
+    onBlur: { action: "blur" },
   },
 };
 
