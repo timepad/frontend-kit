@@ -12,6 +12,18 @@ const meta: Meta<typeof Input> = {
     layout: "centered",
   },
   argTypes: {
+    label: {
+      control: "text",
+    },
+    placeholder: {
+      control: "text",
+    },
+    description: {
+      control: "text",
+    },
+    error: {
+      control: "text",
+    },
     onChange: { action: "change" },
     onFocus: { action: "focus" },
     onBlur: { action: "blur" },
