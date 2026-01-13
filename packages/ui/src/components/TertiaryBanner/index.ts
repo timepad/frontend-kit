@@ -1,0 +1,1 @@
+export { TertiaryBanner } from "./TertiaryBanner";
