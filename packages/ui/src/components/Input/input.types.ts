@@ -1,3 +1,4 @@
+import { InputHTMLAttributes, MouseEvent, ReactNode } from "react";
 // input.types.ts
 import type { InputHTMLAttributes } from "react";
 
@@ -9,6 +10,12 @@ export type ValidationContext = {
 
 export type ValidateOn = "change" | "blur" | "touched";
 
+export interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  value: string;
+  label: ReactNode;
+  onClearField?: (event: MouseEvent<HTMLButtonElement>) => void;
+  error?: ReactNode;
+  description?: ReactNode;
 export interface IInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "value"> {
   value?: string;
   label?: string;

@@ -1,7 +1,12 @@
 import { FC } from "react";
 
 import { TypographyBase } from "./Typography";
-import { ITypographyLeadProps, LEAD_VARIANT_CONFIG } from "./typography.types";
+import { LEAD_VARIANT_CONFIG, LeadVariantTag } from "./configs";
+import { ITypographyCommonProps } from "./typography.types";
+
+interface ITypographyLeadProps extends ITypographyCommonProps {
+  tag: LeadVariantTag;
+}
 
 export const TypographyLead: FC<ITypographyLeadProps> = ({
   tag,

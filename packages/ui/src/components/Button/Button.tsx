@@ -1,37 +1,85 @@
-import React from "react";
-import "./button.less";
+import { FC, ReactNode } from "react";
+import { classNames, component } from "@frontend-kit/utils";
 
-export interface ButtonProps {
-  /**
-   * Button label
-   */
-  label: string;
-  /**
-   * Click handler
-   */
-  onClick?: () => void;
-  /**
-   * Button variant
-   */
-  variant?: "primary" | "secondary";
-  /**
-   * Disabled state
-   */
-  disabled?: boolean;
+import "./button.less";
+import { ButtonVariant, IButtonProps } from "./button.types";
+import { Typography } from "../Typography";
+
+export const Button: FC<IButtonProps> = ({
+  size = "m",
+  variant = "primary",
+  icon,
+  iconPosition = "left",
+  label,
+  className,
+  disabled,
+  type = "button",
+  ...rest
+}) => {
+  const isDisabled = !!disabled || variant === "disable";
+  const btnVariant: ButtonVariant = isDisabled ? "disable" : variant;
+  const hasIcon = !!icon;
+
+  const buttonClassName = classNames(
+    // button variant: cbutton__primary
+    component("button", btnVariant)(),
+    // button size: cbutton cbutton--size-m
+    component("button")({
+      [`size-${size}`]: true,
+    }),
+    className
+  );
+
+  return (
+    <button
+      className={buttonClassName}
+      type={type}
+      disabled={isDisabled}
+      {...rest}
+    >
+      <div className={component("button", "hover-layer")()} />
+
+      <div
+        className={component(
+          "button",
+          "content"
+        )({ "icon-position-left": hasIcon && iconPosition === "left" })}
+      >
+        <ButtonLabel size={size}>{label}</ButtonLabel>
+
+        {hasIcon && icon}
+      </div>
+    </button>
+  );
+};
+
+interface IButtonLabelProps {
+  size: IButtonProps["size"];
+  children: ReactNode;
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  label,
-  onClick,
-  variant = "primary",
-  disabled = false,
-}) => {
-  const className = `button button--variant-${variant} ${
-    disabled ? "button--disabled" : ""
-  }`;
+const ButtonLabel: FC<IButtonLabelProps> = ({ size, children }) => {
+  const buttonLabelClassName = component("button", "label")();
+
+  if (size === "m") {
+    return (
+      <Typography.Paragraph
+        tag="P4 BOLD"
+        as="span"
+        className={buttonLabelClassName}
+      >
+        {children}
+      </Typography.Paragraph>
+    );
+  }
+
   return (
-    <button onClick={onClick} disabled={disabled} className={className}>
-      {label}
-    </button>
+    <Typography.Caption
+      tag="C1 BOLD"
+      as="span"
+      className={buttonLabelClassName}
+    >
+      {children}
+    </Typography.Caption>
   );
 };

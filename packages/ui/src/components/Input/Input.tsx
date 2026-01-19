@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, useState } from "react";
+import { forwardRef, useMemo, useState, useId } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./input.less";
@@ -11,6 +11,7 @@ import {
   IconCopy24Fill,
 } from "../../assets/icons";
 import { useMaskedInput } from "./useMaskedInput";
+import { IconButton } from "../IconButton";
 
 export const Input = forwardRef<HTMLInputElement, IInputProps>(
   (
@@ -34,10 +35,15 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
       onBlur,
       onChange,
 
+      id,
       ...rest
     },
     ref
   ) => {
+    const defaultId = useId();
+
+    const inputId = id ?? defaultId;
+
     const [touched, setTouched] = useState(false);
     const [blurred, setBlurred] = useState(false);
 
@@ -94,35 +100,47 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
 
     const finalError = error ?? validationError ?? "";
     const hasError = !!finalError;
+    const hasValue = !!value;
 
     const showErrorIcon = !disabled && hasError;
-    const showCopyBtn = !showErrorIcon && disabled && !!value;
+    const showCopyBtn = disabled && hasValue && !showErrorIcon;
 
     // показываем clear:
     // - если есть маска: чистим через clear()
     // - если нет маски: через onClearField
-    const canClear = !showErrorIcon && !disabled && !!value;
-    const showClearBtn = canClear && (hasMask || !!onClearField);
+    const canClear = !disabled && hasValue;
+    const showClearBtn = canClear && (hasMask || !!onClearField) && !showErrorIcon;
 
     const caption = finalError || description;
 
+    const captionId = caption ? `${inputId}-caption` : undefined;
+
     const handleCopyTextToClipboard = async () => {
-      await navigator.clipboard.writeText(String(value ?? ""));
+      try {
+        await navigator.clipboard?.writeText?.(value);
+      } catch {}
     };
 
-    const inputClassName = classNames(
-      component("input")({ error: hasError }),
-      className
-    );
+    const inputClassName = classNames(component("input")(), className);
 
     const labelClassName = component("input", "label")({
       error: hasError,
       required: required && !disabled,
     });
+    const labelClassName = component(
+      "input",
+      "label"
+    )({ error: hasError, required: required });
 
-    const captionClassName = component("input", "label")({ error: hasError });
+    const fieldContainerClassName = component("input", "field-container")();
 
-    const inputIconClassName = component("input", "icon")({ error: hasError });
+    const fieldClassName = component("input", "field")();
+
+    const errorIconClassName = component("input", "error-icon")();
+
+    const actionIconClassName = component("input", "action-icon")();
+
+    const captionClassName = component("input", "caption")({ error: hasError });
 
     const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
       setBlurred(true);
@@ -145,26 +163,32 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
     };
 
     return (
-      <label className={inputClassName}>
-        <Typography.Paragraph tag="P4 REGULAR" as="span" className={labelClassName}>
-          {label}
-          {!required && disabled && <IconLock16Fill />}
-        </Typography.Paragraph>
+      <div className={inputClassName}>
+        <label htmlFor={inputId}>
+          <Typography.Paragraph tag="P4 REGULAR" className={labelClassName}>
+            {label}
+            {disabled && <IconLock16Fill />}
+          </Typography.Paragraph>
+        </label>
 
-        <div className={component("input", "field-container")()}>
+        <div className={fieldContainerClassName}>
           <input
-            className={component("input", "field")()}
+            className={fieldClassName}
             ref={(node) => {
               if (typeof ref === "function") ref(node);
               else if (ref) (ref as any).current = node;
               inputRef.current = node;
             }}
+            id={inputId}
             value={hasMask ? maskedValue : value}
             disabled={disabled}
             onBlur={handleBlur}
             onChange={hasMask ? onChangeMasked : handleChange}
             onKeyDown={hasMask ? onKeyDown : rest.onKeyDown}
             placeholder={hasMask ? mask : rest.placeholder}
+            required={required}
+            aria-invalid={hasError || undefined}
+            aria-describedby={captionId}
             {...rest}
           />
 
@@ -186,34 +210,46 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
           )}
 
           {showErrorIcon && (
-            <span className={inputIconClassName}>
+            <span className={errorIconClassName} aria-hidden="true">
               <IconWarningCircle24Fill />
             </span>
           )}
-
           {showCopyBtn && (
-            <button
+            <IconButton
+              className={actionIconClassName}
               onClick={handleCopyTextToClipboard}
-              className={inputIconClassName}
+              icon={<IconCopy24Fill />}
               type="button"
-            >
-              <IconCopy24Fill />
-            </button>
+              variant="transparent"
+              size="s"
+              aria-label="Copy"
+              title="Копировать"
+            />
           )}
 
           {showClearBtn && (
-            <button onClick={handleClear} className={inputIconClassName} type="button">
-              <IconCross24Outline />
-            </button>
+            <IconButton
+              className={actionIconClassName}
+              onClick={onClearField}
+              icon={<IconCross24Outline />}
+              variant="transparent"
+              size="s"
+              aria-label="Clear"
+              title="Очистить"
+            />
           )}
         </div>
 
         {caption && (
-          <Typography.Caption tag="C1 REGULAR" className={captionClassName}>
+          <Typography.Caption
+            tag="C1 REGULAR"
+            className={captionClassName}
+            id={captionId}
+          >
             {caption}
           </Typography.Caption>
         )}
-      </label>
+      </div>
     );
   }
 );

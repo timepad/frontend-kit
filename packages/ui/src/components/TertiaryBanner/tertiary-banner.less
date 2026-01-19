@@ -1,0 +1,64 @@
+.ctertiary-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-10);
+  padding: var(--space-8) var(--space-10);
+  border-radius: var(--radius-10);
+
+  &__icon-container {
+    position: relative;
+    width: 16px;
+    height: 16px;
+  }
+
+  &__icon {
+    display: inline-flex;
+    position: absolute;
+    top: -4px;
+    left: -4px;
+  }
+
+  &__text {
+    color: inherit !important;
+  }
+
+  &--base {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+
+    .ctertiary-banner__icon {
+      &--info {
+        color: var(--dark-purple);
+      }
+      &--success {
+        color: var(--dark-green);
+      }
+      &--warning {
+        color: var(--dark-yellow);
+      }
+      &--error {
+        color: var(--dark-red);
+      }
+    }
+  }
+
+  &--inverted {
+    background-color: var(--bg-inverted);
+    color: var(--text-inverted);
+
+    .ctertiary-banner__icon {
+      &--info {
+        color: var(--normal-purple);
+      }
+      &--success {
+        color: var(--light-green);
+      }
+      &--warning {
+        color: var(--light-yellow);
+      }
+      &--error {
+        color: var(--light-red);
+      }
+    }
+  }
+}
