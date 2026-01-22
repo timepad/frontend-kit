@@ -55,7 +55,7 @@ Controls the visual style and semantic meaning of the button.
 - **primary-alternate** — Inverse primary variant (for dark backgrounds).
 - **secondary** — Neutral, supporting actions.
 - **negative** — Destructive actions (delete, remove, cancel).
-- **disable** — Visually disabled style (design-only).
+- **disable** — Visually disabled, non-interactive state.
       `,
       control: "select",
       options: variantOptions,
@@ -124,6 +124,9 @@ In Storybook this prop is mapped from string options to real icons.
         Lock16Outline: <IconLock16Outline />,
         Lock24Outline: <IconLock24Outline />,
         Lock32Outline: <IconLock32Outline />,
+      },
+      table: {
+        type: { summary: "ReactElement<SVG>" },
       },
     },
     type: {

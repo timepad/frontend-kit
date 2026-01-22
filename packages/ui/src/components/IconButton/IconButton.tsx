@@ -11,6 +11,8 @@ export const IconButton: FC<IIconButtonProps> = ({
   className,
   disabled,
   type = "button",
+  ariaLabel,
+  ariaLabelledby,
   ...rest
 }) => {
   const isDisabled = !!disabled || variant === "disable";
@@ -23,7 +25,7 @@ export const IconButton: FC<IIconButtonProps> = ({
     component("icon-button")({
       [`size-${size}`]: true,
     }),
-    className
+    className,
   );
 
   return (
@@ -31,11 +33,21 @@ export const IconButton: FC<IIconButtonProps> = ({
       className={iconButtonClassName}
       type={type}
       disabled={isDisabled}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledby}
       {...rest}
     >
-      <div className={component("icon-button", "hover-layer")()} />
+      <span
+        aria-hidden="true"
+        className={component("icon-button", "hover-layer")()}
+      />
 
-      <div className={component("icon-button", "content")()}>{icon}</div>
+      <span
+        aria-hidden="true"
+        className={component("icon-button", "content")()}
+      >
+        {icon}
+      </span>
     </button>
   );
 };

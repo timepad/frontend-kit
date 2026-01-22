@@ -27,7 +27,7 @@ export const Button: FC<IButtonProps> = ({
     component("button")({
       [`size-${size}`]: true,
     }),
-    className
+    className,
   );
 
   return (
@@ -37,18 +37,25 @@ export const Button: FC<IButtonProps> = ({
       disabled={isDisabled}
       {...rest}
     >
-      <div className={component("button", "hover-layer")()} />
+      <span
+        aria-hidden="true"
+        className={component("button", "hover-layer")()}
+      />
 
-      <div
+      <span
         className={component(
           "button",
-          "content"
+          "content",
         )({ "icon-position-left": hasIcon && iconPosition === "left" })}
       >
         <ButtonLabel size={size}>{label}</ButtonLabel>
 
-        {hasIcon && icon}
-      </div>
+        {hasIcon && (
+          <span aria-hidden="true" className={component("button", "icon")()}>
+            {icon}
+          </span>
+        )}
+      </span>
     </button>
   );
 };
