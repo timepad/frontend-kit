@@ -31,24 +31,78 @@ const meta = {
   component: Button,
   parameters: {
     layout: "centered",
+    docs: {
+      codePanel: true,
+    },
   },
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <div style={{ width: 340 }}>
+        <Story />
+      </div>
+    ),
+  ],
+  args: {
+    style: { width: "100%" },
+  },
   argTypes: {
     variant: {
+      description: `
+Controls the visual style and semantic meaning of the button.
+
+- **primary** — Main action, highest emphasis.
+- **primary-alternate** — Inverse primary variant (for dark backgrounds).
+- **secondary** — Neutral, supporting actions.
+- **negative** — Destructive actions (delete, remove, cancel).
+- **disable** — Visually disabled style (design-only).
+      `,
       control: "select",
       options: variantOptions,
+      table: {
+        type: { summary: variantOptions.join(" | ") },
+        defaultValue: { summary: "primary" },
+      },
     },
     size: {
+      description: `
+Controls button size.
+
+- **s** — Compact button with reduced padding.
+- **m** — Default button size.
+      `,
       control: "select",
       options: sizeOptions,
+      table: {
+        type: { summary: sizeOptions.join(" | ") },
+        defaultValue: { summary: "m" },
+      },
     },
     iconPosition: {
+      description: `
+Controls where the icon is placed relative to the label.
+
+- **left** — Icon appears before the text.
+- **right** — Icon appears after the text.
+      `,
       control: "select",
       options: iconPositionOptions,
+      table: {
+        type: { summary: iconPositionOptions.join(" | ") },
+        defaultValue: { summary: "left" },
+      },
     },
     icon: {
+      description: `
+Optional icon displayed inside the button.
+
+⚠️ Storybook-only control:
+Internally the component expects a React SVG element.
+In Storybook this prop is mapped from string options to real icons.
+      `,
       control: "select",
       options: [
+        "None",
         "Cross16Outline",
         "Cross24Outline",
         "Cross32Outline",
@@ -58,9 +112,9 @@ const meta = {
         "Lock16Outline",
         "Lock24Outline",
         "Lock32Outline",
-        "None",
       ],
       mapping: {
+        None: undefined,
         Cross16Outline: <IconCross16Outline />,
         Cross24Outline: <IconCross24Outline />,
         Cross32Outline: <IconCross32Outline />,
@@ -70,10 +124,14 @@ const meta = {
         Lock16Outline: <IconLock16Outline />,
         Lock24Outline: <IconLock24Outline />,
         Lock32Outline: <IconLock32Outline />,
-        None: undefined,
       },
     },
     type: {
+      table: {
+        disable: true,
+      },
+    },
+    style: {
       table: {
         disable: true,
       },
