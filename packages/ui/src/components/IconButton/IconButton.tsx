@@ -28,6 +28,10 @@ export const IconButton: FC<IIconButtonProps> = ({
     className,
   );
 
+  const hoverLayerClassName = component("icon-button", "hover-layer")();
+
+  const contentClassName = component("icon-button", "content")();
+
   return (
     <button
       className={iconButtonClassName}
@@ -37,15 +41,9 @@ export const IconButton: FC<IIconButtonProps> = ({
       aria-labelledby={ariaLabelledby}
       {...rest}
     >
-      <span
-        aria-hidden="true"
-        className={component("icon-button", "hover-layer")()}
-      />
+      <span aria-hidden="true" className={hoverLayerClassName} />
 
-      <span
-        aria-hidden="true"
-        className={component("icon-button", "content")()}
-      >
+      <span aria-hidden="true" className={contentClassName}>
         {icon}
       </span>
     </button>

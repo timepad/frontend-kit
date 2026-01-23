@@ -38,14 +38,14 @@ const meta = {
   argTypes: {
     variant: {
       description: `
-Controls the visual style and semantic meaning of the IconButton.
+Управляет визуальным стилем и семантическим значением IconButton.
 
-- **primary** — Main action, high emphasis.
-- **primary-alternate** — Inverse primary variant (for dark backgrounds).
-- **secondary** — Neutral, lower emphasis.
-- **negative** — Destructive actions (delete, remove, cancel).
-- **disable** — Visually disabled, non-interactive state.
-- **transparent** — Minimal background-less button for subtle inline actions; visually integrated with surrounding content.
+- **primary** — основное действие, высокий приоритет.
+- **primary-alternate** — инверсный primary (для тёмных фонов).
+- **secondary** — нейтральный вариант с меньшим акцентом.
+- **negative** — деструктивные действия (удаление, отмена).
+- **disable** — визуально отключённое, неинтерактивное состояние.
+- **transparent** — минималистичная кнопка без фона для встроенных действий.
       `,
       control: "select",
       options: variantOptions,
@@ -56,11 +56,11 @@ Controls the visual style and semantic meaning of the IconButton.
     },
     size: {
       description: `
-Controls the size of the IconButton.
+Управляет размером IconButton.
 
-- **xs** — Ultra-compact button for dense UI (toolbars, inline chrome, tight layouts).
-- **s** — Compact button.
-- **m** — Default button size.
+- **xs** — ультракомпактная кнопка для плотных интерфейсов (тулбары, inline-элементы).
+- **s** — компактная кнопка.
+- **m** — размер по умолчанию.
       `,
       control: "select",
       options: sizeOptions,
@@ -71,12 +71,12 @@ Controls the size of the IconButton.
     },
     icon: {
       description: `
-Icon element rendered inside the button.
+Иконка, отображаемая внутри кнопки.
 
-⚠️ Storybook-only control:
-Internally the component expects a React SVG element.
-In Storybook this prop is mapped from string options to real icons.
-      `,
+⚠️ Контрол только для Storybook:
+В самом компоненте ожидается SVG React-элемент.
+В Storybook значение маппится из строковых опций в реальные иконки.
+      f lj,`,
       control: "select",
       options: [
         "Cross16Outline",
@@ -104,6 +104,45 @@ In Storybook this prop is mapped from string options to real icons.
         type: { summary: "ReactElement<SVG>" },
       },
     },
+    ariaLabel: {
+      description: `
+Доступное имя кнопки для скринридеров.
+
+Используется для **icon-only** кнопок, у которых нет видимого текста.
+
+Пример:
+\`\`\`tsx
+<IconButton ariaLabel="Закрыть диалог" />
+\`\`\`
+
+⚠️ Нельзя использовать одновременно с \`ariaLabelledby\`.
+    `,
+      control: "text",
+      table: {
+        type: { summary: "string" },
+      },
+    },
+
+    ariaLabelledby: {
+      description: `
+Ссылка на \`id\` DOM-элемента с текстом, который должен быть озвучен скринридером.
+
+Используется, когда подходящий текст **уже есть в интерфейсе**.
+
+Пример:
+\`\`\`tsx
+<h2 id="dialog-title">Настройки</h2>
+<IconButton ariaLabelledby="dialog-title" />
+\`\`\`
+
+⚠️ В Storybook контрол отключён, так как требует реального элемента в DOM.
+⚠️ Нельзя использовать одновременно с \`ariaLabel\`.
+    `,
+      control: false,
+      table: {
+        type: { summary: "string (id элемента)" },
+      },
+    },
     type: {
       table: {
         disable: true,
@@ -119,7 +158,7 @@ export const Primary: Story = {
   args: {
     variant: "primary",
     icon: <IconCross16Outline />,
-    ariaLabel: "Close btn"
+    ariaLabel: "Close btn",
   },
 };
 
@@ -127,7 +166,7 @@ export const PrimaryAlternate: Story = {
   args: {
     variant: "primary-alternate",
     icon: <IconCross16Outline />,
-    ariaLabel: "Close btn"
+    ariaLabel: "Close btn",
   },
 };
 
@@ -135,7 +174,7 @@ export const Secondary: Story = {
   args: {
     variant: "secondary",
     icon: <IconCross16Outline />,
-    ariaLabel: "Close btn"
+    ariaLabel: "Close btn",
   },
 };
 
@@ -143,7 +182,7 @@ export const Negative: Story = {
   args: {
     variant: "negative",
     icon: <IconCross16Outline />,
-    ariaLabel: "Close btn"
+    ariaLabel: "Close btn",
   },
 };
 
@@ -151,7 +190,7 @@ export const Disable: Story = {
   args: {
     variant: "disable",
     icon: <IconCross16Outline />,
-    ariaLabel: "Close btn"
+    ariaLabel: "Close btn",
   },
 };
 
@@ -159,6 +198,6 @@ export const Transparent: Story = {
   args: {
     variant: "transparent",
     icon: <IconCross16Outline />,
-    ariaLabelledby: "Close btn"
+    ariaLabelledby: "Close btn",
   },
 };
