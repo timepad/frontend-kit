@@ -49,13 +49,13 @@ const meta = {
   argTypes: {
     variant: {
       description: `
-Controls the visual style and semantic meaning of the button.
+Управляет визуальным стилем и семантикой кнопки.
 
-- **primary** — Main action, highest emphasis.
-- **primary-alternate** — Inverse primary variant (for dark backgrounds).
-- **secondary** — Neutral, supporting actions.
-- **negative** — Destructive actions (delete, remove, cancel).
-- **disable** — Visually disabled, non-interactive state.
+- **primary** — Основное действие, максимальный акцент.
+- **primary-alternate** — Инверсная primary (обычно для тёмных фонов).
+- **secondary** — Нейтральная кнопка для второстепенных действий.
+- **negative** — Деструктивные действия (удалить, отменить, снять).
+- **disable** — Визуально “выключенное”, неинтерактивное состояние.
       `,
       control: "select",
       options: variantOptions,
@@ -66,10 +66,10 @@ Controls the visual style and semantic meaning of the button.
     },
     size: {
       description: `
-Controls button size.
+Управляет размером кнопки.
 
-- **s** — Compact button with reduced padding.
-- **m** — Default button size.
+- **s** — Компактная кнопка с уменьшенными отступами.
+- **m** — Размер по умолчанию.
       `,
       control: "select",
       options: sizeOptions,
@@ -80,10 +80,10 @@ Controls button size.
     },
     iconPosition: {
       description: `
-Controls where the icon is placed relative to the label.
+Управляет расположением иконки относительно текста.
 
-- **left** — Icon appears before the text.
-- **right** — Icon appears after the text.
+- **left** — Иконка перед текстом.
+- **right** — Иконка после текста.
       `,
       control: "select",
       options: iconPositionOptions,
@@ -94,11 +94,11 @@ Controls where the icon is placed relative to the label.
     },
     icon: {
       description: `
-Optional icon displayed inside the button.
+Необязательная иконка внутри кнопки.
 
-⚠️ Storybook-only control:
-Internally the component expects a React SVG element.
-In Storybook this prop is mapped from string options to real icons.
+⚠️ Управление только для Storybook:
+Компонент ожидает React-элемент SVG.
+В Storybook это поле маппится из строковых опций в реальные иконки.
       `,
       control: "select",
       options: [
