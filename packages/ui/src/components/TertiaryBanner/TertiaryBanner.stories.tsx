@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { TertiaryBanner } from "./TertiaryBanner";
-import { Modifier } from "./tertiary-banner.types";
+import { Appearance } from "./tertiary-banner.types";
 
-const modifierOptions = ["base", "inverted"] as const satisfies Modifier[];
+const modifierOptions = ["base", "inverted"] as const satisfies Appearance[];
 
 const meta = {
   title: "Components/TertiaryBanner",
@@ -23,12 +23,12 @@ const meta = {
   ],
   tags: ["autodocs"],
   argTypes: {
-    modifier: {
+    appearance: {
       description: `
-Theme modifier of the banner.
+Модификатор темы баннера.
 
-- **base** — default (light) style
-- **inverted** — inverted (dark) style for dark backgrounds
+- **base** — базовый (светлый) стиль
+- **inverted** — инвертированный (тёмный) стиль для тёмных фонов
       `,
       control: "select",
       options: modifierOptions,
@@ -39,7 +39,7 @@ Theme modifier of the banner.
     },
     children: {
       description:
-        "Text content of the banner (rendered as Typography.Caption, C1 REGULAR). Keep it short and clear.",
+        "Текстовое содержимое баннера (рендерится через Typography.Caption, C1 REGULAR). Рекомендуется использовать короткие и понятные сообщения.",
       control: "text",
       table: {
         type: { summary: "ReactNode" },
@@ -63,48 +63,48 @@ type Story = StoryObj<typeof meta>;
 
 export const Info: Story = {
   render: (args) => (
-    <TertiaryBanner.Info modifier={args.modifier}>
+    <TertiaryBanner.Info appearance={args.appearance}>
       {args.children}
     </TertiaryBanner.Info>
   ),
   args: {
-    modifier: "base",
+    appearance: "base",
     children: "Какое-то сообщение. Рекомендуемый размер две-три строки.",
   },
 };
 
 export const Warning: Story = {
   render: (args) => (
-    <TertiaryBanner.Warning modifier={args.modifier}>
+    <TertiaryBanner.Warning appearance={args.appearance}>
       {args.children}
     </TertiaryBanner.Warning>
   ),
   args: {
-    modifier: "base",
+    appearance: "base",
     children: "Какое-то сообщение. Рекомендуемый размер две-три строки.",
   },
 };
 
 export const Error: Story = {
   render: (args) => (
-    <TertiaryBanner.Error modifier={args.modifier}>
+    <TertiaryBanner.Error appearance={args.appearance}>
       {args.children}
     </TertiaryBanner.Error>
   ),
   args: {
-    modifier: "base",
+    appearance: "base",
     children: "Какое-то сообщение. Рекомендуемый размер две-три строки.",
   },
 };
 
 export const Success: Story = {
   render: (args) => (
-    <TertiaryBanner.Success modifier={args.modifier}>
+    <TertiaryBanner.Success appearance={args.appearance}>
       {args.children}
     </TertiaryBanner.Success>
   ),
   args: {
-    modifier: "base",
+    appearance: "base",
     children: "Какое-то сообщение. Рекомендуемый размер две-три строки.",
   },
 };

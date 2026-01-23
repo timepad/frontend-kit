@@ -1,30 +1,32 @@
 import { DetailedHTMLProps, HTMLAttributes, ReactNode } from "react";
 
 /**
- * Semantic variant of the banner.
+ * Семантический вариант баннера.
  *
- * Controls:
- * - color accents (icon/text depending on styles)
- * - visual meaning (info / warning / error / success)
+ * Управляет:
+ * - цветовыми акцентами (иконка / текст в зависимости от стилей)
+ * - визуальным смыслом сообщения (info / warning / error / success)
  *
- * In `TertiaryBannerBase` this value is also used to apply a variant modifier to the icon wrapper.
+ * В `TertiaryBannerBase` также используется для применения
+ * модификатора варианта к иконке.
  */
 export type TertiaryBannerVariant = "info" | "warning" | "error" | "success";
 
 /**
- * Theme modifier of the banner.
+ * Модификатор темы баннера.
  *
- * - **base** — default (light) style
- * - **inverted** — inverted (dark) style, intended for dark backgrounds
+ * - **base** — базовый (светлый) стиль
+ * - **inverted** — инвертированный (тёмный) стиль,
+ *   предназначенный для использования на тёмных фонах
  */
-export type Modifier = "base" | "inverted";
+export type Appearance = "base" | "inverted";
 
 export interface ITertiaryBannerBaseProps extends DetailedHTMLProps<
   HTMLAttributes<HTMLDivElement>,
   HTMLDivElement
 > {
   variant?: TertiaryBannerVariant;
-  modifier?: Modifier;
+  appearance?: Appearance;
   icon?: ReactNode;
   children: ReactNode;
 }

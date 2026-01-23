@@ -14,35 +14,38 @@ export const TertiaryBannerBase: FC<ITertiaryBannerBaseProps> = ({
   className,
   icon,
   variant,
-  modifier = "base",
+  appearance = "base",
   ...props
 }) => {
   const bannerClasses = classNames(
     component("tertiary-banner")({
-      [modifier]: true,
+      [appearance]: true,
     }),
     className,
   );
 
+  const iconContainerClassName = component(
+    "tertiary-banner",
+    "icon-container",
+  )();
+
+  const iconClassName = component(
+    "tertiary-banner",
+    "icon",
+  )({ [`${variant}`]: !!variant });
+
+  const textClassName = component("tertiary-banner", "text")();
+
   return (
     <div className={bannerClasses} {...props}>
       {icon && (
-        <div className={component("tertiary-banner", "icon-container")()}>
-          <div
-            className={component(
-              "tertiary-banner",
-              "icon",
-            )({ [`${variant}`]: !!variant })}
-            aria-hidden="true"
-          >
+        <div className={iconContainerClassName}>
+          <div className={iconClassName} aria-hidden="true">
             {icon}
           </div>
         </div>
       )}
-      <Typography.Caption
-        className={component("tertiary-banner", "text")()}
-        tag="C1 REGULAR"
-      >
+      <Typography.Caption className={textClassName} tag="C1 REGULAR">
         {children}
       </Typography.Caption>
     </div>
