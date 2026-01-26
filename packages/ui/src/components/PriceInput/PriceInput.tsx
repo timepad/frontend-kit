@@ -5,7 +5,7 @@ import { component, classNames } from "@frontend-kit/utils";
 import { Input } from "../Input/Input";
 import type { IInputProps } from "../Input/input.types";
 
-type Currency = "₽" | "€" | "$" | "₸" | "₴" | "₾" | "£" | string;
+type Currency = "₽" | string;
 
 export type PriceInputValue = string; // RAW digits
 
@@ -23,10 +23,7 @@ export type PriceInputProps = Omit<
   maxDigits?: number;
   forbidZero?: boolean;
 
-  /**
-   * Резерв справа под иконки (clear/error/copy) — чтобы ₽ не заезжал под них.
-   * Подгони под свой padding-right/иконки (у тебя padding-right 32px).
-   */
+  // Резерв справа под иконки (clear/error/copy) — чтобы ₽ не заезжал под них.
   rightReservePx?: number;
 };
 
@@ -40,18 +37,6 @@ const formatThousands = (digits: string, sep: string) => {
     out.push(rev[i]);
   }
   return out.reverse().join("");
-};
-
-const getInputLeftPaddingPx = (el: HTMLInputElement) => {
-  const cs = getComputedStyle(el);
-  const pl = parseFloat(cs.paddingLeft || "0");
-  return Number.isFinite(pl) ? pl : 0;
-};
-
-const getInputRightPaddingPx = (el: HTMLInputElement) => {
-  const cs = getComputedStyle(el);
-  const pr = parseFloat(cs.paddingRight || "0");
-  return Number.isFinite(pr) ? pr : 0;
 };
 
 export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
@@ -114,7 +99,7 @@ export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
     const placeholderText = "0";
     const visibleText = display || placeholderText; // display = форматированное число "3 000"
 
-    // в input.value кладём ТОЛЬКО введённое (иначе будет мешать required)
+    // в input.value кладём только введённое
     const inputValue = display; // "" или "3 000"
 
     // показываем плейсхолдер в overlay только когда пусто
@@ -127,12 +112,10 @@ export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
         const measureEl = measureRef.current;
         if (!inputEl || !measureEl) return;
 
-        // 1) синхронизируем шрифт измерителя с input (иначе width неверный)
         const cs = getComputedStyle(inputEl);
         measureEl.style.font = cs.font;
         measureEl.style.letterSpacing = cs.letterSpacing;
 
-        // 2) меряем именно visibleText (плейсхолдер "0" или введённое "3 000")
         measureEl.textContent = visibleText;
 
         const pl = parseFloat(cs.paddingLeft || "0") || 0;
@@ -146,7 +129,7 @@ export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
         // ширина самого input (контента)
         const inputW = inputEl.getBoundingClientRect().width;
 
-        // чтобы не залезало под иконки справа (у тебя padding-right 32px + сама кнопка)
+        // чтобы не залезало под иконки справа
         const maxLeft = Math.max(pl, inputW - pr - rightReservePx);
 
         const nextLeft = Math.min(Math.max(pl + textW + GAP - scrollLeft, pl), maxLeft);
