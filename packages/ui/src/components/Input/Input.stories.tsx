@@ -42,12 +42,14 @@ const meta: Meta<typeof Input> = {
       description:
         "Вспомогательный текст под полем. Показывается только если нет `error`.",
       table: { type: { summary: "ReactNode" } },
+      defaultValue: { summary: "" },
     },
     error: {
       control: "text",
       description:
         "Текст ошибки под полем. Если задан, отображается вместо `description` и включает состояние ошибки.",
       table: { type: { summary: "ReactNode" } },
+      defaultValue: { summary: "" },
     },
     required: {
       control: "boolean",
@@ -59,10 +61,10 @@ const meta: Meta<typeof Input> = {
       description: "Отключает поле ввода.",
       table: { type: { summary: "boolean" } },
     },
-
     onClearField: {
       action: "clear",
       description: "Обработчик события очистки значения поля.",
+      table: { disable: true },
     },
   },
 };
@@ -84,54 +86,42 @@ const BaseInput: FC<IInputProps> = (args) => {
   );
 };
 
-const defaultParams = {
-  args: {
-    label: "Название",
-    placeholder: "Введите название",
-    error: "",
-    value: "",
-    description: "",
-    required: false,
-    disabled: false,
-  },
-  argTypes: {
-    onClearField: {
-      table: { disable: true },
-    },
-  },
+const defaultArgs: Story["args"] = {
+  label: "Название",
+  placeholder: "Введите название",
+  error: "",
+  value: "",
+  description: "",
+  required: false,
+  disabled: false,
 };
 
 export const Default: Story = {
   render: (args) => <BaseInput {...args} />,
-  args: { ...defaultParams.args },
-  argTypes: { ...defaultParams.argTypes },
+  args: { ...defaultArgs },
 };
 
 export const WithDescription: Story = {
   render: (args) => <BaseInput {...args} />,
-  args: { ...defaultParams.args, description: "Описание поля" },
-  argTypes: { ...defaultParams.argTypes },
+  args: { ...defaultArgs, description: "Описание поля" },
 };
 
 export const Required: Story = {
   render: (args) => <BaseInput {...args} />,
-  args: { ...defaultParams.args, required: true },
-  argTypes: { ...defaultParams.argTypes },
+  args: { ...defaultArgs, required: true },
 };
 
 export const Error: Story = {
   render: (args) => <BaseInput {...args} />,
-  args: { ...defaultParams.args, error: "Какая-то ошибка" },
-  argTypes: { ...defaultParams.argTypes },
+  args: { ...defaultArgs, error: "Какая-то ошибка" },
 };
 
 export const Disabled: Story = {
   render: (args) => <BaseInput {...(args as any)} />,
   args: {
-    ...defaultParams.args,
+    ...defaultArgs,
     description: "Описание поля",
     disabled: true,
     value: "abcd-1234-efgh-5678",
   },
-  argTypes: { ...defaultParams.argTypes },
 };
