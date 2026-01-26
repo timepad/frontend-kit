@@ -16,7 +16,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
       onBlur,
       required,
       id,
-      value = "",
+      value,
       resize = false,
       size = "m",
       maxSymbols = 0,
@@ -24,7 +24,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
       error = "",
       ...rest
     },
-    ref
+    ref,
   ) => {
     const [isFocused, setIsFocused] = useState(false);
 
@@ -34,52 +34,62 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
 
     const valueLength = value.length;
 
-    const caption = error || description;
+    const isMaxSymbols = !!maxSymbols;
 
-    const lengthError = maxSymbols ? valueLength > maxSymbols : false;
+    const maxSymbolsText =
+      isFocused || valueLength > 0
+        ? `${valueLength} / ${maxSymbols}`
+        : `Не более ${maxSymbols} символов`;
+
+    const counter = isMaxSymbols ? maxSymbolsText : "";
+
+    const caption = error || description || counter;
+
+    const lengthError = isMaxSymbols ? valueLength > maxSymbols : false;
 
     const isError = !!error || lengthError;
 
     const captionId = caption ? `${textareaId}-caption` : undefined;
 
     const handleTextareaFocus = (event: FocusEvent<HTMLTextAreaElement>) => {
+      if (isMaxSymbols) setIsFocused(true);
       onFocus?.(event);
-      if (!!maxSymbols) setIsFocused(true);
     };
 
     const handleTextareaBlur = (event: FocusEvent<HTMLTextAreaElement>) => {
+      if (isMaxSymbols) setIsFocused(false);
       onBlur?.(event);
-      if (!!maxSymbols) setIsFocused(false);
     };
 
     const textareaClassName = classNames(component("textarea")(), className);
 
     const labelClassName = component(
       "textarea",
-      "label"
-    )({ error: isError, required: required });
+      "label",
+    )({ error: isError, required: required && !disabled });
 
     const fieldClassName = component(
       "textarea",
-      "field"
+      "field",
     )({ resize: resize, [`size-${size}`]: true });
+
+    const disabledIconClassName = component("textarea", "disabled-icon")();
 
     const captionClassName = component(
       "textarea",
-      "caption"
-    )({ error: !!error });
-
-    const symbolsCountClassName = component(
-      "textarea",
-      "caption"
-    )({ error: lengthError });
+      "caption",
+    )({ error: isError });
 
     return (
       <div className={textareaClassName}>
         <label htmlFor={textareaId}>
           <Typography.Paragraph tag="P4 REGULAR" className={labelClassName}>
             {label}
-            {disabled && <IconLock16Fill />}
+            {disabled && (
+              <span aria-hidden="true" className={disabledIconClassName}>
+                <IconLock16Fill />
+              </span>
+            )}
           </Typography.Paragraph>
         </label>
         <textarea
@@ -104,17 +114,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
             {caption}
           </Typography.Caption>
         )}
-        {maxSymbols > 0 && (
-          <Typography.Caption
-            tag="C1 REGULAR"
-            className={symbolsCountClassName}
-          >
-            {isFocused || valueLength > 0
-              ? `${valueLength} / ${maxSymbols}`
-              : `Не более ${maxSymbols} символов`}
-          </Typography.Caption>
-        )}
       </div>
     );
-  }
+  },
 );

@@ -11,10 +11,6 @@
     color: inherit !important;
     column-gap: var(--space-4);
 
-    svg {
-      color: var(--icon-tertiary);
-    }
-
     &--error {
       color: var(--text-negative) !important;
     }
@@ -23,6 +19,11 @@
       content: "*";
       color: var(--text-negative);
     }
+  }
+
+  &__disabled-icon {
+    display: inline-flex;
+    color: var(--icon-tertiary);
   }
 
   &__field {
@@ -52,15 +53,15 @@
     }
 
     &--size-m {
-      min-height: 100px;
+      min-height: 112px;
     }
 
     &--size-s {
-      min-height: 60px;
+      min-height: 72px;
     }
 
     &--resize {
-      resize: both;
+      resize: vertical;
     }
   }
 
