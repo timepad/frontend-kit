@@ -123,12 +123,14 @@
     font-family: var(--font-regular);
     font-size: 14px;
     line-height: 20px;
+    top: var(--space-4);
+    left: var(--space-10);
   }
 
   &__price-ghost {
     position: absolute;
     left: var(--space-10);
-    top: calc(50% + 1px); // небольшой сдвиг для корректного отображения символа валюты
+    top: 50%;
     transform: translateY(-50%);
     color: var(--text-tertiary);
     white-space: nowrap;
@@ -136,7 +138,7 @@
 
   &__price-currency {
     position: absolute;
-    top: 50%;
+    top: calc(50% + 1px); // небольшой сдвиг для корректного отображения символа валюты
     transform: translateY(-50%);
     color: var(--text-tertiary);
     white-space: nowrap;
