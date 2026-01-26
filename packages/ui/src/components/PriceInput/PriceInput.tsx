@@ -113,8 +113,6 @@ export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
         if (!inputEl || !measureEl) return;
 
         const cs = getComputedStyle(inputEl);
-        measureEl.style.font = cs.font;
-        measureEl.style.letterSpacing = cs.letterSpacing;
 
         measureEl.textContent = visibleText;
 

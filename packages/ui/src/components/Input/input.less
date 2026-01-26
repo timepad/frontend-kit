@@ -119,14 +119,16 @@
     position: absolute;
     visibility: hidden;
     white-space: pre;
-    font: inherit;
-    letter-spacing: inherit;
+    // шрифт должен быть установлен в соответствии с шрифтом в токенах
+    font-family: var(--font-regular);
+    font-size: 14px;
+    line-height: 20px;
   }
 
   &__price-ghost {
     position: absolute;
     left: var(--space-10);
-    top: 50%;
+    top: calc(50% + 1px); // небольшой сдвиг для корректного отображения символа валюты
     transform: translateY(-50%);
     color: var(--text-tertiary);
     white-space: nowrap;
