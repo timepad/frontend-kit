@@ -10,24 +10,60 @@ const meta: Meta<typeof Input> = {
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
+    docs: {
+      codePanel: true,
+    },
   },
+  decorators: [
+    (Story) => (
+      <div style={{ width: 340 }}>
+        <Story />
+      </div>
+    ),
+  ],
   argTypes: {
     label: {
       control: "text",
+      description: "Подпись (лейбл) над полем ввода.",
+      table: { type: { summary: "ReactNode" } },
+    },
+    value: {
+      control: "text",
+      description: "Значение поля (контролируемый режим).",
+      table: { type: { summary: "string" } },
     },
     placeholder: {
       control: "text",
+      description: "Плейсхолдер внутри поля ввода.",
+      table: { type: { summary: "string" } },
     },
     description: {
       control: "text",
+      description:
+        "Вспомогательный текст под полем. Показывается только если нет `error`.",
+      table: { type: { summary: "ReactNode" } },
     },
     error: {
       control: "text",
+      description:
+        "Текст ошибки под полем. Если задан, отображается вместо `description` и включает состояние ошибки.",
+      table: { type: { summary: "ReactNode" } },
     },
-    onChange: { action: "change" },
-    onFocus: { action: "focus" },
-    onBlur: { action: "blur" },
-    onClearField: { action: "clear" },
+    required: {
+      control: "boolean",
+      description: "Делает поле обязательным (нативный HTML `required`).",
+      table: { type: { summary: "boolean" } },
+    },
+    disabled: {
+      control: "boolean",
+      description: "Отключает поле ввода.",
+      table: { type: { summary: "boolean" } },
+    },
+
+    onClearField: {
+      action: "clear",
+      description: "Обработчик события очистки значения поля.",
+    },
   },
 };
 
@@ -35,7 +71,7 @@ export default meta;
 
 type Story = StoryObj<typeof Input>;
 
-const Controlled: FC<IInputProps> = (args) => {
+const BaseInput: FC<IInputProps> = (args) => {
   const [value, setValue] = useState(args.value ?? "");
 
   return (
@@ -43,80 +79,59 @@ const Controlled: FC<IInputProps> = (args) => {
       {...args}
       value={value}
       onChange={(e) => setValue(e.target.value)}
-      onClearField={
-        args.onClearField
-          ? (e) => {
-              args.onClearField?.(e);
-              setValue("");
-            }
-          : undefined
-      }
+      onClearField={() => setValue("")}
     />
   );
 };
 
-export const Default: Story = {
-  render: (args) => <Controlled {...args} />,
+const defaultParams = {
   args: {
     label: "Название",
     placeholder: "Введите название",
+    error: "",
+    value: "",
+    description: "",
+    required: false,
+    disabled: false,
   },
+  argTypes: {
+    onClearField: {
+      table: { disable: true },
+    },
+  },
+};
+
+export const Default: Story = {
+  render: (args) => <BaseInput {...args} />,
+  args: { ...defaultParams.args },
+  argTypes: { ...defaultParams.argTypes },
 };
 
 export const WithDescription: Story = {
-  render: (args) => <Controlled {...args} />,
-  args: {
-    label: "Название",
-    description: "Подсказка под полем",
-    placeholder: "Введите название",
-  },
+  render: (args) => <BaseInput {...args} />,
+  args: { ...defaultParams.args, description: "Описание поля" },
+  argTypes: { ...defaultParams.argTypes },
 };
 
 export const Required: Story = {
-  render: (args) => <Controlled {...args} />,
-  args: {
-    label: "Название",
-    required: true,
-    placeholder: "Обязательное поле",
-  },
+  render: (args) => <BaseInput {...args} />,
+  args: { ...defaultParams.args, required: true },
+  argTypes: { ...defaultParams.argTypes },
 };
 
 export const Error: Story = {
-  render: (args) => <Controlled {...args} />,
-  args: {
-    label: "Название",
-    error: "Это поле обязательно",
-    placeholder: "Введите название",
-  },
-};
-
-export const ClearButton: Story = {
-  render: (args) => <Controlled {...args} />,
-  args: {
-    label: "Название",
-    value: "Можно очистить",
-    placeholder: "Введите название",
-    onClearField: () => {},
-  },
+  render: (args) => <BaseInput {...args} />,
+  args: { ...defaultParams.args, error: "Какая-то ошибка" },
+  argTypes: { ...defaultParams.argTypes },
 };
 
 export const Disabled: Story = {
-  render: (args) => <Controlled {...(args as any)} />,
+  render: (args) => <BaseInput {...(args as any)} />,
   args: {
-    label: "Токен",
+    ...defaultParams.args,
+    description: "Описание поля",
     disabled: true,
     value: "abcd-1234-efgh-5678",
-    description: "Можно скопировать значение",
   },
-};
-
-export const LongValue: Story = {
-  render: (args) => <Controlled {...(args as any)} />,
-  args: {
-    label: "Ссылка",
-    value:
-      "https://example.com/some/very/long/path?with=query&params=and_more=true",
-    placeholder: "Введите ссылку",
-    onClearField: () => {},
-  },
+  argTypes: { ...defaultParams.argTypes },
 };

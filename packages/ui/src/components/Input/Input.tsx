@@ -1,4 +1,10 @@
-import { forwardRef, useId } from "react";
+import {
+  forwardRef,
+  useId,
+  useImperativeHandle,
+  useRef,
+  MouseEvent,
+} from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./input.less";
@@ -26,9 +32,13 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
       id,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const defaultId = useId();
+
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
     const inputId = id ?? defaultId;
 
@@ -44,6 +54,11 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
 
     const captionId = caption ? `${inputId}-caption` : undefined;
 
+    const handleClearFieldClick = (event: MouseEvent<HTMLButtonElement>) => {
+      onClearField?.(event);
+      inputRef.current?.focus();
+    };
+
     const handleCopyTextToClipboard = async () => {
       try {
         await navigator.clipboard?.writeText?.(value);
@@ -54,14 +69,16 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
 
     const labelClassName = component(
       "input",
-      "label"
-    )({ error: hasError, required: required });
+      "label",
+    )({ error: hasError, required: required && !disabled });
 
     const fieldContainerClassName = component("input", "field-container")();
 
     const fieldClassName = component("input", "field")();
 
     const errorIconClassName = component("input", "error-icon")();
+
+    const disabledIconClassName = component("input", "disabled-icon")();
 
     const actionIconClassName = component("input", "action-icon")();
 
@@ -72,14 +89,18 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
         <label htmlFor={inputId}>
           <Typography.Paragraph tag="P4 REGULAR" className={labelClassName}>
             {label}
-            {disabled && <IconLock16Fill />}
+            {disabled && (
+              <span aria-hidden="true" className={disabledIconClassName}>
+                <IconLock16Fill />
+              </span>
+            )}
           </Typography.Paragraph>
         </label>
 
         <div className={fieldContainerClassName}>
           <input
             className={fieldClassName}
-            ref={ref}
+            ref={inputRef}
             id={inputId}
             value={value}
             disabled={disabled}
@@ -100,18 +121,20 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
               icon={<IconCopy24Fill />}
               variant="transparent"
               size="s"
-              aria-label="Copy"
+              ariaLabel="Копировать значение поля"
               title="Копировать"
             />
           )}
           {showClearBtn && (
             <IconButton
+              // Чтобы кнопка “Очистить” не уводила фокус
+              onMouseDown={(e) => e.preventDefault()}
               className={actionIconClassName}
-              onClick={onClearField}
+              onClick={handleClearFieldClick}
               icon={<IconCross24Outline />}
               variant="transparent"
               size="s"
-              aria-label="Clear"
+              ariaLabel="Очистить значение поля"
               title="Очистить"
             />
           )}
@@ -128,5 +151,5 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
         )}
       </div>
     );
-  }
+  },
 );
