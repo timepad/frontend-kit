@@ -7,6 +7,6 @@ export interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: ReactNode;
   description?: ReactNode;
 
-  /** Слот для оверлея (маска/подсказки и т.п.) */
+  /** Слот для оверлея */
   fieldOverlay?: ReactNode;
 }

@@ -50,7 +50,7 @@ export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
       allowEmpty = true,
       maxDigits = 15,
       forbidZero = false,
-      rightReservePx = 32, // под вашу правую зону под иконки
+      rightReservePx = 32,
 
       className,
       onClearField,

@@ -104,7 +104,6 @@
     color: var(--text-tertiary);
   }
 
-  // когда есть маска, делаем ввод "прозрачным", оставляя каретку
   &__field[data-masked="true"] {
     color: transparent;
     caret-color: var(--text-primary);
@@ -126,10 +125,10 @@
 
   &__price-ghost {
     position: absolute;
-    left: var(--space-10);       // должно совпасть с padding-left input
+    left: var(--space-10);
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-tertiary); // как placeholder
+    color: var(--text-tertiary);
     white-space: nowrap;
   }
 
