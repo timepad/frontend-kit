@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, useState, useId } from "react";
+import { forwardRef, useId } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./input.less";
@@ -10,7 +10,6 @@ import {
   IconCross24Outline,
   IconCopy24Fill,
 } from "../../assets/icons";
-import { useMaskedInput } from "./useMaskedInput";
 import { IconButton } from "../IconButton";
 
 export const Input = forwardRef<HTMLInputElement, IInputProps>(
@@ -21,21 +20,11 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
       error,
       description,
       disabled,
-      value = "",
+      value,
       onClearField,
       required,
-
-      mask,
-      validator,
-      validateOn = "blur",
-      returnMasked,
-
-      onValueChange,
-
-      onBlur,
-      onChange,
-
       id,
+      fieldOverlay,
       ...rest
     },
     ref
@@ -44,74 +33,15 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
 
     const inputId = id ?? defaultId;
 
-    const [touched, setTouched] = useState(false);
-    const [blurred, setBlurred] = useState(false);
-
-    const {
-      inputRef,
-      hasMask,
-      maskedValue,
-      rawValue,
-      isComplete,
-      onChangeMasked,
-      onKeyDown,
-      clear,
-      visualTokens,
-    } = useMaskedInput({
-      mask,
-      value: String(value ?? ""),
-      onValueChange: (v) => {
-        onValueChange?.(v);
-      },
-      disabled,
-      readOnly: rest.readOnly,
-      returnMasked,
-      placeholders: { digit: "0", letter: "X", any: "•" },
-    });
-
-    const rawForValidation = hasMask ? rawValue : String(value ?? "");
-    const maskedForValidation = hasMask ? maskedValue : String(value ?? "");
-    const completeForValidation = hasMask ? isComplete : true;
-
-    const validationError = useMemo(() => {
-      if (!validator) return null;
-
-      const show =
-        validateOn === "change" ||
-        (validateOn === "blur" && blurred) ||
-        (validateOn === "touched" && touched);
-
-      if (!show) return null;
-
-      return validator({
-        raw: rawForValidation,
-        masked: maskedForValidation,
-        isComplete: completeForValidation,
-      });
-    }, [
-      validator,
-      validateOn,
-      blurred,
-      touched,
-      rawForValidation,
-      maskedForValidation,
-      completeForValidation,
-    ]);
-
-    const finalError = error ?? validationError ?? "";
-    const hasError = !!finalError;
+    const hasError = !!error;
     const hasValue = !!value;
 
     const showErrorIcon = !disabled && hasError;
     const showCopyBtn = disabled && hasValue && !showErrorIcon;
+    const showClearBtn =
+      !disabled && hasValue && !!onClearField && !showErrorIcon;
 
-    // показываем clear:
-    // - если есть маска: чистим через clear()
-    // - если нет маски: через onClearField
-    const canClear = !disabled && hasValue;
-    const showClearBtn = canClear && (hasMask || !!onClearField) && !showErrorIcon;
-
-    const caption = finalError || description;
+    const caption = error || description;
 
     const captionId = caption ? `${inputId}-caption` : undefined;
 
@@ -123,10 +53,6 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
 
     const inputClassName = classNames(component("input")(), className);
 
-    const labelClassName = component("input", "label")({
-      error: hasError,
-      required: required && !disabled,
-    });
     const labelClassName = component(
       "input",
       "label"
@@ -142,26 +68,6 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
 
     const captionClassName = component("input", "caption")({ error: hasError });
 
-    const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
-      setBlurred(true);
-      onBlur?.(e);
-    };
-
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-      setTouched(true);
-      onChange?.(e);
-      // Если вы хотите поддерживать controlled через onValueChange и без mask:
-      onValueChange?.(e.target.value);
-    };
-
-    const handleClear = () => {
-      if (hasMask) {
-        clear();
-      } else {
-        onClearField?.();
-      }
-    };
-
     return (
       <div className={inputClassName}>
         <label htmlFor={inputId}>
@@ -172,43 +78,18 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
         </label>
 
         <div className={fieldContainerClassName}>
+          {fieldOverlay}
           <input
             className={fieldClassName}
-            ref={(node) => {
-              if (typeof ref === "function") ref(node);
-              else if (ref) (ref as any).current = node;
-              inputRef.current = node;
-            }}
+            ref={ref}
             id={inputId}
-            value={hasMask ? maskedValue : value}
+            value={value}
             disabled={disabled}
-            onBlur={handleBlur}
-            onChange={hasMask ? onChangeMasked : handleChange}
-            onKeyDown={hasMask ? onKeyDown : rest.onKeyDown}
-            placeholder={hasMask ? mask : rest.placeholder}
             required={required}
             aria-invalid={hasError || undefined}
             aria-describedby={captionId}
             {...rest}
           />
-
-          {hasMask && visualTokens && (
-            <span className={component("input", "mask-overlay")()} aria-hidden>
-              {visualTokens.map((t, i) => (
-                <span
-                  key={i}
-                  className={classNames(
-                    "cinput__mask-char",
-                    t.filled && "cinput__mask-char--filled",
-                    !t.filled && "cinput__mask-char--rest"
-                  )}
-                >
-                  {t.char}
-                </span>
-              ))}
-            </span>
-          )}
-
           {showErrorIcon && (
             <span className={errorIconClassName} aria-hidden="true">
               <IconWarningCircle24Fill />
@@ -219,14 +100,12 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
               className={actionIconClassName}
               onClick={handleCopyTextToClipboard}
               icon={<IconCopy24Fill />}
-              type="button"
               variant="transparent"
               size="s"
               aria-label="Copy"
               title="Копировать"
             />
           )}
-
           {showClearBtn && (
             <IconButton
               className={actionIconClassName}

@@ -53,11 +53,6 @@
     font-weight: 400;
     line-height: 20px;
 
-    position: relative;
-    background: transparent;
-    color: transparent;          // <-- ВАЖНО
-    caret-color: var(--text-primary);
-
     &:focus,
     &:focus-visible {
       outline-color: var(--btn-primary-active);
@@ -93,15 +88,12 @@
     display: flex;
     align-items: center;
 
-    font: inherit;
-    font-family: var(--font-regular);
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px;
-    
     padding: var(--space-4) var(--space-32) var(--space-4) var(--space-10);
     white-space: pre;
+
+    font-family: var(--font-regular);
+    font-size: 14px;
+    line-height: 20px;
   }
 
   &__mask-char {
@@ -110,5 +102,42 @@
 
   &__mask-char--rest {
     color: var(--text-tertiary);
+  }
+
+  // когда есть маска, делаем ввод "прозрачным", оставляя каретку
+  &__field[data-masked="true"] {
+    color: transparent;
+    caret-color: var(--text-primary);
+  }
+
+  &__price-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  &__price-measure {
+    position: absolute;
+    visibility: hidden;
+    white-space: pre;
+    font: inherit;
+    letter-spacing: inherit;
+  }
+
+  &__price-ghost {
+    position: absolute;
+    left: var(--space-10);       // должно совпасть с padding-left input
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-tertiary); // как placeholder
+    white-space: nowrap;
+  }
+
+  &__price-currency {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-tertiary);
+    white-space: nowrap;
   }
 }

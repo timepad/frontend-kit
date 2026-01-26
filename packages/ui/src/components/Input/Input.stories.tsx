@@ -112,19 +112,6 @@ export const Disabled: Story = {
 
 export const LongValue: Story = {
   render: (args) => <Controlled {...(args as any)} />,
-  render: (args) => {
-    const [value, setValue] = useState("value");
-
-    return (
-      <Input
-        {...args}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        onValueChange={setValue}
-        onClearField={() => setValue("")}
-      />
-    );
-  },
   args: {
     label: "Ссылка",
     value:
@@ -133,33 +120,3 @@ export const LongValue: Story = {
     onClearField: () => {},
   },
 };
-
-// export const WithValidation: Story = {
-//   render: (args) => {
-//     const [value, setValue] = useState("");
-
-//     return (
-//       <Input
-//         {...args}
-//         value={value}
-//         mask="99"
-//         validateOn="blur"
-//         validator={({ raw, isComplete }) => {
-//           if (!raw) return null;
-//           if (!isComplete) return "Заполните 2 цифры";
-
-//           const n = Number(raw);
-//           if (n < 1 || n > 30) return "Допустимо от 1 до 30";
-//           return null;
-//         }}
-//         onChange={(e) => setValue(e.target.value)}
-//         onClearField={() => setValue("")}
-//       />
-//     );
-//   },
-//   args: {
-//     label: "Толщина",
-//     description: "Валидируемое поле",
-//   },
-// };
-
