@@ -80,6 +80,7 @@
     color: var(--accent-negative) !important;
   }
 
+  // маска
   &__mask-overlay {
     position: absolute;
     inset: 0;
@@ -109,38 +110,74 @@
     caret-color: var(--text-primary);
   }
 
-  &__price-overlay {
+  // форматтер
+  &__formatted-overlay {
     position: absolute;
     inset: 0;
     pointer-events: none;
   }
 
-  &__price-measure {
+  &__formatted-viewport {
     position: absolute;
-    visibility: hidden;
-    white-space: pre;
-    // шрифт должен быть установлен в соответствии с шрифтом в токенах
+    top: 0;
+    bottom: 0;
+
+    /* = padding-left инпута */
+    left: var(--space-10);
+
+    /* = padding-right инпута + reserve под иконки справа */
+    //right: calc(var(--space-32) + var(--cinput-right-reserve, 0px));
+    right: var(--space-32);
+
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+
     font-family: var(--font-regular);
     font-size: 14px;
     line-height: 20px;
-    top: var(--space-4);
-    left: var(--space-10);
+    font-weight: 400;
   }
 
-  &__price-ghost {
-    position: absolute;
-    left: var(--space-10);
-    top: 50%;
-    transform: translateY(-50%);
+  /* трек скроллится синхронно с input */
+  &__formatted-track {
+    display: inline-flex;
+    align-items: center;
+    white-space: pre;
+
+    transform: translateX(calc(var(--fi-scroll-left, 0px) * -1));
+    will-change: transform;
+  }
+
+  &__formatted-content {
+    white-space: pre;
+    color: var(--text-primary);
+  }
+
+  &__formatted-content--empty {
+    color: var(--text-tertiary);
+  }
+
+  &__formatted-suffix {
+    white-space: nowrap;
+    color: var(--text-tertiary);
+  }
+
+  &__formatted-suffix {
     color: var(--text-tertiary);
     white-space: nowrap;
   }
 
-  &__price-currency {
-    position: absolute;
-    top: calc(50% + 1px); // небольшой сдвиг для корректного отображения символа валюты
-    transform: translateY(-50%);
-    color: var(--text-tertiary);
-    white-space: nowrap;
+  &__formatted-suffix--filled {
+    color: var(--text-primary);
+  }
+
+  &__formatted-suffix {
+    margin-left: 6px;
+  }
+
+  &__field[data-formatted="true"] {
+    color: transparent;
+    caret-color: var(--greyscale-800);
   }
 }
