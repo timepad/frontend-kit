@@ -4,15 +4,12 @@
   display: flex;
   flex-direction: column;
   row-gap: var(--space-4);
+  color: var(--text-secondary);
 
   &__label {
     display: flex;
-    color: var(--text-secondary) !important;
+    color: inherit !important;
     column-gap: var(--space-4);
-
-    &--error {
-      color: var(--text-negative) !important;
-    }
 
     &--required::after {
       content: "*";
@@ -21,11 +18,7 @@
   }
 
   &__caption {
-    color: var(--text-secondary) !important;
-
-    &--error {
-      color: var(--text-negative) !important;
-    }
+    color: inherit !important;
   }
 
   &__field-container {
@@ -78,5 +71,9 @@
     transform: translateY(-50%);
     padding: 4px;
     color: var(--accent-negative) !important;
+  }
+
+  &--error {
+    color: var(--text-negative) !important;
   }
 }

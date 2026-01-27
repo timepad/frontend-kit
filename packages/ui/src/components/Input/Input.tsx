@@ -42,13 +42,12 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
 
     const inputId = id ?? defaultId;
 
-    const hasError = !!error;
-    const hasValue = !!value;
+    const isError = !!error;
 
-    const showErrorIcon = !disabled && hasError;
-    const showCopyBtn = disabled && hasValue && !showErrorIcon;
+    const showErrorIcon = !disabled && isError;
+    const showCopyBtn = disabled && !!value && !showErrorIcon;
     const showClearBtn =
-      !disabled && hasValue && !!onClearField && !showErrorIcon;
+      !disabled && !!value && !!onClearField && !showErrorIcon;
 
     const caption = error || description;
 
@@ -65,12 +64,15 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
       } catch {}
     };
 
-    const inputClassName = classNames(component("input")(), className);
+    const inputClassName = classNames(
+      component("input")({ error: isError }),
+      className,
+    );
 
     const labelClassName = component(
       "input",
       "label",
-    )({ error: hasError, required: required && !disabled });
+    )({ required: required && !disabled });
 
     const fieldContainerClassName = component("input", "field-container")();
 
@@ -82,7 +84,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
 
     const actionIconClassName = component("input", "action-icon")();
 
-    const captionClassName = component("input", "caption")({ error: hasError });
+    const captionClassName = component("input", "caption")();
 
     return (
       <div className={inputClassName}>
@@ -105,7 +107,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
             value={value}
             disabled={disabled}
             required={required}
-            aria-invalid={hasError || undefined}
+            aria-invalid={isError || undefined}
             aria-describedby={captionId}
             {...rest}
           />
