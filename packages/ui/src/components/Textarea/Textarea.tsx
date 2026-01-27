@@ -61,12 +61,15 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
       onBlur?.(event);
     };
 
-    const textareaClassName = classNames(component("textarea")(), className);
+    const textareaClassName = classNames(
+      component("textarea")({ error: isError }),
+      className,
+    );
 
     const labelClassName = component(
       "textarea",
       "label",
-    )({ error: isError, required: required && !disabled });
+    )({ required: required && !disabled });
 
     const fieldClassName = component(
       "textarea",
@@ -75,10 +78,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
 
     const disabledIconClassName = component("textarea", "disabled-icon")();
 
-    const captionClassName = component(
-      "textarea",
-      "caption",
-    )({ error: isError });
+    const captionClassName = component("textarea", "caption")();
 
     return (
       <div className={textareaClassName}>
