@@ -10,6 +10,8 @@ export const IconButton: FC<IIconButtonProps> = ({
   icon,
   className,
   disabled,
+  ariaLabel,
+  ariaLabelledby,
   type = "button",
   ariaLabel,
   ariaLabelledby,
