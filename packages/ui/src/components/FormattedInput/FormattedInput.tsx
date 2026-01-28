@@ -1,4 +1,3 @@
-// FormattedInput.tsx
 import { forwardRef, useLayoutEffect, useRef } from "react";
 import { component, classNames } from "@frontend-kit/utils";
 

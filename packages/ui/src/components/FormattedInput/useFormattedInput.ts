@@ -1,4 +1,3 @@
-// useFormattedInput.ts
 import { useMemo } from "react";
 import type { ChangeEvent, FocusEvent, FormEvent } from "react";
 import type { ValueFormatter, ValueParser } from "./formattedInput.utils";
@@ -67,7 +66,6 @@ export const useFormattedInput = (params: UseFormattedInputParams) => {
     onValueChange(v);
   };
 
-  /** Основной путь */
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e: ChangeEvent<HTMLInputElement>) => {
     if (disabled || readOnly) return;
     emit(parse(e.target.value));

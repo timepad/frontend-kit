@@ -1,4 +1,3 @@
-// formattedInput.utils.ts
 export type ValueFormatter = (raw: string) => string;
 export type ValueParser = (text: string) => string;
 
