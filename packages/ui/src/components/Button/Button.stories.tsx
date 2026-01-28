@@ -31,24 +31,78 @@ const meta = {
   component: Button,
   parameters: {
     layout: "centered",
+    docs: {
+      codePanel: true,
+    },
   },
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <div style={{ width: 340 }}>
+        <Story />
+      </div>
+    ),
+  ],
+  args: {
+    style: { width: "100%" },
+  },
   argTypes: {
     variant: {
+      description: `
+Управляет визуальным стилем и семантикой кнопки.
+
+- **primary** — Основное действие, максимальный акцент.
+- **primary-alternate** — Инверсная primary (обычно для тёмных фонов).
+- **secondary** — Нейтральная кнопка для второстепенных действий.
+- **negative** — Деструктивные действия (удалить, отменить, снять).
+- **disable** — Визуально “выключенное”, неинтерактивное состояние.
+      `,
       control: "select",
       options: variantOptions,
+      table: {
+        type: { summary: variantOptions.join(" | ") },
+        defaultValue: { summary: "primary" },
+      },
     },
     size: {
+      description: `
+Управляет размером кнопки.
+
+- **s** — Компактная кнопка с уменьшенными отступами.
+- **m** — Размер по умолчанию.
+      `,
       control: "select",
       options: sizeOptions,
+      table: {
+        type: { summary: sizeOptions.join(" | ") },
+        defaultValue: { summary: "m" },
+      },
     },
     iconPosition: {
+      description: `
+Управляет расположением иконки относительно текста.
+
+- **left** — Иконка перед текстом.
+- **right** — Иконка после текста.
+      `,
       control: "select",
       options: iconPositionOptions,
+      table: {
+        type: { summary: iconPositionOptions.join(" | ") },
+        defaultValue: { summary: "left" },
+      },
     },
     icon: {
+      description: `
+Необязательная иконка внутри кнопки.
+
+⚠️ Управление только для Storybook:
+Компонент ожидает React-элемент SVG.
+В Storybook это поле маппится из строковых опций в реальные иконки.
+      `,
       control: "select",
       options: [
+        "None",
         "Cross16Outline",
         "Cross24Outline",
         "Cross32Outline",
@@ -58,9 +112,9 @@ const meta = {
         "Lock16Outline",
         "Lock24Outline",
         "Lock32Outline",
-        "None",
       ],
       mapping: {
+        None: undefined,
         Cross16Outline: <IconCross16Outline />,
         Cross24Outline: <IconCross24Outline />,
         Cross32Outline: <IconCross32Outline />,
@@ -70,10 +124,17 @@ const meta = {
         Lock16Outline: <IconLock16Outline />,
         Lock24Outline: <IconLock24Outline />,
         Lock32Outline: <IconLock32Outline />,
-        None: undefined,
+      },
+      table: {
+        type: { summary: "ReactElement<SVG>" },
       },
     },
     type: {
+      table: {
+        disable: true,
+      },
+    },
+    style: {
       table: {
         disable: true,
       },

@@ -17,8 +17,26 @@ const meta = {
   component: Typography,
   parameters: {
     layout: "centered",
+    docs: {
+      codePanel: true,
+    },
   },
   tags: ["autodocs"],
+  argTypes: {
+    children: {
+      description: "Текстовое содержимое типографического компонента.",
+    },
+    as: {
+      description:
+        "HTML-тег, который будет использован для рендера (p, span, h1 и т.д.).",
+      table: {
+        defaultValue: { summary: "div" },
+      },
+    },
+    uppercase: {
+      description: "Преобразует текст в верхний регистр.",
+    },
+  },
 } satisfies Meta<typeof Typography>;
 
 export default meta;

@@ -4,9 +4,9 @@ import { TertiaryBannerBase } from "./TertiaryBanner";
 import { IconCrossCircle24Fill } from "../../assets/icons";
 import { ITertiaryBannerVariantProps } from "./tertiary-banner.types";
 
-export const TertiaryBannerError: FC<ITertiaryBannerVariantProps> = ({  modifier, children, ...props }) => {
+export const TertiaryBannerError: FC<ITertiaryBannerVariantProps> = ({  appearance, children, ...props }) => {
     return (
-        <TertiaryBannerBase variant="error" modifier={modifier} icon={<IconCrossCircle24Fill />} {...props}>
+        <TertiaryBannerBase variant="error" appearance={appearance} icon={<IconCrossCircle24Fill />} {...props}>
             {children}
         </TertiaryBannerBase>
     )

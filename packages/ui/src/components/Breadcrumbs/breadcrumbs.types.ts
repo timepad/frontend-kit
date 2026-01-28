@@ -6,33 +6,37 @@ import {
 } from "react";
 
 export interface IBreadcrumbItem {
-  /** Content to render (text, icon+text, Typography, etc.) */
   label: ReactNode;
-  /** URL for navigation. */
   href?: string;
-  /** Explicitly mark this item as the current page.
-   * When not set, the last item is treated as current if there is more than one item.
+  /**
+   * Явно помечает элемент как текущую страницу.
+   *
+   * Если не задано, последнему элементу автоматически
+   * присваивается статус текущей страницы (если элементов больше одного).
    */
   isCurrent?: boolean;
   onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
 }
 
-export interface IBreadcrumbsProps
-  extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+export interface IBreadcrumbsProps extends DetailedHTMLProps<
+  HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+> {
   /** Ordered list of breadcrumb items. */
   items: IBreadcrumbItem[];
   /**
-   * Defines the visual and behavioral mode of the Breadcrumbs component.
+   * Определяет визуальный и поведенческий режим компонента Breadcrumbs.
    *
-   * - **default** — Standard hierarchical breadcrumbs:
-   *   - Renders a list of items separated by for example"›".
-   *   - Intermediate items are links.
-   *   - The last item is marked as the current page by default.
+   * - **default** — стандартная иерархия хлебных крошек:
+   *   - отображает список элементов, разделённых, например, символом «›»
+   *   - промежуточные элементы являются ссылками
+   *   - последний элемент по умолчанию считается текущей страницей
    *
-   * - **backstep** — Single-level "go back" pattern:
-   *   - Renders only the first item as a back button with a left arrow.
-   *   - Used when a page has no visible breadcrumb hierarchy, but still needs an
-   *     affordance to return to the previous screen or parent section.
+   * - **backstep** — одноуровневый режим «вернуться назад»:
+   *   - отображает только первый элемент как ссылку со стрелкой влево
+   *   - используется на страницах без видимой иерархии хлебных крошек,
+   *     но где необходимо предоставить пользователю возможность вернуться
+   *     на предыдущий экран или в родительский раздел
    */
   type?: "default" | "backstep";
 }
