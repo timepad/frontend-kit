@@ -30,6 +30,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
       onClearField,
       required,
       id,
+      fieldOverlay,
       ...rest
     },
     ref,
@@ -100,6 +101,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
         </label>
 
         <div className={fieldContainerClassName}>
+          {fieldOverlay}
           <input
             className={fieldClassName}
             ref={inputRef}

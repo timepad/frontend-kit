@@ -6,4 +6,7 @@ export interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   onClearField?: (event: MouseEvent<HTMLButtonElement>) => void;
   error?: ReactNode;
   description?: ReactNode;
+
+  /** Слот для оверлея */
+  fieldOverlay?: ReactNode;
 }
