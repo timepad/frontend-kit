@@ -29,9 +29,18 @@ export type IconButtonVariant =
   | "disable"
   | "transparent";
 
-export interface IIconButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement> {
-  icon: ReactElement<SVGProps<SVGSVGElement>>;
-  size?: IconButtonSize;
-  variant?: IconButtonVariant;
-}
+type AccessibleName =
+  | { ariaLabel: string; ariaLabelledby?: never }
+  | { ariaLabel?: never; ariaLabelledby: string };
+
+type NativeButtonProps = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "children" | "aria-label" | "aria-labelledby"
+>;
+
+export type IIconButtonProps = NativeButtonProps &
+  AccessibleName & {
+    icon: ReactElement<SVGProps<SVGSVGElement>>;
+    size?: IconButtonSize;
+    variant?: IconButtonVariant;
+  };

@@ -4,19 +4,12 @@
   display: flex;
   flex-direction: column;
   row-gap: var(--space-4);
+  color: var(--text-secondary);
 
   &__label {
     display: flex;
-    color: var(--text-secondary) !important;
+    color: inherit !important;
     column-gap: var(--space-4);
-
-    svg {
-      color: var(--icon-tertiary);
-    }
-
-    &--error {
-      color: var(--text-negative) !important;
-    }
 
     &--required::after {
       content: "*";
@@ -25,12 +18,7 @@
   }
 
   &__caption {
-    display: flex;
-    color: var(--text-secondary) !important;
-
-    &--error {
-      color: var(--text-negative) !important;
-    }
+    color: inherit !important;
   }
 
   &__field-container {
@@ -64,6 +52,11 @@
     }
   }
 
+  &__disabled-icon {
+    display: inline-flex;
+    color: var(--icon-tertiary);
+  }
+
   &__action-icon {
     position: absolute !important;
     right: 0;
@@ -78,6 +71,10 @@
     transform: translateY(-50%);
     padding: 4px;
     color: var(--accent-negative) !important;
+  }
+
+  &--error {
+    color: var(--text-negative) !important;
   }
 
   // маска
@@ -125,8 +122,7 @@
     /* = padding-left инпута */
     left: var(--space-10);
 
-    /* = padding-right инпута + reserve под иконки справа */
-    //right: calc(var(--space-32) + var(--cinput-right-reserve, 0px));
+    /* = padding-right инпута + иконки справа */
     right: var(--space-32);
 
     overflow: hidden;

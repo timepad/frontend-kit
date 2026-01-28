@@ -1,4 +1,10 @@
-import { forwardRef, useId } from "react";
+import {
+  forwardRef,
+  useId,
+  useImperativeHandle,
+  useRef,
+  MouseEvent,
+} from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./input.less";
@@ -27,23 +33,31 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
       fieldOverlay,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const defaultId = useId();
 
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
+
     const inputId = id ?? defaultId;
 
-    const hasError = !!error;
-    const hasValue = !!value;
+    const isError = !!error;
 
-    const showErrorIcon = !disabled && hasError;
-    const showCopyBtn = disabled && hasValue && !showErrorIcon;
+    const showErrorIcon = !disabled && isError;
+    const showCopyBtn = disabled && !!value && !showErrorIcon;
     const showClearBtn =
-      !disabled && hasValue && !!onClearField && !showErrorIcon;
+      !disabled && !!value && !!onClearField && !showErrorIcon;
 
     const caption = error || description;
 
     const captionId = caption ? `${inputId}-caption` : undefined;
+
+    const handleClearFieldClick = (event: MouseEvent<HTMLButtonElement>) => {
+      onClearField?.(event);
+      inputRef.current?.focus();
+    };
 
     const handleCopyTextToClipboard = async () => {
       try {
@@ -51,12 +65,15 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
       } catch {}
     };
 
-    const inputClassName = classNames(component("input")(), className);
+    const inputClassName = classNames(
+      component("input")({ error: isError }),
+      className,
+    );
 
     const labelClassName = component(
       "input",
-      "label"
-    )({ error: hasError, required: required });
+      "label",
+    )({ required: required && !disabled });
 
     const fieldContainerClassName = component("input", "field-container")();
 
@@ -64,16 +81,22 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
 
     const errorIconClassName = component("input", "error-icon")();
 
+    const disabledIconClassName = component("input", "disabled-icon")();
+
     const actionIconClassName = component("input", "action-icon")();
 
-    const captionClassName = component("input", "caption")({ error: hasError });
+    const captionClassName = component("input", "caption")();
 
     return (
       <div className={inputClassName}>
         <label htmlFor={inputId}>
           <Typography.Paragraph tag="P4 REGULAR" className={labelClassName}>
             {label}
-            {disabled && <IconLock16Fill />}
+            {disabled && (
+              <span aria-hidden="true" className={disabledIconClassName}>
+                <IconLock16Fill />
+              </span>
+            )}
           </Typography.Paragraph>
         </label>
 
@@ -81,12 +104,12 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
           {fieldOverlay}
           <input
             className={fieldClassName}
-            ref={ref}
+            ref={inputRef}
             id={inputId}
             value={value}
             disabled={disabled}
             required={required}
-            aria-invalid={hasError || undefined}
+            aria-invalid={isError || undefined}
             aria-describedby={captionId}
             {...rest}
           />
@@ -102,18 +125,20 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
               icon={<IconCopy24Fill />}
               variant="transparent"
               size="s"
-              aria-label="Copy"
+              ariaLabel="Копировать значение поля"
               title="Копировать"
             />
           )}
           {showClearBtn && (
             <IconButton
+              // Чтобы кнопка “Очистить” не уводила фокус
+              onMouseDown={(e) => e.preventDefault()}
               className={actionIconClassName}
-              onClick={onClearField}
+              onClick={handleClearFieldClick}
               icon={<IconCross24Outline />}
               variant="transparent"
               size="s"
-              aria-label="Clear"
+              ariaLabel="Очистить значение поля"
               title="Очистить"
             />
           )}
@@ -130,5 +155,5 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
         )}
       </div>
     );
-  }
+  },
 );

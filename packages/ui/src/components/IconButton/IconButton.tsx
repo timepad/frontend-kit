@@ -10,6 +10,8 @@ export const IconButton: FC<IIconButtonProps> = ({
   icon,
   className,
   disabled,
+  ariaLabel,
+  ariaLabelledby,
   type = "button",
   ...rest
 }) => {
@@ -23,7 +25,7 @@ export const IconButton: FC<IIconButtonProps> = ({
     component("icon-button")({
       [`size-${size}`]: true,
     }),
-    className
+    className,
   );
 
   return (
@@ -31,6 +33,8 @@ export const IconButton: FC<IIconButtonProps> = ({
       className={iconButtonClassName}
       type={type}
       disabled={isDisabled}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledby}
       {...rest}
     >
       <div className={component("icon-button", "hover-layer")()} />
