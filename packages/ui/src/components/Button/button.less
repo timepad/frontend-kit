@@ -8,8 +8,9 @@
   cursor: pointer;
   transition: transform 0.05s ease-out;
 
-  &__hover-layer {
+  &::after {
     position: absolute;
+    content: "";
     inset: 0;
     border-radius: inherit;
     background-color: var(--btn-hover);
@@ -87,7 +88,7 @@
   }
 
   &:hover:not(.cbutton__disable):not(:disabled) {
-    .cbutton__hover-layer {
+    &::after {
       opacity: 1;
     }
   }

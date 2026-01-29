@@ -30,8 +30,6 @@ export const Button: FC<IButtonProps> = ({
     className,
   );
 
-  const hoveLayerClassName = component("button", "hover-layer")();
-
   const contentClassName = component(
     "button",
     "content",
@@ -46,8 +44,6 @@ export const Button: FC<IButtonProps> = ({
       disabled={isDisabled}
       {...rest}
     >
-      <span aria-hidden="true" className={hoveLayerClassName} />
-
       <span className={contentClassName}>
         <ButtonLabel size={size}>{label}</ButtonLabel>
 

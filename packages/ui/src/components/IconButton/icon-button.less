@@ -9,8 +9,9 @@
   cursor: pointer;
   transition: transform 0.05s ease-out;
 
-  &__hover-layer {
+  &::after {
     position: absolute;
+    content: "";
     inset: 0;
     border-radius: inherit;
     background-color: var(--btn-hover);
@@ -81,7 +82,7 @@
   }
 
   &:hover:not(.cicon-button__disable):not(:disabled) {
-    .cicon-button__hover-layer {
+    &::after {
       opacity: 1;
     }
   }
