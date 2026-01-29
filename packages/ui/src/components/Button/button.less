@@ -59,7 +59,6 @@
     background-color: var(--btn-tertiary-active);
   }
 
-  &__disable,
   &:disabled {
     color: var(--greyscale-400);
     background-color: var(--btn-inactive);
@@ -87,13 +86,13 @@
     }
   }
 
-  &:hover:not(.cbutton__disable):not(:disabled) {
+  &:hover:not(:disabled) {
     &::after {
       opacity: 1;
     }
   }
 
-  &:active:not(.cbutton__disable):not(:disabled) {
+  &:active:not(:disabled) {
     &.cbutton--size-m {
       transform: scale(0.95); // 40px → ~38px
     }

@@ -19,7 +19,6 @@ const variantOptions = [
   "primary-alternate",
   "secondary",
   "negative",
-  "disable",
   "transparent",
 ] as const satisfies IconButtonVariant[];
 
@@ -44,7 +43,6 @@ const meta = {
 - **primary-alternate** — инверсный primary (для тёмных фонов).
 - **secondary** — нейтральный вариант с меньшим акцентом.
 - **negative** — деструктивные действия (удаление, отмена).
-- **disable** — визуально отключённое, неинтерактивное состояние.
 - **transparent** — минималистичная кнопка без фона для встроенных действий.
       `,
       control: "select",
@@ -188,9 +186,9 @@ export const Negative: Story = {
 
 export const Disable: Story = {
   args: {
-    variant: "disable",
     icon: <IconCross16Outline />,
     ariaLabel: "Close btn",
+    disabled: true,
   },
 };
 

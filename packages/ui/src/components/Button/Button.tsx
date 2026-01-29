@@ -12,17 +12,14 @@ export const Button: FC<IButtonProps> = ({
   iconPosition = "left",
   label,
   className,
-  disabled,
   type = "button",
   ...rest
 }) => {
-  const isDisabled = !!disabled || variant === "disable";
-  const btnVariant: ButtonVariant = isDisabled ? "disable" : variant;
   const hasIcon = !!icon;
 
   const buttonClassName = classNames(
     // button variant: cbutton__primary
-    component("button", btnVariant)(),
+    component("button", variant)(),
     // button size: cbutton cbutton--size-m
     component("button")({
       [`size-${size}`]: true,
@@ -41,7 +38,6 @@ export const Button: FC<IButtonProps> = ({
     <button
       className={buttonClassName}
       type={type}
-      disabled={isDisabled}
       {...rest}
     >
       <span className={contentClassName}>

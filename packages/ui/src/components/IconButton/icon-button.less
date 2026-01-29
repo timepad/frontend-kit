@@ -47,7 +47,6 @@
     background-color: var(--btn-tertiary-active);
   }
 
-  &__disable,
   &:disabled {
     color: var(--greyscale-400);
     background-color: var(--btn-inactive);
@@ -81,13 +80,13 @@
     border-radius: var(--radius-6);
   }
 
-  &:hover:not(.cicon-button__disable):not(:disabled) {
+  &:hover:not(:disabled) {
     &::after {
       opacity: 1;
     }
   }
 
-  &:active:not(.cicon-button__disable):not(:disabled) {
+  &:active:not(:disabled) {
     &.cicon-button--size-m {
       transform: scale(0.95); // 40px → ~38px
     }

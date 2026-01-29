@@ -19,7 +19,6 @@ const variantOptions = [
   "primary-alternate",
   "secondary",
   "negative",
-  "disable",
 ] as const satisfies ButtonVariant[];
 
 const sizeOptions = ["m", "s"] as const satisfies ButtonSize[];
@@ -55,7 +54,6 @@ const meta = {
 - **primary-alternate** — Инверсная primary (обычно для тёмных фонов).
 - **secondary** — Нейтральная кнопка для второстепенных действий.
 - **negative** — Деструктивные действия (удалить, отменить, снять).
-- **disable** — Визуально “выключенное”, неинтерактивное состояние.
       `,
       control: "select",
       options: variantOptions,
@@ -176,6 +174,6 @@ export const Negative: Story = {
 export const Disable: Story = {
   args: {
     label: "Disable",
-    variant: "disable",
+    disabled: true,
   },
 };

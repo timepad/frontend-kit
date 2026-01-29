@@ -14,14 +14,12 @@ export type ButtonSize = "s" | "m";
  * - **primary-alternate**: Инверсная версия primary (обычно для тёмных фонов).
  * - **secondary**: Нейтральная кнопка, меньший акцент.
  * - **negative**: Деструктивные действия (удалить, отменить, снять).
- * - **disable**: Визуально “выключенное”, неинтерактивное состояние.
  */
 export type ButtonVariant =
   | "primary"
   | "primary-alternate"
   | "secondary"
   | "negative"
-  | "disable";
 
 /**
  * Позиция иконки относительно текста кнопки.
