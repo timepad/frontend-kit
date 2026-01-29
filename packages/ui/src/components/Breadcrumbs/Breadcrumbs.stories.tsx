@@ -4,19 +4,15 @@ import { Breadcrumbs } from "./Breadcrumbs";
 import type { IBreadcrumbItem } from "./breadcrumbs.types";
 
 const defaultItems: IBreadcrumbItem[] = [
-  { label: "Home", href: "/" },
-  { label: "Events", href: "/events" },
-  { label: "Frontend Conf 2025", href: "/events/frontend-conf-2025" },
-  { label: "Tickets", href: "/events/frontend-conf-2025/tickets" },
-];
-
-const longItems: IBreadcrumbItem[] = [
-  { label: "Home", href: "/" },
-  { label: "Events", href: "/events" },
-  { label: "Online", href: "/events/online" },
-  { label: "Conferences", href: "/events/online/conferences" },
-  { label: "Frontend Conf 2025", href: "/events/frontend-conf-2025" },
-  { label: "Tickets", href: "/events/frontend-conf-2025/tickets" },
+  { label: "Breadcrumb", href: "/" },
+  { label: "Breadcrumb", href: "/breadcrumb" },
+  { label: "Breadcrumb", href: "/breadcrumb/breadcrumb" },
+  { label: "Breadcrumb", href: "/breadcrumb/breadcrumb/breadcrumb" },
+  { label: "Breadcrumb", href: "/breadcrumb/breadcrumb/breadcrumb/breadcrumb" },
+  {
+    label: "Breadcrumb",
+    href: "/breadcrumb/breadcrumb/breadcrumb/breadcrumb/breadcrumb",
+  },
 ];
 
 const meta = {
@@ -24,6 +20,9 @@ const meta = {
   component: Breadcrumbs,
   parameters: {
     layout: "centered",
+    docs: {
+      codePanel: true,
+    },
   },
   tags: ["autodocs"],
   argTypes: {
@@ -31,22 +30,18 @@ const meta = {
       control: "select",
       options: ["default", "backstep"],
       description: `
-### Breadcrumbs Mode
-
-Controls how the component behaves and renders.
-
 #### **default**
-- Standard hierarchical breadcrumb trail  
-- Renders all items separated by **separator**  
-- All items except the last are clickable links  
-- Last item becomes the **current page** (non-clickable, bold)
+- Стандартная иерархическая цепочка хлебных крошек  
+- Отображает все элементы, разделённые **разделителем**  
+- Все элементы, кроме последнего, являются кликабельными ссылками  
+- Последний элемент считается **текущей страницей** (некликабельный)
 
 #### **backstep**
-- Single-level “go back” pattern  
-- Intended for pages without a visible breadcrumb hierarchy  
-- Uses only the **first item** from \`items\`  
-- Renders a **button** with a left arrow icon and label  
-- Performs an action via \`onClick\` instead of navigation
+- Одноуровневый паттерн «вернуться назад»  
+- Используется на страницах без явной иерархии хлебных крошек  
+- Использует **только первый элемент** из массива \`items\`  
+- Отображает **ссылку** с иконкой стрелки влево и текстом  
+- Выполняет действие через \`onClick\`, а не навигацию
       `,
       table: {
         type: { summary: `"default" | "backstep"` },
@@ -55,40 +50,29 @@ Controls how the component behaves and renders.
     },
     items: {
       control: false,
-      description: "Breadcrumb items array. Configured per story.",
+      description: "Breadcrumb items array.",
     },
   },
+  decorators: [
+    (Story) => (
+      <div style={{ width: 560, display: "grid", placeItems: "center" }}>
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof Breadcrumbs>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-/**
- * Basic breadcrumb trail with 4 items.
- * Last item is treated as the current page.
- */
-export const Basic: Story = {
+export const Default: Story = {
   args: {
     type: "default",
     items: defaultItems,
   },
 };
 
-/**
- * Longer breadcrumb trail example with more levels.
- */
-export const LongTrail: Story = {
-  args: {
-    type: "default",
-    items: longItems,
-  },
-};
-
-/**
- * Backstep mode: renders a single back button with a left arrow.
- * Uses only the first item from \`items\`.
- */
 export const Backstep: Story = {
   args: {
     type: "backstep",
@@ -100,5 +84,12 @@ export const Backstep: Story = {
         },
       },
     ],
+  },
+  argTypes: {
+    type: {
+      table: {
+        disable: true,
+      },
+    },
   },
 };

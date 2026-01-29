@@ -12,43 +12,43 @@ export const Button: FC<IButtonProps> = ({
   iconPosition = "left",
   label,
   className,
-  disabled,
   type = "button",
   ...rest
 }) => {
-  const isDisabled = !!disabled || variant === "disable";
-  const btnVariant: ButtonVariant = isDisabled ? "disable" : variant;
   const hasIcon = !!icon;
 
   const buttonClassName = classNames(
     // button variant: cbutton__primary
-    component("button", btnVariant)(),
+    component("button", variant)(),
     // button size: cbutton cbutton--size-m
     component("button")({
       [`size-${size}`]: true,
     }),
-    className
+    className,
   );
+
+  const contentClassName = component(
+    "button",
+    "content",
+  )({ "icon-position-left": hasIcon && iconPosition === "left" });
+
+  const iconClassName = component("button", "icon")();
 
   return (
     <button
       className={buttonClassName}
       type={type}
-      disabled={isDisabled}
       {...rest}
     >
-      <div className={component("button", "hover-layer")()} />
-
-      <div
-        className={component(
-          "button",
-          "content"
-        )({ "icon-position-left": hasIcon && iconPosition === "left" })}
-      >
+      <span className={contentClassName}>
         <ButtonLabel size={size}>{label}</ButtonLabel>
 
-        {hasIcon && icon}
-      </div>
+        {hasIcon && (
+          <span aria-hidden="true" className={iconClassName}>
+            {icon}
+          </span>
+        )}
+      </span>
     </button>
   );
 };

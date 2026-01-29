@@ -3,12 +3,14 @@
 .cbutton {
   position: relative;
   display: inline-flex;
+  justify-content: center;
   border: none;
   cursor: pointer;
   transition: transform 0.05s ease-out;
 
-  &__hover-layer {
+  &::after {
     position: absolute;
+    content: "";
     inset: 0;
     border-radius: inherit;
     background-color: var(--btn-hover);
@@ -27,6 +29,10 @@
     &--icon-position-left {
       flex-direction: row-reverse;
     }
+  }
+
+  &__icon {
+    display: inline-flex;
   }
 
   &__label {
@@ -53,7 +59,6 @@
     background-color: var(--btn-tertiary-active);
   }
 
-  &__disable,
   &:disabled {
     color: var(--greyscale-400);
     background-color: var(--btn-inactive);
@@ -81,19 +86,19 @@
     }
   }
 
-  &:hover:not(.cbutton__disable):not(:disabled) {
-    .cbutton__hover-layer {
+  &:hover:not(:disabled) {
+    &::after {
       opacity: 1;
     }
   }
 
-  &:active:not(.cbutton__disable):not(:disabled) {
+  &:active:not(:disabled) {
     &.cbutton--size-m {
-      transform: scaleY(0.95); // 40px → ~38px
+      transform: scale(0.95); // 40px → ~38px
     }
 
     &.cbutton--size-s {
-      transform: scaleY(0.9375); // 32px → ~30px
+      transform: scale(0.9375); // 32px → ~30px
     }
   }
 }
