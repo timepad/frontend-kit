@@ -42,6 +42,8 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
 
     const inputId = id ?? defaultId;
 
+    const isRequired = required && !disabled;
+
     const isError = !!error;
 
     const showErrorIcon = !disabled && isError;
@@ -72,7 +74,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
     const labelClassName = component(
       "input",
       "label",
-    )({ required: required && !disabled });
+    )({ required: isRequired });
 
     const fieldContainerClassName = component("input", "field-container")();
 
@@ -106,7 +108,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
             id={inputId}
             value={value}
             disabled={disabled}
-            required={required}
+            required={isRequired}
             aria-invalid={isError || undefined}
             aria-describedby={captionId}
             {...rest}
