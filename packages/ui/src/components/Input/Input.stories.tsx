@@ -142,7 +142,7 @@ export const Disabled: Story = {
 
 type PhoneStory = StoryObj<typeof PhoneInput>;
 
-const PhoneControlled: FC<{ initial?: string }> = ({ initial = "" }) => {
+const PhoneControlled: FC<{ initial?: string; disabled?: boolean }> = ({ initial = "", disabled = false }) => {
   const [value, setValue] = useState(initial);
 
   return (
@@ -152,6 +152,7 @@ const PhoneControlled: FC<{ initial?: string }> = ({ initial = "" }) => {
         onValueChange={setValue}
         label="Телефон"
         placeholders={ {digit : "0"} }
+        disabled={disabled}
       />
       <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
         RAW: <code>{value || "∅"}</code>
@@ -189,7 +190,7 @@ export const PhoneInputWithValue: PhoneStory = {
 };
 
 export const PhoneInputDisabled: PhoneStory = {
-  render: () => <PhoneControlled initial="9123456789" />,
+  render: () => <PhoneControlled initial="9123456789" disabled />,
   args: {
     disabled: true,
   },
@@ -211,7 +212,7 @@ export const PhoneInputDisabled: PhoneStory = {
 
 type TimeStory = StoryObj<typeof TimeInput>;
 
-const TimeControlled: FC<{ initial?: string }> = ({ initial = "" }) => {
+const TimeControlled: FC<{ initial?: string; disabled?: boolean }> = ({ initial = "", disabled = false }) => {
   const [value, setValue] = useState(initial);
 
   return (
@@ -221,6 +222,7 @@ const TimeControlled: FC<{ initial?: string }> = ({ initial = "" }) => {
         onValueChange={setValue}
         label="Время"
         placeholders={{ digit: "0" }}
+        disabled={disabled}
       />
       <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
         RAW: <code>{value || "∅"}</code>
@@ -258,7 +260,7 @@ export const TimeInputWithValue: TimeStory = {
 };
 
 export const TimeInputDisabled: TimeStory = {
-  render: () => <TimeControlled initial="1830" />,
+  render: () => <TimeControlled initial="1830" disabled />,
   args: {
     disabled: true,
   },
@@ -280,7 +282,7 @@ export const TimeInputDisabled: TimeStory = {
 
 type TimeRangeStory = StoryObj<typeof TimeRangeInput>;
 
-const TimeRangeControlled: FC<{ initial?: string }> = ({ initial = "" }) => {
+const TimeRangeControlled: FC<{ initial?: string; disabled?: boolean }> = ({ initial = "", disabled = false }) => {
   const [value, setValue] = useState(initial);
 
   return (
@@ -290,6 +292,7 @@ const TimeRangeControlled: FC<{ initial?: string }> = ({ initial = "" }) => {
         onValueChange={setValue}
         label="Временной диапазон"
         placeholders={{ digit: "0" }}
+        disabled={disabled}
       />
       <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
         RAW: <code>{value || "∅"}</code>
@@ -327,7 +330,7 @@ export const TimeRangeInputWithValue: TimeRangeStory = {
 };
 
 export const TimeRangeInputDisabled: TimeRangeStory = {
-  render: () => <TimeRangeControlled initial="09001800" />,
+  render: () => <TimeRangeControlled initial="09001800" disabled />,
   args: {
     disabled: true,
   },
@@ -349,7 +352,7 @@ export const TimeRangeInputDisabled: TimeRangeStory = {
 
 type PriceStory = StoryObj<typeof PriceInput>;
 
-const PriceControlled: FC<{ initial?: string }> = ({ initial = "" }) => {
+const PriceControlled: FC<{ initial?: string; disabled?: boolean }> = ({ initial = "", disabled = false }) => {
   const [value, setValue] = useState(initial);
 
   return (
@@ -358,6 +361,7 @@ const PriceControlled: FC<{ initial?: string }> = ({ initial = "" }) => {
         value={value}
         onValueChange={setValue}
         label="Цена"
+        disabled={disabled}
       />
       <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
         RAW: <code>{value || "∅"}</code>
@@ -395,7 +399,7 @@ export const PriceInputWithValue: PriceStory = {
 };
 
 export const PriceInputDisabled: PriceStory = {
-  render: () => <PriceControlled initial="5000" />,
+  render: () => <PriceControlled initial="5000" disabled />,
   args: {
     disabled: true,
   },
@@ -434,9 +438,10 @@ export const PriceInputCustomCurrency: PriceStory = {
 
 type DiscountStory = StoryObj<typeof DiscountInput>;
 
-const DiscountControlled: FC<{ initial?: string; discountType?: "percent" | "amount" }> = ({ 
+const DiscountControlled: FC<{ initial?: string; discountType?: "percent" | "amount"; disabled?: boolean }> = ({ 
   initial = "", 
-  discountType = "percent" 
+  discountType = "percent",
+  disabled = false
 }) => {
   const [value, setValue] = useState(initial);
 
@@ -447,6 +452,7 @@ const DiscountControlled: FC<{ initial?: string; discountType?: "percent" | "amo
         onValueChange={setValue}
         label="Скидка"
         discountType={discountType}
+        disabled={disabled}
       />
       <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
         RAW: <code>{value || "∅"}</code>
@@ -501,7 +507,7 @@ export const DiscountInputAmount: DiscountStory = {
 };
 
 export const DiscountInputDisabled: DiscountStory = {
-  render: () => <DiscountControlled initial="25" />,
+  render: () => <DiscountControlled initial="25" disabled />,
   args: {
     disabled: true,
   },
