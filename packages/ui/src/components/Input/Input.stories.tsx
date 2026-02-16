@@ -1,8 +1,18 @@
 import { FC, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
+import type { StoryFn } from "@storybook/react";
 
 import { Input } from "./Input";
+import { PhoneInput } from "./PhoneInput";
+import { TimeInput } from "./TimeInput";
+import { TimeRangeInput } from "./TimeRangeInput";
+import { PriceInput } from "./PriceInput";
+import { DiscountInput } from "./DiscountInput";
 import type { IInputProps } from "./input.types";
+
+// ============================================
+// Base Input Stories
+// ============================================
 
 const meta: Meta<typeof Input> = {
   title: "Components/Input",
@@ -15,7 +25,7 @@ const meta: Meta<typeof Input> = {
     },
   },
   decorators: [
-    (Story) => (
+    (Story: StoryFn) => (
       <div style={{ width: 340 }}>
         <Story />
       </div>
@@ -123,5 +133,386 @@ export const Disabled: Story = {
     description: "Описание поля",
     disabled: true,
     value: "abcd-1234-efgh-5678",
+  },
+};
+
+// ============================================
+// PhoneInput Stories
+// ============================================
+
+type PhoneStory = StoryObj<typeof PhoneInput>;
+
+const PhoneControlled: FC<{ initial?: string }> = ({ initial = "" }) => {
+  const [value, setValue] = useState(initial);
+
+  return (
+    <>
+      <PhoneInput
+        value={value}
+        onValueChange={setValue}
+        label="Телефон"
+        placeholders={ {digit : "0"} }
+      />
+      <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
+        RAW: <code>{value || "∅"}</code>
+      </div>
+    </>
+  );
+};
+
+export const PhoneInputDefault: PhoneStory = {
+  render: () => <PhoneControlled />,
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
+  },
+};
+
+export const PhoneInputWithValue: PhoneStory = {
+  render: () => <PhoneControlled initial="9123456789" />,
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
+  },
+};
+
+export const PhoneInputDisabled: PhoneStory = {
+  render: () => <PhoneControlled initial="9123456789" />,
+  args: {
+    disabled: true,
+  },
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
+  },
+};
+
+// ============================================
+// TimeInput Stories
+// ============================================
+
+type TimeStory = StoryObj<typeof TimeInput>;
+
+const TimeControlled: FC<{ initial?: string }> = ({ initial = "" }) => {
+  const [value, setValue] = useState(initial);
+
+  return (
+    <>
+      <TimeInput
+        value={value}
+        onValueChange={setValue}
+        label="Время"
+        placeholders={{ digit: "0" }}
+      />
+      <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
+        RAW: <code>{value || "∅"}</code>
+      </div>
+    </>
+  );
+};
+
+export const TimeInputDefault: TimeStory = {
+  render: () => <TimeControlled />,
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
+  },
+};
+
+export const TimeInputWithValue: TimeStory = {
+  render: () => <TimeControlled initial="1830" />,
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
+  },
+};
+
+export const TimeInputDisabled: TimeStory = {
+  render: () => <TimeControlled initial="1830" />,
+  args: {
+    disabled: true,
+  },
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
+  },
+};
+
+// ============================================
+// TimeRangeInput Stories
+// ============================================
+
+type TimeRangeStory = StoryObj<typeof TimeRangeInput>;
+
+const TimeRangeControlled: FC<{ initial?: string }> = ({ initial = "" }) => {
+  const [value, setValue] = useState(initial);
+
+  return (
+    <>
+      <TimeRangeInput
+        value={value}
+        onValueChange={setValue}
+        label="Временной диапазон"
+        placeholders={{ digit: "0" }}
+      />
+      <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
+        RAW: <code>{value || "∅"}</code>
+      </div>
+    </>
+  );
+};
+
+export const TimeRangeInputDefault: TimeRangeStory = {
+  render: () => <TimeRangeControlled />,
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
+  },
+};
+
+export const TimeRangeInputWithValue: TimeRangeStory = {
+  render: () => <TimeRangeControlled initial="09001800" />,
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
+  },
+};
+
+export const TimeRangeInputDisabled: TimeRangeStory = {
+  render: () => <TimeRangeControlled initial="09001800" />,
+  args: {
+    disabled: true,
+  },
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
+  },
+};
+
+// ============================================
+// PriceInput Stories
+// ============================================
+
+type PriceStory = StoryObj<typeof PriceInput>;
+
+const PriceControlled: FC<{ initial?: string }> = ({ initial = "" }) => {
+  const [value, setValue] = useState(initial);
+
+  return (
+    <>
+      <PriceInput
+        value={value}
+        onValueChange={setValue}
+        label="Цена"
+      />
+      <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
+        RAW: <code>{value || "∅"}</code>
+      </div>
+    </>
+  );
+};
+
+export const PriceInputDefault: PriceStory = {
+  render: () => <PriceControlled />,
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
+  },
+};
+
+export const PriceInputWithValue: PriceStory = {
+  render: () => <PriceControlled initial="5000" />,
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
+  },
+};
+
+export const PriceInputDisabled: PriceStory = {
+  render: () => <PriceControlled initial="5000" />,
+  args: {
+    disabled: true,
+  },
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
+  },
+};
+
+export const PriceInputCustomCurrency: PriceStory = {
+  render: () => <PriceControlled initial="1000" />,
+  args: {
+    currencySymbol: "$",
+  },
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
+  },
+};
+
+// ============================================
+// DiscountInput Stories
+// ============================================
+
+type DiscountStory = StoryObj<typeof DiscountInput>;
+
+const DiscountControlled: FC<{ initial?: string; discountType?: "percent" | "amount" }> = ({ 
+  initial = "", 
+  discountType = "percent" 
+}) => {
+  const [value, setValue] = useState(initial);
+
+  return (
+    <>
+      <DiscountInput
+        value={value}
+        onValueChange={setValue}
+        label="Скидка"
+        discountType={discountType}
+      />
+      <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
+        RAW: <code>{value || "∅"}</code>
+      </div>
+    </>
+  );
+};
+
+export const DiscountInputDefault: DiscountStory = {
+  render: () => <DiscountControlled />,
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
+  },
+};
+
+export const DiscountInputPercent: DiscountStory = {
+  render: () => <DiscountControlled initial="25" discountType="percent" />,
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
+  },
+};
+
+export const DiscountInputAmount: DiscountStory = {
+  render: () => <DiscountControlled initial="500" discountType="amount" />,
+  args: {
+    discountType: "amount",
+  },
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
+  },
+};
+
+export const DiscountInputDisabled: DiscountStory = {
+  render: () => <DiscountControlled initial="25" />,
+  args: {
+    disabled: true,
+  },
+  parameters: {
+    layout: "centered",
+    decorators: [
+      (Story: StoryFn) => (
+        <div style={{ width: 340 }}>
+          <Story />
+        </div>
+      ),
+    ],
   },
 };

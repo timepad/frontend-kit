@@ -4,7 +4,7 @@ import { component, classNames } from "@frontend-kit/utils";
 import { Input } from "../Input/Input";
 import type { IInputProps } from "../Input/input.types";
 import { useFormattedInput } from "./useFormattedInput";
-import type { ValueFormatter, ValueParser } from "./formattedInput.utils";
+import type { ValueFormatter, ValueParser } from "./formattedInputHelpers";
 
 type Slot = Parameters<typeof useFormattedInput>[0]["suffixSlot"];
 

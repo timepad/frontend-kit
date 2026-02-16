@@ -1,329 +1,35 @@
 import { useLayoutEffect, useMemo, useRef } from "react";
+import type {
+  EditMode,
+  UseMaskedInputParams,
+} from "./useMaskedInput.types";
+import {
+  applyForInputValue,
+  buildVisualTokens,
+  caretFromRawLen,
+  defaultSmartPasteDetector,
+  digitsOnly,
+  extractRawFromInputValue,
+  insertIntoRaw,
+  isRuPhoneMask,
+  isSlotPos,
+  match,
+  maxRawLen,
+  nextSlotPos,
+  normalizeRuPhoneDigitsForSlots,
+  overwriteIntoRaw,
+  parseMask,
+  prevSlotPos,
+  rawIndexFromMaskPos,
+} from "./useMaskedInput.helpers";
 
-type SlotType = "digit" | "letter" | "any";
-type Token =
-  | { type: "slot"; slot: SlotType; placeholder: string }
-  | { type: "lit"; char: string };
-
-export type VisualToken = { char: string; filled: boolean };
-
-type PlaceholderConfig =
-  | string
-  | Partial<Record<SlotType, string>>
-  | ((ctx: { slot: SlotType; maskPos: number; tokenIndex: number }) => string);
-
-// ВАЖНО: placeholder слота может быть валидным символом (например "0").
-// Поэтому в value инпута пустые слоты кодируем отдельным символом,
-// а placeholder рисуем только в overlay.
-const EMPTY_SLOT_CHAR = "\u2007"; // figure space
-
-type EditMode = "shift" | "overwrite";
-type PasteMode = "shift" | "overwrite" | "smart";
-
-type SmartPasteCtx = {
-  mask: string;
-  tokens: Token[];
-  maxLen: number; // slots count
-  digitsOnly: string; // extracted digits from clipboard
-  raw: string; // current raw
-};
-
-type SmartPasteDetector = (ctx: SmartPasteCtx) => "shift" | "overwrite";
-
-const defaultSmartPasteDetector: SmartPasteDetector = ({ maxLen, digitsOnly, raw }) => {
-  // если вставляют почти полный набор слотов (или больше) — это "полная вставка"
-  // и логичнее overwrite с начала/позиции.
-  if (digitsOnly.length >= Math.max(2, maxLen - 1)) return "overwrite";
-  // если поле пустое — overwrite тоже выглядит ожидаемо
-  if (raw.length === 0 && digitsOnly.length > 0) return "overwrite";
-  return "shift";
-};
-
-const resolvePlaceholder = (
-  placeholders: PlaceholderConfig | undefined,
-  slot: SlotType,
-  maskPos: number,
-  tokenIndex: number
-) => {
-  const fallback = "_";
-  if (!placeholders) return fallback;
-  if (typeof placeholders === "string") return placeholders;
-  if (typeof placeholders === "function") return placeholders({ slot, maskPos, tokenIndex });
-  return placeholders[slot] ?? fallback;
-};
-
-const parseMask = (mask: string, placeholders?: PlaceholderConfig): Token[] => {
-  const out: Token[] = [];
-  let esc = false;
-  let maskPos = 0;
-
-  for (let i = 0; i < mask.length; i++) {
-    const ch = mask[i];
-
-    if (esc) {
-      out.push({ type: "lit", char: ch });
-      esc = false;
-      maskPos += 1;
-      continue;
-    }
-
-    if (ch === "\\") {
-      esc = true;
-      continue;
-    }
-
-    if (ch === "9") {
-      out.push({
-        type: "slot",
-        slot: "digit",
-        placeholder: resolvePlaceholder(placeholders, "digit", maskPos, out.length),
-      });
-      maskPos += 1;
-      continue;
-    }
-
-    if (ch === "A") {
-      out.push({
-        type: "slot",
-        slot: "letter",
-        placeholder: resolvePlaceholder(placeholders, "letter", maskPos, out.length),
-      });
-      maskPos += 1;
-      continue;
-    }
-
-    if (ch === "*") {
-      out.push({
-        type: "slot",
-        slot: "any",
-        placeholder: resolvePlaceholder(placeholders, "any", maskPos, out.length),
-      });
-      maskPos += 1;
-      continue;
-    }
-
-    out.push({ type: "lit", char: ch });
-    maskPos += 1;
-  }
-
-  return out;
-};
-
-const maxRawLen = (tokens: Token[]) => tokens.filter((t) => t.type === "slot").length;
-
-const match = (slot: SlotType, ch: string) => {
-  if (slot === "digit") return /[0-9]/.test(ch);
-  if (slot === "letter") return /[a-zA-Z]/.test(ch);
-  return ch !== " ";
-};
-
-// value для input: литералы как есть, заполненные слоты — символ,
-// пустые слоты — EMPTY_SLOT_CHAR (а не placeholder!)
-const applyForInputValue = (raw: string, tokens: Token[]) => {
-  let ri = 0;
-  let res = "";
-
-  for (const t of tokens) {
-    if (t.type === "lit") {
-      res += t.char;
-    } else {
-      const c = raw[ri];
-      if (c !== undefined && match(t.slot, c)) {
-        res += c;
-        ri += 1;
-      } else {
-        res += EMPTY_SLOT_CHAR;
-      }
-    }
-  }
-
-  return res;
-};
-
-// placeholder для overlay: литералы как есть, пустые слоты — token.placeholder
-const buildVisualTokens = (tokens: Token[], raw: string): VisualToken[] => {
-  const boundaryPos = caretFromRawLen(raw.length, tokens);
-  let rawIdx = 0;
-
-  return tokens.map((t, maskPos) => {
-    if (t.type === "lit") {
-      //const filled = raw.length > 0 && maskPos < boundaryPos;
-      const filled = maskPos < boundaryPos;
-      return { char: t.char, filled };
-    }
-
-    const char = raw[rawIdx];
-    if (char !== undefined) {
-      rawIdx += 1;
-      return { char, filled: true };
-    }
-
-    return { char: t.placeholder, filled: false };
-  });
-};
-
-// корректное извлечение raw из input.value: литералы пропускаем,
-// пустые слоты (EMPTY_SLOT_CHAR) игнорируем
-const extractRawFromInputValue = (masked: string, tokens: Token[]) => {
-  let res = "";
-  let mi = 0;
-
-  for (const t of tokens) {
-    const ch = masked[mi];
-    if (ch === undefined) break;
-
-    if (t.type === "lit") {
-      mi += 1;
-      continue;
-    }
-
-    if (ch === EMPTY_SLOT_CHAR) {
-      mi += 1;
-      continue;
-    }
-
-    if (match(t.slot, ch)) res += ch;
-    mi += 1;
-  }
-
-  return res;
-};
-
-const isSlotPos = (maskPos: number, tokens: Token[]) => tokens[maskPos]?.type === "slot";
-
-const nextSlotPos = (fromPos: number, tokens: Token[]) => {
-  for (let p = Math.max(0, fromPos); p < tokens.length; p++) {
-    if (tokens[p]?.type === "slot") return p;
-  }
-  return tokens.length;
-};
-
-const prevSlotPos = (fromPos: number, tokens: Token[]) => {
-  for (let p = Math.min(fromPos, tokens.length - 1); p >= 0; p--) {
-    if (tokens[p]?.type === "slot") return p;
-  }
-  return -1;
-};
-
-const rawIndexFromMaskPos = (maskPos: number, tokens: Token[]) => {
-  let rawIdx = 0;
-  let pos = 0;
-  for (const t of tokens) {
-    if (pos >= maskPos) break;
-    if (t.type === "slot") rawIdx += 1;
-    pos += 1;
-  }
-  return rawIdx;
-};
-
-const caretFromRawLen = (rawLen: number, tokens: Token[]) => {
-  let rawCount = 0;
-  let pos = 0;
-  for (const t of tokens) {
-    if (t.type === "slot") {
-      if (rawCount >= rawLen) return pos;
-      rawCount += 1;
-      pos += 1;
-    } else pos += 1;
-  }
-  return pos;
-};
-
-const normalizeRuPhoneDigitsForSlots = (input: string, slotsCount: number) => {
-  let digits = (input.match(/\d/g) ?? []).join("");
-  if (!digits) return "";
-
-  if (digits.length > 11) digits = digits.slice(-11);
-  if (digits.length === 11 && (digits[0] === "8" || digits[0] === "7")) digits = digits.slice(1);
-  if (digits.length > slotsCount) digits = digits.slice(-slotsCount);
-
-  return digits.slice(0, slotsCount);
-};
-
-const isRuPhoneMask = (mask: string, slotsCount: number) =>
-  mask.includes("+7") && slotsCount === 10;
-
-// overwrite: заменяем по индексу слота, без сдвига хвоста
-const overwriteIntoRaw = (
-  baseRaw: string,
-  insertText: string,
-  tokens: Token[],
-  rawStartIdx: number,
-  maxLen: number
-) => {
-  const slots = tokens.filter((t): t is Extract<Token, { type: "slot" }> => t.type === "slot");
-
-  const rawArr = baseRaw.split("");
-  let idx = rawStartIdx;
-
-  for (const ch of insertText) {
-    const slot = slots[idx];
-    if (!slot) break;
-    if (!match(slot.slot, ch)) continue;
-
-    if (idx < rawArr.length) rawArr[idx] = ch;
-    else rawArr.push(ch);
-
-    idx += 1;
-  }
-
-  const nextRaw = rawArr.join("").slice(0, maxLen);
-  return { nextRaw, nextCaretRaw: Math.min(idx, maxLen) };
-};
-
-// insert-with-shift: вставляем и сдвигаем хвост вправо
-const insertIntoRaw = (
-  baseRaw: string,
-  insertText: string,
-  tokens: Token[],
-  rawStartIdx: number,
-  maxLen: number
-) => {
-  const slots = tokens.filter((t): t is Extract<Token, { type: "slot" }> => t.type === "slot");
-
-  let filtered = "";
-  let idx = rawStartIdx;
-
-  for (const ch of insertText) {
-    const slot = slots[idx];
-    if (!slot) break;
-    if (!match(slot.slot, ch)) continue;
-    filtered += ch;
-    idx += 1;
-  }
-
-  if (!filtered) return { nextRaw: baseRaw, nextCaretRaw: rawStartIdx };
-
-  const nextRaw = (baseRaw.slice(0, rawStartIdx) + filtered + baseRaw.slice(rawStartIdx)).slice(
-    0,
-    maxLen
-  );
-
-  return { nextRaw, nextCaretRaw: Math.min(rawStartIdx + filtered.length, maxLen) };
-};
-
-const digitsOnly = (text: string) => (text.match(/\d/g) ?? []).join("");
-
-export const useMaskedInput = (params: {
-  mask: string;
-  /** RAW value по умолчанию */
-  value: string;
-  /** change отдаёт RAW value */
-  onValueChange: (v: string) => void;
-  disabled?: boolean;
-  readOnly?: boolean;
-  /** Кастомные плейсхолдеры (только для overlay) */
-  placeholders?: PlaceholderConfig;
-  /** Если наружу нужно отдавать masked (редко) */
-  returnMasked?: boolean;
-
-  /** Режим ввода символов с клавиатуры */
-  inputMode?: EditMode; // default: "shift"
-  /** Режим вставки */
-  pasteMode?: PasteMode; // default: "smart"
-  /** Детектор для smart paste */
-  smartPasteDetector?: SmartPasteDetector;
-}) => {
+/**
+ * Хук управления masked-input с поддержкой двух режимов редактирования и smart-вставки.
+ *
+ * @param params - Параметры настройки маски, режимов ввода и обратного вызова изменения.
+ * @returns Набор значений и обработчиков для подключения к инпуту и overlay.
+ */
+export const useMaskedInput = (params: UseMaskedInputParams) => {
   const {
     mask,
     value,

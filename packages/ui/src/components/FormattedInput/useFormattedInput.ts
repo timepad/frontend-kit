@@ -1,32 +1,17 @@
 import { useMemo } from "react";
-import type { ChangeEvent, FocusEvent, FormEvent } from "react";
-import type { ValueFormatter, ValueParser } from "./formattedInput.utils";
+import type { ChangeEvent, FocusEvent } from "react";
+import { getGhostText, getSuffix, limitRawLen } from "./useFormattedInput.helpers";
+import type { UseFormattedInputParams } from "./useFormattedInput.types";
 
-type Slot = (ctx: { raw: string; display: string; isEmpty: boolean }) => React.ReactNode;
+export type { FormattedInputSlot, FormattedInputSlotContext, UseFormattedInputParams } from "./useFormattedInput.types";
 
-export type UseFormattedInputParams = {
-  value: string;
-  onValueChange: (raw: string) => void;
-
-  format?: ValueFormatter;
-  parse?: ValueParser;
-
-  emptyVisual?: string;
-  showEmptyVisual?: boolean;
-
-  /** Ограничение raw (например maxDigits для цены) */
-  maxLen?: number;
-
-  /** Нормализация raw на blur */
-  normalizeOnBlur?: (raw: string) => string;
-
-  /** Слот */
-  suffixSlot?: Slot;
-
-  disabled?: boolean;
-  readOnly?: boolean;
-};
-
+/**
+ * Хук управления форматированным вводом:
+ * конвертирует RAW <-> display, управляет пустым состоянием и обработчиками поля.
+ *
+ * @param params - Параметры форматирования, парсинга и поведения поля.
+ * @returns Данные для рендера (`raw`, `display`, `ghostText`, `suffix`) и обработчики (`handlers`).
+ */
 export const useFormattedInput = (params: UseFormattedInputParams) => {
   const {
     value,
@@ -44,33 +29,52 @@ export const useFormattedInput = (params: UseFormattedInputParams) => {
 
   const raw = String(value ?? "");
 
+  /** Ограниченное по `maxLen` RAW-значение. */
   const limitedRaw = useMemo(() => {
-    if (!maxLen) return raw;
-    return raw.slice(0, maxLen);
+    return limitRawLen(raw, maxLen);
   }, [raw, maxLen]);
 
+  /** Значение для отображения в `input.value`. */
   const display = useMemo(() => format(limitedRaw), [limitedRaw, format]);
+
+  /** Флаг пустого RAW-значения. */
   const isEmpty = limitedRaw.length === 0;
 
+  /** Контекст для слотов и внешней логики отображения. */
   const ctx = useMemo(
     () => ({ raw: limitedRaw, display, isEmpty }),
     [limitedRaw, display, isEmpty]
   );
 
-  const ghostText = isEmpty && showEmptyVisual ? emptyVisual : null;
+  /** Текст overlay для пустого состояния. */
+  const ghostText = getGhostText(isEmpty, showEmptyVisual, emptyVisual);
 
-  const suffix = suffixSlot ? suffixSlot(ctx) : null;
+  /** Контент suffix-слота (если задан). */
+  const suffix = getSuffix(suffixSlot, ctx);
 
+  /**
+   * Отправляет наружу новое RAW-значение с учётом ограничения `maxLen`.
+   *
+   * @param nextRaw - Следующее RAW-значение.
+   */
   const emit = (nextRaw: string) => {
-    const v = maxLen ? nextRaw.slice(0, maxLen) : nextRaw;
+    const v = limitRawLen(nextRaw, maxLen);
     onValueChange(v);
   };
 
+  /**
+   * Обработчик изменения значения инпута.
+   * Парсит `input.value` в RAW и эмитит наружу.
+   */
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e: ChangeEvent<HTMLInputElement>) => {
     if (disabled || readOnly) return;
     emit(parse(e.target.value));
   };
 
+  /**
+   * Обработчик blur:
+   * выполняет опциональную нормализацию RAW и эмитит изменение при необходимости.
+   */
   const onBlur: React.FocusEventHandler<HTMLInputElement> = (e: FocusEvent<HTMLInputElement>) => {
     if (!disabled && !readOnly && normalizeOnBlur) {
       const next = normalizeOnBlur(limitedRaw);

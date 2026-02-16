@@ -3,7 +3,7 @@ import { classNames, component } from "@frontend-kit/utils";
 
 import { Input } from "../Input/Input";
 import type { IInputProps } from "../Input/input.types";
-import { useMaskedInput } from "../../../../hooks/src/useMaskedInput/useMaskedInput";
+import { useMaskedInput } from "./useMaskedInput";
 
 type MaskedInputProps = Omit<
   IInputProps,

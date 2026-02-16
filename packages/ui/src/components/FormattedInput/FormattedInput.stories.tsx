@@ -1,10 +1,9 @@
-// FormattedInput.stories.tsx
-import { FC, useMemo, useState } from "react";
+import { FC, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { FormattedInput } from "./FormattedInput";
 import type { FormattedInputProps } from "./FormattedInput";
-import { parseDigits, formatThousands, normalizeLeadingZeros } from "./formattedInput.utils";
+import { parseDigits, formatThousands, normalizeLeadingZeros } from "./formattedInputHelpers";
 
 const meta: Meta<typeof FormattedInput> = {
   title: "Components/FormattedInput",
