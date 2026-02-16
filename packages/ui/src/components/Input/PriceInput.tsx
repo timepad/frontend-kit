@@ -1,24 +1,14 @@
 import { forwardRef } from "react";
 import { FormattedInput } from "../FormattedInput";
-import type { FormattedInputProps } from "../FormattedInput/FormattedInput";
 import { formatThousands, parseDigits } from "../FormattedInput/formattedInputHelpers";
-
-type PriceInputProps = Omit<
-  FormattedInputProps,
-  "format" | "parse" | "suffixSlot" | "inputMode" | "emptyVisual"
-> & {
-  value: string;
-  onValueChange: (value: string) => void;
-  currencySymbol?: string;
-  label?: string;
-};
+import type { PriceInputProps } from "./input.types";
 
 /**
  * Компонент ввода цены с форматированием
  * Автоматически добавляет символ валюты и форматирует числовое значение
  */
 export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
-  ({ value, onValueChange, currencySymbol = "₽", label, ...rest }, ref) => {
+  ({ value = "", onValueChange = () => {}, currencySymbol = "₽", label, ...rest }, ref) => {
     // Форматирование: разбиение числа на разряды и добавление валюты
     const formatPrice = (raw: string): string => {
       return formatThousands(raw);

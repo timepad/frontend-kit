@@ -1,28 +1,13 @@
 import { forwardRef } from "react";
 import { FormattedInput } from "../FormattedInput";
 import { parseDigits, limitLen } from "../FormattedInput/formattedInputHelpers";
-
-type DiscountInputProps = Omit<
-  React.ComponentProps<typeof FormattedInput>,
-  "format" | "parse" | "suffixSlot" | "value" | "onValueChange"
-> & {
-  /** Значение скидки в процентах или рублях */
-  value: string;
-
-  /** Обработчик изменения значения */
-  onValueChange: (value: string) => void;
-  
-  /** Тип скидки */
-  discountType?: "percent" | "amount";
-  
-  label?: string;
-};
+import type { DiscountInputProps } from "./input.types";
 
 /**
  * Компонент ввода скидки (в процентах или сумме)
  */
 export const DiscountInput = forwardRef<HTMLInputElement, DiscountInputProps>(
-  ({ value, onValueChange, discountType = "percent", label, ...rest }, ref) => {
+  ({ value = "", onValueChange = () => {}, discountType = "percent", label, ...rest }, ref) => {
     // Форматирование: добавляем символ % или валюты
     const formatDiscount = (raw: string): string => {
       if (!raw) return "";

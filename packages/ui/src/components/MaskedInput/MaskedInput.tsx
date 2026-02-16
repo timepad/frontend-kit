@@ -5,7 +5,7 @@ import { Input } from "../Input/Input";
 import type { IInputProps } from "../Input/input.types";
 import { useMaskedInput } from "./useMaskedInput";
 
-type MaskedInputProps = Omit<
+export type MaskedInputProps = Omit<
   IInputProps,
   | "value"
   | "placeholder"

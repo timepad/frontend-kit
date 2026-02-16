@@ -8,7 +8,14 @@ import { TimeInput } from "./TimeInput";
 import { TimeRangeInput } from "./TimeRangeInput";
 import { PriceInput } from "./PriceInput";
 import { DiscountInput } from "./DiscountInput";
-import type { IInputProps } from "./input.types";
+import type {
+  IInputProps,
+  PhoneInputProps,
+  TimeInputProps,
+  TimeRangeInputProps,
+  PriceInputProps,
+  DiscountInputProps,
+} from "./input.types";
 
 // ============================================
 // Base Input Stories
@@ -142,17 +149,17 @@ export const Disabled: Story = {
 
 type PhoneStory = StoryObj<typeof PhoneInput>;
 
-const PhoneControlled: FC<{ initial?: string; disabled?: boolean }> = ({ initial = "", disabled = false }) => {
-  const [value, setValue] = useState(initial);
+const PhoneControlled: FC<PhoneInputProps> = (args) => {
+  const [value, setValue] = useState(args.value ?? "");
 
   return (
     <>
       <PhoneInput
+        {...args}
         value={value}
         onValueChange={setValue}
         label="Телефон"
         placeholders={ {digit : "0"} }
-        disabled={disabled}
       />
       <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
         RAW: <code>{value || "∅"}</code>
@@ -162,7 +169,7 @@ const PhoneControlled: FC<{ initial?: string; disabled?: boolean }> = ({ initial
 };
 
 export const PhoneInputDefault: PhoneStory = {
-  render: () => <PhoneControlled />,
+  render: (args) => <PhoneControlled {...args} />,
   parameters: {
     layout: "centered",
     decorators: [
@@ -176,7 +183,7 @@ export const PhoneInputDefault: PhoneStory = {
 };
 
 export const PhoneInputWithValue: PhoneStory = {
-  render: () => <PhoneControlled initial="9123456789" />,
+  render: (args) => <PhoneControlled {...args} value="9123456789" />,
   parameters: {
     layout: "centered",
     decorators: [
@@ -190,7 +197,7 @@ export const PhoneInputWithValue: PhoneStory = {
 };
 
 export const PhoneInputDisabled: PhoneStory = {
-  render: () => <PhoneControlled initial="9123456789" disabled />,
+  render: (args) => <PhoneControlled {...args} value="9123456789" />,
   args: {
     disabled: true,
   },
@@ -212,17 +219,17 @@ export const PhoneInputDisabled: PhoneStory = {
 
 type TimeStory = StoryObj<typeof TimeInput>;
 
-const TimeControlled: FC<{ initial?: string; disabled?: boolean }> = ({ initial = "", disabled = false }) => {
-  const [value, setValue] = useState(initial);
+const TimeControlled: FC<TimeInputProps> = (args) => {
+  const [value, setValue] = useState(args.value ?? "");
 
   return (
     <>
       <TimeInput
+        {...args}
         value={value}
         onValueChange={setValue}
         label="Время"
         placeholders={{ digit: "0" }}
-        disabled={disabled}
       />
       <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
         RAW: <code>{value || "∅"}</code>
@@ -232,7 +239,7 @@ const TimeControlled: FC<{ initial?: string; disabled?: boolean }> = ({ initial 
 };
 
 export const TimeInputDefault: TimeStory = {
-  render: () => <TimeControlled />,
+  render: (args) => <TimeControlled {...args} />,
   parameters: {
     layout: "centered",
     decorators: [
@@ -246,7 +253,7 @@ export const TimeInputDefault: TimeStory = {
 };
 
 export const TimeInputWithValue: TimeStory = {
-  render: () => <TimeControlled initial="1830" />,
+  render: (args) => <TimeControlled {...args} value="1830" />,
   parameters: {
     layout: "centered",
     decorators: [
@@ -260,7 +267,7 @@ export const TimeInputWithValue: TimeStory = {
 };
 
 export const TimeInputDisabled: TimeStory = {
-  render: () => <TimeControlled initial="1830" disabled />,
+  render: (args) => <TimeControlled {...args} value="1830" />,
   args: {
     disabled: true,
   },
@@ -282,17 +289,17 @@ export const TimeInputDisabled: TimeStory = {
 
 type TimeRangeStory = StoryObj<typeof TimeRangeInput>;
 
-const TimeRangeControlled: FC<{ initial?: string; disabled?: boolean }> = ({ initial = "", disabled = false }) => {
-  const [value, setValue] = useState(initial);
+const TimeRangeControlled: FC<TimeRangeInputProps> = (args) => {
+  const [value, setValue] = useState(args.value ?? "");
 
   return (
     <>
       <TimeRangeInput
+        {...args}
         value={value}
         onValueChange={setValue}
         label="Временной диапазон"
         placeholders={{ digit: "0" }}
-        disabled={disabled}
       />
       <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
         RAW: <code>{value || "∅"}</code>
@@ -302,7 +309,7 @@ const TimeRangeControlled: FC<{ initial?: string; disabled?: boolean }> = ({ ini
 };
 
 export const TimeRangeInputDefault: TimeRangeStory = {
-  render: () => <TimeRangeControlled />,
+  render: (args) => <TimeRangeControlled {...args} />,
   parameters: {
     layout: "centered",
     decorators: [
@@ -316,7 +323,7 @@ export const TimeRangeInputDefault: TimeRangeStory = {
 };
 
 export const TimeRangeInputWithValue: TimeRangeStory = {
-  render: () => <TimeRangeControlled initial="09001800" />,
+  render: (args) => <TimeRangeControlled {...args} value="09001800" />,
   parameters: {
     layout: "centered",
     decorators: [
@@ -330,7 +337,7 @@ export const TimeRangeInputWithValue: TimeRangeStory = {
 };
 
 export const TimeRangeInputDisabled: TimeRangeStory = {
-  render: () => <TimeRangeControlled initial="09001800" disabled />,
+  render: (args) => <TimeRangeControlled {...args} value="09001800" />,
   args: {
     disabled: true,
   },
@@ -352,16 +359,16 @@ export const TimeRangeInputDisabled: TimeRangeStory = {
 
 type PriceStory = StoryObj<typeof PriceInput>;
 
-const PriceControlled: FC<{ initial?: string; disabled?: boolean }> = ({ initial = "", disabled = false }) => {
-  const [value, setValue] = useState(initial);
+const PriceControlled: FC<PriceInputProps> = (args) => {
+  const [value, setValue] = useState(args.value ?? "");
 
   return (
     <>
       <PriceInput
+        {...args}
         value={value}
         onValueChange={setValue}
         label="Цена"
-        disabled={disabled}
       />
       <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
         RAW: <code>{value || "∅"}</code>
@@ -371,7 +378,7 @@ const PriceControlled: FC<{ initial?: string; disabled?: boolean }> = ({ initial
 };
 
 export const PriceInputDefault: PriceStory = {
-  render: () => <PriceControlled />,
+  render: (args) => <PriceControlled {...args} />,
   parameters: {
     layout: "centered",
     decorators: [
@@ -385,7 +392,7 @@ export const PriceInputDefault: PriceStory = {
 };
 
 export const PriceInputWithValue: PriceStory = {
-  render: () => <PriceControlled initial="5000" />,
+  render: (args) => <PriceControlled {...args} value="5000" />,
   parameters: {
     layout: "centered",
     decorators: [
@@ -399,7 +406,7 @@ export const PriceInputWithValue: PriceStory = {
 };
 
 export const PriceInputDisabled: PriceStory = {
-  render: () => <PriceControlled initial="5000" disabled />,
+  render: (args) => <PriceControlled {...args} value="5000" />,
   args: {
     disabled: true,
   },
@@ -416,7 +423,7 @@ export const PriceInputDisabled: PriceStory = {
 };
 
 export const PriceInputCustomCurrency: PriceStory = {
-  render: () => <PriceControlled initial="1000" />,
+  render: (args) => <PriceControlled {...args} value="1000" />,
   args: {
     currencySymbol: "$",
   },
@@ -438,21 +445,16 @@ export const PriceInputCustomCurrency: PriceStory = {
 
 type DiscountStory = StoryObj<typeof DiscountInput>;
 
-const DiscountControlled: FC<{ initial?: string; discountType?: "percent" | "amount"; disabled?: boolean }> = ({ 
-  initial = "", 
-  discountType = "percent",
-  disabled = false
-}) => {
-  const [value, setValue] = useState(initial);
+const DiscountControlled: FC<DiscountInputProps> = (args) => {
+  const [value, setValue] = useState(args.value ?? "");
 
   return (
     <>
       <DiscountInput
+        {...args}
         value={value}
         onValueChange={setValue}
         label="Скидка"
-        discountType={discountType}
-        disabled={disabled}
       />
       <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
         RAW: <code>{value || "∅"}</code>
@@ -462,7 +464,7 @@ const DiscountControlled: FC<{ initial?: string; discountType?: "percent" | "amo
 };
 
 export const DiscountInputDefault: DiscountStory = {
-  render: () => <DiscountControlled />,
+  render: (args) => <DiscountControlled {...args} />,
   parameters: {
     layout: "centered",
     decorators: [
@@ -476,7 +478,7 @@ export const DiscountInputDefault: DiscountStory = {
 };
 
 export const DiscountInputPercent: DiscountStory = {
-  render: () => <DiscountControlled initial="25" discountType="percent" />,
+  render: (args) => <DiscountControlled {...args} value="25" />,
   parameters: {
     layout: "centered",
     decorators: [
@@ -490,7 +492,7 @@ export const DiscountInputPercent: DiscountStory = {
 };
 
 export const DiscountInputAmount: DiscountStory = {
-  render: () => <DiscountControlled initial="500" discountType="amount" />,
+  render: (args) => <DiscountControlled {...args} value="500" />,
   args: {
     discountType: "amount",
   },
@@ -507,7 +509,7 @@ export const DiscountInputAmount: DiscountStory = {
 };
 
 export const DiscountInputDisabled: DiscountStory = {
-  render: () => <DiscountControlled initial="25" disabled />,
+  render: (args) => <DiscountControlled {...args} value="25" />,
   args: {
     disabled: true,
   },
@@ -522,3 +524,4 @@ export const DiscountInputDisabled: DiscountStory = {
     ],
   },
 };
+
