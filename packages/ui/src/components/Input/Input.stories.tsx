@@ -152,13 +152,7 @@ const PhoneControlled: FC<PhoneInputProps> = (args) => {
 
   return (
     <>
-      <PhoneInput
-        {...args}
-        value={value}
-        onValueChange={setValue}
-        label="Телефон"
-        placeholders={ {digit : "0"} }
-      />
+      <PhoneInput {...args} value={value} onValueChange={setValue} />
       <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
         RAW: <code>{value || "∅"}</code>
       </div>
@@ -166,8 +160,19 @@ const PhoneControlled: FC<PhoneInputProps> = (args) => {
   );
 };
 
+const defaultPhoneArgs: PhoneStory["args"] = {
+  label: "Телефон",
+  error: "",
+  value: "",
+  description: "",
+  required: false,
+  disabled: false,
+  placeholders: { digit: "0" },
+};
+
 export const PhoneInputDefault: PhoneStory = {
   render: (args) => <PhoneControlled {...args} />,
+  args: { ...defaultPhoneArgs },
   parameters: {
     layout: "centered",
     decorators: [
@@ -181,7 +186,11 @@ export const PhoneInputDefault: PhoneStory = {
 };
 
 export const PhoneInputWithValue: PhoneStory = {
-  render: (args) => <PhoneControlled {...args} value="9123456789" />,
+  render: (args) => <PhoneControlled {...args} />,
+  args: {
+    ...defaultPhoneArgs,
+    value: "9123456789",
+  },
   parameters: {
     layout: "centered",
     decorators: [
@@ -195,8 +204,10 @@ export const PhoneInputWithValue: PhoneStory = {
 };
 
 export const PhoneInputDisabled: PhoneStory = {
-  render: (args) => <PhoneControlled {...args} value="9123456789" />,
+  render: (args) => <PhoneControlled {...args} />,
   args: {
+    ...defaultPhoneArgs,
+    value: "9123456789",
     disabled: true,
   },
   parameters: {
@@ -222,13 +233,7 @@ const TimeControlled: FC<TimeInputProps> = (args) => {
 
   return (
     <>
-      <TimeInput
-        {...args}
-        value={value}
-        onValueChange={setValue}
-        label="Время"
-        placeholders={{ digit: "0" }}
-      />
+      <TimeInput {...args} value={value} onValueChange={setValue} />
       <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
         RAW: <code>{value || "∅"}</code>
       </div>
@@ -236,8 +241,19 @@ const TimeControlled: FC<TimeInputProps> = (args) => {
   );
 };
 
+const defaultTimeArgs: TimeStory["args"] = {
+  label: "Время",
+  error: "",
+  value: "",
+  description: "",
+  required: false,
+  disabled: false,
+  placeholders: { digit: "0" },
+};
+
 export const TimeInputDefault: TimeStory = {
   render: (args) => <TimeControlled {...args} />,
+  args: { ...defaultTimeArgs },
   parameters: {
     layout: "centered",
     decorators: [
@@ -251,7 +267,11 @@ export const TimeInputDefault: TimeStory = {
 };
 
 export const TimeInputWithValue: TimeStory = {
-  render: (args) => <TimeControlled {...args} value="1830" />,
+  render: (args) => <TimeControlled {...args} />,
+  args: {
+    ...defaultTimeArgs,
+    value: "1830",
+  },
   parameters: {
     layout: "centered",
     decorators: [
@@ -265,8 +285,10 @@ export const TimeInputWithValue: TimeStory = {
 };
 
 export const TimeInputDisabled: TimeStory = {
-  render: (args) => <TimeControlled {...args} value="1830" />,
+  render: (args) => <TimeControlled {...args} />,
   args: {
+    ...defaultTimeArgs,
+    value: "1830",
     disabled: true,
   },
   parameters: {
@@ -294,12 +316,7 @@ const PriceControlled: FC<PriceInputProps> = (args) => {
 
   return (
     <>
-      <PriceInput
-        {...args}
-        value={value}
-        onValueChange={setValue}
-        label="Цена"
-      />
+      <PriceInput {...args} value={value} onValueChange={setValue} />
       <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
         RAW: <code>{value || "∅"}</code>
       </div>
@@ -307,8 +324,19 @@ const PriceControlled: FC<PriceInputProps> = (args) => {
   );
 };
 
+const defaultPriceArgs: PriceStory["args"] = {
+  label: "Цена",
+  error: "",
+  value: "",
+  description: "",
+  required: false,
+  disabled: false,
+  currencySymbol: "₽",
+};
+
 export const PriceInputDefault: PriceStory = {
   render: (args) => <PriceControlled {...args} />,
+  args: { ...defaultPriceArgs },
   parameters: {
     layout: "centered",
     decorators: [
@@ -322,7 +350,11 @@ export const PriceInputDefault: PriceStory = {
 };
 
 export const PriceInputWithValue: PriceStory = {
-  render: (args) => <PriceControlled {...args} value="5000" />,
+  render: (args) => <PriceControlled {...args} />,
+  args: {
+    ...defaultPriceArgs,
+    value: "5000",
+  },
   parameters: {
     layout: "centered",
     decorators: [
@@ -336,8 +368,10 @@ export const PriceInputWithValue: PriceStory = {
 };
 
 export const PriceInputDisabled: PriceStory = {
-  render: (args) => <PriceControlled {...args} value="5000" />,
+  render: (args) => <PriceControlled {...args} />,
   args: {
+    ...defaultPriceArgs,
+    value: "5000",
     disabled: true,
   },
   parameters: {
@@ -353,8 +387,10 @@ export const PriceInputDisabled: PriceStory = {
 };
 
 export const PriceInputCustomCurrency: PriceStory = {
-  render: (args) => <PriceControlled {...args} value="1000" />,
+  render: (args) => <PriceControlled {...args} />,
   args: {
+    ...defaultPriceArgs,
+    value: "1000",
     currencySymbol: "₸",
   },
   parameters: {
@@ -380,12 +416,7 @@ const DiscountControlled: FC<DiscountInputProps> = (args) => {
 
   return (
     <>
-      <DiscountInput
-        {...args}
-        value={value}
-        onValueChange={setValue}
-        label="Скидка"
-      />
+      <DiscountInput {...args} value={value} onValueChange={setValue} />
       <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
         RAW: <code>{value || "∅"}</code>
       </div>
@@ -393,8 +424,19 @@ const DiscountControlled: FC<DiscountInputProps> = (args) => {
   );
 };
 
+const defaultDiscountArgs: DiscountStory["args"] = {
+  label: "Скидка",
+  error: "",
+  value: "",
+  description: "",
+  required: false,
+  disabled: false,
+  discountType: "percent",
+};
+
 export const DiscountInputDefault: DiscountStory = {
   render: (args) => <DiscountControlled {...args} />,
+  args: { ...defaultDiscountArgs },
   parameters: {
     layout: "centered",
     decorators: [
@@ -408,7 +450,11 @@ export const DiscountInputDefault: DiscountStory = {
 };
 
 export const DiscountInputPercent: DiscountStory = {
-  render: (args) => <DiscountControlled {...args} value="25" />,
+  render: (args) => <DiscountControlled {...args} />,
+  args: {
+    ...defaultDiscountArgs,
+    value: "25",
+  },
   parameters: {
     layout: "centered",
     decorators: [
@@ -422,8 +468,10 @@ export const DiscountInputPercent: DiscountStory = {
 };
 
 export const DiscountInputAmount: DiscountStory = {
-  render: (args) => <DiscountControlled {...args} value="500" />,
+  render: (args) => <DiscountControlled {...args} />,
   args: {
+    ...defaultDiscountArgs,
+    value: "500",
     discountType: "amount",
   },
   parameters: {
@@ -439,8 +487,10 @@ export const DiscountInputAmount: DiscountStory = {
 };
 
 export const DiscountInputDisabled: DiscountStory = {
-  render: (args) => <DiscountControlled {...args} value="25" />,
+  render: (args) => <DiscountControlled {...args} />,
   args: {
+    ...defaultDiscountArgs,
+    value: "25",
     disabled: true,
   },
   parameters: {
@@ -454,4 +504,3 @@ export const DiscountInputDisabled: DiscountStory = {
     ],
   },
 };
-
