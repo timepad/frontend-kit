@@ -28,6 +28,9 @@ const meta: Meta<typeof Input> = {
     docs: {
       codePanel: true,
     },
+    controls: {
+      sort: "none",
+    },
   },
   decorators: [
     (Story: StoryFn) => (
@@ -111,6 +114,17 @@ const defaultArgs: Story["args"] = {
   disabled: false,
 };
 
+const defaultControlsOrder = [
+  "label",
+  "placeholder",
+  "error",
+  "value",
+  "description",
+  "required",
+  "disabled",
+  "fieldOverlay",
+];
+
 export const Default: Story = {
   render: (args) => <BaseInput {...args} />,
   args: { ...defaultArgs },
@@ -160,21 +174,26 @@ const PhoneControlled: FC<PhoneInputProps> = (args) => {
   );
 };
 
-const defaultPhoneArgs: PhoneStory["args"] = {
+const defaultPhoneArgs = {
   label: "Телефон",
+  placeholder: "Введите телефон",
   error: "",
   value: "",
   description: "",
   required: false,
   disabled: false,
   placeholders: { digit: "0" },
-};
+} as any;
 
 export const PhoneInputDefault: PhoneStory = {
   render: (args) => <PhoneControlled {...args} />,
-  args: { ...defaultPhoneArgs },
+  args: { ...defaultPhoneArgs } as any,
   parameters: {
     layout: "centered",
+    controls: {
+      sort: "none",
+      include: [...defaultControlsOrder, "placeholders"],
+    },
     decorators: [
       (Story: StoryFn) => (
         <div style={{ width: 340 }}>
@@ -190,9 +209,13 @@ export const PhoneInputWithValue: PhoneStory = {
   args: {
     ...defaultPhoneArgs,
     value: "9123456789",
-  },
+  } as any,
   parameters: {
     layout: "centered",
+    controls: {
+      sort: "none",
+      include: [...defaultControlsOrder, "placeholders"],
+    },
     decorators: [
       (Story: StoryFn) => (
         <div style={{ width: 340 }}>
@@ -209,9 +232,13 @@ export const PhoneInputDisabled: PhoneStory = {
     ...defaultPhoneArgs,
     value: "9123456789",
     disabled: true,
-  },
+  } as any,
   parameters: {
     layout: "centered",
+    controls: {
+      sort: "none",
+      include: [...defaultControlsOrder, "placeholders"],
+    },
     decorators: [
       (Story: StoryFn) => (
         <div style={{ width: 340 }}>
@@ -241,21 +268,26 @@ const TimeControlled: FC<TimeInputProps> = (args) => {
   );
 };
 
-const defaultTimeArgs: TimeStory["args"] = {
+const defaultTimeArgs = {
   label: "Время",
+  placeholder: "00:00",
   error: "",
   value: "",
   description: "",
   required: false,
   disabled: false,
   placeholders: { digit: "0" },
-};
+} as any;
 
 export const TimeInputDefault: TimeStory = {
   render: (args) => <TimeControlled {...args} />,
-  args: { ...defaultTimeArgs },
+  args: { ...defaultTimeArgs } as any,
   parameters: {
     layout: "centered",
+    controls: {
+      sort: "none",
+      include: [...defaultControlsOrder, "placeholders"],
+    },
     decorators: [
       (Story: StoryFn) => (
         <div style={{ width: 340 }}>
@@ -271,9 +303,13 @@ export const TimeInputWithValue: TimeStory = {
   args: {
     ...defaultTimeArgs,
     value: "1830",
-  },
+  } as any,
   parameters: {
     layout: "centered",
+    controls: {
+      sort: "none",
+      include: [...defaultControlsOrder, "placeholders"],
+    },
     decorators: [
       (Story: StoryFn) => (
         <div style={{ width: 340 }}>
@@ -290,9 +326,13 @@ export const TimeInputDisabled: TimeStory = {
     ...defaultTimeArgs,
     value: "1830",
     disabled: true,
-  },
+  } as any,
   parameters: {
     layout: "centered",
+    controls: {
+      sort: "none",
+      include: [...defaultControlsOrder, "placeholders"],
+    },
     decorators: [
       (Story: StoryFn) => (
         <div style={{ width: 340 }}>
@@ -324,21 +364,26 @@ const PriceControlled: FC<PriceInputProps> = (args) => {
   );
 };
 
-const defaultPriceArgs: PriceStory["args"] = {
+const defaultPriceArgs = {
   label: "Цена",
+  placeholder: "0",
   error: "",
   value: "",
   description: "",
   required: false,
   disabled: false,
   currencySymbol: "₽",
-};
+} as any;
 
 export const PriceInputDefault: PriceStory = {
   render: (args) => <PriceControlled {...args} />,
-  args: { ...defaultPriceArgs },
+  args: { ...defaultPriceArgs } as any,
   parameters: {
     layout: "centered",
+    controls: {
+      sort: "none",
+      include: [...defaultControlsOrder, "currencySymbol"],
+    },
     decorators: [
       (Story: StoryFn) => (
         <div style={{ width: 340 }}>
@@ -354,9 +399,13 @@ export const PriceInputWithValue: PriceStory = {
   args: {
     ...defaultPriceArgs,
     value: "5000",
-  },
+  } as any,
   parameters: {
     layout: "centered",
+    controls: {
+      sort: "none",
+      include: [...defaultControlsOrder, "currencySymbol"],
+    },
     decorators: [
       (Story: StoryFn) => (
         <div style={{ width: 340 }}>
@@ -373,9 +422,13 @@ export const PriceInputDisabled: PriceStory = {
     ...defaultPriceArgs,
     value: "5000",
     disabled: true,
-  },
+  } as any,
   parameters: {
     layout: "centered",
+    controls: {
+      sort: "none",
+      include: [...defaultControlsOrder, "currencySymbol"],
+    },
     decorators: [
       (Story: StoryFn) => (
         <div style={{ width: 340 }}>
@@ -392,9 +445,13 @@ export const PriceInputCustomCurrency: PriceStory = {
     ...defaultPriceArgs,
     value: "1000",
     currencySymbol: "₸",
-  },
+  } as any,
   parameters: {
     layout: "centered",
+    controls: {
+      sort: "none",
+      include: [...defaultControlsOrder, "currencySymbol"],
+    },
     decorators: [
       (Story: StoryFn) => (
         <div style={{ width: 340 }}>
@@ -424,21 +481,26 @@ const DiscountControlled: FC<DiscountInputProps> = (args) => {
   );
 };
 
-const defaultDiscountArgs: DiscountStory["args"] = {
+const defaultDiscountArgs = {
   label: "Скидка",
+  placeholder: "0",
   error: "",
   value: "",
   description: "",
   required: false,
   disabled: false,
   discountType: "percent",
-};
+} as any;
 
 export const DiscountInputDefault: DiscountStory = {
   render: (args) => <DiscountControlled {...args} />,
-  args: { ...defaultDiscountArgs },
+  args: { ...defaultDiscountArgs } as any,
   parameters: {
     layout: "centered",
+    controls: {
+      sort: "none",
+      include: [...defaultControlsOrder, "discountType"],
+    },
     decorators: [
       (Story: StoryFn) => (
         <div style={{ width: 340 }}>
@@ -454,9 +516,13 @@ export const DiscountInputPercent: DiscountStory = {
   args: {
     ...defaultDiscountArgs,
     value: "25",
-  },
+  } as any,
   parameters: {
     layout: "centered",
+    controls: {
+      sort: "none",
+      include: [...defaultControlsOrder, "discountType"],
+    },
     decorators: [
       (Story: StoryFn) => (
         <div style={{ width: 340 }}>
@@ -473,9 +539,13 @@ export const DiscountInputAmount: DiscountStory = {
     ...defaultDiscountArgs,
     value: "500",
     discountType: "amount",
-  },
+  } as any,
   parameters: {
     layout: "centered",
+    controls: {
+      sort: "none",
+      include: [...defaultControlsOrder, "discountType"],
+    },
     decorators: [
       (Story: StoryFn) => (
         <div style={{ width: 340 }}>
@@ -492,9 +562,13 @@ export const DiscountInputDisabled: DiscountStory = {
     ...defaultDiscountArgs,
     value: "25",
     disabled: true,
-  },
+  } as any,
   parameters: {
     layout: "centered",
+    controls: {
+      sort: "none",
+      include: [...defaultControlsOrder, "discountType"],
+    },
     decorators: [
       (Story: StoryFn) => (
         <div style={{ width: 340 }}>
