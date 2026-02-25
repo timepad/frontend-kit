@@ -51,3 +51,34 @@ export const normalizeLeadingZeros = (rawDigits: string) => {
  * @returns Строка, обрезанная до max символов, либо исходная строка.
  */
 export const limitLen = (s: string, max?: number) => (max ? s.slice(0, max) : s);
+
+/**
+ * Нормализует значение процентов: ограничивает до 100.
+ *
+ * @param digits - Строка с цифрами.
+ * @returns "100", если значение больше 100, иначе исходное значение.
+ */
+export const normalizePercentValue = (digits: string): string => {
+  const numValue = parseInt(digits);
+  if (!isNaN(numValue) && numValue > 100) {
+    return "100";
+  }
+  return digits;
+};
+
+/**
+ * Нормализует время: дополняет минуты нулями, если введены только часы.
+ *
+ * @param rawDigits - Исходная строка со временем.
+ * @returns Строка с 4 цифрами в формате ЧЧММ.
+ */
+export const normalizeTimeValue = (rawDigits: string): string => {
+  const digits = parseDigits(rawDigits);
+  
+  // Если введено 1-2 цифры (часы), дополняем до 4 символов
+  if (digits.length >= 1 && digits.length <= 2) {
+    return digits.padEnd(4, "0");
+  }
+  
+  return digits;
+};

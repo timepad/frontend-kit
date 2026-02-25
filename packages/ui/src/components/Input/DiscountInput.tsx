@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import { FormattedInput } from "../FormattedInput";
-import { parseDigits, limitLen } from "../FormattedInput/formattedInputHelpers";
+import { parseDigits, limitLen, normalizePercentValue, formatThousands } from "../FormattedInput/formattedInputHelpers";
 import type { DiscountInputProps } from "./input.types";
 
 /**
@@ -17,21 +17,24 @@ export const DiscountInput = forwardRef<HTMLInputElement, DiscountInputProps>(
       
       // Если это проценты, ограничиваем до 100%
       if (discountType === "percent") {
-        const numValue = parseInt(digits);
-        if (!isNaN(numValue) && numValue > 100) {
-          return "100";
-        }
         // Ограничиваем до 3 знаков для процентов
-        return limitLen(digits, 3);
+        return limitLen(normalizePercentValue(digits), 3);
       }
 
-      // Для суммы просто возвращаем цифры
-      return digits;
+      // Для суммы форматируем тысячи
+      return formatThousands(digits);
     };
 
-    // Парсинг: возвращаем только цифры
+    // Парсинг: возвращаем только цифры с нормализацией
     const parseDiscount = (formatted: string): string => {
-      return parseDigits(formatted);
+      const digits = parseDigits(formatted);
+      
+      // Нормализуем проценты: если > 100, возвращаем 100
+      if (discountType === "percent") {
+        return normalizePercentValue(digits);
+      }
+      
+      return digits;
     };
 
     // Суффикс в зависимости от типа скидки

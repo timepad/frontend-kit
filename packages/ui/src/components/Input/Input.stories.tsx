@@ -5,14 +5,12 @@ import type { StoryFn } from "@storybook/react";
 import { Input } from "./Input";
 import { PhoneInput } from "./PhoneInput";
 import { TimeInput } from "./TimeInput";
-import { TimeRangeInput } from "./TimeRangeInput";
 import { PriceInput } from "./PriceInput";
 import { DiscountInput } from "./DiscountInput";
 import type {
   IInputProps,
   PhoneInputProps,
   TimeInputProps,
-  TimeRangeInputProps,
   PriceInputProps,
   DiscountInputProps,
 } from "./input.types";
@@ -283,75 +281,7 @@ export const TimeInputDisabled: TimeStory = {
   },
 };
 
-// ============================================
-// TimeRangeInput Stories
-// ============================================
 
-type TimeRangeStory = StoryObj<typeof TimeRangeInput>;
-
-const TimeRangeControlled: FC<TimeRangeInputProps> = (args) => {
-  const [value, setValue] = useState(args.value ?? "");
-
-  return (
-    <>
-      <TimeRangeInput
-        {...args}
-        value={value}
-        onValueChange={setValue}
-        label="Временной диапазон"
-        placeholders={{ digit: "0" }}
-      />
-      <div style={{ marginTop: 12, fontSize: 12, opacity: 0.8 }}>
-        RAW: <code>{value || "∅"}</code>
-      </div>
-    </>
-  );
-};
-
-export const TimeRangeInputDefault: TimeRangeStory = {
-  render: (args) => <TimeRangeControlled {...args} />,
-  parameters: {
-    layout: "centered",
-    decorators: [
-      (Story: StoryFn) => (
-        <div style={{ width: 340 }}>
-          <Story />
-        </div>
-      ),
-    ],
-  },
-};
-
-export const TimeRangeInputWithValue: TimeRangeStory = {
-  render: (args) => <TimeRangeControlled {...args} value="09001800" />,
-  parameters: {
-    layout: "centered",
-    decorators: [
-      (Story: StoryFn) => (
-        <div style={{ width: 340 }}>
-          <Story />
-        </div>
-      ),
-    ],
-  },
-};
-
-export const TimeRangeInputDisabled: TimeRangeStory = {
-  render: (args) => <TimeRangeControlled {...args} value="09001800" />,
-  args: {
-    disabled: true,
-  },
-  parameters: {
-    layout: "centered",
-    decorators: [
-      (Story: StoryFn) => (
-        <div style={{ width: 340 }}>
-          <Story />
-        </div>
-      ),
-    ],
-  },
-};
 
 // ============================================
 // PriceInput Stories
@@ -425,7 +355,7 @@ export const PriceInputDisabled: PriceStory = {
 export const PriceInputCustomCurrency: PriceStory = {
   render: (args) => <PriceControlled {...args} value="1000" />,
   args: {
-    currencySymbol: "$",
+    currencySymbol: "₸",
   },
   parameters: {
     layout: "centered",

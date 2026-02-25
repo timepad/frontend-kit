@@ -54,23 +54,6 @@ export type TimeInputProps = Omit<
 };
 
 // ============================================
-// Time Range Input
-// ============================================
-
-export type TimeRangeInputProps = Omit<
-  MaskedInputProps,
-  "mask" | "value" | "onValueChange"
-> & {
-  /** Значение диапазона времени в формате "HHMM-HHMM" (RAW value) */
-  value?: string;
-
-  /** Обработчик изменения значения (возвращает RAW value) */
-  onValueChange?: (value: string) => void;
-  
-  label?: string;
-};
-
-// ============================================
 // Price Input
 // ============================================
 
