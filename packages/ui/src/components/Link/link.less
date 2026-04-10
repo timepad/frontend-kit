@@ -1,0 +1,68 @@
+@import "../../assets/tokens/index.less";
+
+.clink {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--dark-purple);
+  font-weight: 500;
+  border-radius: var(--radius-6);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+
+  &--state-default {
+    text-decoration: none;
+    color: var(--dark-purple);
+  }
+
+  &--state-hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    color: var(--dark-purple);
+  }
+
+  &--size-S {
+    font-size: 16px;
+    line-height: 16px;
+  }
+
+  &--size-M {
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+  &--size-L {
+    font-size: 24px;
+    line-height: 24px;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-4);
+
+    &--icon-position-left {
+      flex-direction: row-reverse;
+    }
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+  }
+
+  &__text {
+    display: inline-block;
+  }
+}
