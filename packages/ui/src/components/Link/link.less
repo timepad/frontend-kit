@@ -4,42 +4,17 @@
   display: inline-flex;
   align-items: center;
   text-decoration: none;
-  color: var(--dark-purple);
-  font-weight: 500;
   border-radius: var(--radius-6);
   cursor: pointer;
-  transition: all 0.2s ease;
-  background: transparent;
 
-  &--state-default {
-    text-decoration: none;
-    color: var(--dark-purple);
-  }
-
-  &--state-hover {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    color: var(--dark-purple);
-  }
-
-  &--size-S {
-    font-size: 16px;
-    line-height: 16px;
-  }
-
-  &--size-M {
-    font-size: 20px;
-    line-height: 20px;
-  }
-
-  &--size-L {
-    font-size: 24px;
-    line-height: 24px;
+  &:hover {
+    .clink__text {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+    }
   }
 
   &__content {
-    position: relative;
-    z-index: 1;
     display: inline-flex;
     align-items: center;
     gap: var(--space-4);
@@ -64,5 +39,26 @@
 
   &__text {
     display: inline-block;
+    color: var(--dark-purple) !important;
+
+    text-decoration: none;
+  }
+
+  &--size-s {
+    .clink__text {
+      text-underline-offset: 3px;
+    }
+  }
+
+  &--size-m {
+    .clink__text {
+      text-underline-offset: 4px;
+    }
+  }
+
+  &--size-l {
+    .clink__text {
+      text-underline-offset: 5px;
+    }
   }
 }

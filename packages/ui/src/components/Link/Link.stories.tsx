@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Link } from "./Link";
-import { LinkSizeType, LinkStateType, IconPositionType } from "./link.types";
+import { LinkSizeType, IconPositionType } from "./link.types";
 import { IconCheck16Outline } from "../../assets/icons";
 
-const sizeOptions = ["S", "M", "L"] as const satisfies LinkSizeType[];
-const stateOptions = ["default", "hover"] as const satisfies LinkStateType[];
+const sizeOptions = ["s", "m", "l"] as const satisfies LinkSizeType[];
 const iconPositionOptions = ["left", "right"] as const satisfies IconPositionType[];
 
 const meta = {
@@ -32,22 +31,6 @@ const meta = {
             table: {
                 type: { summary: `"S" | "M" | "L"` },
                 defaultValue: { summary: "M" },
-            },
-        },
-        state: {
-            description: `
-Состояние ссылки.
-
-- **default** — обычное состояние (подчеркивание **только при наведении**)
-- **hover** — всегда подчеркнута (даже без наведения)
-
-Если не указан, работает как **default**.
-      `,
-            control: "select",
-            options: stateOptions,
-            table: {
-                type: { summary: `"default" | "hover"` },
-                defaultValue: { summary: "default" },
             },
         },
         icon: {
@@ -121,28 +104,14 @@ export const SizeS: Story = {
     args: {} as any,
     render: () => (
         <div style={{ display: "flex", gap: "32px", alignItems: "center", flexWrap: "wrap" }}>
-            <Link to="#" size="S" state="default">
+            <Link to="#" size="s">
                 Size S default
             </Link>
-            <Link to="#" size="S" state="hover">
-                Size S hover
-            </Link>
-        </div>
-    ),
-};
-
-export const SizeSWithIcon: Story = {
-    args: {} as any,
-    render: () => (
-        <div style={{ display: "flex", gap: "32px", alignItems: "center", flexWrap: "wrap" }}>
-            <Link to="#" size="S" icon={<IconCheck16Outline />}>
+            <Link to="#" size="s" icon={<IconCheck16Outline />}>
                 Icon left
             </Link>
-            <Link to="#" size="S" icon={<IconCheck16Outline />} iconPosition="right">
+            <Link to="#" size="s" icon={<IconCheck16Outline />} iconPosition="right">
                 Icon right
-            </Link>
-            <Link to="#" size="S" state="hover" icon={<IconCheck16Outline />}>
-                Hover with icon
             </Link>
         </div>
     ),
@@ -153,28 +122,14 @@ export const SizeM: Story = {
     args: {} as any,
     render: () => (
         <div style={{ display: "flex", gap: "32px", alignItems: "center", flexWrap: "wrap" }}>
-            <Link to="#" size="M" state="default">
+            <Link to="#" size="m">
                 Size M default
             </Link>
-            <Link to="#" size="M" state="hover">
-                Size M hover
-            </Link>
-        </div>
-    ),
-};
-
-export const SizeMWithIcon: Story = {
-    args: {} as any,
-    render: () => (
-        <div style={{ display: "flex", gap: "32px", alignItems: "center", flexWrap: "wrap" }}>
-            <Link to="#" size="M" icon={<IconCheck16Outline />}>
+            <Link to="#" size="m" icon={<IconCheck16Outline />}>
                 Icon left
             </Link>
-            <Link to="#" size="M" icon={<IconCheck16Outline />} iconPosition="right">
+            <Link to="#" size="m" icon={<IconCheck16Outline />} iconPosition="right">
                 Icon right
-            </Link>
-            <Link to="#" size="M" state="hover" icon={<IconCheck16Outline />}>
-                Hover with icon
             </Link>
         </div>
     ),
@@ -185,28 +140,14 @@ export const SizeL: Story = {
     args: {} as any,
     render: () => (
         <div style={{ display: "flex", gap: "32px", alignItems: "center", flexWrap: "wrap" }}>
-            <Link to="#" size="L" state="default">
+            <Link to="#" size="l">
                 Size L default
             </Link>
-            <Link to="#" size="L" state="hover">
-                Size L hover
-            </Link>
-        </div>
-    ),
-};
-
-export const SizeLWithIcon: Story = {
-    args: {} as any,
-    render: () => (
-        <div style={{ display: "flex", gap: "32px", alignItems: "center", flexWrap: "wrap" }}>
-            <Link to="#" size="L" icon={<IconCheck16Outline />}>
+            <Link to="#" size="l" icon={<IconCheck16Outline />}>
                 Icon left
             </Link>
-            <Link to="#" size="L" icon={<IconCheck16Outline />} iconPosition="right">
+            <Link to="#" size="l" icon={<IconCheck16Outline />} iconPosition="right">
                 Icon right
-            </Link>
-            <Link to="#" size="L" state="hover" icon={<IconCheck16Outline />}>
-                Hover with icon
             </Link>
         </div>
     ),

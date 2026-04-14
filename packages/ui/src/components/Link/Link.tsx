@@ -1,27 +1,24 @@
-import React, {useState} from 'react';
-import {ILinkProps} from "./link.types";
-import "./link.less";
+import React, {FC} from 'react';
 import {classNames, component} from "@frontend-kit/utils";
 
-export function Link({
+import "./link.less";
+import {ILinkProps} from "./link.types";
+import {LinkLabel} from "./LinkLabel";
+
+export const Link: FC<ILinkProps> = ({
                          to,
                          external = false,
                          navigate,
                          onClick,
                          target,
                          rel,
-                         size = 'M',
+                         size = 'm',
                          icon,
                          iconPosition = 'left',
-                         state = 'default',
                          className = '',
                          children,
                          ...rest
-                     }: ILinkProps) {
-    const [isHovered, setIsHovered] = useState(false);
-
-    const currentState = state === 'hover' || isHovered ? 'hover' : 'default';
-
+                     }) => {
     const hasIcon = !!icon;
 
     const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -41,18 +38,15 @@ export function Link({
     const linkClassName = classNames(
         component("link")({
             [`size-${size}`]: true,
-            [`state-${currentState}`]: true,
         }),
         className,
     )
 
-    const contentClassName = component("link", "content")({ "icon-position-left": hasIcon && iconPosition === "left" });
-
     const content = (
-        <span className={contentClassName}>
-            <span className={component("link", "text")()}>{children}</span>
+        <span className={component("link", "content")({ "icon-position-left": hasIcon && iconPosition === "left" })}>
+            <LinkLabel size={size}>{children}</LinkLabel>
             {hasIcon && (
-                <span className={component("link", "icon")()}>{icon}</span>
+                <span className={component("link", "icon")()} aria-hidden="true">{icon}</span>
                 )
             }
         </span>
@@ -64,8 +58,6 @@ export function Link({
             className={linkClassName}
             target={target}
             rel={external && target === '_blank' ? rel ?? 'noopener noreferrer' : rel}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
             onClick={handleClick}
             {...rest}
         >
