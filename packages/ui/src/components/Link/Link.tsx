@@ -42,11 +42,14 @@ export const Link: FC<ILinkProps> = ({
         className,
     )
 
+    const linkIconClassName = component("link", "icon")();
+    const contentClassName = component("link", "content")({ "icon-position-left": hasIcon && iconPosition === "left" });
+
     const content = (
-        <span className={component("link", "content")({ "icon-position-left": hasIcon && iconPosition === "left" })}>
+        <span className={contentClassName}>
             <LinkLabel size={size}>{children}</LinkLabel>
             {hasIcon && (
-                <span className={component("link", "icon")()} aria-hidden="true">{icon}</span>
+                <span className={linkIconClassName} aria-hidden="true">{icon}</span>
                 )
             }
         </span>

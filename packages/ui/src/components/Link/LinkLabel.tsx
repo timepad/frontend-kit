@@ -6,14 +6,14 @@ import {Typography} from "../Typography";
 import {ILinkTextProps} from "./link.types";
 
 export const LinkLabel: FC<ILinkTextProps> = ({ size, children }) => {
-    const linkTextClassName = component("link", "text")();
+    const linkLabelClassName = component("link", "label")();
 
     if (size === 'm') {
         return (
             <Typography.Paragraph
                 tag="P4 REGULAR"
                 as="span"
-                className={linkTextClassName}
+                className={linkLabelClassName}
             >
                 {children}
             </Typography.Paragraph>
@@ -25,7 +25,7 @@ export const LinkLabel: FC<ILinkTextProps> = ({ size, children }) => {
             <Typography.Paragraph
                 tag="P3 REGULAR"
                 as="span"
-                className={linkTextClassName}
+                className={linkLabelClassName}
             >
                 {children}
             </Typography.Paragraph>
@@ -37,7 +37,7 @@ export const LinkLabel: FC<ILinkTextProps> = ({ size, children }) => {
         <Typography.Caption
             tag="C1 REGULAR"
             as="span"
-            className={linkTextClassName}
+            className={linkLabelClassName}
         >
             {children}
         </Typography.Caption>
