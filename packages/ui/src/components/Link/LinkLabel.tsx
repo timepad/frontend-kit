@@ -3,9 +3,9 @@ import {component} from "@frontend-kit/utils";
 
 import "./link.less";
 import {Typography} from "../Typography";
-import {ILinkTextProps} from "./link.types";
+import {ILinkLabelProps} from "./link.types";
 
-export const LinkLabel: FC<ILinkTextProps> = ({ size, children }) => {
+export const LinkLabel: FC<ILinkLabelProps> = ({ size, children }) => {
     const linkLabelClassName = component("link", "label")();
 
     if (size === 'm') {

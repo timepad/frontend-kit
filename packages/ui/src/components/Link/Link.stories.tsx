@@ -22,15 +22,15 @@ const meta = {
             description: `
 Размер ссылки:
 
-- **S** — 16px / 16px
-- **M** — 20px / 20px (по умолчанию)
-- **L** — 24px / 24px
+- **s** — 16px / 16px
+- **m** — 20px / 20px (по умолчанию)
+- **l** — 24px / 24px
 `,
             control: "select",
             options: sizeOptions,
             table: {
-                type: { summary: `"S" | "M" | "L"` },
-                defaultValue: { summary: "M" },
+                type: { summary: `"s" | "m" | "l"` },
+                defaultValue: { summary: "m" },
             },
         },
         icon: {
@@ -99,7 +99,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Размер S
+// Размер s
 export const SizeS: Story = {
     args: {} as any,
     render: () => (
@@ -117,7 +117,7 @@ export const SizeS: Story = {
     ),
 };
 
-// Размер M
+// Размер m
 export const SizeM: Story = {
     args: {} as any,
     render: () => (
@@ -135,7 +135,7 @@ export const SizeM: Story = {
     ),
 };
 
-// Размер L
+// Размер l
 export const SizeL: Story = {
     args: {} as any,
     render: () => (
