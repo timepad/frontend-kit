@@ -1,0 +1,155 @@
+@import "../../assets/tokens/index.less";
+
+// Модификаторы размера с column-gap. Вызывать внутри блока — & берётся из контекста.
+.size-column-gaps(@gap-s; @gap-m; @gap-l) {
+  &--size-s {
+    column-gap: @gap-s;
+  }
+  &--size-m {
+    column-gap: @gap-m;
+  }
+  &--size-l {
+    column-gap: @gap-l;
+  }
+}
+
+// Модификатор размера для поля чекбокса.
+.field-size(@size-name; @w; @h; @margin; @border-width; @radius) {
+  &--size-@{size-name} {
+    width: @w;
+    height: @h;
+    margin: @margin;
+    border-width: @border-width;
+    border-radius: @radius;
+  }
+}
+
+.ccheckbox {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  cursor: pointer;
+
+  .size-column-gaps(var(--space-6), var(--space-8), var(--space-12));
+
+  &:hover:not(:has(&__field:disabled))::after {
+    content: "";
+    position: absolute;
+    inset: -5px -12px;
+    background-color: var(--btn-hover);
+    border-radius: var(--radius-16);
+    z-index: -1;
+  }
+
+  &:has(&__field:disabled) {
+    cursor: not-allowed;
+    pointer-events: none;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  &__label {
+    display: flex;
+    color: var(--text-primary) !important;
+
+    & > :nth-child(2) {
+      color: var(--text-tertiary) !important;
+    }
+
+    .size-column-gaps(var(--space-4), var(--space-6), var(--space-8));
+  }
+
+  &__description {
+    color: var(--text-secondary) !important;
+  }
+
+  &__control {
+    position: relative;
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
+  &__field {
+    display: block;
+    flex-shrink: 0;
+    position: relative;
+    appearance: none;
+    margin: 0;
+    border-radius: var(--radius-4);
+    border-style: solid;
+    border-color: var(--greyscale-300);
+    background-color: var(--bg-primary);
+
+
+    &:checked {
+      border-color: var(--btn-primary-active);
+      background-color: var(--btn-primary-active);
+    }
+
+    &--indeterminate {
+      border-color: var(--btn-primary-active);
+      background-color: var(--btn-primary-active);
+    }
+
+    &:hover:not(&--error):not(:disabled) {
+      border-color: var(--btn-primary-active);
+    }
+
+    &:disabled {
+      border-color: var(--greyscale-300);
+      background-color: var(--bg-disabled);
+    }
+
+    &:disabled:checked,
+    &:disabled&--indeterminate {
+      border-color: transparent;
+      background-color: var(--btn-inactive);
+    }
+
+    &--error:not(:disabled) {
+      border-color: #F95721;
+
+      &:checked,
+      &.ccheckbox__field--indeterminate {
+        background-color: var(--accent-negative);
+        border-color: transparent;
+      }
+    }
+
+    .field-size(s, 16px, 16px, 2px, 1px, 4px);
+    .field-size(m, 18px, 18px, 3px, 1.5px, 6px);
+    .field-size(l, 24px, 24px, 4px, 2px, 8px);
+  }
+
+  &__icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    pointer-events: none;
+    opacity: 0;
+
+    svg {
+      display: block;
+      flex-shrink: 0;
+    }
+
+    * {
+      fill: var(--greyscale-100);
+    }
+
+    &--visible {
+      opacity: 1;
+    }
+  }
+
+  &__field:disabled + &__icon {
+    * {
+      fill: var(--9B9FA6);
+    }
+  }
+}
