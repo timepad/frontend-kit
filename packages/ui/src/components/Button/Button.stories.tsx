@@ -19,9 +19,10 @@ const variantOptions = [
   "primary-alternate",
   "secondary",
   "negative",
+  "transparent",
 ] as const satisfies ButtonVariant[];
 
-const sizeOptions = ["m", "s"] as const satisfies ButtonSize[];
+const sizeOptions = ["l", "m", "s"] as const satisfies ButtonSize[];
 
 const iconPositionOptions = ["left", "right"] as const satisfies IconPosition[];
 
@@ -54,6 +55,7 @@ const meta = {
 - **primary-alternate** — Инверсная primary (обычно для тёмных фонов).
 - **secondary** — Нейтральная кнопка для второстепенных действий.
 - **negative** — Деструктивные действия (удалить, отменить, снять).
+- **transparent** — Прозрачная.
       `,
       control: "select",
       options: variantOptions,
@@ -68,6 +70,7 @@ const meta = {
 
 - **s** — Компактная кнопка с уменьшенными отступами.
 - **m** — Размер по умолчанию.
+- **l** — Кнопка для мобильных версий / модальных окон.
       `,
       control: "select",
       options: sizeOptions,
@@ -168,6 +171,13 @@ export const Negative: Story = {
   args: {
     label: "Negative",
     variant: "negative",
+  },
+};
+
+export const Transparent: Story = {
+  args: {
+    label: "Transparent",
+    variant: "transparent",
   },
 };
 
