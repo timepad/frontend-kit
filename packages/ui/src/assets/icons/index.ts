@@ -59,6 +59,12 @@ import IconCopy32Outline from "./actions/Copy-32-Outline.svg?react";
 import IconCross16Outline from "./actions/Cross-16-Outline.svg?react";
 import IconCross24Outline from "./actions/Cross-24-Outline.svg?react";
 import IconCross32Outline from "./actions/Cross-32-Outline.svg?react";
+import IconDelete16Outline from "./actions/Delete-16-Outline.svg?react";
+import IconDelete16Fill from "./actions/Delete-16-Fill.svg?react";
+import IconDelete24Outline from "./actions/Delete-24-Outline.svg?react";
+import IconDelete24Fill from "./actions/Delete-24-Fill.svg?react";
+import IconDelete32Outline from "./actions/Delete-32-Outline.svg?react";
+import IconDelete32Fill from "./actions/Delete-32-Fill.svg?react";
 import IconCrossCircle24Fill from "./actions/CrossCircle-24-Fill.svg?react";
 import IconCrossCircle24Outline from "./actions/CrossCircle-24-Outline.svg?react";
 import IconCrossCircle32Fill from "./actions/CrossCircle-32-Fill.svg?react";
@@ -178,6 +184,18 @@ export {
   IconCrossCircle24Outline,
   IconCrossCircle32Fill,
   IconCrossCircle32Outline,
+  IconDelete16Outline,
+  IconDelete16Fill,
+  IconDelete24Outline,
+  IconDelete24Fill,
+  IconDelete32Outline,
+  IconDelete32Fill,
+  IconLock16Fill,
+  IconLock16Outline,
+  IconLock24Fill,
+  IconLock24Outline,
+  IconLock32Fill,
+  IconLock32Outline,
   IconEdit24Outline,
   IconEdit32Outline,
   IconFullscreen32Outline,
@@ -185,12 +203,6 @@ export {
   IconHide32Outline,
   IconLink24Outline,
   IconLink32Outline,
-  IconLock16Fill,
-  IconLock16Outline,
-  IconLock24Fill,
-  IconLock24Outline,
-  IconLock32Fill,
-  IconLock32Outline,
   IconLogin32Outline,
   IconLogout32Outline,
   IconMinimize32Outline,
