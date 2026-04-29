@@ -1,3 +1,43 @@
+//actions
+
+//alerts
+import IconInfoCirle16Fill from "./alerts/InfoCirle-16-Fill.svg?react";
+import IconInfoCirle16Outline from "./alerts/InfoCirle-16-Outline.svg?react";
+import IconInfoCirle24Fill from "./alerts/InfoCirle-24-Fill.svg?react";
+import IconInfoCirle24Outline from "./alerts/InfoCirle-24-Outline.svg?react";
+import IconInfoCirle32Fill from "./alerts/InfoCirle-32-Fill.svg?react";
+import IconInfoCirle32Outline from "./alerts/InfoCirle-32-Outline.svg?react";
+import IconInfoHexagon16Fill from "./alerts/InfoHexagon-16-Fill.svg?react";
+import IconInfoHexagon16Outline from "./alerts/InfoHexagon-16-Outline.svg?react";
+import IconInfoHexagon24Fill from "./alerts/InfoHexagon-24-Fill.svg?react";
+import IconInfoHexagon24Outline from "./alerts/InfoHexagon-24-Outline.svg?react";
+import IconInfoHexagon32Fill from "./alerts/InfoHexagon-32-Fill.svg?react";
+import IconInfoHexagon32Outline from "./alerts/InfoHexagon-32-Outline.svg?react";
+import IconQuestionCircle16Fill from "./alerts/QuestionCircle-16-Fill.svg?react";
+import IconQuestionCircle16Outline from "./alerts/QuestionCircle-16-Outline.svg?react";
+import IconQuestionCircle24Fill from "./alerts/QuestionCircle-24-Fill.svg?react";
+import IconQuestionCircle24Outline from "./alerts/QuestionCircle-24-Outline.svg?react";
+import IconQuestionCircle32Fill from "./alerts/QuestionCircle-32-Fill.svg?react";
+import IconQuestionCircle32Outline from "./alerts/QuestionCircle-32-Outline.svg?react";
+import IconWarningCircle16Fill from "./alerts/WarningCircle-16-Fill.svg?react";
+import IconWarningCircle16Outline from "./alerts/WarningCircle-16-Outline.svg?react";
+import IconWarningCircle24Fill from "./alerts/WarningCircle-24-Fill.svg?react";
+import IconWarningCircle24Outline from "./alerts/WarningCircle-24-Outline.svg?react";
+import IconWarningCircle32Fill from "./alerts/WarningCircle-32-Fill.svg?react";
+import IconWarningCircle32Outline from "./alerts/WarningCircle-32-Outline.svg?react";
+import IconWarningDescription16Fill from "./alerts/WarningDescription-16-Fill.svg?react";
+import IconWarningDescription16Outline from "./alerts/WarningDescription-16-Outline.svg?react";
+import IconWarningDescription24Fill from "./alerts/WarningDescription-24-Fill.svg?react";
+import IconWarningDescription24Outline from "./alerts/WarningDescription-24-Outline.svg?react";
+import IconWarningDescription32Fill from "./alerts/WarningDescription-32-Fill.svg?react";
+import IconWarningDescription32Outline from "./alerts/WarningDescription-32-Outline.svg?react";
+import IconWarningTriangle16Fill from "./alerts/WarningTriangle-16-Fill.svg?react";
+import IconWarningTriangle16Outline from "./alerts/WarningTriangle-16-Outline.svg?react";
+import IconWarningTriangle24Fill from "./alerts/WarningTriangle-24-Fill.svg?react";
+import IconWarningTriangle24Outline from "./alerts/WarningTriangle-24-Outline.svg?react";
+import IconWarningTriangle32Fill from "./alerts/WarningTriangle-32-Fill.svg?react";
+import IconWarningTriangle32Outline from "./alerts/WarningTriangle-32-Outline.svg?react";
+
 // arrows
 import IconArrowDown16Outline from "./arrows/ArrowDown-16-Outline.svg?react";
 import IconArrowDown24Outline from "./arrows/ArrowDown-24-Outline.svg?react";
@@ -55,6 +95,46 @@ import IconUser32Outline from "./objects/User-32-Outline.svg?react";
 
 
 export {
+  //actions
+
+  //alerts
+  IconInfoCirle16Fill,
+  IconInfoCirle16Outline,
+  IconInfoCirle24Fill,
+  IconInfoCirle24Outline,
+  IconInfoCirle32Fill,
+  IconInfoCirle32Outline,
+  IconInfoHexagon16Fill,
+  IconInfoHexagon16Outline,
+  IconInfoHexagon24Fill,
+  IconInfoHexagon24Outline,
+  IconInfoHexagon32Fill,
+  IconInfoHexagon32Outline,
+  IconQuestionCircle16Fill,
+  IconQuestionCircle16Outline,
+  IconQuestionCircle24Fill,
+  IconQuestionCircle24Outline,
+  IconQuestionCircle32Fill,
+  IconQuestionCircle32Outline,
+  IconWarningCircle16Fill,
+  IconWarningCircle16Outline,
+  IconWarningCircle24Fill,
+  IconWarningCircle24Outline,
+  IconWarningCircle32Fill,
+  IconWarningCircle32Outline,
+  IconWarningDescription16Fill,
+  IconWarningDescription16Outline,
+  IconWarningDescription24Fill,
+  IconWarningDescription24Outline,
+  IconWarningDescription32Fill,
+  IconWarningDescription32Outline,
+  IconWarningTriangle16Fill,
+  IconWarningTriangle16Outline,
+  IconWarningTriangle24Fill,
+  IconWarningTriangle24Outline,
+  IconWarningTriangle32Fill,
+  IconWarningTriangle32Outline,
+
   // arrows
   IconArrowDown16Outline,
   IconArrowDown24Outline,
