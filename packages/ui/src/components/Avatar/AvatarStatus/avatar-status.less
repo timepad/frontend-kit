@@ -1,0 +1,53 @@
+@import "../../../assets/tokens/index.less";
+
+.cavatar-status {
+  --avatar-status-bg: var(--accent-notification);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-8);
+  background-color: var(--avatar-status-bg);
+  color: var(--text-inverted);
+
+  &__icon {
+    display: inline-flex;
+  }
+
+  &--size-s {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--radius-6);
+
+    .cavatar-status__icon {
+      width: 16px;
+      height: 16px;
+      padding: var(--space-2);
+    }
+  }
+
+  &--size-m {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-6);
+    padding: var(--space-4);
+
+    .cavatar-status__icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &--size-l {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-10);
+    padding: 4px;
+
+    .cavatar-status__icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
