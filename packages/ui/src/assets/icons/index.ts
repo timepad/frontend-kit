@@ -400,6 +400,3 @@ export {
   IconUser24Outline,
   IconUser32Outline,
 };
-
-export class IconLineArrowLeft16Outline {
-}
