@@ -36,7 +36,7 @@
 
   .size-column-gaps(var(--space-6), var(--space-8), var(--space-12));
 
-  &:hover:not(:has(&__field:disabled))::after {
+  &:hover::after {
     content: "";
     position: absolute;
     inset: -5px -12px;
@@ -46,12 +46,7 @@
   }
 
   &:has(&__field:disabled) {
-    cursor: not-allowed;
     pointer-events: none;
-
-    &::after {
-      display: none;
-    }
   }
 
   &__label {
@@ -78,6 +73,7 @@
     border-radius: 50%;
     border-color: var(--greyscale-300);
     border-style: solid;
+    cursor: inherit;
 
     &::after {
       position: absolute;
