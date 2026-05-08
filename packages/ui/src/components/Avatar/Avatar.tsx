@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 import { AvatarStatusSize } from "./AvatarStatus/avatar-status.types";
-import {AvatarStatus} from "./AvatarStatus";
+import { AvatarStatus } from "./AvatarStatus";
 
 import "./avatar.less";
 import {
@@ -55,23 +55,23 @@ const getInitials = (
 };
 
 export const Avatar: FC<IAvatarProps> = ({
-  src,
-  alt,
   name,
   initials,
   size = 40,
-  square = false,
-  bordered = false,
+  stroke = false,
   withStatus = false,
+  icon,
+  src,
+  onClick,
+  avatarStatusClassName,
   className,
   ...rest
 }) => {
   const avatarClassName = classNames(
     component("avatar")({
-      square,
-      bordered,
       [`size-${size}`]: true,
       image: !!src,
+      stroke: stroke && !src,
     }),
     className,
   );
@@ -80,29 +80,32 @@ export const Avatar: FC<IAvatarProps> = ({
   const defaultStatusSize = avatarStatusSizeByAvatarSize[size];
 
   const showStatus = withStatus && defaultStatusSize;
-  const statusNode = showStatus && <AvatarStatus size={defaultStatusSize} />;
+  const statusNode = showStatus && (
+    <AvatarStatus
+      size={defaultStatusSize}
+      icon={icon}
+      onClick={onClick}
+      className={avatarStatusClassName}
+    />
+  );
 
   const initialsValue = getInitials(initials, name, size);
 
   return (
     <div className={avatarClassName} {...rest}>
-      {src ? (
-        <AvatarImage src={src} />
-      ) : (
-        <AvatarInitials initials={initialsValue} />
-      )}
+      {src ? <AvatarImage src={src} stroke={stroke} /> : <AvatarInitials initials={initialsValue} />}
 
       {statusNode && <span className={statusClassName}>{statusNode}</span>}
     </div>
   );
 };
 
-const AvatarImage: FC<IAvatarImageProps> = ({ src }) => {
-  const imageClassName = component("avatar", "image")();
+const AvatarImage: FC<IAvatarImageProps> = ({ src, stroke }) => {
+  const iconAvatarImageClassName = component("avatar", "image")({ stroke });
 
   return (
     <div
-      className={imageClassName}
+      className={iconAvatarImageClassName}
       role="img"
       style={{ backgroundImage: `url("${src}")` }}
     />
@@ -110,7 +113,7 @@ const AvatarImage: FC<IAvatarImageProps> = ({ src }) => {
 };
 
 const AvatarInitials: FC<IAvatarInitialsProps> = ({ initials }) => {
-  const initialsClassName = component("avatar", "initials")();
+  const iconAvatarInitialsClassName = component("avatar", "initials")();
 
-  return <span className={initialsClassName}>{initials}</span>;
+  return <span className={iconAvatarInitialsClassName}>{initials}</span>;
 };

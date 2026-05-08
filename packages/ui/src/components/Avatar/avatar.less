@@ -18,11 +18,7 @@
   cursor: default;
   user-select: none;
 
-  &--square {
-    border-radius: var(--radius-8);
-  }
-
-  &--bordered {
+  &--stroke {
     box-shadow: inset 0 0 0 1px var(--bg-stroke);
   }
 
@@ -40,6 +36,10 @@
     background-size: cover;
     border-radius: inherit;
     box-sizing: border-box;
+
+    &--stroke {
+      box-shadow: inset 0 0 0 1px var(--bg-stroke);
+    }
   }
 
   &__initials {
@@ -52,6 +52,7 @@
     font-family: var(--font-regular);
     font-weight: 700;
     text-align: center;
+
   }
 
   &__status {
@@ -71,10 +72,6 @@
       font-size: 12px;
       line-height: 12px;
     }
-
-    &.cavatar--square {
-      border-radius: 3px;
-    }
   }
 
   &--size-32 {
@@ -85,10 +82,6 @@
     .cavatar__initials {
       font-size: 17px;
       line-height: 17px;
-    }
-
-    &.cavatar--square {
-      border-radius: 4px;
     }
   }
 
@@ -103,17 +96,13 @@
     }
 
     .cavatar__status {
-      transform: translate(50%, 50%) rotate(4deg);
+      transform: translate(30%, 30%) rotate(4deg);
 
       .cavatar-status--size-s {
         border: 2px solid #FFFFFF;
         background-clip: padding-box;
         padding: 0;
       }
-    }
-
-    &.cavatar--square {
-      border-radius: 6px;
     }
   }
 
@@ -128,7 +117,7 @@
     }
 
     .cavatar__status {
-      transform: translate(50%, 50%) rotate(4deg);
+      transform: translate(30%, 30%) rotate(4deg);
 
       .cavatar-status--size-s {
         border: 2px solid #FFFFFF;
@@ -136,15 +125,12 @@
         padding: 0;
       }
     }
-
-    &.cavatar--square {
-      border-radius: 6px;
-    }
   }
 
   &--size-64 {
     width: 64px;
     height: 64px;
+    border-radius: var(--radius-12);
 
     .cavatar__initials {
       font-size: 32px;
@@ -152,23 +138,19 @@
     }
 
     .cavatar__status {
-      transform: translate(50%, 50%) rotate(4deg);
+      transform: translate(30%, 30%) rotate(4deg);
 
       .cavatar-status--size-m {
         border: 2px solid #FFFFFF;
         background-clip: padding-box;
-        padding: 0;
       }
-    }
-
-    &.cavatar--square {
-      border-radius: 8px;
     }
   }
 
   &--size-80 {
     width: 80px;
     height: 80px;
+    border-radius: var(--radius-16);
 
     .cavatar__initials {
       font-size: 40px;
@@ -176,17 +158,20 @@
     }
 
     .cavatar__status {
-      transform: translate(50%, 50%) rotate(4deg);
+      transform: translate(30%, 30%) rotate(4deg);
 
       .cavatar-status--size-l {
         border: 2px solid #FFFFFF;
         background-clip: padding-box;
-        padding: 0;
       }
     }
 
-    &.cavatar--square {
-      border-radius: 8px;
+    .cavatar__image--stroke {
+      box-shadow: inset 0 0 0 2px var(--bg-stroke);
+    }
+
+    &.cavatar--stroke {
+      box-shadow: inset 0 0 0 2px var(--bg-stroke);
     }
   }
 }

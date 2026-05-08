@@ -11,8 +11,14 @@
   background-color: var(--avatar-status-bg);
   color: var(--text-inverted);
 
+  &--clickable {
+    cursor: pointer;
+  }
+
   &__icon {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &--size-s {
@@ -28,8 +34,8 @@
   }
 
   &--size-m {
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
     border-radius: var(--radius-6);
     padding: var(--space-4);
 
@@ -40,8 +46,8 @@
   }
 
   &--size-l {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     border-radius: var(--radius-10);
     padding: var(--space-4);
 
