@@ -48,7 +48,7 @@ export const Avatar: FC<IAvatarProps> = ({
       component("avatar")({
         [`size-${size}`]: true,
         image: !!src,
-        stroke: stroke && !src,
+        stroke,
       }),
       className,
   );
@@ -76,7 +76,7 @@ export const Avatar: FC<IAvatarProps> = ({
   return (
       <div className={avatarClassName} {...rest}>
         {src ? (
-            <AvatarImage src={src} stroke={stroke} />
+            <AvatarImage src={src} />
         ) : (
             <AvatarInitials initials={initialsValue} />
         )}
@@ -86,8 +86,8 @@ export const Avatar: FC<IAvatarProps> = ({
   );
 };
 
-const AvatarImage: FC<IAvatarImageProps> = ({ src, stroke }) => {
-  const iconAvatarImageClassName = component("avatar", "image")({ stroke });
+const AvatarImage: FC<IAvatarImageProps> = ({ src }) => {
+  const iconAvatarImageClassName = component("avatar", "image")();
 
   return (
     <div className={iconAvatarImageClassName} role="img" style={{ backgroundImage: `url("${src}")` }} />

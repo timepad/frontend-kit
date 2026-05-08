@@ -20,5 +20,4 @@ export interface IAvatarInitialsProps {
 
 export interface IAvatarImageProps {
   src: string;
-  stroke?: boolean;
 }
