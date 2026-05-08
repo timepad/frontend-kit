@@ -9,7 +9,7 @@
   border: none;
   border-radius: var(--radius-8);
   background-color: var(--avatar-status-bg);
-  color: var(--text-inverted);
+  color: var(--icon-inverted);
 
   &--clickable {
     cursor: pointer;
@@ -21,11 +21,11 @@
     justify-content: center;
   }
 
-  &--size-s {
+  &--size-s,
+  &--size-m {
     width: 16px;
     height: 16px;
     border-radius: var(--radius-6);
-    padding: var(--space-2);
 
     .cavatar-status__icon {
       width: 16px;
@@ -33,16 +33,12 @@
     }
   }
 
-  &--size-m {
-    width: 16px;
-    height: 16px;
-    border-radius: var(--radius-6);
-    padding: var(--space-4);
+  &--size-s {
+    padding: var(--space-2);
+  }
 
-    .cavatar-status__icon {
-      width: 16px;
-      height: 16px;
-    }
+  &--size-m {
+    padding: var(--space-4);
   }
 
   &--size-l {

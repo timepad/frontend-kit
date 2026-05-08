@@ -23,6 +23,9 @@ const meta = {
       control: "select",
       options: [24, 32, 40, 48, 64, 80],
     },
+    stroke: {
+      control: "boolean",
+    },
     icon: {
       description: `
 Иконка для AvatarStatus в режиме withStatus.
@@ -68,7 +71,6 @@ export const WithStatus: Story = {
   args: {
     src: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
     size: 64,
-    withStatus: true,
     icon: <IconCheck16Outline />,
   },
 };
@@ -77,6 +79,7 @@ export const WithStatusSizes: Story = {
   args: {
     src: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
     icon: <IconPlus16Outline />,
+    stroke: false,
   },
   render: (args) => (
     <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
@@ -85,8 +88,8 @@ export const WithStatusSizes: Story = {
           key={size}
           src={args.src}
           size={size as 40 | 48 | 64 | 80}
-          withStatus
           icon={args.icon}
+          stroke={args.stroke}
         />
       ))}
     </div>
@@ -97,8 +100,8 @@ export const WithStatusOnClick: Story = {
   args: {
     src: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
     size: 64,
-    withStatus: true,
     icon: <IconCheck16Outline />,
+    stroke: false,
   },
   argTypes: {
     onClick: {
@@ -109,9 +112,9 @@ export const WithStatusOnClick: Story = {
   render: (args) => (
     <Avatar
       src={args.src}
-      size={args.size}
-      withStatus={args.withStatus}
+      size={64}
       icon={args.icon}
+      stroke={args.stroke}
       onClick={() => {
         alert("Avatar status clicked");
       }}

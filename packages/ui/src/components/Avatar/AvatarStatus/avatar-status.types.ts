@@ -1,13 +1,21 @@
-import React, {MouseEventHandler} from "react";
+import { HTMLAttributes, ReactElement, SVGProps } from "react";
 
 export type AvatarStatusSize = "s" | "m" | "l";
-export type AvatarAppearance = "accent" | "custom";
 
-export interface IAvatarStatusProps {
+interface IBaseAvatarStatusProps extends HTMLAttributes<HTMLDivElement> {
   size?: AvatarStatusSize;
-  appearance?: AvatarAppearance;
-  color?: string;
-  icon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
-  onClick?: MouseEventHandler;
-  className?: string;
+  icon: ReactElement<SVGProps<SVGSVGElement>>;
 }
+
+// appearance = "accent"
+interface IAccentAvatarStatusProps extends IBaseAvatarStatusProps {
+  appearance?: "accent";
+}
+
+// appearance = "custom"
+interface ICustomAvatarStatusProps extends IBaseAvatarStatusProps {
+  appearance: "custom";
+  color: string;
+}
+
+export type IAvatarStatusProps = IAccentAvatarStatusProps | ICustomAvatarStatusProps;

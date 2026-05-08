@@ -22,8 +22,9 @@ export const AvatarStatus: FC<IAvatarStatusProps> = ({
   );
 
   const iconClassName = component("avatar-status", "icon")();
-  const statusColor = appearance === "custom" && (color ?? "var(--accent-positive)");
-  const statusStyle = {...(statusColor && { "--avatar-status-bg": statusColor })} as CSSProperties;
+  const statusStyle = {
+    "--avatar-status-bg": appearance === "custom" ? color : undefined,
+  } as CSSProperties;
 
   return (
     <span

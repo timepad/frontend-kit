@@ -1,18 +1,18 @@
-import React, {HTMLAttributes, MouseEventHandler} from "react";
+import { HTMLAttributes, ReactElement, SVGProps } from "react";
 
 export type AvatarSize = 24 | 32 | 40 | 48 | 64 | 80;
+export type SmallAvatarSize = 24 | 32;
 
-export interface IAvatarProps extends HTMLAttributes<HTMLDivElement> {
-  name?: string; // Имя-Фамилия
-  initials?: string; // Название организации
-  size?: AvatarSize;
+interface IAvatarBaseProps extends HTMLAttributes<HTMLDivElement> {
+  name?: string;
   stroke?: boolean;
-  withStatus?: boolean;
-  icon?: React.ReactElement<React.SVGProps<SVGSVGElement>>;
   src?: string;
-  onClick?: MouseEventHandler;
   avatarStatusClassName?: string;
 }
+
+export type IAvatarProps =
+    | (IAvatarBaseProps & { size?: SmallAvatarSize; icon?: never })
+    | (IAvatarBaseProps & { size?: Exclude<AvatarSize, SmallAvatarSize>; icon?: ReactElement<SVGProps<SVGSVGElement>> });
 
 export interface IAvatarInitialsProps {
   initials: string;
