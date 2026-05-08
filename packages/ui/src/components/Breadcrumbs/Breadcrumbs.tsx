@@ -5,8 +5,8 @@ import "./breadcrumbs.less";
 import { IBreadcrumbItem, IBreadcrumbsProps } from "./breadcrumbs.types";
 import { Typography } from "../Typography";
 import {
-  IconLineArrowLeft16Outline,
-  IconLineArrowRight16Outline,
+  IconChevronLeft16Outline,
+  IconChevronRight16Outline,
 } from "../../assets/icons";
 
 export const Breadcrumbs: FC<IBreadcrumbsProps> = ({
@@ -31,7 +31,7 @@ export const Breadcrumbs: FC<IBreadcrumbsProps> = ({
       {type === "backstep" ? (
         <div className={itemClassName}>
           <span className={separatorClassName} aria-hidden="true">
-            <IconLineArrowLeft16Outline />
+            <IconChevronLeft16Outline />
           </span>
           <BreadcrumbNode item={items[0]} isCurrent={!!items[0].isCurrent} />
         </div>
@@ -47,7 +47,7 @@ export const Breadcrumbs: FC<IBreadcrumbsProps> = ({
 
                 {!isLast && (
                   <span className={separatorClassName} aria-hidden="true">
-                    <IconLineArrowRight16Outline />
+                    <IconChevronRight16Outline />
                   </span>
                 )}
               </div>

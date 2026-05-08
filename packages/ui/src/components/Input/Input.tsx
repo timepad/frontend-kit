@@ -13,7 +13,7 @@ import { Typography } from "../Typography";
 import {
   IconWarningCircle24Fill,
   IconLock16Fill,
-  IconCross24Outline,
+  IconDelete24Outline,
   IconCopy24Fill,
 } from "../../assets/icons";
 import { IconButton } from "../IconButton";
@@ -135,7 +135,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
               onMouseDown={(e) => e.preventDefault()}
               className={actionIconClassName}
               onClick={handleClearFieldClick}
-              icon={<IconCross24Outline />}
+              icon={<IconDelete24Outline />}
               variant="transparent"
               size="s"
               ariaLabel="Очистить значение поля"

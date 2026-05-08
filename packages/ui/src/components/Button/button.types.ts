@@ -4,8 +4,9 @@ import { ButtonHTMLAttributes, ReactElement, SVGProps } from "react";
  * Варианты размера кнопки.
  * - **s**: Компактная кнопка (меньше текст и отступы).
  * - **m**: Размер по умолчанию.
+ * - **l**: Кнопка для мобильных версий / модальных окон.
  */
-export type ButtonSize = "s" | "m";
+export type ButtonSize = "s" | "m" | "l";
 
 /**
  * Визуальный стиль (вариант дизайна) кнопки.
@@ -14,12 +15,14 @@ export type ButtonSize = "s" | "m";
  * - **primary-alternate**: Инверсная версия primary (обычно для тёмных фонов).
  * - **secondary**: Нейтральная кнопка, меньший акцент.
  * - **negative**: Деструктивные действия (удалить, отменить, снять).
+ * - **transparent**: Прозрачная.
  */
 export type ButtonVariant =
   | "primary"
   | "primary-alternate"
   | "secondary"
   | "negative"
+  | "transparent"
 
 /**
  * Позиция иконки относительно текста кнопки.
