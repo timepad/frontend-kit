@@ -61,7 +61,7 @@ interface IButtonLabelProps {
 const ButtonLabel: FC<IButtonLabelProps> = ({ size, children }) => {
   const buttonLabelClassName = component("button", "label")();
 
-  if (size === "m") {
+  if (size === "m" || size === "l") {
     return (
       <Typography.Paragraph
         tag="P4 BOLD"

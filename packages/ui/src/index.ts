@@ -3,6 +3,7 @@ export { Avatar, AvatarStatus } from "./components/Avatar";
 export { Button } from "./components/Button";
 export { IconButton } from "./components/IconButton";
 export { Input } from "./components/Input";
+export { Radio } from "./components/Radio";
 export { Textarea } from "./components/Textarea";
 export { Typography } from "./components/Typography";
 export * from "./assets/icons";
