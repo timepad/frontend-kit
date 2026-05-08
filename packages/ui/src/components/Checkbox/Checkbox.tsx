@@ -1,4 +1,4 @@
-import { FC, forwardRef, useId, PropsWithChildren } from "react";
+import { forwardRef, useId, ComponentType } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 import {
   IconCheck16Outline,
@@ -7,14 +7,7 @@ import {
 
 import "./checkbox.less";
 import { ICheckboxProps, CheckboxSize } from "./checkbox.types";
-import { Typography } from "../Typography";
-import type { ParagraphVariantTag } from "../Typography/configs";
-
-const LABEL_TAG: Record<CheckboxSize, ParagraphVariantTag> = {
-  s: "P4 REGULAR",
-  m: "P3 REGULAR",
-  l: "P1 REGULAR",
-};
+import { Typography, ParagraphVariantTag, CaptionVariantTag } from "../Typography";
 
 export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
   (
@@ -35,10 +28,11 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
 
     const checkboxId = id ?? defaultId;
     const descriptionId = description ? `${checkboxId}-description` : undefined;
+      const { DescriptionComponent, descriptionTag } = descriptionTypography[size];
     const { checked, ...inputProps } = rest;
 
     const isChecked = !!checked;
-    const isIndeterminate = !!indeterminate && isChecked;
+    const isIndeterminate = indeterminate && isChecked;
     const icon = isIndeterminate ? <IconMinus16Outline /> : <IconCheck16Outline />;
 
     const checkboxClassName = classNames(
@@ -77,19 +71,19 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
         </span>
         <div>
           <div className={labelClassName}>
-            <Typography.Paragraph tag={LABEL_TAG[size]}>
+            <Typography.Paragraph tag={labelTag[size]}>
               {label}
             </Typography.Paragraph>
             {extraLabel && (
-              <Typography.Paragraph tag={LABEL_TAG[size]}>
+              <Typography.Paragraph tag={labelTag[size]}>
                 {extraLabel}
               </Typography.Paragraph>
             )}
           </div>
           {description && (
-            <Description size={size} id={descriptionId}>
+            <DescriptionComponent tag={descriptionTag} size={size} id={descriptionId}>
               {description}
-            </Description>
+            </DescriptionComponent>
           )}
         </div>
       </label>
@@ -97,36 +91,28 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
   },
 );
 
-interface IDescriptionProps {
-  size: CheckboxSize;
-  id?: string;
-}
+const labelTag: Record<CheckboxSize, ParagraphVariantTag> = {
+    s: "P4 REGULAR",
+    m: "P3 REGULAR",
+    l: "P1 REGULAR",
+};
 
-const Description: FC<PropsWithChildren<IDescriptionProps>> = ({
-  size,
-  id,
-  children,
-}) => {
-  const className = component("checkbox", "description")();
-  const typographyProps = { className, id };
-
-  if (size === "s")
-    return (
-      <Typography.Caption tag="C1 REGULAR" {...typographyProps}>
-        {children}
-      </Typography.Caption>
-    );
-
-  if (size === "m")
-    return (
-      <Typography.Paragraph tag="P4 REGULAR" {...typographyProps}>
-        {children}
-      </Typography.Paragraph>
-    );
-
-  return (
-    <Typography.Paragraph tag="P2 REGULAR" {...typographyProps}>
-      {children}
-    </Typography.Paragraph>
-  );
+const descriptionTypography: Record<
+    CheckboxSize,
+    {
+        DescriptionComponent: ComponentType<any>;
+        descriptionTag:
+            | Extract<ParagraphVariantTag, "P4 REGULAR" | "P2 REGULAR">
+            | Extract<CaptionVariantTag, "C1 REGULAR">;
+    }
+> = {
+    s: { DescriptionComponent: Typography.Caption, descriptionTag: "C1 REGULAR" },
+    m: {
+        DescriptionComponent: Typography.Paragraph,
+        descriptionTag: "P4 REGULAR",
+    },
+    l: {
+        DescriptionComponent: Typography.Paragraph,
+        descriptionTag: "P2 REGULAR",
+    },
 };
