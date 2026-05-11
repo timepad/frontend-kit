@@ -55,21 +55,21 @@ type Story = StoryObj<typeof meta>;
 
 export const Text: Story = {
   args: {
-    name: "Алексей  Ветров",
+    text: "Алексей  Ветров",
     size: 48,
   },
 };
 
 export const Image: Story = {
   args: {
-    src: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
+    image: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
     size: 64,
   },
 };
 
 export const WithStatus: Story = {
   args: {
-    src: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
+    image: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
     size: 64,
     icon: <IconCheck16Outline />,
   },
@@ -77,7 +77,7 @@ export const WithStatus: Story = {
 
 export const WithStatusSizes: Story = {
   args: {
-    src: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
+    image: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
     icon: <IconPlus16Outline />,
     stroke: false,
   },
@@ -86,7 +86,7 @@ export const WithStatusSizes: Story = {
       {[40, 48, 64, 80].map((size) => (
         <Avatar
           key={size}
-          src={args.src}
+          image={args.image}
           size={size as 40 | 48 | 64 | 80}
           icon={args.icon}
           stroke={args.stroke}
@@ -98,7 +98,7 @@ export const WithStatusSizes: Story = {
 
 export const WithStatusOnClick: Story = {
   args: {
-    src: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
+    image: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
     size: 64,
     icon: <IconCheck16Outline />,
     stroke: false,
@@ -111,7 +111,7 @@ export const WithStatusOnClick: Story = {
   },
   render: (args) => (
     <Avatar
-      src={args.src}
+      image={args.image}
       size={64}
       icon={args.icon}
       stroke={args.stroke}
@@ -124,7 +124,7 @@ export const WithStatusOnClick: Story = {
 
 export const Square: Story = {
   args: {
-    name: "TimePad",
+    text: "TimePad",
     stroke: true,
     size: 48,
   },

@@ -42,6 +42,8 @@
     z-index: 1;
     color: inherit;
     text-align: center;
+    leading-trim: both;
+    text-edge: cap;
   }
 
   &__status {
@@ -51,6 +53,8 @@
     line-height: 0;
     z-index: 1;
     transform: translate(30%, 30%) rotate(4deg);
+    display: inline-flex;
+    background-color: #fff;
   }
 
   &--size-24 {
@@ -58,10 +62,11 @@
     height: 24px;
     border-radius: var(--radius-40);
 
-    //.cavatar__initials {
-    //  font-size: 12px;
-    //  line-height: 12px;
-    //}
+    //уточнить у глеба
+    .cavatar__initials {
+      font-size: 12px;
+      line-height: 12px;
+    }
   }
 
   &--size-32 {
@@ -69,10 +74,10 @@
     height: 32px;
     border-radius: var(--radius-40);
 
-    //.cavatar__initials {
-    //  font-size: 17px;
-    //  line-height: 17px;
-    //}
+    //уточнить у глеба
+    .cavatar__initials {
+      line-height: 17px;
+    }
   }
 
   &--size-40 {
@@ -80,17 +85,14 @@
     height: 40px;
     border-radius: var(--radius-8);
 
-    //.cavatar__initials {
-    //  font-size: 20px;
-    //  line-height: 24px;
-    //}
+    //уточнить у глеба
+    .cavatar__initials {
+      line-height: 20px;
+    }
 
     .cavatar__status {
-      .cavatar-status--size-s {
-        border: 2px solid #FFFFFF;
-        background-clip: padding-box;
-        padding: 0;
-      }
+      padding: 2px;
+      border-radius: 6px;
     }
   }
 
@@ -99,17 +101,14 @@
     height: 48px;
     border-radius: var(--radius-10);
 
-    //.cavatar__initials {
-    //  font-size: 24px;
-    //  line-height: 24px;
-    //}
+    //уточнить у глеба
+    .cavatar__initials {
+      line-height: 24px;
+    }
 
     .cavatar__status {
-      .cavatar-status--size-s {
-        border: 2px solid #FFFFFF;
-        background-clip: padding-box;
-        padding: 0;
-      }
+      padding: 2px;
+      border-radius: 6px;
     }
   }
 
@@ -118,16 +117,14 @@
     height: 64px;
     border-radius: var(--radius-12);
 
-    //.cavatar__initials {
-    //  font-size: 32px;
-    //  line-height: 32px;
-    //}
+    //уточнить у глеба
+    .cavatar__initials {
+      line-height: 32px;
+    }
 
     .cavatar__status {
-      .cavatar-status--size-m {
-        border: 2px solid #FFFFFF;
-        background-clip: padding-box;
-      }
+      padding: 2px;
+      border-radius: 6px;
     }
   }
 
@@ -138,16 +135,15 @@
     height: 80px;
     border-radius: var(--radius-16);
 
-    //.cavatar__initials {
-    //  font-size: 40px;
-    //  line-height: 40px;
-    //}
+    //уточнить у глеба
+    .cavatar__initials {
+      font-size: 40px;
+      line-height: 40px;
+    }
 
     .cavatar__status {
-      .cavatar-status--size-l {
-        border: 2px solid #FFFFFF;
-        background-clip: padding-box;
-      }
+      padding: 2px;
+      border-radius: 10px;
     }
 
   }
