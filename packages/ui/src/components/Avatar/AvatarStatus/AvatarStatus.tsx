@@ -13,27 +13,24 @@ export const AvatarStatus: FC<IAvatarStatusProps> = ({
   className,
   ...rest
 }) => {
-  const statusClassName = classNames(
+  const avatarStatusClassName = classNames(
     component("avatar-status")({
       [`size-${size}`]: true,
       clickable: !!onClick,
     }),
     className,
   );
-
   const iconClassName = component("avatar-status", "icon")();
-  const statusStyle = {
-    "--avatar-status-bg": appearance === "custom" ? color : undefined,
-  } as CSSProperties;
+  const statusStyle = { "--avatar-status-bg": appearance === "custom" ? color : undefined } as CSSProperties;
 
   return (
     <span
-      className={statusClassName}
+      className={avatarStatusClassName}
       onClick={onClick}
       style={statusStyle}
       {...rest}
     >
-      {icon && <span className={iconClassName} aria-hidden="true">{icon}</span>}
+      <span className={iconClassName} aria-hidden="true">{icon}</span>
     </span>
   );
 };

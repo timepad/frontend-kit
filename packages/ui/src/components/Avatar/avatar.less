@@ -10,38 +10,42 @@
   justify-content: center;
   background-color: var(--light-purple);
   color: var(--text-primary-alt);
-  box-shadow: inset 0 0 1px transparent;
   user-select: none;
 
-  &--stroke::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    box-shadow: inset 0 0 0 var(--avatar-stroke-width) var(--bg-stroke);
-    pointer-events: none;
-    z-index: 2;
+  //&--stroke::after {
+  //  content: "";
+  //  position: absolute;
+  //  inset: 0;
+  //  border-radius: inherit;
+  //  box-shadow: inset 0 0 0 var(--avatar-stroke-width) var(--bg-stroke);
+  //  pointer-events: none;
+  //  z-index: 2;
+  //}
+  &--stroke {
+    outline: 1px solid red;
   }
 
   &__image {
-    position: relative;
-    z-index: 1;
+    //position: relative;
+    //z-index: 1;
     width: 100%;
     height: 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: inherit;
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 69% 75%, 69% 100%, 0 100%);
+
   }
 
   &__initials {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-    color: inherit;
-    text-align: center;
+  //  position: relative;
+  //  display: inline-flex;
+    //align-items: center;
+    //justify-content: center;
+    //z-index: 1;
+    //color: inherit;
+    //text-align: center;
     leading-trim: both;
     text-edge: cap;
   }
@@ -50,34 +54,21 @@
     position: absolute;
     right: 0;
     bottom: 0;
-    line-height: 0;
     z-index: 1;
     transform: translate(30%, 30%) rotate(4deg);
-    display: inline-flex;
-    background-color: #fff;
+    //background-color: #fff;
   }
 
   &--size-24 {
     width: 24px;
     height: 24px;
     border-radius: var(--radius-40);
-
-    //уточнить у глеба
-    .cavatar__initials {
-      font-size: 12px;
-      line-height: 12px;
-    }
   }
 
   &--size-32 {
     width: 32px;
     height: 32px;
     border-radius: var(--radius-40);
-
-    //уточнить у глеба
-    .cavatar__initials {
-      line-height: 17px;
-    }
   }
 
   &--size-40 {
@@ -85,14 +76,9 @@
     height: 40px;
     border-radius: var(--radius-8);
 
-    //уточнить у глеба
-    .cavatar__initials {
-      line-height: 20px;
-    }
-
     .cavatar__status {
-      padding: 2px;
-      border-radius: 6px;
+      //padding: 2px;
+      //border-radius: 6px;
     }
   }
 
@@ -101,14 +87,9 @@
     height: 48px;
     border-radius: var(--radius-10);
 
-    //уточнить у глеба
-    .cavatar__initials {
-      line-height: 24px;
-    }
-
     .cavatar__status {
-      padding: 2px;
-      border-radius: 6px;
+      //padding: 2px;
+      //border-radius: 6px;
     }
   }
 
@@ -117,33 +98,22 @@
     height: 64px;
     border-radius: var(--radius-12);
 
-    //уточнить у глеба
-    .cavatar__initials {
-      line-height: 32px;
-    }
-
     .cavatar__status {
-      padding: 2px;
-      border-radius: 6px;
+      //padding: 2px;
+      //border-radius: 6px;
     }
   }
 
   &--size-80 {
-    --avatar-stroke-width: 2px;
+    outline-width: 2px;
 
     width: 80px;
     height: 80px;
     border-radius: var(--radius-16);
 
-    //уточнить у глеба
-    .cavatar__initials {
-      font-size: 40px;
-      line-height: 40px;
-    }
-
     .cavatar__status {
-      padding: 2px;
-      border-radius: 10px;
+      //padding: 2px;
+      //border-radius: 10px;
     }
 
   }

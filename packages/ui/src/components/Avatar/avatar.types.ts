@@ -1,4 +1,5 @@
-import { HTMLAttributes, ReactElement, SVGProps } from "react";
+import { HTMLAttributes, ReactNode } from "react";
+import { AvatarStatusSize } from "./AvatarStatus/avatar-status.types";
 
 export type AvatarSize = 24 | 32 | 40 | 48 | 64 | 80;
 export type SmallAvatarSize = Extract<AvatarSize, 24 | 32>;
@@ -7,9 +8,16 @@ interface IAvatarBaseProps extends HTMLAttributes<HTMLDivElement> {
   text?: string;
   stroke?: boolean;
   image?: string;
-  avatarStatusClassName?: string;
+}
+
+interface IAvatarStatusRendererProps {
+  statusSize: AvatarStatusSize;
+}
+
+interface IAvatarWithStatusProps {
+  renderAvatarStatus?: (props: IAvatarStatusRendererProps) => ReactNode;
 }
 
 export type IAvatarProps =
-    | (IAvatarBaseProps & { size?: SmallAvatarSize; icon?: never })
-    | (IAvatarBaseProps & { size?: Exclude<AvatarSize, SmallAvatarSize>; icon?: ReactElement<SVGProps<SVGSVGElement>> });
+  | (IAvatarBaseProps & { size?: SmallAvatarSize; renderAvatarStatus?: never })
+  | (IAvatarBaseProps & { size?: Exclude<AvatarSize, SmallAvatarSize> } & IAvatarWithStatusProps);

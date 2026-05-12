@@ -6,7 +6,6 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: none;
   border-radius: var(--radius-8);
   background-color: var(--avatar-status-bg);
   color: var(--icon-inverted);
@@ -26,17 +25,11 @@
     width: 16px;
     height: 16px;
     border-radius: var(--radius-6);
-
-    .cavatar-status__icon {
-      width: 16px;
-      height: 16px;
-    }
   }
 
-  //уточнить у глеба
-  //&--size-s {
-  //  padding: var(--space-2);
-  //}
+  &--size-s {
+    padding: var(--space-2);
+  }
 
   &--size-m {
     padding: var(--space-4);
@@ -47,10 +40,5 @@
     height: 24px;
     border-radius: var(--radius-10);
     padding: var(--space-4);
-
-    .cavatar-status__icon {
-      width: 24px;
-      height: 24px;
-    }
   }
 }

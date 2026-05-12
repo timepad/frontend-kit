@@ -3,9 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Avatar } from "./Avatar";
 import {
   IconCheck16Outline,
-  IconCheck24Outline,
   IconPlus16Outline,
-  IconPlus24Outline,
 } from "../../assets/icons";
 
 const meta = {
@@ -25,27 +23,6 @@ const meta = {
     },
     stroke: {
       control: "boolean",
-    },
-    icon: {
-      description: `
-Иконка для AvatarStatus в режиме withStatus.
-      `,
-      control: "select",
-      options: [
-        "Check16Outline",
-        "Check24Outline",
-        "Plus16Outline",
-        "Plus24Outline",
-      ],
-      mapping: {
-        Check16Outline: <IconCheck16Outline />,
-        Check24Outline: <IconCheck24Outline />,
-        Plus16Outline: <IconPlus16Outline />,
-        Plus24Outline: <IconPlus24Outline />,
-      },
-      table: {
-        type: { summary: "ReactElement<SVG>" },
-      },
     },
   },
 } satisfies Meta<typeof Avatar>;
@@ -71,14 +48,23 @@ export const WithStatus: Story = {
   args: {
     image: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
     size: 64,
-    icon: <IconCheck16Outline />,
+    stroke: false,
   },
+  render: (args) => (
+    <Avatar
+      image={args.image}
+      size={80}
+      stroke={args.stroke}
+      renderAvatarStatus={({ statusSize }) => (
+        <Avatar.AvatarStatus size={statusSize} icon={<IconCheck16Outline />} />
+      )}
+    />
+  ),
 };
 
 export const WithStatusSizes: Story = {
   args: {
     image: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
-    icon: <IconPlus16Outline />,
     stroke: false,
   },
   render: (args) => (
@@ -88,8 +74,10 @@ export const WithStatusSizes: Story = {
           key={size}
           image={args.image}
           size={size as 40 | 48 | 64 | 80}
-          icon={args.icon}
           stroke={args.stroke}
+          renderAvatarStatus={({ statusSize }) => (
+            <Avatar.AvatarStatus size={statusSize} icon={<IconPlus16Outline />} />
+          )}
         />
       ))}
     </div>
@@ -100,7 +88,6 @@ export const WithStatusOnClick: Story = {
   args: {
     image: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
     size: 64,
-    icon: <IconCheck16Outline />,
     stroke: false,
   },
   argTypes: {
@@ -113,11 +100,49 @@ export const WithStatusOnClick: Story = {
     <Avatar
       image={args.image}
       size={64}
-      icon={args.icon}
       stroke={args.stroke}
-      onClick={() => {
-        alert("Avatar status clicked");
-      }}
+      renderAvatarStatus={({ statusSize }) => (
+        <Avatar.AvatarStatus
+          size={statusSize}
+          icon={<IconCheck16Outline />}
+          onClick={() => {
+            alert("Avatar status clicked");
+          }}
+        />
+      )}
+    />
+  ),
+};
+
+export const WithStatusRenderProp: Story = {
+  args: {
+    image: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
+    size: 64,
+    stroke: false,
+  },
+  argTypes: {
+    onClick: {
+      control: false,
+      table: { disable: true },
+    },
+  },
+  render: (args) => (
+    <Avatar
+      image={args.image}
+      size={64}
+      stroke={args.stroke}
+      renderAvatarStatus={({ statusSize }) => (
+        <Avatar.AvatarStatus
+          size={statusSize}
+          icon={<IconCheck16Outline />}
+          appearance="custom"
+          color="#22c55e"
+          onClick={(e) => {
+            e.stopPropagation();
+            alert("AvatarStatus props are set at the call site");
+          }}
+        />
+      )}
     />
   ),
 };

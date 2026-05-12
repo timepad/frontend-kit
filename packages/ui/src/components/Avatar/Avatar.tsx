@@ -1,17 +1,60 @@
-import React, { FC } from "react";
+import React, {type ComponentType, FC} from "react";
 import { classNames, component } from "@frontend-kit/utils";
-import { AvatarStatusSize } from "./AvatarStatus/avatar-status.types";
-import { AvatarStatus } from "./AvatarStatus";
 
 import "./avatar.less";
-import {
-  AvatarSize,
-  IAvatarProps,
-} from "./avatar.types";
+import { AvatarSize, IAvatarProps } from "./avatar.types";
+import { AvatarStatusSize } from "./AvatarStatus/avatar-status.types";
 import { CaptionVariantTag, Typography } from "../Typography";
+import { AvatarStatus } from "./AvatarStatus";
 import { HeaderVariantTag, ParagraphVariantTag } from "../Typography/configs";
 
-const avatarStatusSizeByAvatarSize: Partial<Record<AvatarSize, AvatarStatusSize>> = {
+const AvatarComponent: FC<IAvatarProps> = ({
+  text,
+  size = 40,
+  stroke = false,
+  renderAvatarStatus,
+  image,
+  className,
+  ...rest
+}) => {
+  const avatarClassName = classNames(
+      component("avatar")({
+        [`size-${size}`]: true,
+        stroke,
+      }),
+      className,
+  );
+  const initialsClassName = component("avatar", "initials")();
+  const imageClassName = component("avatar", "image")();
+  const statusClassName = component("avatar", "status")();
+
+  const { TextComponent, textTag } = textAvatar[size];
+  const statusSize = avatarStatusSizes[size];
+
+  return (
+      <div className={avatarClassName} {...rest}>
+        {image ? (
+            <div className={imageClassName} role="img" style={{backgroundImage: `url("${image}")`}}/>
+        ) : (
+            <TextComponent as="span" tag={textTag} className={initialsClassName}>
+              {getInitials(text, size)}
+            </TextComponent>
+        )}
+
+        {statusSize && renderAvatarStatus && (
+            <span className={statusClassName}>
+              {renderAvatarStatus({ statusSize })}
+            </span>
+        )}
+      </div>
+  );
+};
+
+export const Avatar = Object.assign(AvatarComponent, {
+  AvatarStatus,
+});
+
+const avatarStatusSizes: Partial<Record<AvatarSize, AvatarStatusSize>> = {
   40: "s",
   48: "s",
   64: "m",
@@ -33,82 +76,35 @@ const getInitials = (name?: string, size: AvatarSize = 40) => {
       : words[0].slice(0, 2).toUpperCase();
 };
 
-type InitialsVariant =
-  | { variant: "caption"; tag: CaptionVariantTag }
-  | { variant: "paragraph"; tag: ParagraphVariantTag }
-  | { variant: "header"; tag: HeaderVariantTag };
-
-const textVariantBySize: Record<AvatarSize, InitialsVariant> = {
-  24: { variant: "caption", tag: "C1 BOLD" },
-  32: { variant: "paragraph", tag: "P3 BOLD" },
-  40: { variant: "header", tag: "H4 BOLD" },
-  48: { variant: "header", tag: "H3 BOLD" },
-  64: { variant: "header", tag: "H2 BOLD" },
-  80: { variant: "header", tag: "H1 BOLD" },
-};
-
-export const Avatar: FC<IAvatarProps> = ({
-  text,
-  size = 40,
-  stroke = false,
-  icon,
-  image,
-  avatarStatusClassName,
-  className,
-  ...rest
-}) => {
-  const avatarClassName = classNames(
-      component("avatar")({
-        [`size-${size}`]: true,
-        image: image,
-        stroke,
-      }),
-      className,
-  );
-  const iconAvatarInitialsClassName = component("avatar", "initials")();
-  const iconAvatarImageClassName = component("avatar", "image")();
-  const statusClassName = component("avatar", "status")();
-  const textVariant = textVariantBySize[size];
-
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    rest.onClick?.(e);
-  };
-
-  return (
-      <div className={avatarClassName} {...rest}>
-        {image ? (
-            <div className={iconAvatarImageClassName} role="img" style={{backgroundImage: `url("${image}")`}}/>
-        ) : (
-          <>
-            {textVariant.variant === "caption" && (
-              <Typography.Caption as="span" tag={textVariant.tag} className={iconAvatarInitialsClassName}>
-                {getInitials(text, size)}
-              </Typography.Caption>
-            )}
-            {textVariant.variant === "paragraph" && (
-              <Typography.Paragraph as="span" tag={textVariant.tag} className={iconAvatarInitialsClassName}>
-                {getInitials(text, size)}
-              </Typography.Paragraph>
-            )}
-            {textVariant.variant === "header" && (
-              <Typography.Header as="span" tag={textVariant.tag} className={iconAvatarInitialsClassName}>
-                {getInitials(text, size)}
-              </Typography.Header>
-            )}
-          </>
-        )}
-
-        {icon && avatarStatusSizeByAvatarSize[size] && (
-            <span className={statusClassName}>
-                <AvatarStatus
-                  size={avatarStatusSizeByAvatarSize[size]}
-                  icon={icon}
-                  onClick={handleClick}
-                  className={avatarStatusClassName}
-                />
-            </span>
-        )}
-      </div>
-  );
+const textAvatar: Record<
+    AvatarSize,
+    {
+      TextComponent: ComponentType<any>;
+      textTag:
+          | Extract<ParagraphVariantTag, "P4 REGULAR" | "P3 BOLD">
+          | Extract<HeaderVariantTag, "H4 BOLD" | "H3 BOLD" | "H2 BOLD" | "H1 BOLD">
+          | Extract<CaptionVariantTag, "C1 BOLD">;
+    }
+> = {
+  24: { TextComponent: Typography.Caption, textTag: "C1 BOLD" },
+  32: {
+    TextComponent: Typography.Paragraph,
+    textTag: "P3 BOLD",
+  },
+  40: {
+    TextComponent: Typography.Header,
+    textTag: "H4 BOLD",
+  },
+  48: {
+    TextComponent: Typography.Header,
+    textTag: "H3 BOLD",
+  },
+  64: {
+    TextComponent: Typography.Header,
+    textTag: "H2 BOLD",
+  },
+  80: {
+    TextComponent: Typography.Header,
+    textTag: "H1 BOLD",
+  },
 };
