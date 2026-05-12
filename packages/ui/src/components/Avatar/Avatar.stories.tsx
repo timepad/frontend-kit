@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Avatar } from "./Avatar";
+import type { AvatarSize, AvatarSizeWithStatus } from "./avatar.types";
 import {
   IconCheck16Outline,
   IconPlus16Outline,
@@ -30,6 +31,9 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const withStatusSizeFromArgs = (size: AvatarSize | undefined): AvatarSizeWithStatus =>
+  size === 40 || size === 48 || size === 64 || size === 80 ? size : 64;
+
 export const Text: Story = {
   args: {
     text: "Алексей  Ветров",
@@ -50,10 +54,16 @@ export const WithStatus: Story = {
     size: 64,
     stroke: false,
   },
+  argTypes: {
+    size: {
+      control: "select",
+      options: [40, 48, 64, 80],
+    },
+  },
   render: (args) => (
     <Avatar
       image={args.image}
-      size={80}
+      size={withStatusSizeFromArgs(args.size)}
       stroke={args.stroke}
       renderAvatarStatus={({ statusSize }) => (
         <Avatar.AvatarStatus size={statusSize} icon={<IconCheck16Outline />} />
@@ -73,7 +83,7 @@ export const WithStatusSizes: Story = {
         <Avatar
           key={size}
           image={args.image}
-          size={size as 40 | 48 | 64 | 80}
+          size={size as AvatarSizeWithStatus}
           stroke={args.stroke}
           renderAvatarStatus={({ statusSize }) => (
             <Avatar.AvatarStatus size={statusSize} icon={<IconPlus16Outline />} />
@@ -91,6 +101,10 @@ export const WithStatusOnClick: Story = {
     stroke: false,
   },
   argTypes: {
+    size: {
+      control: "select",
+      options: [40, 48, 64, 80],
+    },
     onClick: {
       control: false,
       table: { disable: true },
@@ -99,7 +113,7 @@ export const WithStatusOnClick: Story = {
   render: (args) => (
     <Avatar
       image={args.image}
-      size={64}
+      size={withStatusSizeFromArgs(args.size)}
       stroke={args.stroke}
       renderAvatarStatus={({ statusSize }) => (
         <Avatar.AvatarStatus
@@ -121,6 +135,10 @@ export const WithStatusRenderProp: Story = {
     stroke: false,
   },
   argTypes: {
+    size: {
+      control: "select",
+      options: [40, 48, 64, 80],
+    },
     onClick: {
       control: false,
       table: { disable: true },
@@ -129,7 +147,7 @@ export const WithStatusRenderProp: Story = {
   render: (args) => (
     <Avatar
       image={args.image}
-      size={64}
+      size={withStatusSizeFromArgs(args.size)}
       stroke={args.stroke}
       renderAvatarStatus={({ statusSize }) => (
         <Avatar.AvatarStatus
