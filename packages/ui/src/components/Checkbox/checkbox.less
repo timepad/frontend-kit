@@ -76,7 +76,7 @@
     border-style: solid;
     border-color: var(--greyscale-300);
     background-color: var(--bg-primary);
-
+    cursor: inherit;
 
     &:checked {
       border-color: var(--btn-primary-active);
@@ -124,7 +124,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 0;
     pointer-events: none;
     opacity: 0;
 
@@ -144,7 +143,7 @@
 
   &__field:disabled + &__icon {
     * {
-      fill: var(--9B9FA6);
+      fill: var(--icon-tertiary);
     }
   }
 }

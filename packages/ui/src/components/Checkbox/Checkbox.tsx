@@ -1,9 +1,6 @@
 import { forwardRef, useId, ComponentType } from "react";
 import { classNames, component } from "@frontend-kit/utils";
-import {
-  IconCheck16Outline,
-  IconMinus16Outline,
-} from "../../assets/icons";
+import { IconCheck16Outline, IconMinus16Outline } from "../../assets/icons";
 
 import "./checkbox.less";
 import { ICheckboxProps, CheckboxSize } from "./checkbox.types";
@@ -28,11 +25,10 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
 
     const checkboxId = id ?? defaultId;
     const descriptionId = description ? `${checkboxId}-description` : undefined;
-      const { DescriptionComponent, descriptionTag } = descriptionTypography[size];
+    const { DescriptionComponent, descriptionTag } = descriptionTypography[size];
     const { checked, ...inputProps } = rest;
 
-    const isChecked = !!checked;
-    const isIndeterminate = indeterminate && isChecked;
+    const isIndeterminate = indeterminate && checked;
     const icon = isIndeterminate ? <IconMinus16Outline /> : <IconCheck16Outline />;
 
     const checkboxClassName = classNames(
@@ -49,9 +45,7 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
       "checkbox",
       "field",
     )({ [`size-${size}`]: true, error: isError, indeterminate: isIndeterminate });
-    const iconClassName = component("checkbox", "icon")({
-      visible: isChecked || isIndeterminate,
-    });
+    const iconClassName = component("checkbox", "icon")({ visible: checked || isIndeterminate });
 
     return (
       <label className={checkboxClassName}>
@@ -62,9 +56,9 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
             ref={ref}
             id={checkboxId}
             aria-invalid={isError || undefined}
-            aria-checked={isIndeterminate ? "mixed" : isChecked}
+            aria-checked={isIndeterminate ? "mixed" : checked}
             aria-describedby={descriptionId}
-            checked={isChecked}
+            checked={checked}
             {...inputProps}
           />
           <span className={iconClassName}>{icon}</span>
