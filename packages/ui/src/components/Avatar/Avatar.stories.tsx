@@ -1,12 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import React from "react";
 
 import { Avatar } from "./Avatar";
-import type { AvatarSizeWithStatus } from "./avatar.types";
-import {
-  IconCheck16Outline,
-  IconPlus16Outline,
-} from "../../assets/icons";
+import {AvatarSizeWithStatus, IAvatarProps} from "./avatar.types";
+import { IconCheck16Outline, IconPlus16Outline } from "../../assets/icons";
 
 const meta = {
   title: "Components/Avatar",
@@ -32,15 +28,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Расширенный тип для args со статусом
-type ArgsWithStatus = {
-  text?: string;
-  image?: string;
-  size?: AvatarSizeWithStatus;
-  stroke?: boolean;
-  statusClickable?: boolean;
-};
-
 // DEFAULT
 export const Default: Story = {
   args: {
@@ -58,7 +45,7 @@ export const Default: Story = {
 export const TextWithoutStatus: Story = {
   args: {
     text: "Алексей Ветров",
-    size: 48,
+    size: 40,
     stroke: false,
   },
   argTypes: {
@@ -75,7 +62,7 @@ export const TextWithoutStatus: Story = {
     },
   },
   render: (args) => {
-    const { text, size = 48, stroke } = args;
+    const { text, size = 40, stroke } = args;
     return <Avatar text={text} size={size} stroke={stroke} />;
   },
 };
@@ -84,10 +71,8 @@ export const TextWithoutStatus: Story = {
 export const TextWithStatus: Story = {
   args: {
     text: "Алексей Ветров",
-    size: 64,
+    size: 40,
     stroke: false,
-    // @ts-expect-error statusClickable не входит в IAvatarProps, но нужен для Controls
-    statusClickable: true,
   },
   argTypes: {
     text: {
@@ -102,25 +87,16 @@ export const TextWithStatus: Story = {
     stroke: {
       control: "boolean",
     },
-    // @ts-expect-error statusClickable не входит в IAvatarProps, но нужен для Controls
-    statusClickable: {
-      control: "boolean",
-      description: "Статус кликабельный",
-    },
   },
   render: (args) => {
-    const { text, size = 64, stroke, statusClickable = true } = args as ArgsWithStatus;
+    const { text, size = 40, stroke } = args as IAvatarProps;
     return (
         <Avatar
             text={text}
             size={size as AvatarSizeWithStatus}
             stroke={stroke}
             renderAvatarStatus={({ statusSize }) => (
-                <Avatar.AvatarStatus
-                    size={statusSize}
-                    icon={<IconCheck16Outline />}
-                    onClick={statusClickable ? () => alert("Avatar status clicked") : undefined}
-                />
+                <Avatar.AvatarStatus size={statusSize} icon={<IconCheck16Outline />} />
             )}
         />
     );
@@ -131,7 +107,7 @@ export const TextWithStatus: Story = {
 export const ImageWithoutStatus: Story = {
   args: {
     image: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
-    size: 64,
+    size: 40,
     stroke: false,
   },
   argTypes: {
@@ -148,7 +124,7 @@ export const ImageWithoutStatus: Story = {
     },
   },
   render: (args) => {
-    const { image, size = 64, stroke } = args;
+    const { image, size = 40, stroke } = args;
     return <Avatar image={image} size={size} stroke={stroke} />;
   },
 };
@@ -157,10 +133,8 @@ export const ImageWithoutStatus: Story = {
 export const ImageWithStatus: Story = {
   args: {
     image: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
-    size: 64,
+    size: 40,
     stroke: false,
-    // @ts-expect-error statusClickable не входит в IAvatarProps, но нужен для Controls
-    statusClickable: true,
   },
   argTypes: {
     image: {
@@ -175,27 +149,74 @@ export const ImageWithStatus: Story = {
     stroke: {
       control: "boolean",
     },
-    // @ts-expect-error statusClickable не входит в IAvatarProps, но нужен для Controls
-    statusClickable: {
-      control: "boolean",
-      description: "Статус кликабельный",
-    },
   },
   render: (args) => {
-    const { image, size = 64, stroke, statusClickable = true } = args as ArgsWithStatus;
+    const { image, size = 40, stroke } = args as IAvatarProps;
     return (
         <Avatar
             image={image}
             size={size as AvatarSizeWithStatus}
             stroke={stroke}
             renderAvatarStatus={({ statusSize }) => (
-                <Avatar.AvatarStatus
-                    size={statusSize}
-                    icon={<IconPlus16Outline />}
-                    onClick={statusClickable ? () => alert("Avatar status clicked") : undefined}
-                />
+                <Avatar.AvatarStatus size={statusSize} icon={<IconPlus16Outline />} />
             )}
         />
+    );
+  },
+};
+
+// IMAGE WITH CLICKABLE STATUS (можно очистить image и добавить text)
+export const ImageWithClickableStatus: Story = {
+  args: {
+    image: "https://i.pinimg.com/736x/e1/13/f6/e113f64f714bcf8a32d0b183727e8f38--avatar-film-avatar-theme.jpg",
+    text: "Алексей Ветров",
+    size: 64,
+    stroke: false,
+  },
+  argTypes: {
+    image: {
+      control: "text",
+      description: "URL изображения (очистите поле, чтобы показать текст)",
+    },
+    text: {
+      control: "text",
+      description: "Текст для отображения, если image пустой",
+    },
+    size: {
+      control: "select",
+      options: [40, 48, 64, 80],
+      description: "Только размеры, поддерживающие статус",
+    },
+    stroke: {
+      control: "boolean",
+    },
+  },
+  render: (args) => {
+    const { image, text, size = 64, stroke } = args;
+
+    const handleStatusClick = () => {
+      alert("Avatar status clicked!");
+    };
+
+    const hasImage = image && image.trim() !== "";
+
+    return (
+        <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+          <Avatar
+              {...(hasImage
+                      ? { image, size: size as AvatarSizeWithStatus, stroke }
+                      : { text: text || "Алексей Ветров", size: size as AvatarSizeWithStatus, stroke }
+              )}
+              renderAvatarStatus={({ statusSize }) => (
+                  <Avatar.AvatarStatus
+                      size={statusSize}
+                      icon={<IconCheck16Outline />}
+                      onClick={handleStatusClick}
+                      style={{ cursor: "pointer" }}
+                  />
+              )}
+          />
+        </div>
     );
   },
 };

@@ -1,11 +1,11 @@
-import React, {type ComponentType, FC} from "react";
+import { type ComponentType, FC } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./avatar.less";
 import { AvatarSize, IAvatarProps } from "./avatar.types";
 import { AvatarStatusSize } from "./AvatarStatus/avatar-status.types";
-import { CaptionVariantTag, Typography } from "../Typography";
 import { AvatarStatus } from "./AvatarStatus";
+import { CaptionVariantTag, Typography } from "../Typography";
 import { HeaderVariantTag, ParagraphVariantTag } from "../Typography/configs";
 
 const AvatarComponent: FC<IAvatarProps> = ({
