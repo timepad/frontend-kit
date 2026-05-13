@@ -1,0 +1,44 @@
+@import "../../../assets/tokens/index.less";
+
+.cavatar-status {
+  --avatar-status-bg: var(--accent-notification);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-8);
+  background-color: var(--avatar-status-bg);
+  color: var(--icon-inverted);
+
+  &--clickable {
+    cursor: pointer;
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &--size-s,
+  &--size-m {
+    width: 16px;
+    height: 16px;
+    border-radius: var(--radius-6);
+  }
+
+  &--size-s {
+    padding: var(--space-2);
+  }
+
+  &--size-m {
+    padding: var(--space-4);
+  }
+
+  &--size-l {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-10);
+    padding: var(--space-4);
+  }
+}
