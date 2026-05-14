@@ -1,3 +1,4 @@
+export { Badge } from "./components/Badge";
 export { Breadcrumbs } from "./components/Breadcrumbs";
 export { Avatar, AvatarStatus } from "./components/Avatar";
 export { Button } from "./components/Button";
