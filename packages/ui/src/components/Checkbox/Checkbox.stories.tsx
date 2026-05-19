@@ -1,5 +1,6 @@
-import { FC, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
+import { useArgs } from "@storybook/preview-api";
 
 import { Checkbox } from "./Checkbox";
 import { ICheckboxProps } from "./checkbox.types";
@@ -56,7 +57,8 @@ const meta: Meta<typeof Checkbox> = {
     },
     indeterminate: {
       control: "boolean",
-      description: "Неопределенное состояние чекбокса.",
+      description:
+        "Промежуточное состояние (часть дочерних выбрана). Не равно checked. Клик по родителю обычно выбирает всех детей или снимает выбор, если все уже выбраны.",
       table: { type: { summary: "boolean" } },
     },
     description: {
@@ -84,18 +86,36 @@ export default meta;
 
 type Story = StoryObj<typeof Checkbox>;
 
-const BaseCheckbox: FC<ICheckboxProps> = (args) => {
-  const [checked, setChecked] = useState<boolean>(args.checked ?? false);
+const renderBaseCheckbox: Story["render"] = () => {
+  const [args, updateArgs] = useArgs<ICheckboxProps>();
+  const {
+    checked = false,
+    indeterminate = false,
+    onChange,
+    ...checkboxArgs
+  } = args;
 
   useEffect(() => {
-    setChecked(args?.checked ?? false);
-  }, [args.checked]);
+    if (indeterminate && checked) {
+      updateArgs({ indeterminate: false, checked: true });
+    }
+  }, [indeterminate, checked, updateArgs]);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (indeterminate) {
+      updateArgs({ checked: true, indeterminate: false });
+    } else {
+      updateArgs({ checked: event.target.checked, indeterminate: false });
+    }
+    onChange?.(event);
+  };
 
   return (
     <Checkbox
-      {...args}
+      {...checkboxArgs}
       checked={checked}
-      onChange={(e) => setChecked(e.target.checked)}
+      indeterminate={indeterminate}
+      onChange={handleChange}
     />
   );
 };
@@ -110,21 +130,20 @@ const defaultArgs: Story["args"] = {
 };
 
 export const Default: Story = {
-  render: (args) => <BaseCheckbox {...args} />,
+  render: renderBaseCheckbox,
   args: { ...defaultArgs },
 };
 
 export const Disabled: Story = {
-  render: (args) => <BaseCheckbox {...args} />,
+  render: renderBaseCheckbox,
   args: { ...defaultArgs, disabled: true },
   argTypes: {
     isError: { table: { disable: true } },
-    disabled: { table: { disable: true } },
   },
 };
 
 export const Error: Story = {
-  render: (args) => <BaseCheckbox {...args} />,
+  render: renderBaseCheckbox,
   args: { ...defaultArgs, isError: true },
   argTypes: {
     disabled: { table: { disable: true } },
@@ -165,56 +184,21 @@ const OPTIONS = [
   },
 ] as const;
 
-export const Group: Story = {
-  render: ({ size }) => {
-    const [selected, setSelected] = useState<string[]>([OPTIONS[0].value]);
+type OptionId = (typeof OPTIONS)[number]["value"];
 
-    const handleToggle = (value: string) => {
-      setSelected((prev) =>
-        prev.includes(value)
-          ? prev.filter((selectedValue) => selectedValue !== value)
-          : [...prev, value],
-      );
-    };
+const createInitialNestedChecked = (): Record<OptionId, boolean> => ({
+  "option-a": true,
+  "option-b": false,
+  "option-c": false,
+});
 
-    return (
-      <div style={{ display: "flex", flexDirection: "column", rowGap: 16 }}>
-        {OPTIONS.map((option) => (
-          <Checkbox
-            key={option.value}
-            name="checkbox-group"
-            value={option.value}
-            label={option.label}
-            description={option.description}
-            checked={selected.includes(option.value)}
-            onChange={() => handleToggle(option.value)}
-            extraLabel={option.extraLabel}
-            size={size}
-          />
-        ))}
-      </div>
-    );
-  },
-  argTypes: {
-    label: { table: { disable: true } },
-    extraLabel: { table: { disable: true } },
-    description: { table: { disable: true } },
-    checked: { table: { disable: true } },
-    isError: { table: { disable: true } },
-    disabled: { table: { disable: true } },
-  },
+export const Indeterminate: Story = {
+  render: renderBaseCheckbox,
+  args: { ...defaultArgs, indeterminate: true, checked: false },
 };
 
-export const Indeterminate : Story = {
-  render: (args) => <BaseCheckbox {...args} />,
-  args: { ...defaultArgs, indeterminate: true },
-  argTypes: {
-    indeterminate: { table: { disable: true } }
-  },
-};
-
-export const IndeterminateError : Story = {
-  render: (args) => <BaseCheckbox {...args} />,
+export const IndeterminateError: Story = {
+  render: renderBaseCheckbox,
   args: { ...defaultArgs, indeterminate: true, checked: false, isError: true },
   argTypes: {
     indeterminate: { table: { disable: true } },
@@ -222,19 +206,66 @@ export const IndeterminateError : Story = {
   },
 };
 
-export const IndeterminateErrorChecked : Story = {
-  render: (args) => <BaseCheckbox {...args} />,
-  args: { ...defaultArgs, indeterminate: true, checked: true, isError: true },
-  argTypes: {
-    indeterminate: { table: { disable: true } },
-    isError: { table: { disable: true } },
-  },
-};
+export const NestedWithSelectAll: Story = {
+  render: ({ size }) => {
+    const [checked, setChecked] = useState<Record<OptionId, boolean>>(createInitialNestedChecked);
 
-export const IndeterminateErrorCheckedDisabled: Story = {
-  render: (args) => <BaseCheckbox {...args} />,
-  args: { ...defaultArgs, indeterminate: true, checked: true, isError: true, disabled: true },
+    const values = OPTIONS.map((option) => checked[option.value]);
+    const allChecked = values.every(Boolean);
+    const noneChecked = values.every((value) => !value);
+    const parentIndeterminate = !allChecked && !noneChecked;
+
+    const setAll = (value: boolean) => {
+      setChecked(
+          OPTIONS.reduce<Record<OptionId, boolean>>(
+              (acc, option) => ({ ...acc, [option.value]: value }),
+              {} as Record<OptionId, boolean>,
+          ),
+      );
+    };
+
+    const toggleOption = (id: OptionId) => {
+      setChecked((prev) => ({ ...prev, [id]: !prev[id] }));
+    };
+
+    const handleParentChange = () => {
+      setAll(!allChecked);
+    };
+
+    return (
+        <div style={{ display: "flex", flexDirection: "column", rowGap: 16 }}>
+          <Checkbox
+              label="Заголовок"
+              extraLabel="Дополнение к заголовку"
+              description="Описание"
+              size={size}
+              checked={allChecked}
+              indeterminate={parentIndeterminate}
+              onChange={handleParentChange}
+          />
+          <div style={{ display: "flex", flexDirection: "column", rowGap: 16, paddingLeft: 24 }}>
+            {OPTIONS.map((option) => (
+                <Checkbox
+                    key={option.value}
+                    name="checkbox-group"
+                    value={option.value}
+                    label={option.label}
+                    description={option.description}
+                    extraLabel={option.extraLabel}
+                    size={size}
+                    checked={checked[option.value]}
+                    onChange={() => toggleOption(option.value)}
+                />
+            ))}
+          </div>
+        </div>
+    );
+  },
   argTypes: {
+    label: { table: { disable: true } },
+    extraLabel: { table: { disable: true } },
+    description: { table: { disable: true } },
+    checked: { table: { disable: true } },
     indeterminate: { table: { disable: true } },
     isError: { table: { disable: true } },
     disabled: { table: { disable: true } },

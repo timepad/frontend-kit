@@ -28,8 +28,7 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
     const { DescriptionComponent, descriptionTag } = descriptionTypography[size];
     const { checked, ...inputProps } = rest;
 
-    const isIndeterminate = indeterminate && checked;
-    const icon = isIndeterminate ? <IconMinus16Outline /> : <IconCheck16Outline />;
+    const icon = indeterminate ? <IconMinus16Outline /> : <IconCheck16Outline />;
 
     const checkboxClassName = classNames(
       component("checkbox")({ [`size-${size}`]: true }),
@@ -44,8 +43,10 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
     const fieldClassName = component(
       "checkbox",
       "field",
-    )({ [`size-${size}`]: true, error: isError, indeterminate: isIndeterminate });
-    const iconClassName = component("checkbox", "icon")({ visible: checked || isIndeterminate });
+    )({ [`size-${size}`]: true, error: isError, indeterminate: indeterminate });
+    const iconClassName = component("checkbox", "icon")({
+      visible: checked || indeterminate,
+    });
 
     return (
       <label className={checkboxClassName}>
@@ -56,7 +57,7 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
             ref={ref}
             id={checkboxId}
             aria-invalid={isError || undefined}
-            aria-checked={isIndeterminate ? "mixed" : checked}
+            aria-checked={indeterminate ? "mixed" : checked}
             aria-describedby={descriptionId}
             checked={checked}
             {...inputProps}

@@ -8,7 +8,6 @@ import { InputHTMLAttributes, ReactNode } from "react";
  * - **l** — крупный
  */
 export type CheckboxSize = "s" | "m" | "l";
-// export type CheckboxCheckedState = boolean | "indeterminate";
 
 /**
  * Пропсы компонента Checkbox.
@@ -29,6 +28,8 @@ export interface ICheckboxProps extends Omit<
   isError?: boolean;
   /** Вспомогательный текст под подписью. */
   description?: ReactNode;
-  /** Неопределенное состояние чекбокса. */
+  /**
+   * Промежуточное состояние: выбрана только часть связанных чекбоксов (например, у родителя в группе).
+   */
   indeterminate?: boolean;
 }
