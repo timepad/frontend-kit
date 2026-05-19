@@ -1,9 +1,48 @@
-import {type CSSProperties, FC} from "react";
+import { type ComponentType, type CSSProperties, FC } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./counter.less";
-import type { CounterSize, ICounterProps } from "./counter.types";
-import { Typography } from "../Typography";
+import { CounterSize, CounterSM, ICounterProps } from "./counter.types";
+import { CaptionVariantTag, ParagraphVariantTag, Typography } from "../Typography";
+
+export const Counter: FC<ICounterProps> = ({
+  size = "m",
+  appearance = "accent",
+  className,
+  value,
+  color,
+  style,
+  ...rest
+}) => {
+  const indicator = isIndicatorOnly(size, value);
+  const showText = !indicator && size !== "xs";
+  const displayText = indicator  ? "" : formatCounterText(normalizeNumber(value!));
+  const visualSize: CounterSize = indicator ? "xs" : size;
+  const { ValueComponent, valueTag } = showText ? valueCounter[size] : { ValueComponent: null, valueTag: null };
+
+
+  const rootClassName = classNames(
+      component("counter")({
+          [`size-${visualSize}`]: true,
+          "appearance-custom": appearance === "custom",
+          "shape-circle": displayText.length === 1,
+      }),
+      className,
+  );
+
+  const textClassName = component("counter", "text")();
+  const customBg = appearance === "custom" ? ({ "--counter-bg": color } as CSSProperties) : {};
+
+  return (
+      <span className={rootClassName} style={{ ...customBg, ...style }} {...rest}>
+          {showText && ValueComponent && (
+              <ValueComponent tag={valueTag} className={textClassName}>
+                  {displayText}
+              </ValueComponent>
+          )}
+      </span>
+  );
+};
 
 const formatCounterText = (value: number): string => {
     if (value > 99) return "99+";
@@ -19,50 +58,15 @@ const isIndicatorOnly = (size: CounterSize, value?: number): boolean => {
     return size === "xs" || value === undefined;
 };
 
-export const Counter: FC <ICounterProps>= (props) => {
-    const {
-        size = "m",
-        appearance = "accent",
-        className,
-        style,
-        ...rest
-    } = props;
-    const value = "value" in props ? props.value : undefined;
-    const color = "color" in props ? props.color : undefined;
-
-    const indicator = isIndicatorOnly(size, value);
-    const displayText = indicator || value === undefined
-        ? ""
-        : formatCounterText(normalizeNumber(value));
-
-    const visualSize: CounterSize = indicator ? "xs" : size;
-    const isCircle = !indicator && displayText.length === 1;
-
-    const rootClassName = classNames(
-        component("counter")({
-            [`size-${visualSize}`]: true,
-            "appearance-accent": appearance === "accent",
-            "appearance-custom": appearance === "custom",
-            "shape-circle": !indicator && isCircle,
-        }),
-        className,
-    );
-
-    const textClassName = component("counter", "text")();
-    const customBg = appearance === "custom" ? ({ "--counter-bg": color } as CSSProperties) : undefined;
-    const mergedStyle = customBg ? { ...customBg, ...style } : style;
-
-    return (
-        <span className={rootClassName} style={mergedStyle} {...rest}>
-            {!indicator && (size === "s" ? (
-                    <Typography.Caption as="span" tag="C1 SEMIBOLD" className={textClassName}>
-                        {displayText}
-                    </Typography.Caption>
-                ) : (
-                    <Typography.Paragraph as="span" tag="P4 SEMIBOLD" className={textClassName}>
-                        {displayText}
-                    </Typography.Paragraph>
-            ))}
-        </span>
-    );
+const valueCounter: Record<
+  CounterSM,
+  {
+      ValueComponent: ComponentType<any>;
+      valueTag:
+      | Extract<ParagraphVariantTag, "P4 SEMIBOLD">
+      | Extract<CaptionVariantTag, "C1 SEMIBOLD">;
+  }
+> = {
+  s: { ValueComponent: Typography.Caption, valueTag: "C1 SEMIBOLD" },
+  m: { ValueComponent: Typography.Paragraph, valueTag: "P4 SEMIBOLD"},
 };

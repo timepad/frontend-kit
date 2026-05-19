@@ -1,10 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { useArgs } from "@storybook/preview-api";
 
 import { Counter } from "./Counter";
 import type { CounterAppearance, CounterSize, ICounterProps } from "./counter.types";
 
-const sizeOptions: CounterSize[] = ["xs", "s", "m"];
-const appearanceOptions: CounterAppearance[] = ["accent", "custom"];
+type CustomCounterStoryArgs = {
+  appearance: "custom";
+  color: string;
+  value?: number;
+};
+
+const sizeOptions = ["xs", "s", "m"] as const satisfies readonly CounterSize[];
+const appearanceOptions = ["accent", "custom"] as const satisfies readonly CounterAppearance[];
 
 const meta = {
   title: "Components/Counter",
@@ -81,24 +88,25 @@ export const AccentCounter: Story = {
 
 export const CustomCounter: Story = {
   args: {
+    appearance: "custom",
     color: "#59C836",
     value: 1,
-  },
+  } satisfies CustomCounterStoryArgs,
   argTypes: {
     appearance: { table: { disable: true } },
     size: { table: { disable: true } },
     value: { control: "number" },
     color: { control: "color" },
   },
-  render: (args) => {
-    const color = "color" in args ? args.color : "#59C836";
-    const value = "value" in args ? args.value : 1;
+  render: function CustomCounterRender() {
+    const [{ color, value = 1 }] = useArgs<CustomCounterStoryArgs>();
+
     return (
-        <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-          <Counter size="xs" appearance="custom" color={color} />
-          <Counter size="s" appearance="custom" color={color} value={value} />
-          <Counter size="m" appearance="custom" color={color} value={value} />
-        </div>
+      <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+        <Counter size="xs" appearance="custom" color={color} />
+        <Counter size="s" appearance="custom" color={color} value={value} />
+        <Counter size="m" appearance="custom" color={color} value={value} />
+      </div>
     );
   },
 };
