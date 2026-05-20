@@ -15,11 +15,19 @@ export const Counter: FC<ICounterProps> = ({
   ...rest
 }) => {
   const indicator = isIndicatorOnly(size, value);
-  const showText = !indicator && size !== "xs";
   const displayText = indicator  ? "" : formatCounterText(normalizeNumber(value!));
   const visualSize: CounterSize = indicator ? "xs" : size;
-  const { ValueComponent, valueTag } = showText ? valueCounter[size] : { ValueComponent: null, valueTag: null };
 
+  const content = () => {
+      if (indicator) return null;
+      const { Component, tag } = valueCounter[size as CounterSM];
+
+      return (
+          <Component tag={tag} className={textClassName}>
+              {displayText}
+          </Component>
+      )
+  }
 
   const rootClassName = classNames(
       component("counter")({
@@ -35,11 +43,7 @@ export const Counter: FC<ICounterProps> = ({
 
   return (
       <span className={rootClassName} style={{ ...customBg, ...style }} {...rest}>
-          {showText && ValueComponent && (
-              <ValueComponent tag={valueTag} className={textClassName}>
-                  {displayText}
-              </ValueComponent>
-          )}
+          {content()}
       </span>
   );
 };
@@ -61,12 +65,12 @@ const isIndicatorOnly = (size: CounterSize, value?: number): boolean => {
 const valueCounter: Record<
   CounterSM,
   {
-      ValueComponent: ComponentType<any>;
-      valueTag:
+      Component: ComponentType<any>;
+      tag:
       | Extract<ParagraphVariantTag, "P4 SEMIBOLD">
       | Extract<CaptionVariantTag, "C1 SEMIBOLD">;
   }
 > = {
-  s: { ValueComponent: Typography.Caption, valueTag: "C1 SEMIBOLD" },
-  m: { ValueComponent: Typography.Paragraph, valueTag: "P4 SEMIBOLD"},
+  s: { Component: Typography.Caption, tag: "C1 SEMIBOLD" },
+  m: { Component: Typography.Paragraph, tag: "P4 SEMIBOLD"},
 };
