@@ -104,7 +104,7 @@
     }
 
     &--error:not(:disabled) {
-      border-color: #F95721;
+      border-color: var(--accent-negative);
 
       &:checked,
       &.ccheckbox__field--indeterminate {
@@ -126,15 +126,13 @@
     justify-content: center;
     pointer-events: none;
     opacity: 0;
+    color: var(--greyscale-100);
 
     svg {
       display: block;
       flex-shrink: 0;
     }
 
-    * {
-      fill: var(--greyscale-100);
-    }
 
     &--visible {
       opacity: 1;
@@ -142,8 +140,6 @@
   }
 
   &__field:disabled + &__icon {
-    * {
-      fill: var(--icon-tertiary);
-    }
+    color: var(--icon-tertiary);
   }
 }
