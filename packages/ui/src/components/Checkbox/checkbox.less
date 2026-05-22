@@ -14,11 +14,10 @@
 }
 
 // Модификатор размера для поля чекбокса.
-.field-size(@size-name; @w; @h; @margin; @border-width; @radius) {
+.field-size(@size-name; @w; @h; @border-width; @radius) {
   &--size-@{size-name} {
     width: @w;
     height: @h;
-    margin: @margin;
     border-width: @border-width;
     border-radius: @radius;
   }
@@ -64,6 +63,16 @@
     position: relative;
     display: inline-flex;
     flex-shrink: 0;
+  }
+
+  &--size-s &__control {
+    margin: 2px;
+  }
+  &--size-m &__control {
+    margin: 3px;
+  }
+  &--size-l &__control {
+    margin: 4px;
   }
 
   &__field {
@@ -113,9 +122,9 @@
       }
     }
 
-    .field-size(s, 16px, 16px, 2px, 1px, 4px);
-    .field-size(m, 18px, 18px, 3px, 1.5px, 6px);
-    .field-size(l, 24px, 24px, 4px, 2px, 8px);
+    .field-size(s, 16px, 16px, 1px, 4px);
+    .field-size(m, 18px, 18px, 1.5px, 6px);
+    .field-size(l, 24px, 24px, 2px, 8px);
   }
 
   &__icon {
