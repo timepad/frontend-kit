@@ -1,35 +1,18 @@
 @import "../../assets/tokens/index.less";
 
-// Модификаторы размера с column-gap. Вызывать внутри блока — & берётся из контекста.
-.size-column-gaps(@gap-s; @gap-m; @gap-l) {
-  &--size-s {
-    column-gap: @gap-s;
-  }
-  &--size-m {
-    column-gap: @gap-m;
-  }
-  &--size-l {
-    column-gap: @gap-l;
-  }
-}
-
-// Модификатор размера для поля чекбокса.
-.field-size(@size-name; @w; @h; @border-width; @radius) {
-  &--size-@{size-name} {
-    width: @w;
-    height: @h;
-    border-width: @border-width;
-    border-radius: @radius;
-  }
-}
-
 .ccheckbox {
   display: flex;
   align-items: flex-start;
   position: relative;
   cursor: pointer;
 
-  .size-column-gaps(var(--space-6), var(--space-8), var(--space-12));
+  .column-gap-size(s, var(--space-6));
+  .column-gap-size(m, var(--space-8));
+  .column-gap-size(l, var(--space-12));
+
+  .control-margin-size(s, 2px);
+  .control-margin-size(m, 3px);
+  .control-margin-size(l, 4px);
 
   &:hover::after {
     content: "";
@@ -52,7 +35,9 @@
       color: var(--text-tertiary) !important;
     }
 
-    .size-column-gaps(var(--space-4), var(--space-6), var(--space-8));
+    .column-gap-size(s, var(--space-4));
+    .column-gap-size(m, var(--space-6));
+    .column-gap-size(l, var(--space-8));
   }
 
   &__description {
@@ -81,17 +66,12 @@
     position: relative;
     appearance: none;
     margin: 0;
-    border-radius: var(--radius-4);
     border-style: solid;
     border-color: var(--greyscale-300);
     background-color: var(--bg-primary);
     cursor: inherit;
 
-    &:checked {
-      border-color: var(--btn-primary-active);
-      background-color: var(--btn-primary-active);
-    }
-
+    &:checked,
     &--indeterminate {
       border-color: var(--btn-primary-active);
       background-color: var(--btn-primary-active);
@@ -118,7 +98,6 @@
       &:checked,
       &.ccheckbox__field--indeterminate {
         background-color: var(--accent-negative);
-        border-color: transparent;
       }
     }
 
@@ -142,7 +121,6 @@
       flex-shrink: 0;
     }
 
-
     &--visible {
       opacity: 1;
     }
@@ -150,5 +128,26 @@
 
   &__field:disabled + &__icon {
     color: var(--icon-tertiary);
+  }
+}
+
+.column-gap-size(@size-name; @gap) {
+  &--size-@{size-name} {
+    column-gap: @gap;
+  }
+}
+
+.field-size(@size-name; @w; @h; @border-width; @radius) {
+  &--size-@{size-name} {
+    width: @w;
+    height: @h;
+    border-width: @border-width;
+    border-radius: @radius;
+  }
+}
+
+.control-margin-size(@size-name; @margin) {
+  &--size-@{size-name} &__control {
+    margin: @margin;
   }
 }

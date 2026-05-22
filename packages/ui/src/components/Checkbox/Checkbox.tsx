@@ -4,7 +4,11 @@ import { IconCheck16Outline, IconMinus16Outline } from "../../assets/icons";
 
 import "./checkbox.less";
 import { ICheckboxProps, CheckboxSize } from "./checkbox.types";
-import { Typography, ParagraphVariantTag, CaptionVariantTag } from "../Typography";
+import {
+  Typography,
+  ParagraphVariantTag,
+  CaptionVariantTag,
+} from "../Typography";
 
 export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
   (
@@ -17,6 +21,7 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
       extraLabel,
       size = "m",
       indeterminate = false,
+      checked,
       ...rest
     },
     ref,
@@ -25,10 +30,14 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
 
     const checkboxId = id ?? defaultId;
     const descriptionId = description ? `${checkboxId}-description` : undefined;
-    const { DescriptionComponent, descriptionTag } = descriptionTypography[size];
-    const { checked, ...inputProps } = rest;
+    const { DescriptionComponent, descriptionTag } =
+      descriptionTypography[size];
 
-    const icon = indeterminate ? <IconMinus16Outline /> : <IconCheck16Outline />;
+    const icon = indeterminate ? (
+      <IconMinus16Outline />
+    ) : (
+      <IconCheck16Outline />
+    );
 
     const checkboxClassName = classNames(
       component("checkbox")({ [`size-${size}`]: true }),
@@ -40,17 +49,22 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
       "label",
     )({ [`size-${size}`]: true });
 
+    const controlClassName = component("checkbox", "control")();
+
     const fieldClassName = component(
       "checkbox",
       "field",
     )({ [`size-${size}`]: true, error: isError, indeterminate: indeterminate });
-    const iconClassName = component("checkbox", "icon")({
+    const iconClassName = component(
+      "checkbox",
+      "icon",
+    )({
       visible: checked || indeterminate,
     });
 
     return (
       <label className={checkboxClassName}>
-        <span className={component("checkbox", "control")()}>
+        <span className={controlClassName}>
           <input
             className={fieldClassName}
             type="checkbox"
@@ -60,7 +74,7 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
             aria-checked={indeterminate ? "mixed" : checked}
             aria-describedby={descriptionId}
             checked={checked}
-            {...inputProps}
+            {...rest}
           />
           <span className={iconClassName}>{icon}</span>
         </span>
@@ -76,7 +90,11 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
             )}
           </div>
           {description && (
-            <DescriptionComponent tag={descriptionTag} size={size} id={descriptionId}>
+            <DescriptionComponent
+              tag={descriptionTag}
+              size={size}
+              id={descriptionId}
+            >
               {description}
             </DescriptionComponent>
           )}
@@ -87,27 +105,27 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
 );
 
 const labelTag: Record<CheckboxSize, ParagraphVariantTag> = {
-    s: "P4 REGULAR",
-    m: "P3 REGULAR",
-    l: "P1 REGULAR",
+  s: "P4 REGULAR",
+  m: "P3 REGULAR",
+  l: "P1 REGULAR",
 };
 
 const descriptionTypography: Record<
-    CheckboxSize,
-    {
-        DescriptionComponent: ComponentType<any>;
-        descriptionTag:
-            | Extract<ParagraphVariantTag, "P4 REGULAR" | "P2 REGULAR">
-            | Extract<CaptionVariantTag, "C1 REGULAR">;
-    }
+  CheckboxSize,
+  {
+    DescriptionComponent: ComponentType<any>;
+    descriptionTag:
+      | Extract<ParagraphVariantTag, "P4 REGULAR" | "P2 REGULAR">
+      | Extract<CaptionVariantTag, "C1 REGULAR">;
+  }
 > = {
-    s: { DescriptionComponent: Typography.Caption, descriptionTag: "C1 REGULAR" },
-    m: {
-        DescriptionComponent: Typography.Paragraph,
-        descriptionTag: "P4 REGULAR",
-    },
-    l: {
-        DescriptionComponent: Typography.Paragraph,
-        descriptionTag: "P2 REGULAR",
-    },
+  s: { DescriptionComponent: Typography.Caption, descriptionTag: "C1 REGULAR" },
+  m: {
+    DescriptionComponent: Typography.Paragraph,
+    descriptionTag: "P4 REGULAR",
+  },
+  l: {
+    DescriptionComponent: Typography.Paragraph,
+    descriptionTag: "P2 REGULAR",
+  },
 };
