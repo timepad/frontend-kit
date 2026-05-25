@@ -50,6 +50,7 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
     )({ [`size-${size}`]: true });
 
     const controlClassName = component("checkbox", "control")();
+    const descriptionClassName = component("checkbox", "description")();
 
     const fieldClassName = component(
       "checkbox",
@@ -92,7 +93,7 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
           {description && (
             <DescriptionComponent
               tag={descriptionTag}
-              size={size}
+              className={descriptionClassName}
               id={descriptionId}
             >
               {description}
