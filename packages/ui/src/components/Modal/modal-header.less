@@ -1,0 +1,59 @@
+.cmodal-header {
+  display: grid;
+  grid-template-columns: 32px 1fr 32px;
+  grid-template-rows: auto;
+  row-gap: var(--space-8);
+  column-gap: var(--space-8);
+  padding: var(--space-20);
+
+  &:not(:has(&__btn-back)) {
+    .cmodal-header__title {
+      grid-column: 1 / span 2;
+    }
+
+    .cmodal-header__subtitle {
+      grid-column: 1 / span 2;
+    }
+  }
+  &:not(:has(&__btn-back)):not(:has(&__btn-close)) {
+    .cmodal-header__title {
+      grid-column: 1 / span 3;
+    }
+
+    .cmodal-header__subtitle {
+      grid-column: 1 / span 3;
+    }
+  }
+
+  &__btn-back {
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  &__title {
+    grid-row: 1;
+    grid-column: 2;
+    justify-self: center;
+  }
+
+  &__btn-close {
+    grid-row: 1;
+    grid-column: 3;
+    justify-self: end;
+  }
+
+  &__subtitle {
+    grid-row: 2;
+    grid-column: 1 / span 3;
+    justify-self: center;
+    color: var(--text-secondary) !important;
+  }
+
+  &--text-left {
+    .cmodal-header__title,
+    .cmodal-header__subtitle {
+      justify-self: start;
+    }
+  }
+}
