@@ -2,7 +2,7 @@ import { FC, ReactNode } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./button.less";
-import { ButtonVariant, IButtonProps } from "./button.types";
+import { IButtonProps } from "./button.types";
 import { Typography } from "../Typography";
 
 export const Button: FC<IButtonProps> = ({
@@ -13,6 +13,7 @@ export const Button: FC<IButtonProps> = ({
   label,
   className,
   type = "button",
+  fullWidth,
   ...rest
 }) => {
   const hasIcon = !!icon;
@@ -23,6 +24,7 @@ export const Button: FC<IButtonProps> = ({
     // button size: cbutton cbutton--size-m
     component("button")({
       [`size-${size}`]: true,
+      ["full-width"]: fullWidth,
     }),
     className,
   );
@@ -35,11 +37,7 @@ export const Button: FC<IButtonProps> = ({
   const iconClassName = component("button", "icon")();
 
   return (
-    <button
-      className={buttonClassName}
-      type={type}
-      {...rest}
-    >
+    <button className={buttonClassName} type={type} {...rest}>
       <span className={contentClassName}>
         <ButtonLabel size={size}>{label}</ButtonLabel>
 

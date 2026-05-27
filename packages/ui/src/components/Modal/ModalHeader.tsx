@@ -2,11 +2,8 @@ import { FC, PropsWithChildren } from "react";
 import { component } from "@frontend-kit/utils";
 
 import "./modal-header.less";
-import {
-  IBtnBackProps,
-  IBtnCloseProps,
-  IModalHeaderProps,
-} from "./modal.types";
+import { useModalContext } from "./modal.context";
+import { IBtnBackProps, IBtnCloseProps } from "./modal.types";
 import { IconButton } from "../IconButton";
 import { Typography } from "../Typography";
 import {
@@ -68,12 +65,12 @@ const Subtitle: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
-const ModalHeaderRoot: FC<PropsWithChildren<IModalHeaderProps>> = ({
-  children,
-  textLeft,
-}) => {
+const ModalHeaderRoot: FC<PropsWithChildren> = ({ children }) => {
+  const { headerAlign, isMobilePortraitMax } = useModalContext();
+
   const headerClassName = component("modal-header")({
-    ["text-left"]: textLeft,
+    ["text-left"]: headerAlign === "start",
+    ["mobile"]: isMobilePortraitMax,
   });
 
   return <div className={headerClassName}>{children}</div>;

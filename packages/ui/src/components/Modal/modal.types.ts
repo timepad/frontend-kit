@@ -1,13 +1,23 @@
 import {
-  ReactNode,
   MouseEvent,
+  PropsWithChildren,
   DetailedHTMLProps,
   HTMLAttributes,
+  FC,
 } from "react";
 
-type ModalSize = "s" | "m" | "l" | "full";
+export type ModalSize = "s" | "m" | "l" | "full";
 
-type DeviceType = "mobile" | "desktop";
+export type ModalHeaderAlign = "start" | "center";
+
+export type ModalFooterDirection = "column" | "row";
+
+export type ModalContextValue = {
+  size: ModalSize;
+  footerDirection: ModalFooterDirection;
+  headerAlign: ModalHeaderAlign;
+  isMobilePortraitMax: boolean;
+};
 
 export type ButtonClickHandler = (
   event?: MouseEvent<HTMLButtonElement>,
@@ -19,13 +29,9 @@ export interface IModalProps extends DetailedHTMLProps<
 > {
   isOpen: boolean;
   onClose?: ButtonClickHandler;
-  deviceType?: DeviceType;
   size?: ModalSize;
-}
-
-// Header types
-export interface IModalHeaderProps {
-  textLeft?: boolean;
+  footerDirection?: ModalFooterDirection;
+  headerAlign?: ModalHeaderAlign;
 }
 
 export interface IBtnCloseProps {
@@ -36,36 +42,12 @@ export interface IBtnBackProps {
   onBack: ButtonClickHandler;
 }
 
+export type ModalFooterLayoutComponentMap = {
+  [K in ModalFooterLayout]: FC<PropsWithChildren>;
+};
+
 export type ModalFooterLayout = "stack" | "inline-actions" | "toolbar";
 
-interface IBaseModalFooterProps {
-  onConfirmHandler: ButtonClickHandler;
-  onCancelHandler?: ButtonClickHandler;
-  onBackHandler?: ButtonClickHandler;
-  beforeContent?: ReactNode;
-  afterContent?: ReactNode;
-  confirmLabel?: string;
-  cancelLabel?: string;
-  backLabel?: string;
+export interface IModalFooterProps {
   withDivider?: boolean;
-  disabled?: boolean;
 }
-
-export type IModalFooterStackProps = IBaseModalFooterProps & {
-  layout: Extract<ModalFooterLayout, "stack">;
-  device: DeviceType;
-};
-
-export type IModalFooterInlineActionsProps = IBaseModalFooterProps & {
-  layout: Extract<ModalFooterLayout, "inline-actions">;
-  onBackHandler?: never;
-};
-
-export type IModalFooterToolbarProps = IBaseModalFooterProps & {
-  layout: Extract<ModalFooterLayout, "toolbar">;
-};
-
-export type IModalFooterProps =
-  | IModalFooterStackProps
-  | IModalFooterInlineActionsProps
-  | IModalFooterToolbarProps;
