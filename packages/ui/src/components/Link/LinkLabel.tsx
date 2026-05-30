@@ -1,0 +1,45 @@
+import React, {FC} from "react";
+import {component} from "@frontend-kit/utils";
+
+import "./link.less";
+import {Typography} from "../Typography";
+import {ILinkLabelProps} from "./link.types";
+
+export const LinkLabel: FC<ILinkLabelProps> = ({ size, children }) => {
+    const linkLabelClassName = component("link", "label")();
+
+    if (size === 'm') {
+        return (
+            <Typography.Paragraph
+                tag="P4 REGULAR"
+                as="span"
+                className={linkLabelClassName}
+            >
+                {children}
+            </Typography.Paragraph>
+        );
+    }
+
+    if (size === 'l') {
+        return (
+            <Typography.Paragraph
+                tag="P3 REGULAR"
+                as="span"
+                className={linkLabelClassName}
+            >
+                {children}
+            </Typography.Paragraph>
+        );
+    }
+
+    // size === 's'
+    return (
+        <Typography.Caption
+            tag="C1 REGULAR"
+            as="span"
+            className={linkLabelClassName}
+        >
+            {children}
+        </Typography.Caption>
+    );
+};
