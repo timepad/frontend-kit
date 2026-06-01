@@ -57,7 +57,7 @@ const ModalRoot: FC<PropsWithChildren<IModalProps>> = ({
 
     dialog.addEventListener("cancel", handleCancel);
     return () => dialog.removeEventListener("cancel", handleCancel);
-  }, []);
+  }, [onClose]);
 
   const handleBackdropClick = (event: React.MouseEvent<HTMLDialogElement>) => {
     if (event.target === dialogRef.current) {
