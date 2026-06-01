@@ -3,10 +3,17 @@
 .cmodal-footer {
   padding: var(--space-12) var(--space-20) var(--space-20) var(--space-20);
 
-  &__row-buttons {
+  &__buttons {
     display: flex;
     column-gap: var(--space-12);
     grid-row: 2;
+
+    &--full-width {
+      > * {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+    }
   }
 
   &__before-content {
@@ -40,7 +47,7 @@
     row-gap: var(--space-12);
 
     &:not(:has(.cmodal-footer__btn-back)) {
-      .cmodal-footer__row-buttons {
+      .cmodal-footer__buttons {
         grid-row: 1 / span 2;
         align-self: center;
         justify-self: end;
@@ -52,7 +59,7 @@
     }
 
     &:not(:has(.cmodal-footer__before-content)) {
-      .cmodal-footer__row-buttons {
+      .cmodal-footer__buttons {
         grid-row: 1;
       }
 

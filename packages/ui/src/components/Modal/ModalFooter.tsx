@@ -2,7 +2,6 @@ import { FC, PropsWithChildren } from "react";
 import { component } from "@frontend-kit/utils";
 
 import "./modal-footer.less";
-
 import {
   ModalFooterAfter,
   ModalFooterBefore,
@@ -10,10 +9,7 @@ import {
   ModalFooterBtnCancel,
   ModalFooterBtnConfirm,
 } from "./ModalFooterSlots";
-import {
-  IModalFooterProps,
-  ModalFooterLayoutComponentMap,
-} from "./modal.types";
+import { ModalFooterLayout } from "./modal.types";
 import { useModalContext } from "./modal.context";
 import { getModalFooterLayout, getModalFooterSlots } from "./modal.helpers";
 
@@ -31,7 +27,7 @@ const ModalFooterToolbar: FC<PropsWithChildren> = ({ children }) => {
         </div>
       )}
       {hasRowButtons && (
-        <div className={component("modal-footer", "row-buttons")()}>
+        <div className={component("modal-footer", "buttons")()}>
           {BtnBack && (
             <div className={component("modal-footer", "btn-back")()}>
               {BtnBack}
@@ -60,7 +56,14 @@ const ModalFooterInlineActions: FC<PropsWithChildren> = ({ children }) => {
     <>
       {Before}
       {hasRowButtons && (
-        <div className={component("modal-footer", "row-buttons")()}>
+        <div
+          className={component(
+            "modal-footer",
+            "buttons",
+          )({
+            ["full-width"]: true,
+          })}
+        >
           {BtnCancel}
           {BtnConfirm}
         </div>
@@ -84,22 +87,22 @@ const ModalFooterStack: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
-const footerLayoutComponents: ModalFooterLayoutComponentMap = {
+const footerLayoutComponents: {
+  [K in ModalFooterLayout]: FC<PropsWithChildren>;
+} = {
   stack: ModalFooterStack,
   "inline-actions": ModalFooterInlineActions,
   toolbar: ModalFooterToolbar,
 };
 
-const ModalFooterRoot: FC<PropsWithChildren<IModalFooterProps>> = ({
-  children,
-  withDivider,
-}) => {
-  const { footerDirection, size, isMobilePortraitMax } = useModalContext();
+const ModalFooterRoot: FC<PropsWithChildren> = ({ children }) => {
+  const { footerDirection, size, isMobileDevice, withFooterDivider } =
+    useModalContext();
   const layout = getModalFooterLayout(size, footerDirection);
 
   const footerClassName = component("modal-footer")({
-    ["divider"]: withDivider,
-    ["mobile"]: isMobilePortraitMax,
+    ["divider"]: withFooterDivider,
+    ["mobile"]: isMobileDevice,
     [layout]: true,
   });
   const LayoutComponent = footerLayoutComponents[layout];

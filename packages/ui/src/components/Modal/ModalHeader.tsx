@@ -46,10 +46,15 @@ const BtnClose: FC<IBtnCloseProps> = ({ onClose }) => {
 };
 
 const Title: FC<PropsWithChildren> = ({ children }) => {
+  const { titleId } = useModalContext();
   const titleClassName = component("modal-header", "title")();
 
   return (
-    <Typography.Header tag="H3 ACCENT BOLD" className={titleClassName}>
+    <Typography.Header
+      id={titleId}
+      tag="H3 ACCENT BOLD"
+      className={titleClassName}
+    >
       {children}
     </Typography.Header>
   );
@@ -66,11 +71,11 @@ const Subtitle: FC<PropsWithChildren> = ({ children }) => {
 };
 
 const ModalHeaderRoot: FC<PropsWithChildren> = ({ children }) => {
-  const { headerAlign, isMobilePortraitMax } = useModalContext();
+  const { headerAlign, isMobileDevice } = useModalContext();
 
   const headerClassName = component("modal-header")({
-    ["text-left"]: headerAlign === "start",
-    ["mobile"]: isMobilePortraitMax,
+    ["align-start"]: headerAlign === "start",
+    ["mobile"]: isMobileDevice,
   });
 
   return <div className={headerClassName}>{children}</div>;
