@@ -1,11 +1,9 @@
 import {
-  Dispatch,
   PointerEvent,
-  SetStateAction,
+  useCallback,
   useRef,
   useState,
   CSSProperties,
-  MutableRefObject,
 } from "react";
 
 import { ButtonClickHandler } from "./modal.types";
@@ -17,8 +15,7 @@ interface IUseDragPanelResult {
   handlePointerDown: (event: PointerEvent<HTMLElement>) => void;
   handlePointerMove: (event: PointerEvent<HTMLElement>) => void;
   finishDragging: () => void;
-  setDragY: Dispatch<SetStateAction<number>>;
-  dragYRef: MutableRefObject<number>;
+  resetDrag: () => void;
 }
 
 export const useDragPanel = (
@@ -27,18 +24,25 @@ export const useDragPanel = (
 ): IUseDragPanelResult => {
   const startYRef = useRef(0);
   const dragYRef = useRef(0);
+  const isDraggingRef = useRef(false);
   const [dragY, setDragY] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
+
+  const resetDrag = useCallback(() => {
+    isDraggingRef.current = false;
+    dragYRef.current = 0;
+    setDragY(0);
+  }, []);
 
   const handlePointerDown = (event: PointerEvent<HTMLElement>) => {
     startYRef.current = event.clientY;
     dragYRef.current = 0;
-    setIsDragging(true);
+    isDraggingRef.current = true;
+    setDragY(0);
     event.currentTarget.setPointerCapture(event.pointerId);
   };
 
   const handlePointerMove = (event: PointerEvent<HTMLElement>) => {
-    if (!isDragging) return;
+    if (!isDraggingRef.current) return;
 
     const nextDragY = Math.max(0, event.clientY - startYRef.current);
     dragYRef.current = nextDragY;
@@ -46,23 +50,23 @@ export const useDragPanel = (
   };
 
   const finishDragging = () => {
-    if (!isDragging) return;
+    if (!isDraggingRef.current) return;
 
-    setIsDragging(false);
+    isDraggingRef.current = false;
 
-    if (dragYRef.current >= CLOSE_DRAG_DISTANCE) {
-      onClose?.();
-      return;
-    }
-
+    const distance = dragYRef.current;
     dragYRef.current = 0;
     setDragY(0);
+
+    if (distance >= CLOSE_DRAG_DISTANCE) {
+      onClose?.();
+    }
   };
 
   const contentStyles = isMobileDevice
     ? {
         transform: `translateY(${dragY}px)`,
-        transitionDuration: isDragging ? "0ms" : undefined,
+        transitionDuration: isDraggingRef.current ? "0ms" : undefined,
       }
     : {};
 
@@ -71,7 +75,6 @@ export const useDragPanel = (
     handlePointerDown,
     handlePointerMove,
     finishDragging,
-    setDragY,
-    dragYRef,
+    resetDrag,
   };
 };

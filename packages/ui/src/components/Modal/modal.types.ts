@@ -43,10 +43,6 @@ export interface IModalContextValue {
   isMobileDevice: boolean;
   /** Верхняя граница-разделитель у футера (`box-shadow`). */
   withFooterDivider: boolean;
-  /** `id` для `Modal.Header.Title` и `aria-labelledby` на `<dialog>`. */
-  titleId: string;
-  /** `id` для `Modal.Body` и `aria-describedby` на `<dialog>`. */
-  bodyId: string;
 }
 
 /** Обработчик клика по кнопкам модалки (close, back, footer actions). */

@@ -46,12 +46,10 @@ const BtnClose: FC<IBtnCloseProps> = ({ onClose }) => {
 };
 
 const Title: FC<PropsWithChildren> = ({ children }) => {
-  const { titleId } = useModalContext();
   const titleClassName = component("modal-header", "title")();
 
   return (
     <Typography.Header
-      id={titleId}
       tag="H3 ACCENT BOLD"
       className={titleClassName}
     >

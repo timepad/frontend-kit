@@ -11,8 +11,14 @@ import {
 import { Typography } from "../Typography";
 
 const modalSizeOptions = ["s", "m", "l", "full"] as const satisfies ModalSize[];
-const footerDirectionOptions = ["column", "row"] as const satisfies ModalFooterDirection[];
-const headerAlignOptions = ["center", "start"] as const satisfies ModalHeaderAlign[];
+const footerDirectionOptions = [
+  "column",
+  "row",
+] as const satisfies ModalFooterDirection[];
+const headerAlignOptions = [
+  "center",
+  "start",
+] as const satisfies ModalHeaderAlign[];
 
 type ModalStoryArgs = {
   size: ModalSize;
@@ -135,13 +141,8 @@ const ModalPlaygroundContent = ({
 );
 
 const ModalStoryView = (args: ModalStoryArgs) => {
-  const {
-    size,
-    footerDirection,
-    headerAlign,
-    withFooterDivider,
-    ...slotArgs
-  } = args;
+  const { size, footerDirection, headerAlign, withFooterDivider, ...slotArgs } =
+    args;
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
 
@@ -159,15 +160,16 @@ const ModalStoryView = (args: ModalStoryArgs) => {
         headerAlign={headerAlign}
         withFooterDivider={withFooterDivider}
       >
-        <ModalPlaygroundContent onClose={handleClose} {...slotArgs} />
+        <ModalPlaygroundContent {...slotArgs} onClose={handleClose} />
       </Modal>
     </>
   );
 };
 
 const renderModalStory =
-  (View: FC<ModalStoryArgs>) => (args: ModalStoryArgs) =>
-    <View {...normalizeModalStoryArgs(args)} />;
+  (View: FC<ModalStoryArgs>) => (args: ModalStoryArgs) => (
+    <View {...normalizeModalStoryArgs(args)} />
+  );
 
 const meta = {
   title: "Components/Modal",
@@ -478,9 +480,7 @@ const BtnBackStoryView = ({
         withFooterDivider={withFooterDivider}
       >
         <Modal.Header>
-          {!isFirstStep && (
-            <Modal.Header.BtnBack onBack={() => goToStep(1)} />
-          )}
+          {!isFirstStep && <Modal.Header.BtnBack onBack={() => goToStep(1)} />}
           <Modal.Header.Title>
             {isFirstStep ? "Шаг 1. Список" : "Шаг 2. Детали"}
           </Modal.Header.Title>
@@ -496,8 +496,8 @@ const BtnBackStoryView = ({
           {isFirstStep ? (
             <>
               <Typography.Paragraph tag="P4 REGULAR">
-                Нажмите «Далее», чтобы перейти ко второму шагу и увидеть
-                BtnBack в шапке (M/L/Full) или в футере (S).
+                Нажмите «Далее», чтобы перейти ко второму шагу и увидеть BtnBack
+                в шапке (M/L/Full) или в футере (S).
               </Typography.Paragraph>
               <button
                 type="button"

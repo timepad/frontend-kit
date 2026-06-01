@@ -1,11 +1,4 @@
-import {
-  FC,
-  PropsWithChildren,
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-} from "react";
+import { FC, PropsWithChildren, useEffect, useMemo, useRef } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 import { useMedia } from "@frontend-kit/hooks";
 
@@ -30,17 +23,13 @@ const ModalRoot: FC<PropsWithChildren<IModalProps>> = ({
 }) => {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
 
-  const titleId = useId();
-  const bodyId = useId();
-
   const { isMobilePortraitMax } = useMedia();
   const {
     contentStyles,
-    setDragY,
-    dragYRef,
     handlePointerDown,
     handlePointerMove,
     finishDragging,
+    resetDrag,
   } = useDragPanel(onClose, isMobilePortraitMax);
 
   useEffect(() => {
@@ -53,12 +42,9 @@ const ModalRoot: FC<PropsWithChildren<IModalProps>> = ({
 
     if (!isOpen && dialog.open) {
       dialog.close();
-      if (isMobilePortraitMax) {
-        setDragY(0);
-        dragYRef.current = 0;
-      }
+      resetDrag();
     }
-  }, [isOpen, isMobilePortraitMax]);
+  }, [isOpen, resetDrag]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -71,7 +57,7 @@ const ModalRoot: FC<PropsWithChildren<IModalProps>> = ({
 
     dialog.addEventListener("cancel", handleCancel);
     return () => dialog.removeEventListener("cancel", handleCancel);
-  }, [onClose]);
+  }, []);
 
   const handleBackdropClick = (event: React.MouseEvent<HTMLDialogElement>) => {
     if (event.target === dialogRef.current) {
@@ -88,17 +74,13 @@ const ModalRoot: FC<PropsWithChildren<IModalProps>> = ({
       headerAlign,
       isMobileDevice: isMobilePortraitMax,
       withFooterDivider,
-      titleId,
-      bodyId,
     } satisfies IModalContextValue;
   }, [
     isMobilePortraitMax,
-    size,
+    modalSize,
     footerDirection,
     headerAlign,
     withFooterDivider,
-    titleId,
-    bodyId,
   ]);
 
   const modalClassName = classNames(
@@ -113,14 +95,12 @@ const ModalRoot: FC<PropsWithChildren<IModalProps>> = ({
     "modal",
     "content",
   )({
-    ["mobile"]: isMobilePortraitMax,
+    mobile: isMobilePortraitMax,
   });
 
   return (
     <dialog
       ref={dialogRef}
-      aria-labelledby={titleId}
-      aria-describedby={bodyId}
       onClick={handleBackdropClick}
       className={modalClassName}
     >

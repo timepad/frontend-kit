@@ -5,13 +5,14 @@ import "./modal-body.less";
 import { useModalContext } from "./modal.context";
 
 export const ModalBody: FC<PropsWithChildren> = ({ children }) => {
-  const { isMobileDevice, bodyId } = useModalContext();
+  const { isMobileDevice } = useModalContext();
 
   const bodyClassName = component("modal-body")({
     ["mobile"]: isMobileDevice,
   });
+
   return (
-    <div id={bodyId} className={bodyClassName}>
+    <div className={bodyClassName}>
       {children}
     </div>
   );
