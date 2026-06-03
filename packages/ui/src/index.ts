@@ -7,5 +7,14 @@ export { Input } from "./components/Input";
 export { Radio } from "./components/Radio";
 export { Textarea } from "./components/Textarea";
 export { Typography } from "./components/Typography";
+export { Cell } from "./components/Cell";
+export type {
+  ICellProps,
+  ICellSlotProps,
+  ICellContentProps,
+  ICellTextProps,
+  CellAlign,
+  CellHorizontalPadding,
+} from "./components/Cell";
 export * from "./assets/icons";
 export * from "./P";

@@ -1,0 +1,79 @@
+@import "../../assets/tokens/index.less";
+
+@cell-horizontal-paddings: 0, 8, 16;
+
+.ccell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-10) 0;
+  min-width: 0;
+  cursor: default;
+  user-select: none;
+
+  --cell-text-color: var(--text-primary);
+  --cell-bg-color: var(--bg-primary);
+
+  color: var(--cell-text-color);
+  background-color: var(--cell-bg-color);
+
+  each(@cell-horizontal-paddings, {
+    &--padding-@{value} {
+      padding-left: ~"var(--space-@{value})";
+      padding-right: ~"var(--space-@{value})";
+    }
+  });
+
+  &__left,
+  &__right {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  &--align-top &__left {
+    align-self: flex-start;
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__text-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    min-width: 0;
+  }
+
+  &__text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  &__caption {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    margin: 0;
+    color: var(--text-secondary);
+  }
+
+  &__right {
+    max-width: 50%;
+  }
+
+  &__separator {
+    width: 100%;
+    height: 1px;
+    margin-top: var(--space-8);
+    background-color: var(--bg-stroke);
+  }
+}
