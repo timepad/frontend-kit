@@ -1,0 +1,87 @@
+@import "../../assets/tokens/index.less";
+
+.cmodal-footer {
+  padding: var(--space-12) var(--space-20) var(--space-20) var(--space-20);
+
+  &__buttons {
+    display: flex;
+    column-gap: var(--space-12);
+    grid-row: 2;
+
+    &--full-width {
+      > * {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+    }
+  }
+
+  &__before-content {
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  &__btn-back {
+    flex: 1;
+  }
+
+  &__after-content {
+    grid-row: 3;
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  &--stack,
+  &--inline-actions {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-12);
+  }
+
+  &--toolbar {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    column-gap: var(--space-12);
+    row-gap: var(--space-12);
+
+    &:not(:has(.cmodal-footer__btn-back)) {
+      .cmodal-footer__buttons {
+        grid-row: 1 / span 2;
+        align-self: center;
+        justify-self: end;
+      }
+
+      .cmodal-footer__after-content {
+        grid-row: 2;
+      }
+    }
+
+    &:not(:has(.cmodal-footer__before-content)) {
+      .cmodal-footer__buttons {
+        grid-row: 1;
+      }
+
+      .cmodal-footer__after-content {
+        grid-row: 2;
+      }
+    }
+
+    &:not(:has(.cmodal-footer__btn-back)):not(
+        :has(.cmodal-footer__before-content)
+      ) {
+      .cmodal-footer__after-content {
+        grid-row: 1;
+      }
+    }
+  }
+
+  &--mobile {
+    padding: var(--space-8) var(--space-16) var(--space-16) var(--space-16);
+  }
+
+  &--divider {
+    box-shadow: 0 -1px 0 0 var(--bg-stroke);
+  }
+}
