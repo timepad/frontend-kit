@@ -1,31 +1,46 @@
 @import "../../assets/tokens/index.less";
 
-@cell-horizontal-paddings: 0, 8, 16;
+@cell-horizontal-paddings: 0, 8, 12, 16;
 
 .ccell {
-  display: flex;
-  align-items: center;
-  gap: var(--space-12);
-  padding: var(--space-10) 0;
   min-width: 0;
   cursor: default;
-  user-select: none;
 
-  --cell-text-color: var(--text-primary);
-  --cell-bg-color: var(--bg-primary);
+  --cell-bg-color: transparent;
 
-  color: var(--cell-text-color);
+  color: var(--text-primary);
   background-color: var(--cell-bg-color);
+  border-radius: var(--radius-20);
 
   each(@cell-horizontal-paddings, {
     &--padding-@{value} {
-      padding-left: ~"var(--space-@{value})";
-      padding-right: ~"var(--space-@{value})";
+      .ccell__left,
+      .ccell__body > .ccell__content:first-child {
+        padding-left: ~"var(--space-@{value})";
+      }
+
+      .ccell__right {
+        padding-right: ~"var(--space-@{value})";
+      }
     }
   });
 
-  &__left,
-  &__right {
+  &__body {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    column-gap: var(--space-12);
+    padding: var(--space-10) 0;
+    min-width: 0;
+
+    &:has(.ccell__separator) {
+      padding-bottom: 0;
+      row-gap: var(--space-10);
+    }
+  }
+
+  &__left {
+    grid-column: 1;
+    grid-row: 1;
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -36,10 +51,9 @@
   }
 
   &__content {
-    flex: 1;
+    grid-column: 2;
+    grid-row: 1;
     min-width: 0;
-    display: flex;
-    flex-direction: column;
   }
 
   &__text-stack {
@@ -49,31 +63,22 @@
     min-width: 0;
   }
 
-  &__text {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-    margin: 0;
-  }
-
   &__caption {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-    overflow: hidden;
-    margin: 0;
     color: var(--text-secondary);
   }
 
   &__right {
-    max-width: 50%;
+    grid-column: 3;
+    grid-row: 1;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
   }
 
   &__separator {
-    width: 100%;
+    grid-column: 2 / -1;
+    grid-row: 2;
     height: 1px;
-    margin-top: var(--space-8);
     background-color: var(--bg-stroke);
   }
 }

@@ -4,11 +4,33 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Cell } from "./Cell";
 import { ICellProps } from "./cell.types";
 import { Avatar } from "../Avatar";
+import { Counter } from "../Counter";
+import { IconButton } from "../IconButton";
 import { Typography } from "../Typography";
 import {
   IconChevronRight16Outline,
+  IconChevronRight24Outline,
+  IconHeart16Outline,
   IconHeart24Outline,
 } from "../../assets/icons";
+
+const fillColorOptions = [
+  "transparent",
+  "var(--bg-primary)",
+  "var(--bg-secondary)",
+  "var(--light-purple)",
+  "var(--normal-purple)",
+] as const;
+
+const resolveCellBackground = (backgroundColor?: string) =>
+  backgroundColor === "transparent" || backgroundColor == null
+    ? undefined
+    : backgroundColor;
+
+type CellStoryArgs = ICellProps & {
+  separator?: boolean;
+  bold?: boolean;
+};
 
 const meta = {
   title: "Components/Cell",
@@ -22,7 +44,7 @@ const meta = {
   tags: ["autodocs"],
   decorators: [
     (Story) => (
-      <div style={{ width: 480, background: "var(--bg-secondary)" }}>
+      <div style={{ width: 480 }}>
         <Story />
       </div>
     ),
@@ -30,18 +52,34 @@ const meta = {
   argTypes: {
     horizontalPadding: {
       control: "select",
-      options: [0, 8, 16],
+      options: [0, 8, 12, 16],
     },
     align: {
       control: "inline-radio",
       options: ["center", "top"],
     },
+    backgroundColor: {
+      name: "Цвет заливки",
+      control: "select",
+      options: [...fillColorOptions],
+    },
+    separator: {
+      name: "Сепаратор",
+      control: "boolean",
+      table: { disable: true },
+    },
+    bold: {
+      name: "Bold",
+      control: "boolean",
+      table: { disable: true },
+    },
   },
   args: {
     align: "center",
     horizontalPadding: 0,
+    backgroundColor: "var(--bg-primary)",
   },
-} satisfies Meta<typeof Cell>;
+} satisfies Meta<CellStoryArgs>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -59,140 +97,332 @@ const leftIconBgStyle: CSSProperties = {
 const longCaption =
   "И большое описание, которое ещё сильнее увеличивает высоту контейнера. Третья строка caption.";
 
+const listCaption = "Описание в три строки максимум";
+
+const rightStackStyle: CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-end",
+  gap: "var(--space-2)",
+};
+
+const badgePillStyle: CSSProperties = {
+  padding: "2px 8px",
+  borderRadius: "var(--radius-8)",
+  background: "var(--light-purple)",
+  color: "var(--dark-purple)",
+};
+
+const listCellProps: ICellProps = {
+  backgroundColor: "var(--bg-primary)",
+};
+
 const cellStoryProps = ({
   align,
   horizontalPadding,
+  backgroundColor,
 }: ICellProps): ICellProps => ({
   align,
   horizontalPadding,
+  backgroundColor: resolveCellBackground(backgroundColor),
 });
 
 export const Default: Story = {
-  render: (args) => (
-    <Cell {...cellStoryProps(args)}>
-      <Cell.Left>
-        <span style={leftIconBgStyle}>
-          <IconHeart24Outline />
-        </span>
-      </Cell.Left>
-      <Cell.Content separator>
-        <Cell.Text>Заголовок</Cell.Text>
-        <Cell.Caption>{longCaption}</Cell.Caption>
-      </Cell.Content>
-      <Cell.Right>
-        <Typography.Paragraph tag="P4 REGULAR">Data</Typography.Paragraph>
-        <IconChevronRight16Outline aria-hidden="true" />
-      </Cell.Right>
-    </Cell>
-  ),
+  args: {
+    separator: false,
+  },
+  argTypes: {
+    separator: {
+      table: { disable: false },
+    },
+  },
+  render: (args) => {
+    const { separator = false, ...cellArgs } = args as CellStoryArgs;
+
+    return (
+      <Cell {...cellStoryProps(cellArgs)}>
+        <Cell.Left>
+          <span style={leftIconBgStyle}>
+            <IconHeart24Outline />
+          </span>
+        </Cell.Left>
+        <Cell.Content separator={separator}>
+          <Cell.Content.Text>Заголовок</Cell.Content.Text>
+          <Cell.Content.Caption>{longCaption}</Cell.Content.Caption>
+        </Cell.Content>
+        <Cell.Right>
+          <div style={{display: "flex", alignItems: "center", cursor: "pointer"}} onClick={() => alert("клик")}>
+            <Typography.Paragraph tag="P4 REGULAR">Data</Typography.Paragraph>
+            <IconChevronRight16Outline aria-hidden="true" />
+          </div>
+        </Cell.Right>
+      </Cell>
+    );
+  },
 };
 
 export const TextOnly: Story = {
-  render: () => (
-    <Cell>
-      <Cell.Content>
-        <Cell.Text bold={false}>
-          Заголовок regular
-        </Cell.Text>
-      </Cell.Content>
-    </Cell>
-  ),
-};
+  args: {
+    separator: false,
+    bold: false,
+  },
+  argTypes: {
+    align: { table: { disable: true } },
+    separator: {
+      table: { disable: false },
+    },
+    bold: {
+      table: { disable: false },
+    },
+  },
+  render: (args) => {
+    const { separator = false, bold = false, ...cellArgs } = args as CellStoryArgs;
 
-export const Alignment: Story = {
-  render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-      <Cell>
-        <Cell.Left>
-          <span style={leftIconBgStyle}>
-            <IconHeart24Outline />
-          </span>
-        </Cell.Left>
-        <Cell.Content>
-          <Cell.Text>Заголовок</Cell.Text>
-          <Cell.Caption>Описание</Cell.Caption>
+    return (
+      <Cell {...cellStoryProps(cellArgs)}>
+        <Cell.Content separator={separator}>
+          <Cell.Content.Text bold={bold}>
+            Заголовок Text
+          </Cell.Content.Text>
         </Cell.Content>
-        <Cell.Right>
-          <Typography.Paragraph tag="P3 REGULAR">Data</Typography.Paragraph>
-          <IconChevronRight16Outline aria-hidden="true" />
-        </Cell.Right>
       </Cell>
-
-      <Cell align="top">
-        <Cell.Left>
-          <span style={leftIconBgStyle}>
-            <IconHeart24Outline />
-          </span>
-        </Cell.Left>
-        <Cell.Content>
-          <Cell.Text>Заголовок</Cell.Text>
-          <Cell.Caption>{longCaption}</Cell.Caption>
-        </Cell.Content>
-        <Cell.Right>
-          <Typography.Paragraph tag="P4 REGULAR">Data</Typography.Paragraph>
-          <IconChevronRight16Outline aria-hidden="true" />
-        </Cell.Right>
-      </Cell>
-    </div>
-  ),
+    );
+  },
 };
 
 export const CaptionAboveLabel: Story = {
-  render: () => (
-    <Cell align="top">
-      <Cell.Content>
-        <Cell.Caption>Описание сверху</Cell.Caption>
-        <Cell.Text>Заголовок снизу</Cell.Text>
-      </Cell.Content>
-    </Cell>
-  ),
-};
+  args: {
+    separator: false,
+    bold: true,
+  },
+  argTypes: {
+    align: { table: { disable: true } },
+    separator: {
+      table: { disable: false },
+    },
+    bold: {
+      table: { disable: false },
+    },
+  },
+  render: (args) => {
+    const { separator = false, bold = true, ...cellArgs } = args as CellStoryArgs;
 
-export const WithAvatar: Story = {
-  render: () => (
-    <Cell>
-      <Cell.Left>
-        <Avatar text="Алексей Ветров" size={40} />
-      </Cell.Left>
-      <Cell.Content separator>
-        <Cell.Text>Алексей Ветров</Cell.Text>
-        <Cell.Caption>Онлайн</Cell.Caption>
-      </Cell.Content>
-      <Cell.Right>
-        <IconChevronRight16Outline aria-hidden="true" />
-      </Cell.Right>
-    </Cell>
-  ),
+    return (
+      <Cell {...cellStoryProps({ ...cellArgs, align: "top" })}>
+        <Cell.Content separator={separator}>
+          <Cell.Content.Caption>Описание сверху</Cell.Content.Caption>
+          <Cell.Content.Text bold={bold}>Заголовок снизу</Cell.Content.Text>
+        </Cell.Content>
+      </Cell>
+    );
+  },
 };
 
 export const WithoutSides: Story = {
-  render: () => (
-    <Cell horizontalPadding={0}>
-      <Cell.Content separator>
-        <Cell.Text>Только текстовый блок</Cell.Text>
-        <Cell.Caption>Левый и правый слоты опциональны</Cell.Caption>
-      </Cell.Content>
-    </Cell>
-  ),
+  args: {
+    horizontalPadding: 0,
+    separator: true,
+    bold: true,
+  },
+  argTypes: {
+    align: { table: { disable: true } },
+    separator: {
+      table: { disable: false },
+    },
+    bold: {
+      table: { disable: false },
+    },
+  },
+  render: (args) => {
+    const { separator = false, bold = true, ...cellArgs } = args as CellStoryArgs;
+
+    return (
+        <Cell {...cellStoryProps({ ...cellArgs, horizontalPadding: 0 })}>
+          <Cell.Content separator={separator}>
+            <Cell.Content.Text bold={bold}>Только текстовый блок</Cell.Content.Text>
+            <Cell.Content.Caption>
+              Левый и правый слоты опциональны
+            </Cell.Content.Caption>
+          </Cell.Content>
+        </Cell>
+    );
+  },
+};
+
+export const Alignment: Story = {
+  args: {
+    align: "center",
+    separator: true,
+  },
+  argTypes: {
+    separator: {
+      table: { disable: false },
+    },
+    bold: {
+      table: { disable: true },
+    },
+  },
+  render: (args) => {
+    const { separator = false, bold: _bold, ...cellArgs } = args as CellStoryArgs;
+    const oppositeAlign = cellArgs.align === "top" ? "center" : "top";
+
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+        <Cell {...cellStoryProps(cellArgs)}>
+          <Cell.Left>
+            <span style={leftIconBgStyle}>
+              <IconHeart24Outline />
+            </span>
+          </Cell.Left>
+          <Cell.Content separator={separator}>
+            <Cell.Content.Text>Заголовок</Cell.Content.Text>
+            <Cell.Content.Caption>Описание</Cell.Content.Caption>
+          </Cell.Content>
+          <Cell.Right>
+            <Typography.Paragraph tag="P3 REGULAR">Data</Typography.Paragraph>
+            <IconChevronRight16Outline aria-hidden="true" />
+          </Cell.Right>
+        </Cell>
+
+        <Cell {...cellStoryProps({ ...cellArgs, align: oppositeAlign })}>
+          <Cell.Left>
+            <span style={leftIconBgStyle}>
+              <IconHeart24Outline />
+            </span>
+          </Cell.Left>
+          <Cell.Content separator={separator}>
+            <Cell.Content.Text>Заголовок</Cell.Content.Text>
+            <Cell.Content.Caption>{longCaption}</Cell.Content.Caption>
+          </Cell.Content>
+          <Cell.Right>
+            <Typography.Paragraph tag="P4 REGULAR">Data</Typography.Paragraph>
+            <IconChevronRight16Outline aria-hidden="true" />
+          </Cell.Right>
+        </Cell>
+      </div>
+    );
+  },
+};
+
+export const WithAvatar: Story = {
+  args: {
+    separator: true,
+    bold: true,
+  },
+  argTypes: {
+    align: { table: { disable: true } },
+    separator: {
+      table: { disable: false },
+    },
+    bold: {
+      table: { disable: false },
+    },
+  },
+  render: (args) => {
+    const { separator = false, bold = true, ...cellArgs } = args as CellStoryArgs;
+
+    return (
+      <Cell {...cellStoryProps(cellArgs)}>
+        <Cell.Left>
+          <Avatar text="Алексей Ветров" size={40} />
+        </Cell.Left>
+        <Cell.Content separator={separator}>
+          <Cell.Content.Text bold={bold}>Алексей Ветров</Cell.Content.Text>
+          <Cell.Content.Caption>Онлайн</Cell.Content.Caption>
+        </Cell.Content>
+        <Cell.Right>
+          <IconChevronRight16Outline aria-hidden="true" />
+        </Cell.Right>
+      </Cell>
+    );
+  },
 };
 
 export const List: Story = {
+  parameters: {
+    controls: { disable: true },
+  },
   render: () => (
     <div>
-      <Cell>
+      <Cell {...listCellProps}>
+        <Cell.Left>
+          <span style={leftIconBgStyle}>
+            <IconHeart24Outline />
+          </span>
+        </Cell.Left>
         <Cell.Content separator>
-          <Cell.Text>Первая ячейка</Cell.Text>
+          <Cell.Content.Text>Заголовок</Cell.Content.Text>
+          <Cell.Content.Caption>{listCaption}</Cell.Content.Caption>
         </Cell.Content>
+        <Cell.Right>
+          <div style={{display: "flex", alignItems: 'center', color: "var(--icon-tertiary)"}}>
+            <Counter size="m" value={100} />
+            <IconChevronRight24Outline style={{ cursor: "pointer" }} onClick={() => alert("клик")} />
+          </div>
+        </Cell.Right>
       </Cell>
-      <Cell>
+
+      <Cell {...listCellProps}>
+        <Cell.Left>
+          <span style={leftIconBgStyle}>
+            <IconHeart24Outline />
+          </span>
+        </Cell.Left>
         <Cell.Content separator>
-          <Cell.Text>Вторая ячейка</Cell.Text>
+          <Cell.Content.Text>Заголовок</Cell.Content.Text>
+          <Cell.Content.Caption>{listCaption}</Cell.Content.Caption>
         </Cell.Content>
+        <Cell.Right>
+          <div style={{display: "flex", alignItems: 'center', columnGap: "12px"}}>
+            <IconButton
+              size="s"
+              variant="secondary"
+              icon={<IconHeart24Outline />}
+              ariaLabel="Добавить в избранное"
+            />
+            <IconButton
+              size="s"
+              variant="secondary"
+              icon={<IconHeart24Outline />}
+              ariaLabel="Добавить в избранное"
+            />
+          </div>
+        </Cell.Right>
       </Cell>
-      <Cell>
+
+      <Cell {...listCellProps}>
+        <Cell.Left>
+          <span style={leftIconBgStyle}>
+            <IconHeart24Outline />
+          </span>
+        </Cell.Left>
+        <Cell.Content separator>
+          <Cell.Content.Text>Заголовок</Cell.Content.Text>
+          <Cell.Content.Caption>{listCaption}</Cell.Content.Caption>
+        </Cell.Content>
+        <Cell.Right>
+          <IconButton
+            size="s"
+            variant="secondary"
+            icon={<IconHeart24Outline />}
+            ariaLabel="Добавить в избранное"
+          />
+        </Cell.Right>
+      </Cell>
+
+      <Cell {...listCellProps}>
+        <Cell.Left>
+          <span style={leftIconBgStyle}>
+            <IconHeart24Outline />
+          </span>
+        </Cell.Left>
         <Cell.Content>
-          <Cell.Text>Третья ячейка без сепаратора</Cell.Text>
+          <Cell.Content.Text>Заголовок</Cell.Content.Text>
+          <Cell.Content.Caption>{listCaption}</Cell.Content.Caption>
         </Cell.Content>
+        <Cell.Right>
+          <Typography.Paragraph style={{color: "var(--text-secondary)"}} tag="P4 REGULAR">Data</Typography.Paragraph>
+        </Cell.Right>
       </Cell>
     </div>
   ),

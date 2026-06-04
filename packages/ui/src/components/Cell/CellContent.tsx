@@ -2,8 +2,10 @@ import { FC } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import { ICellContentProps } from "./cell.types";
+import { CellText } from "./CellText";
+import { CellCaption } from "./CellCaption";
 
-export const CellContent: FC<ICellContentProps> = ({
+const CellContentComponent: FC<ICellContentProps> = ({
   className,
   children,
   separator = false,
@@ -19,7 +21,11 @@ export const CellContent: FC<ICellContentProps> = ({
   return (
     <div className={contentClassName} {...rest}>
       <div className={textStackClassName}>{children}</div>
-      {separator && <div className={component("cell", "separator")()} />}
     </div>
   );
 };
+
+export const CellContent = Object.assign(CellContentComponent, {
+  Text: CellText,
+  Caption: CellCaption,
+});

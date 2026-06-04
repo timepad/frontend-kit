@@ -1,18 +1,56 @@
-import { FC } from "react";
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  type CSSProperties,
+  type FC,
+  type ReactElement,
+  type ReactNode,
+} from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./cell.less";
-import { ICellProps } from "./cell.types";
+import { ICellContentProps, ICellProps } from "./cell.types";
 import { CellLeft } from "./CellLeft";
 import { CellContent } from "./CellContent";
-import { CellText } from "./CellText";
-import { CellCaption } from "./CellCaption";
 import { CellRight } from "./CellRight";
+
+const renderBodyChildren = (children: ReactNode) => {
+  let showSeparator = false;
+  const bodyChildren: ReactNode[] = [];
+
+  Children.forEach(children, (child) => {
+    if (isValidElement(child) && child.type === CellContent) {
+      const { separator } = child.props as ICellContentProps;
+
+      if (separator) {
+        showSeparator = true;
+      }
+
+      bodyChildren.push(
+        cloneElement(child as ReactElement<ICellContentProps>, { separator: false }),
+      );
+      return;
+    }
+
+    bodyChildren.push(child);
+  });
+
+  if (showSeparator) {
+    bodyChildren.push(
+      <div key="cell-separator" className={component("cell", "separator")()} />,
+    );
+  }
+
+  return bodyChildren;
+};
 
 const CellComponent: FC<ICellProps> = ({
   className,
   horizontalPadding = 0,
   align = "center",
+  backgroundColor,
+  style,
   children,
   ...rest
 }) => {
@@ -24,9 +62,15 @@ const CellComponent: FC<ICellProps> = ({
     className,
   );
 
+  const fillStyle = backgroundColor
+    ? ({ "--cell-bg-color": backgroundColor } as CSSProperties)
+    : undefined;
+
+  const bodyClassName = component("cell", "body")();
+
   return (
-    <div className={cellClassName} {...rest}>
-      {children}
+    <div className={cellClassName} style={{ ...fillStyle, ...style }} {...rest}>
+      <div className={bodyClassName}>{renderBodyChildren(children)}</div>
     </div>
   );
 };
@@ -34,7 +78,5 @@ const CellComponent: FC<ICellProps> = ({
 export const Cell = Object.assign(CellComponent, {
   Left: CellLeft,
   Content: CellContent,
-  Text: CellText,
-  Caption: CellCaption,
   Right: CellRight,
 });

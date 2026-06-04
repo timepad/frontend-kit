@@ -10,12 +10,10 @@ export const CellText: FC<ICellTextProps> = ({
   children,
   ...rest
 }) => {
-  const textClassName = classNames(component("cell", "text")(), className);
-
   return (
     <Typography.Paragraph
       tag={bold ? "P4 BOLD" : "P4 REGULAR"}
-      className={textClassName}
+      className={className}
       {...rest}
     >
       {children}
