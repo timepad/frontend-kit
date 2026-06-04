@@ -94,24 +94,8 @@ const leftIconBgStyle: CSSProperties = {
   background: "var(--bg-secondary)",
 };
 
-const longCaption =
-  "И большое описание, которое ещё сильнее увеличивает высоту контейнера. Третья строка caption.";
-
+const longCaption = "Описание в три строки максимум, а остально будет обрезаться троеточием барабарабарабара береберебере барабарабарабара береберебере барабарабарабара береберебере места ещё много очень, очень много места";
 const listCaption = "Описание в три строки максимум";
-
-const rightStackStyle: CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-end",
-  gap: "var(--space-2)",
-};
-
-const badgePillStyle: CSSProperties = {
-  padding: "2px 8px",
-  borderRadius: "var(--radius-8)",
-  background: "var(--light-purple)",
-  color: "var(--dark-purple)",
-};
 
 const listCellProps: ICellProps = {
   backgroundColor: "var(--bg-primary)",
@@ -147,7 +131,7 @@ export const Default: Story = {
           </span>
         </Cell.Left>
         <Cell.Content separator={separator}>
-          <Cell.Content.Text>Заголовок</Cell.Content.Text>
+          <Cell.Content.Text>Заголовок в три строки максимум, остальное обрезается тремя точками в конце. Заголовок в три строки максимум, остальное обрезается тремя точками в конце</Cell.Content.Text>
           <Cell.Content.Caption>{longCaption}</Cell.Content.Caption>
         </Cell.Content>
         <Cell.Right>
@@ -190,7 +174,7 @@ export const TextOnly: Story = {
   },
 };
 
-export const CaptionAboveLabel: Story = {
+export const CaptionAboveText: Story = {
   args: {
     separator: false,
     bold: true,
@@ -218,7 +202,7 @@ export const CaptionAboveLabel: Story = {
   },
 };
 
-export const WithoutSides: Story = {
+export const TextAboveCaption: Story = {
   args: {
     horizontalPadding: 0,
     separator: true,
@@ -245,61 +229,6 @@ export const WithoutSides: Story = {
             </Cell.Content.Caption>
           </Cell.Content>
         </Cell>
-    );
-  },
-};
-
-export const Alignment: Story = {
-  args: {
-    align: "center",
-    separator: true,
-  },
-  argTypes: {
-    separator: {
-      table: { disable: false },
-    },
-    bold: {
-      table: { disable: true },
-    },
-  },
-  render: (args) => {
-    const { separator = false, bold: _bold, ...cellArgs } = args as CellStoryArgs;
-    const oppositeAlign = cellArgs.align === "top" ? "center" : "top";
-
-    return (
-      <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-        <Cell {...cellStoryProps(cellArgs)}>
-          <Cell.Left>
-            <span style={leftIconBgStyle}>
-              <IconHeart24Outline />
-            </span>
-          </Cell.Left>
-          <Cell.Content separator={separator}>
-            <Cell.Content.Text>Заголовок</Cell.Content.Text>
-            <Cell.Content.Caption>Описание</Cell.Content.Caption>
-          </Cell.Content>
-          <Cell.Right>
-            <Typography.Paragraph tag="P3 REGULAR">Data</Typography.Paragraph>
-            <IconChevronRight16Outline aria-hidden="true" />
-          </Cell.Right>
-        </Cell>
-
-        <Cell {...cellStoryProps({ ...cellArgs, align: oppositeAlign })}>
-          <Cell.Left>
-            <span style={leftIconBgStyle}>
-              <IconHeart24Outline />
-            </span>
-          </Cell.Left>
-          <Cell.Content separator={separator}>
-            <Cell.Content.Text>Заголовок</Cell.Content.Text>
-            <Cell.Content.Caption>{longCaption}</Cell.Content.Caption>
-          </Cell.Content>
-          <Cell.Right>
-            <Typography.Paragraph tag="P4 REGULAR">Data</Typography.Paragraph>
-            <IconChevronRight16Outline aria-hidden="true" />
-          </Cell.Right>
-        </Cell>
-      </div>
     );
   },
 };

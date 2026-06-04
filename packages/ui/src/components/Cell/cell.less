@@ -5,8 +5,10 @@
 .ccell {
   min-width: 0;
   cursor: default;
+  overflow: hidden;
 
   --cell-bg-color: transparent;
+  --cell-padding-inline: 0;
 
   color: var(--text-primary);
   background-color: var(--cell-bg-color);
@@ -14,6 +16,8 @@
 
   each(@cell-horizontal-paddings, {
     &--padding-@{value} {
+      --cell-padding-inline: ~"var(--space-@{value})";
+
       .ccell__left,
       .ccell__body > .ccell__content:first-child {
         padding-left: ~"var(--space-@{value})";
@@ -63,7 +67,21 @@
     min-width: 0;
   }
 
+  &__text,
   &__caption {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+  }
+
+  &__text {
+    -webkit-line-clamp: 3;
+  }
+
+  &__caption {
+    -webkit-line-clamp: 3;
     color: var(--text-secondary);
   }
 
@@ -78,7 +96,10 @@
   &__separator {
     grid-column: 2 / -1;
     grid-row: 2;
+    width: calc(100% + var(--cell-padding-inline));
+    margin-right: calc(-1 * var(--cell-padding-inline));
     height: 1px;
+    justify-self: stretch;
     background-color: var(--bg-stroke);
   }
 }
