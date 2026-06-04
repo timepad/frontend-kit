@@ -66,9 +66,22 @@ const layoutControlsOnly = [
   "withFooterDivider",
 ] as const;
 
+const playgroundControls = [
+  ...layoutControlsOnly,
+  "withTitle",
+  "withSubtitle",
+  "withHeaderBtnBack",
+  "withHeaderBtnClose",
+  "withFooterBefore",
+  "withFooterAfter",
+  "withFooterBtnBack",
+  "withFooterBtnCancel",
+  "withFooterBtnConfirm",
+] as const;
+
 const normalizeModalStoryArgs = (args: ModalStoryArgs): ModalStoryArgs => {
   if (args.size === "s") {
-    return { ...args, withFooterDivider: false };
+    return args;
   }
 
   return { ...args, footerDirection: "column" };
@@ -177,7 +190,7 @@ const meta = {
   parameters: {
     layout: "centered",
     docs: { codePanel: true },
-    controls: { exclude: ["isOpen"] },
+    controls: { exclude: ["isOpen"], include: [...playgroundControls] },
   },
   tags: ["autodocs"],
   render: renderModalStory(ModalStoryView),
@@ -238,10 +251,9 @@ const meta = {
       description: `
 Верхняя граница-разделитель у футера (\`box-shadow\`).
 
-Доступно только для **m**, **l** и **full** (toolbar). Для **s** отключено.
+Имеет эффект только для **m**, **l** и **full** (toolbar). При **size = s** в компоненте игнорируется.
       `,
       control: "boolean",
-      if: { arg: "size", neq: "s" },
       table: {
         category: "Modal",
         type: { summary: "boolean" },
@@ -309,6 +321,9 @@ type Story = StoryObj<ModalStoryArgs>;
 
 export const S_Stack: Story = {
   name: "S / Stack",
+  parameters: {
+    controls: { include: [...playgroundControls] },
+  },
   args: {
     size: "s",
     footerDirection: "column",
@@ -323,6 +338,9 @@ export const S_Stack: Story = {
 
 export const S_InlineActions: Story = {
   name: "S / Inline actions",
+  parameters: {
+    controls: { include: [...playgroundControls] },
+  },
   args: {
     size: "s",
     footerDirection: "row",
@@ -337,6 +355,9 @@ export const S_InlineActions: Story = {
 
 export const M_Toolbar: Story = {
   name: "M / Toolbar",
+  parameters: {
+    controls: { include: [...playgroundControls] },
+  },
   args: {
     size: "m",
     footerDirection: "column",
@@ -348,6 +369,9 @@ export const M_Toolbar: Story = {
 
 export const HeaderStart: Story = {
   name: "Header align start",
+  parameters: {
+    controls: { include: [...playgroundControls] },
+  },
   args: {
     size: "m",
     footerDirection: "column",
