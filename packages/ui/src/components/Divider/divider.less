@@ -1,0 +1,19 @@
+@import "../../assets/tokens/index.less";
+
+.cdivider {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  border-radius: 0;
+  background-color: var(--bg-stroke);
+
+  &--flow-horizontal {
+    width: 100%;
+    height: 1px;
+  }
+
+  &--flow-vertical {
+    width: 1px;
+    height: 100%;
+    align-self: stretch;
+  }
+}
