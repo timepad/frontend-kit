@@ -1,0 +1,54 @@
+@import "../../assets/tokens/index.less";
+
+@scrollbar-thumb-size: var(--space-4);
+@scrollbar-offset: var(--space-4);
+@scrollbar-track-size: calc(@scrollbar-thumb-size + @scrollbar-offset);
+
+.scrollbar-thumb() {
+  background-color: var(--icon-tertiary);
+  border-radius: var(--radius-40);
+  background-clip: padding-box;
+  opacity: 0.5;
+}
+
+.cscrollbar {
+  box-sizing: border-box;
+  overflow: auto;
+  scrollbar-width: thin; // тощина скроллбара для Firefox
+  scrollbar-color: rgba(155, 159, 166, 0.5) transparent; // цвет скроллбара для Firefox
+
+  &::-webkit-scrollbar {
+    width: @scrollbar-track-size;
+    height: @scrollbar-track-size;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb:vertical {
+    .scrollbar-thumb();
+    width: @scrollbar-thumb-size;
+    border-right: @scrollbar-offset solid transparent;
+  }
+
+  &::-webkit-scrollbar-thumb:horizontal {
+    .scrollbar-thumb();
+    height: @scrollbar-thumb-size;
+    border-bottom: @scrollbar-offset solid transparent;
+  }
+
+  &--flow-vertical {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  &--flow-horizontal {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
