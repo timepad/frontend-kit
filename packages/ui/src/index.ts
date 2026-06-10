@@ -7,5 +7,7 @@ export { Input } from "./components/Input";
 export { Radio } from "./components/Radio";
 export { Textarea } from "./components/Textarea";
 export { Typography } from "./components/Typography";
+export { Scrollbar } from "./components/Scrollbar";
+export type { IScrollbarProps, ScrollbarFlow } from "./components/Scrollbar";
 export * from "./assets/icons";
 export * from "./P";
