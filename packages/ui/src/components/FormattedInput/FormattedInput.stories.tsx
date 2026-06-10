@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import { useState } from "react";
+import type { FC } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { FormattedInput } from "./FormattedInput";
@@ -35,9 +36,15 @@ type Story = StoryObj<typeof FormattedInput>;
 
 type ControlledProps = Omit<FormattedInputProps, "value" | "onValueChange"> & {
   initial?: string;
+  onValueChange?: FormattedInputProps["onValueChange"];
 };
 
-const Controlled: FC<ControlledProps> = ({ initial = "", ...args }) => {
+const Controlled: FC<ControlledProps> = ({
+  initial = "",
+  onValueChange,
+  onClearField,
+  ...args
+}) => {
   const [raw, setRaw] = useState(initial);
 
   const value = raw;
@@ -45,16 +52,16 @@ const Controlled: FC<ControlledProps> = ({ initial = "", ...args }) => {
   return (
     <>
       <FormattedInput
-        {...(args as any)}
+        {...args}
         value={value}
         onValueChange={(v) => {
-          (args as any).onValueChange?.(v);
+          onValueChange?.(v);
           setRaw(v);
         }}
         onClearField={
-          args.onClearField
+          onClearField
             ? (e) => {
-                args.onClearField?.(e as any);
+                onClearField(e);
                 setRaw("");
               }
             : undefined
@@ -68,7 +75,7 @@ const Controlled: FC<ControlledProps> = ({ initial = "", ...args }) => {
 };
 
 export const Price: Story = {
-  render: (args) => <Controlled {...(args as any)} />,
+  render: (args) => <Controlled {...args} />,
   args: {
     label: "Цена",
     description: "Введите сумму",
@@ -83,11 +90,11 @@ export const Price: Story = {
 
     suffixSlot: () => "₽",
     onClearField: () => {},
-  } as any,
+  },
 };
 
 export const Discount: Story = {
-  render: (args) => <Controlled {...(args as any)} />,
+  render: (args) => <Controlled {...args} />,
   args: {
     label: "Скидка",
     description: "0–100",
@@ -106,8 +113,8 @@ export const Discount: Story = {
 
     emptyVisual: "0",
     showEmptyVisual: true,
-    
+
     suffixSlot: () => "%",
     onClearField: () => {},
-  } as any,
+  },
 };

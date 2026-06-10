@@ -40,4 +40,3 @@ export type UseFormattedInputParams = {
   disabled?: boolean;
   readOnly?: boolean;
 };
-

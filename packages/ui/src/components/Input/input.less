@@ -155,21 +155,13 @@
   }
 
   &__formatted-suffix {
-    white-space: nowrap;
-    color: var(--text-tertiary);
-  }
-
-  &__formatted-suffix {
-    color: var(--text-tertiary);
-    white-space: nowrap;
-  }
-
-  &__formatted-suffix--filled {
-    color: var(--text-primary);
-  }
-
-  &__formatted-suffix {
     margin-left: 4px;
+    white-space: nowrap;
+    color: var(--text-tertiary);
+
+    &--filled {
+      color: var(--text-primary);
+    }
   }
 
   &__field[data-formatted="true"] {

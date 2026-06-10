@@ -1,4 +1,5 @@
 import { forwardRef, useLayoutEffect, useRef } from "react";
+import type { ForwardedRef } from "react";
 import { component, classNames } from "@frontend-kit/utils";
 
 import { Input } from "../Input/Input";
@@ -7,6 +8,17 @@ import { useFormattedInput } from "./useFormattedInput";
 import type { ValueFormatter, ValueParser } from "./formattedInputHelpers";
 
 type Slot = Parameters<typeof useFormattedInput>[0]["suffixSlot"];
+
+const setForwardedRef = (
+  ref: ForwardedRef<HTMLInputElement>,
+  node: HTMLInputElement | null
+) => {
+  if (typeof ref === "function") {
+    ref(node);
+  } else if (ref) {
+    ref.current = node;
+  }
+};
 
 export type FormattedInputProps = Omit<
   IInputProps,
@@ -101,12 +113,12 @@ export const FormattedInput = forwardRef<HTMLInputElement, FormattedInputProps>(
       inputEl.addEventListener("scroll", sync, { passive: true });
 
       // на всякий случай при ресайзе/смене шрифта
-      const ro = new ResizeObserver(sync);
-      ro.observe(inputEl);
+      const resizeObserver = new ResizeObserver(sync);
+      resizeObserver.observe(inputEl);
 
       return () => {
         inputEl.removeEventListener("scroll", sync);
-        ro.disconnect();
+        resizeObserver.disconnect();
       };
     }, []);
 
@@ -146,11 +158,7 @@ export const FormattedInput = forwardRef<HTMLInputElement, FormattedInputProps>(
       <Input
         {...rest}
         ref={(node) => {
-          // наружный ref
-          if (typeof ref === "function") ref(node);
-          else if (ref) (ref as any).current = node;
-
-          // внутренний ref
+          setForwardedRef(ref, node);
           inputElRef.current = node;
         }}
         className={className}
