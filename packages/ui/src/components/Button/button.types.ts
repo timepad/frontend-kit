@@ -1,32 +1,33 @@
 import { ButtonHTMLAttributes, ReactElement, SVGProps } from "react";
 
 /**
- * Button size options.
- * - **s**: Compact button, small text & padding.
- * - **m**: Default button size.
+ * Варианты размера кнопки.
+ * - **s**: Компактная кнопка (меньше текст и отступы).
+ * - **m**: Размер по умолчанию.
+ * - **l**: Кнопка для мобильных версий / модальных окон.
  */
-export type ButtonSize = "s" | "m";
+export type ButtonSize = "s" | "m" | "l";
 
 /**
- * Visual style (design variant) of the button.
- * Matches the design system semantics:
- * - **primary**: Main action, high emphasis.
- * - **primary-alternate**: Inverse version of primary.
- * - **secondary**: Neutral, lower emphasis.
- * - **negative**: Destructive actions (delete, remove, cancel).
- * - **disable**: Visually disabled, non-interactive state.
+ * Визуальный стиль (вариант дизайна) кнопки.
+ * Соответствует семантике дизайн-системы:
+ * - **primary**: Основное действие, максимальный акцент.
+ * - **primary-alternate**: Инверсная версия primary (обычно для тёмных фонов).
+ * - **secondary**: Нейтральная кнопка, меньший акцент.
+ * - **negative**: Деструктивные действия (удалить, отменить, снять).
+ * - **transparent**: Прозрачная.
  */
 export type ButtonVariant =
   | "primary"
   | "primary-alternate"
   | "secondary"
   | "negative"
-  | "disable";
+  | "transparent"
 
 /**
- * Icon placement relative to button text.
- * - **left**: Icon appears before label.
- * - **right**: Icon appears after label.
+ * Позиция иконки относительно текста кнопки.
+ * - **left**: Иконка перед текстом.
+ * - **right**: Иконка после текста.
  */
 export type IconPosition = "left" | "right";
 

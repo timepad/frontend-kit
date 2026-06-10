@@ -13,7 +13,7 @@ import { Typography } from "../Typography";
 import {
   IconWarningCircle24Fill,
   IconLock16Fill,
-  IconCross24Outline,
+  IconDelete24Outline,
   IconCopy24Fill,
 } from "../../assets/icons";
 import { IconButton } from "../IconButton";
@@ -42,6 +42,8 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
     const inputId = id ?? defaultId;
+
+    const isRequired = required && !disabled;
 
     const isError = !!error;
 
@@ -73,7 +75,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
     const labelClassName = component(
       "input",
       "label",
-    )({ required: required && !disabled });
+    )({ required: isRequired });
 
     const fieldContainerClassName = component("input", "field-container")();
 
@@ -108,7 +110,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
             id={inputId}
             value={value}
             disabled={disabled}
-            required={required}
+            required={isRequired}
             aria-invalid={isError || undefined}
             aria-describedby={captionId}
             {...rest}
@@ -135,7 +137,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
               onMouseDown={(e) => e.preventDefault()}
               className={actionIconClassName}
               onClick={handleClearFieldClick}
-              icon={<IconCross24Outline />}
+              icon={<IconDelete24Outline />}
               variant="transparent"
               size="s"
               ariaLabel="Очистить значение поля"

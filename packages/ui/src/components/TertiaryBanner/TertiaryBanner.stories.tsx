@@ -1,139 +1,110 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { TertiaryBanner } from "./TertiaryBanner";
-import {Modifier} from "./tertiary-banner.types";
+import { Appearance } from "./tertiary-banner.types";
 
-const modifierOptions = ["base", "inverted"] as const satisfies Modifier[];
+const modifierOptions = ["base", "inverted"] as const satisfies Appearance[];
 
 const meta = {
-    title: "Components/TertiaryBanner",
-    component: TertiaryBanner,
-    parameters: {
-        layout: "centered",
+  title: "Components/TertiaryBanner",
+  component: TertiaryBanner,
+  parameters: {
+    layout: "centered",
+    docs: {
+      codePanel: true,
     },
-    tags: ["autodocs"],
-    argTypes: {
-        modifier: {
-            control: "select",
-            options: modifierOptions,
-            description: "Модификатор стиля",
-        },
-        children: {
-            control: "text",
-            description: "Текст баннера",
-        },
-        variant: {
-            table: {
-                disable: true,
-            },
-        },
-        icon: {
-            table: {
-                disable: true,
-            },
-        },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ width: 340 }}>
+        <Story />
+      </div>
+    ),
+  ],
+  tags: ["autodocs"],
+  argTypes: {
+    appearance: {
+      description: `
+Модификатор темы баннера.
+
+- **base** — базовый (светлый) стиль
+- **inverted** — инвертированный (тёмный) стиль для тёмных фонов
+      `,
+      control: "select",
+      options: modifierOptions,
+      table: {
+        type: { summary: `"base" | "inverted"` },
+        defaultValue: { summary: "base" },
+      },
     },
+    children: {
+      description:
+        "Текстовое содержимое баннера (рендерится через Typography.Caption, C1 REGULAR). Рекомендуется использовать короткие и понятные сообщения.",
+      control: "text",
+      table: {
+        type: { summary: "ReactNode" },
+      },
+    },
+    variant: {
+      table: {
+        disable: true,
+      },
+    },
+    icon: {
+      table: {
+        disable: true,
+      },
+    },
+  },
 } satisfies Meta<typeof TertiaryBanner>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Info
-export const InfoBase: Story = {
-    render: (args) => (
-        <TertiaryBanner.Info modifier={args.modifier}>
-            {args.children}
-        </TertiaryBanner.Info>
-    ),
-    args: {
-        modifier: "base",
-        children: "Banner info. Светлая тема.",
-    },
+export const Info: Story = {
+  render: (args) => (
+    <TertiaryBanner.Info appearance={args.appearance}>
+      {args.children}
+    </TertiaryBanner.Info>
+  ),
+  args: {
+    appearance: "base",
+    children: "Какое-то сообщение. Рекомендуемый размер две-три строки.",
+  },
 };
 
-export const InfoInverted: Story = {
-    render: (args) => (
-        <TertiaryBanner.Info modifier={args.modifier}>
-            {args.children}
-        </TertiaryBanner.Info>
-    ),
-    args: {
-        modifier: "inverted",
-        children: "Banner info. Темная тема.",
-    },
+export const Warning: Story = {
+  render: (args) => (
+    <TertiaryBanner.Warning appearance={args.appearance}>
+      {args.children}
+    </TertiaryBanner.Warning>
+  ),
+  args: {
+    appearance: "base",
+    children: "Какое-то сообщение. Рекомендуемый размер две-три строки.",
+  },
 };
 
-// Warning
-export const WarningBase: Story = {
-    render: (args) => (
-        <TertiaryBanner.Warning modifier={args.modifier}>
-            {args.children}
-        </TertiaryBanner.Warning>
-    ),
-    args: {
-        modifier: "base",
-        children: "Banner Warning. Светлая тема.",
-    },
+export const Error: Story = {
+  render: (args) => (
+    <TertiaryBanner.Error appearance={args.appearance}>
+      {args.children}
+    </TertiaryBanner.Error>
+  ),
+  args: {
+    appearance: "base",
+    children: "Какое-то сообщение. Рекомендуемый размер две-три строки.",
+  },
 };
 
-export const WarningInverted: Story = {
-    render: (args) => (
-        <TertiaryBanner.Warning modifier={args.modifier}>
-            {args.children}
-        </TertiaryBanner.Warning>
-    ),
-    args: {
-        modifier: "inverted",
-        children: "Banner Warning. Темная тема.",
-    },
-};
-
-// Error
-export const ErrorBase: Story = {
-    render: (args) => (
-        <TertiaryBanner.Error modifier={args.modifier}>
-            {args.children}
-        </TertiaryBanner.Error>
-    ),
-    args: {
-        modifier: "base",
-        children: "Banner Error. Светлая тема.",
-    },
-};
-
-export const ErrorInverted: Story = {
-    render: (args) => (
-        <TertiaryBanner.Error modifier={args.modifier}>
-            {args.children}
-        </TertiaryBanner.Error>
-    ),
-    args: {
-        modifier: "inverted",
-        children: "Banner Error. Темная тема.",
-    },
-};
-
-// Success
-export const SuccessBase: Story = {
-    render: (args) => (
-        <TertiaryBanner.Success modifier={args.modifier}>
-            {args.children}
-        </TertiaryBanner.Success>
-    ),
-    args: {
-        modifier: "base",
-        children: "Banner Success. Светлая тема.",
-    },
-};
-
-export const SuccessInverted: Story = {
-    render: (args) => (
-        <TertiaryBanner.Success modifier={args.modifier}>
-            {args.children}
-        </TertiaryBanner.Success>
-    ),
-    args: {
-        modifier: "inverted",
-        children: "Banner Success. Темная тема.",
-    },
+export const Success: Story = {
+  render: (args) => (
+    <TertiaryBanner.Success appearance={args.appearance}>
+      {args.children}
+    </TertiaryBanner.Success>
+  ),
+  args: {
+    appearance: "base",
+    children: "Какое-то сообщение. Рекомендуемый размер две-три строки.",
+  },
 };

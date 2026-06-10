@@ -32,6 +32,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
 
     const textareaId = id ?? defaultId;
 
+    const isRequired = required && !disabled;
+
     const valueLength = value.length;
 
     const isMaxSymbols = !!maxSymbols;
@@ -98,7 +100,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
           ref={ref}
           value={value}
           disabled={disabled}
-          required={required}
+          required={isRequired}
           onFocus={handleTextareaFocus}
           onBlur={handleTextareaBlur}
           aria-invalid={isError || undefined}

@@ -1,7 +1,10 @@
+export { Counter } from "./components/Counter";
 export { Breadcrumbs } from "./components/Breadcrumbs";
+export { Avatar, AvatarStatus } from "./components/Avatar";
 export { Button } from "./components/Button";
 export { IconButton } from "./components/IconButton";
 export { Input, PhoneInput, PriceInput, TimeInput, TimeRangeInput, DiscountInput } from "./components/Input";
+export { Radio } from "./components/Radio";
 export { Textarea } from "./components/Textarea";
 export { Typography } from "./components/Typography";
 export * from "./assets/icons";

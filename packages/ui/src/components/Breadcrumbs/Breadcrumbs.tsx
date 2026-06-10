@@ -5,8 +5,8 @@ import "./breadcrumbs.less";
 import { IBreadcrumbItem, IBreadcrumbsProps } from "./breadcrumbs.types";
 import { Typography } from "../Typography";
 import {
-  IconLineArrowLeft16Outline,
-  IconLineArrowRight16Outline,
+  IconChevronLeft16Outline,
+  IconChevronRight16Outline,
 } from "../../assets/icons";
 
 export const Breadcrumbs: FC<IBreadcrumbsProps> = ({
@@ -17,8 +17,10 @@ export const Breadcrumbs: FC<IBreadcrumbsProps> = ({
 }) => {
   const breadcrumbsClassName = classNames(
     component("breadcrumbs")(),
-    className
+    className,
   );
+
+  const itemListClassName = component("breadcrumbs", "list")();
 
   const itemClassName = component("breadcrumbs", "item")();
 
@@ -29,12 +31,12 @@ export const Breadcrumbs: FC<IBreadcrumbsProps> = ({
       {type === "backstep" ? (
         <div className={itemClassName}>
           <span className={separatorClassName} aria-hidden="true">
-            <IconLineArrowLeft16Outline />
+            <IconChevronLeft16Outline />
           </span>
           <BreadcrumbNode item={items[0]} isCurrent={!!items[0].isCurrent} />
         </div>
       ) : (
-        <div className={component("breadcrumbs", "list")()}>
+        <div className={itemListClassName}>
           {items.map((item, index) => {
             const isLast = index === items.length - 1;
             const isCurrent = item.isCurrent ?? isLast;
@@ -45,7 +47,7 @@ export const Breadcrumbs: FC<IBreadcrumbsProps> = ({
 
                 {!isLast && (
                   <span className={separatorClassName} aria-hidden="true">
-                    <IconLineArrowRight16Outline />
+                    <IconChevronRight16Outline />
                   </span>
                 )}
               </div>

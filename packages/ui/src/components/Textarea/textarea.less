@@ -38,14 +38,14 @@
     line-height: 20px;
     resize: none;
 
+    &::placeholder {
+      color: var(--text-tertiary);
+    }
+
     &:focus,
     &:focus-visible {
       outline-color: var(--btn-primary-active);
       caret-color: var(--greyscale-800);
-
-      &::placeholder {
-        color: var(--text-tertiary);
-      }
     }
 
     &--size-m {

@@ -7,47 +7,44 @@ import {
 } from "react";
 
 /**
- * High-level typography variants used by the base component.
+ * Высокоуровневые варианты типографики,
+ * используемые базовым компонентом.
  *
- * Each variant has its own allowed combination of:
- * - size
- * - fontType
- * - fontWeight
+ * Каждый вариант имеет собственные допустимые комбинации:
+ * - размера текста
+ * - типа шрифта
+ * - начертания (fontWeight)
  */
 export type TypographyVariant = "lead" | "header" | "paragraph" | "caption";
 
 /**
- * Font weight modifiers supported by the typography system.
- * - **bold** – Strongest emphasis.
- * - **semi-bold** – Medium-strong emphasis.
- * - **medium** – Standard emphasis.
- * - **regular** – Default lightweight text.
+ * Поддерживаемые варианты начертания шрифта.
+ *
+ * - **bold** — максимальный акцент
+ * - **semi-bold** — средний акцент
+ * - **medium** — стандартный акцент
+ * - **regular** — базовый (обычный) текст
  */
 export type FontWeight = "bold" | "semi-bold" | "medium" | "regular";
 
 /**
- * Font styling presets defined by the design system.
- * - **accent** – Uses the accent font (TT Backwards Sans).
- * - **regular** – Uses the base system font (Inter).
+ * Предустановленные типы шрифтов дизайн-системы.
+ *
+ * - **accent** — акцентный шрифт (TT Backwards Sans)
+ * - **regular** — основной системный шрифт (Inter)
  */
 export type FontType = "accent" | "regular";
 
 /**
- * Size levels for Typography.
- * - **1** – Largest text.
- * - **2** – Medium text.
- * - **3** – Smallest text.
- * - **4** – Extra small text.
+ * Уровни размера текста.
+ *
+ * - **1** — самый крупный текст
+ * - **2** — средний размер
+ * - **3** — маленький размер
+ * - **4** — самый мелкий текст
  */
 export type Size = 1 | 2 | 3 | 4;
 
-/**
- * Variant-specific definitions used to enforce correct
- * size levels, font-family and font-weight based on the selected typography variant.
- *
- * Each variant restricts the `size, fontType, fontWeight` props to the valid
- * numeric levels of that variant.
- */
 export interface ILeadVariant {
   variant: Extract<TypographyVariant, "lead">;
   size: Exclude<Size, 4>;
@@ -77,18 +74,21 @@ export interface ICaptionVariant {
 }
 
 /**
- * Common props shared across all typography components.
+ * Общие props для всех компонентов Typography.
  *
- * Includes:
- * - **children** – All renderable React content.
- * - **as** – Changes the rendered HTML tag (span, p, h1, etc.).
- * - **innerRef** – Forwarded ref to the underlying DOM element.
- * - **uppercase** – Transforms text to uppercase when true.
+ * Включает:
+ * - **children** — отображаемый контент
+ * - **as** — HTML-тег, который будет отрендерен (span, p, h1 и т.д.)
+ * - **innerRef** — ref, пробрасываемый к DOM-элементу
+ * - **uppercase** — приводит текст к верхнему регистру
  *
- * Inherits all native HTMLElement attributes (id, className, onClick, etc.)
+ * Также наследует все стандартные HTML-атрибуты
+ * (id, className, onClick и т.д.).
  */
-export interface ITypographyCommonProps
-  extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
+export interface ITypographyCommonProps extends DetailedHTMLProps<
+  HTMLAttributes<HTMLElement>,
+  HTMLElement
+> {
   children: ReactNode;
   as?: keyof ReactHTML;
   innerRef?: LegacyRef<HTMLElement>;
