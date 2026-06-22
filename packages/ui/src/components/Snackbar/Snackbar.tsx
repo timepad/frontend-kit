@@ -19,7 +19,7 @@ export const SnackbarBase: FC<ISnackbarBaseProps> = ({
   icon,
   variant,
   title,
-  after = false,
+  after,
   actionLabel,
   onAction,
   actionAriaLabel = "Закрыть",

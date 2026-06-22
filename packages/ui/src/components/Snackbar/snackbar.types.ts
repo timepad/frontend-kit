@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, DetailedHTMLProps, HTMLAttributes, ReactNode } fr
 
 export type SnackbarVariant = "info" | "warning" | "error" | "success" | "custom";
 
-export type SnackbarAfter = "button" | "icon-button" | false;
+export type SnackbarAfter = "button" | "icon-button";
 
 export interface ISnackbarBaseProps extends Omit<
   DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,

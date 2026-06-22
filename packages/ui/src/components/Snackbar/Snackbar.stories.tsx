@@ -4,7 +4,7 @@ import { Snackbar } from "./Snackbar";
 import { SnackbarAfter } from "./snackbar.types";
 import { IconWarningDescription24Fill } from "../../assets/icons";
 
-const afterOptions = [false, "button", "icon-button"] as const satisfies SnackbarAfter[];
+const afterOptions: (SnackbarAfter | undefined)[] = [undefined, "button", "icon-button"];
 
 const meta = {
   title: "Components/Snackbar",
@@ -28,15 +28,20 @@ const meta = {
       description: `
 Тип правого действия.
 
-- **false** — без действия
+- **undefined** — без действия
 - **button** — текстовая кнопка (требует \`actionLabel\`)
 - **icon-button** — кнопка закрытия
       `,
       control: "select",
       options: afterOptions,
+      labels: {
+        undefined: "без действия",
+        button: "button",
+        "icon-button": "icon-button",
+      },
       table: {
-        type: { summary: `false | "button" | "icon-button"` },
-        defaultValue: { summary: "false" },
+        type: { summary: `"button" | "icon-button"` },
+        defaultValue: { summary: "undefined" },
       },
     },
     title: {
@@ -172,12 +177,9 @@ export const CustomIcon: Story = {
 };
 
 export const WithoutAction: Story = {
-  render: (args) => (
-    <Snackbar.Success after={false}>{args.children}</Snackbar.Success>
-  ),
+  render: (args) => <Snackbar.Success>{args.children}</Snackbar.Success>,
   args: {
     children: "Текст уведомления",
-    after: false,
   },
 };
 
