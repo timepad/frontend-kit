@@ -7,5 +7,6 @@ export { Input } from "./components/Input";
 export { Radio } from "./components/Radio";
 export { Textarea } from "./components/Textarea";
 export { Typography } from "./components/Typography";
+export { Divider } from "./components/Divider";
 export * from "./assets/icons";
 export * from "./P";
