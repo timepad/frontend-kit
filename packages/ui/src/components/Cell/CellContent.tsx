@@ -2,7 +2,7 @@ import { FC } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import { ICellBaseProps } from "./cell.types";
-import { CellRight } from "./CellRight";
+import { CellSide } from "./CellSide";
 import { CellText } from "./CellTextBlock";
 
 const CellContentComponent: FC<ICellBaseProps> = ({
@@ -21,5 +21,5 @@ const CellContentComponent: FC<ICellBaseProps> = ({
 
 export const CellContent = Object.assign(CellContentComponent, {
   Text: CellText,
-  Right: CellRight,
+  Right: (props: ICellBaseProps) => <CellSide side="right" {...props} />,
 });

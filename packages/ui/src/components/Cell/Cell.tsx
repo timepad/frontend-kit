@@ -2,8 +2,8 @@ import { type CSSProperties, type FC } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./cell.less";
-import { ICellProps } from "./cell.types";
-import { CellLeft } from "./CellLeft";
+import { ICellBaseProps, ICellProps } from "./cell.types";
+import { CellSide } from "./CellSide";
 import { CellContent } from "./CellContent";
 
 const CellComponent: FC<ICellProps> = ({
@@ -40,6 +40,6 @@ const CellComponent: FC<ICellProps> = ({
 };
 
 export const Cell = Object.assign(CellComponent, {
-  Left: CellLeft,
+  Left: (props: ICellBaseProps) => <CellSide side="left" {...props} />,
   Content: CellContent,
 });
