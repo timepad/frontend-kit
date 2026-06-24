@@ -1,20 +1,16 @@
 import { FC } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
-import { ICellContentProps } from "./cell.types";
+import { ICellBaseProps } from "./cell.types";
 import { CellRight } from "./CellRight";
 import { CellText } from "./CellTextBlock";
 
-const CellContentComponent: FC<ICellContentProps> = ({
+const CellContentComponent: FC<ICellBaseProps> = ({
   className,
   children,
-  separator = false,
   ...rest
 }) => {
-  const contentClassName = classNames(
-    component("cell", "content")({ separator }),
-    className,
-  );
+  const contentClassName = classNames(component("cell", "content")(), className);
 
   return (
     <div className={contentClassName} {...rest}>

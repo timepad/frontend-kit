@@ -11,6 +11,7 @@ const CellComponent: FC<ICellProps> = ({
   horizontalPadding = 0,
   align = "center",
   backgroundColor,
+  withSeparator = false,
   style,
   children,
   ...rest
@@ -27,7 +28,9 @@ const CellComponent: FC<ICellProps> = ({
     ? ({ "--cell-bg-color": backgroundColor } as CSSProperties)
     : undefined;
 
-  const bodyClassName = component("cell", "body")();
+  const bodyClassName = component("cell", "body")({
+    "with-separator": withSeparator,
+  });
 
   return (
     <div className={cellClassName} style={{ ...fillStyle, ...style }} {...rest}>

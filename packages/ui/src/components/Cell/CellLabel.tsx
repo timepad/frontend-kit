@@ -1,10 +1,10 @@
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import { Typography } from "../Typography";
 import { ICellLabelProps } from "./cell.types";
 
-export const CellLabel: FC<ICellLabelProps> = ({
+export const CellLabel: FC<PropsWithChildren<ICellLabelProps>> = ({
   bold = true,
   className,
   children,

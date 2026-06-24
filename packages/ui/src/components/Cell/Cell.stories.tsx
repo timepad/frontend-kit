@@ -27,7 +27,6 @@ const resolveCellBackground = (backgroundColor?: string) =>
     : backgroundColor;
 
 type CellStoryArgs = ICellProps & {
-  separator?: boolean;
   bold?: boolean;
 };
 
@@ -62,7 +61,7 @@ const meta = {
       control: "select",
       options: [...fillColorOptions],
     },
-    separator: {
+    withSeparator: {
       name: "Сепаратор",
       control: "boolean",
       table: { disable: true },
@@ -104,32 +103,34 @@ const cellStoryProps = ({
   align,
   horizontalPadding,
   backgroundColor,
+  withSeparator,
 }: ICellProps): ICellProps => ({
   align,
   horizontalPadding,
   backgroundColor: resolveCellBackground(backgroundColor),
+  withSeparator,
 });
 
 export const Default: Story = {
   args: {
-    separator: false,
+    withSeparator: false,
   },
   argTypes: {
-    separator: {
+    withSeparator: {
       table: { disable: false },
     },
   },
   render: (args) => {
-    const { separator = false, ...cellArgs } = args as CellStoryArgs;
+    const { withSeparator = false, ...cellArgs } = args as CellStoryArgs;
 
     return (
-      <Cell {...cellStoryProps(cellArgs)}>
+      <Cell {...cellStoryProps({ ...cellArgs, withSeparator })}>
         <Cell.Left>
           <span style={leftIconBgStyle}>
             <IconHeart24Outline />
           </span>
         </Cell.Left>
-        <Cell.Content separator={separator}>
+        <Cell.Content>
           <Cell.Content.Text>
             <Cell.Content.Text.Label>
               Заголовок в три строки максимум, остальное обрезается тремя точками в конце. Заголовок в три строки максимум, остальное обрезается тремя точками в конце
@@ -150,12 +151,12 @@ export const Default: Story = {
 
 export const TextOnly: Story = {
   args: {
-    separator: false,
+    withSeparator: false,
     bold: false,
   },
   argTypes: {
     align: { table: { disable: true } },
-    separator: {
+    withSeparator: {
       table: { disable: false },
     },
     bold: {
@@ -163,11 +164,11 @@ export const TextOnly: Story = {
     },
   },
   render: (args) => {
-    const { separator = false, bold = false, ...cellArgs } = args as CellStoryArgs;
+    const { withSeparator = false, bold = false, ...cellArgs } = args as CellStoryArgs;
 
     return (
-      <Cell {...cellStoryProps(cellArgs)}>
-        <Cell.Content separator={separator}>
+      <Cell {...cellStoryProps({ ...cellArgs, withSeparator })}>
+        <Cell.Content>
           <Cell.Content.Text>
             <Cell.Content.Text.Label bold={bold}>
               Заголовок Text
@@ -181,12 +182,12 @@ export const TextOnly: Story = {
 
 export const CaptionAboveText: Story = {
   args: {
-    separator: false,
+    withSeparator: false,
     bold: true,
   },
   argTypes: {
     align: { table: { disable: true } },
-    separator: {
+    withSeparator: {
       table: { disable: false },
     },
     bold: {
@@ -194,11 +195,11 @@ export const CaptionAboveText: Story = {
     },
   },
   render: (args) => {
-    const { separator = false, bold = true, ...cellArgs } = args as CellStoryArgs;
+    const { withSeparator = false, bold = true, ...cellArgs } = args as CellStoryArgs;
 
     return (
-      <Cell {...cellStoryProps({ ...cellArgs, align: "top" })}>
-        <Cell.Content separator={separator}>
+      <Cell {...cellStoryProps({ ...cellArgs, align: "top", withSeparator })}>
+        <Cell.Content>
           <Cell.Content.Text>
             <Cell.Content.Text.Caption>Описание сверху</Cell.Content.Text.Caption>
             <Cell.Content.Text.Label bold={bold}>Заголовок снизу</Cell.Content.Text.Label>
@@ -212,12 +213,12 @@ export const CaptionAboveText: Story = {
 export const TextAboveCaption: Story = {
   args: {
     horizontalPadding: 0,
-    separator: true,
+    withSeparator: true,
     bold: true,
   },
   argTypes: {
     align: { table: { disable: true } },
-    separator: {
+    withSeparator: {
       table: { disable: false },
     },
     bold: {
@@ -225,11 +226,11 @@ export const TextAboveCaption: Story = {
     },
   },
   render: (args) => {
-    const { separator = false, bold = true, ...cellArgs } = args as CellStoryArgs;
+    const { withSeparator = false, bold = true, ...cellArgs } = args as CellStoryArgs;
 
     return (
-        <Cell {...cellStoryProps({ ...cellArgs, horizontalPadding: 0 })}>
-          <Cell.Content separator={separator}>
+        <Cell {...cellStoryProps({ ...cellArgs, horizontalPadding: 0, withSeparator })}>
+          <Cell.Content>
             <Cell.Content.Text>
               <Cell.Content.Text.Label bold={bold}>Только текстовый блок</Cell.Content.Text.Label>
               <Cell.Content.Text.Caption>
@@ -244,12 +245,12 @@ export const TextAboveCaption: Story = {
 
 export const WithAvatar: Story = {
   args: {
-    separator: true,
+    withSeparator: true,
     bold: true,
   },
   argTypes: {
     align: { table: { disable: true } },
-    separator: {
+    withSeparator: {
       table: { disable: false },
     },
     bold: {
@@ -257,14 +258,14 @@ export const WithAvatar: Story = {
     },
   },
   render: (args) => {
-    const { separator = false, bold = true, ...cellArgs } = args as CellStoryArgs;
+    const { withSeparator = false, bold = true, ...cellArgs } = args as CellStoryArgs;
 
     return (
-      <Cell {...cellStoryProps(cellArgs)}>
+      <Cell {...cellStoryProps({ ...cellArgs, withSeparator })}>
         <Cell.Left>
           <Avatar text="Алексей Ветров" size={40} />
         </Cell.Left>
-        <Cell.Content separator={separator}>
+        <Cell.Content>
           <Cell.Content.Text>
             <Cell.Content.Text.Label bold={bold}>Алексей Ветров</Cell.Content.Text.Label>
             <Cell.Content.Text.Caption>Онлайн</Cell.Content.Text.Caption>
@@ -284,13 +285,13 @@ export const List: Story = {
   },
   render: () => (
     <div>
-      <Cell {...listCellProps}>
+      <Cell {...listCellProps} withSeparator>
         <Cell.Left>
           <span style={leftIconBgStyle}>
             <IconHeart24Outline />
           </span>
         </Cell.Left>
-        <Cell.Content separator>
+        <Cell.Content>
           <Cell.Content.Text>
             <Cell.Content.Text.Label>Заголовок</Cell.Content.Text.Label>
             <Cell.Content.Text.Caption>{listCaption}</Cell.Content.Text.Caption>
@@ -304,13 +305,13 @@ export const List: Story = {
         </Cell.Content>
       </Cell>
 
-      <Cell {...listCellProps}>
+      <Cell {...listCellProps} withSeparator>
         <Cell.Left>
           <span style={leftIconBgStyle}>
             <IconHeart24Outline />
           </span>
         </Cell.Left>
-        <Cell.Content separator>
+        <Cell.Content>
           <Cell.Content.Text>
             <Cell.Content.Text.Label>Заголовок</Cell.Content.Text.Label>
             <Cell.Content.Text.Caption>{listCaption}</Cell.Content.Text.Caption>
@@ -334,13 +335,13 @@ export const List: Story = {
         </Cell.Content>
       </Cell>
 
-      <Cell {...listCellProps}>
+      <Cell {...listCellProps} withSeparator>
         <Cell.Left>
           <span style={leftIconBgStyle}>
             <IconHeart24Outline />
           </span>
         </Cell.Left>
-        <Cell.Content separator>
+        <Cell.Content>
           <Cell.Content.Text>
             <Cell.Content.Text.Label>Заголовок</Cell.Content.Text.Label>
             <Cell.Content.Text.Caption>{listCaption}</Cell.Content.Text.Caption>
