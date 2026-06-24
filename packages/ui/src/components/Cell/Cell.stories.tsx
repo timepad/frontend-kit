@@ -10,7 +10,6 @@ import { Typography } from "../Typography";
 import {
   IconChevronRight16Outline,
   IconChevronRight24Outline,
-  IconHeart16Outline,
   IconHeart24Outline,
 } from "../../assets/icons";
 
@@ -131,15 +130,19 @@ export const Default: Story = {
           </span>
         </Cell.Left>
         <Cell.Content separator={separator}>
-          <Cell.Content.Text>Заголовок в три строки максимум, остальное обрезается тремя точками в конце. Заголовок в три строки максимум, остальное обрезается тремя точками в конце</Cell.Content.Text>
-          <Cell.Content.Caption>{longCaption}</Cell.Content.Caption>
+          <Cell.Content.Text>
+            <Cell.Content.Text.Label>
+              Заголовок в три строки максимум, остальное обрезается тремя точками в конце. Заголовок в три строки максимум, остальное обрезается тремя точками в конце
+            </Cell.Content.Text.Label>
+            <Cell.Content.Text.Caption>{longCaption}</Cell.Content.Text.Caption>
+          </Cell.Content.Text>
+          <Cell.Content.Right>
+            <div style={{display: "flex", alignItems: "center", cursor: "pointer"}} onClick={() => alert("клик")}>
+              <Typography.Paragraph tag="P4 REGULAR">Data</Typography.Paragraph>
+              <IconChevronRight16Outline aria-hidden="true" />
+            </div>
+          </Cell.Content.Right>
         </Cell.Content>
-        <Cell.Right>
-          <div style={{display: "flex", alignItems: "center", cursor: "pointer"}} onClick={() => alert("клик")}>
-            <Typography.Paragraph tag="P4 REGULAR">Data</Typography.Paragraph>
-            <IconChevronRight16Outline aria-hidden="true" />
-          </div>
-        </Cell.Right>
       </Cell>
     );
   },
@@ -165,8 +168,10 @@ export const TextOnly: Story = {
     return (
       <Cell {...cellStoryProps(cellArgs)}>
         <Cell.Content separator={separator}>
-          <Cell.Content.Text bold={bold}>
-            Заголовок Text
+          <Cell.Content.Text>
+            <Cell.Content.Text.Label bold={bold}>
+              Заголовок Text
+            </Cell.Content.Text.Label>
           </Cell.Content.Text>
         </Cell.Content>
       </Cell>
@@ -194,8 +199,10 @@ export const CaptionAboveText: Story = {
     return (
       <Cell {...cellStoryProps({ ...cellArgs, align: "top" })}>
         <Cell.Content separator={separator}>
-          <Cell.Content.Caption>Описание сверху</Cell.Content.Caption>
-          <Cell.Content.Text bold={bold}>Заголовок снизу</Cell.Content.Text>
+          <Cell.Content.Text>
+            <Cell.Content.Text.Caption>Описание сверху</Cell.Content.Text.Caption>
+            <Cell.Content.Text.Label bold={bold}>Заголовок снизу</Cell.Content.Text.Label>
+          </Cell.Content.Text>
         </Cell.Content>
       </Cell>
     );
@@ -223,10 +230,12 @@ export const TextAboveCaption: Story = {
     return (
         <Cell {...cellStoryProps({ ...cellArgs, horizontalPadding: 0 })}>
           <Cell.Content separator={separator}>
-            <Cell.Content.Text bold={bold}>Только текстовый блок</Cell.Content.Text>
-            <Cell.Content.Caption>
-              Левый и правый слоты опциональны
-            </Cell.Content.Caption>
+            <Cell.Content.Text>
+              <Cell.Content.Text.Label bold={bold}>Только текстовый блок</Cell.Content.Text.Label>
+              <Cell.Content.Text.Caption>
+                Левый и правый слоты опциональны
+              </Cell.Content.Text.Caption>
+            </Cell.Content.Text>
           </Cell.Content>
         </Cell>
     );
@@ -256,12 +265,14 @@ export const WithAvatar: Story = {
           <Avatar text="Алексей Ветров" size={40} />
         </Cell.Left>
         <Cell.Content separator={separator}>
-          <Cell.Content.Text bold={bold}>Алексей Ветров</Cell.Content.Text>
-          <Cell.Content.Caption>Онлайн</Cell.Content.Caption>
+          <Cell.Content.Text>
+            <Cell.Content.Text.Label bold={bold}>Алексей Ветров</Cell.Content.Text.Label>
+            <Cell.Content.Text.Caption>Онлайн</Cell.Content.Text.Caption>
+          </Cell.Content.Text>
+          <Cell.Content.Right>
+            <IconChevronRight16Outline aria-hidden="true" />
+          </Cell.Content.Right>
         </Cell.Content>
-        <Cell.Right>
-          <IconChevronRight16Outline aria-hidden="true" />
-        </Cell.Right>
       </Cell>
     );
   },
@@ -280,15 +291,17 @@ export const List: Story = {
           </span>
         </Cell.Left>
         <Cell.Content separator>
-          <Cell.Content.Text>Заголовок</Cell.Content.Text>
-          <Cell.Content.Caption>{listCaption}</Cell.Content.Caption>
+          <Cell.Content.Text>
+            <Cell.Content.Text.Label>Заголовок</Cell.Content.Text.Label>
+            <Cell.Content.Text.Caption>{listCaption}</Cell.Content.Text.Caption>
+          </Cell.Content.Text>
+          <Cell.Content.Right>
+            <div style={{display: "flex", alignItems: 'center', color: "var(--icon-tertiary)"}}>
+              <Counter size="m" value={100} />
+              <IconChevronRight24Outline style={{ cursor: "pointer" }} onClick={() => alert("клик")} />
+            </div>
+          </Cell.Content.Right>
         </Cell.Content>
-        <Cell.Right>
-          <div style={{display: "flex", alignItems: 'center', color: "var(--icon-tertiary)"}}>
-            <Counter size="m" value={100} />
-            <IconChevronRight24Outline style={{ cursor: "pointer" }} onClick={() => alert("клик")} />
-          </div>
-        </Cell.Right>
       </Cell>
 
       <Cell {...listCellProps}>
@@ -298,25 +311,27 @@ export const List: Story = {
           </span>
         </Cell.Left>
         <Cell.Content separator>
-          <Cell.Content.Text>Заголовок</Cell.Content.Text>
-          <Cell.Content.Caption>{listCaption}</Cell.Content.Caption>
+          <Cell.Content.Text>
+            <Cell.Content.Text.Label>Заголовок</Cell.Content.Text.Label>
+            <Cell.Content.Text.Caption>{listCaption}</Cell.Content.Text.Caption>
+          </Cell.Content.Text>
+          <Cell.Content.Right>
+            <div style={{display: "flex", alignItems: 'center', columnGap: "12px"}}>
+              <IconButton
+                size="s"
+                variant="secondary"
+                icon={<IconHeart24Outline />}
+                ariaLabel="Добавить в избранное"
+              />
+              <IconButton
+                size="s"
+                variant="secondary"
+                icon={<IconHeart24Outline />}
+                ariaLabel="Добавить в избранное"
+              />
+            </div>
+          </Cell.Content.Right>
         </Cell.Content>
-        <Cell.Right>
-          <div style={{display: "flex", alignItems: 'center', columnGap: "12px"}}>
-            <IconButton
-              size="s"
-              variant="secondary"
-              icon={<IconHeart24Outline />}
-              ariaLabel="Добавить в избранное"
-            />
-            <IconButton
-              size="s"
-              variant="secondary"
-              icon={<IconHeart24Outline />}
-              ariaLabel="Добавить в избранное"
-            />
-          </div>
-        </Cell.Right>
       </Cell>
 
       <Cell {...listCellProps}>
@@ -326,17 +341,19 @@ export const List: Story = {
           </span>
         </Cell.Left>
         <Cell.Content separator>
-          <Cell.Content.Text>Заголовок</Cell.Content.Text>
-          <Cell.Content.Caption>{listCaption}</Cell.Content.Caption>
+          <Cell.Content.Text>
+            <Cell.Content.Text.Label>Заголовок</Cell.Content.Text.Label>
+            <Cell.Content.Text.Caption>{listCaption}</Cell.Content.Text.Caption>
+          </Cell.Content.Text>
+          <Cell.Content.Right>
+            <IconButton
+              size="s"
+              variant="secondary"
+              icon={<IconHeart24Outline />}
+              ariaLabel="Добавить в избранное"
+            />
+          </Cell.Content.Right>
         </Cell.Content>
-        <Cell.Right>
-          <IconButton
-            size="s"
-            variant="secondary"
-            icon={<IconHeart24Outline />}
-            ariaLabel="Добавить в избранное"
-          />
-        </Cell.Right>
       </Cell>
 
       <Cell {...listCellProps}>
@@ -346,12 +363,14 @@ export const List: Story = {
           </span>
         </Cell.Left>
         <Cell.Content>
-          <Cell.Content.Text>Заголовок</Cell.Content.Text>
-          <Cell.Content.Caption>{listCaption}</Cell.Content.Caption>
+          <Cell.Content.Text>
+            <Cell.Content.Text.Label>Заголовок</Cell.Content.Text.Label>
+            <Cell.Content.Text.Caption>{listCaption}</Cell.Content.Text.Caption>
+          </Cell.Content.Text>
+          <Cell.Content.Right>
+            <Typography.Paragraph style={{color: "var(--text-secondary)"}} tag="P4 REGULAR">Data</Typography.Paragraph>
+          </Cell.Content.Right>
         </Cell.Content>
-        <Cell.Right>
-          <Typography.Paragraph style={{color: "var(--text-secondary)"}} tag="P4 REGULAR">Data</Typography.Paragraph>
-        </Cell.Right>
       </Cell>
     </div>
   ),

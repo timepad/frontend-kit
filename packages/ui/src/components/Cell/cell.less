@@ -23,7 +23,8 @@
         padding-left: ~"var(--space-@{value})";
       }
 
-      .ccell__right {
+      .ccell__content .ccell__right,
+      .ccell__body > .ccell__content:last-child:not(:has(.ccell__right)) {
         padding-right: ~"var(--space-@{value})";
       }
     }
@@ -31,42 +32,65 @@
 
   &__body {
     display: grid;
-    grid-template-columns: max-content minmax(0, 1fr) max-content;
+    grid-template-columns: max-content minmax(0, 1fr);
     column-gap: var(--space-12);
     padding: var(--space-10) 0;
     min-width: 0;
 
-    &:has(.ccell__separator) {
-      padding-bottom: 0;
+    &:has(.ccell__content--separator) {
+      grid-template-rows: auto auto;
       row-gap: var(--space-10);
+
+      &::after {
+        content: "";
+        grid-column: 2;
+        grid-row: 2;
+        justify-self: stretch;
+        min-width: 0;
+        height: 1px;
+        background-color: var(--bg-stroke);
+      }
     }
   }
 
   &__left {
     grid-column: 1;
     grid-row: 1;
+    align-self: center;
     display: flex;
     align-items: center;
   }
 
-  &--align-top &__left {
-    align-self: flex-start;
+  &--align-top &__left,
+  &--align-top &__content {
+    align-self: start;
+  }
+
+  &--align-top &__content {
+    align-items: start;
   }
 
   &__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    column-gap: var(--space-12);
     grid-column: 2;
     grid-row: 1;
+    align-items: center;
+    justify-self: stretch;
     min-width: 0;
   }
 
-  &__text-stack {
+  &__text {
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
     min-width: 0;
+    grid-column: 1;
+    grid-row: 1;
   }
 
-  &__text,
+  &__label,
   &__caption {
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -75,7 +99,7 @@
     margin: 0;
   }
 
-  &__text {
+  &__label {
     -webkit-line-clamp: 3;
   }
 
@@ -85,19 +109,9 @@
   }
 
   &__right {
-    grid-column: 3;
-    grid-row: 1;
     display: flex;
     align-items: center;
-  }
-
-  &__separator {
-    grid-column: 2 / -1;
-    grid-row: 2;
-    width: calc(100% + var(--cell-padding-inline));
-    margin-right: calc(-1 * var(--cell-padding-inline));
-    height: 1px;
-    justify-self: stretch;
-    background-color: var(--bg-stroke);
+    grid-column: 2;
+    grid-row: 1;
   }
 }

@@ -2,8 +2,8 @@ import { FC } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import { ICellContentProps } from "./cell.types";
-import { CellText } from "./CellText";
-import { CellCaption } from "./CellCaption";
+import { CellRight } from "./CellRight";
+import { CellText } from "./CellTextBlock";
 
 const CellContentComponent: FC<ICellContentProps> = ({
   className,
@@ -11,21 +11,19 @@ const CellContentComponent: FC<ICellContentProps> = ({
   separator = false,
   ...rest
 }) => {
-
   const contentClassName = classNames(
     component("cell", "content")({ separator }),
     className,
   );
-  const textStackClassName = component("cell", "text-stack")();
 
   return (
     <div className={contentClassName} {...rest}>
-      <div className={textStackClassName}>{children}</div>
+      {children}
     </div>
   );
 };
 
 export const CellContent = Object.assign(CellContentComponent, {
   Text: CellText,
-  Caption: CellCaption,
+  Right: CellRight,
 });

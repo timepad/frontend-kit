@@ -10,8 +10,8 @@ export { Typography } from "./components/Typography";
 export { Cell } from "./components/Cell";
 export type {
   ICellProps,
-  ICellSlotProps,
   ICellContentProps,
+  ICellLabelProps,
   ICellTextProps,
   CellAlign,
   CellHorizontalPadding,

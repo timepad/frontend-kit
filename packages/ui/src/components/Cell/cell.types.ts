@@ -8,7 +8,6 @@ export interface ICellProps
   extends HTMLAttributes<HTMLDivElement> {
   horizontalPadding?: CellHorizontalPadding;
   align?: CellAlign;
-  /** Цвет заливки ячейки. По умолчанию прозрачный — виден фон родителя. */
   backgroundColor?: string;
 }
 
@@ -20,7 +19,7 @@ export interface ICellContentProps extends ICellBaseProps {
   separator?: boolean;
 }
 
-export interface ICellTextProps extends HTMLAttributes<HTMLDivElement> {
+export interface ICellLabelProps extends HTMLAttributes<HTMLDivElement> {
   bold?: boolean;
   children?: ReactNode;
 }

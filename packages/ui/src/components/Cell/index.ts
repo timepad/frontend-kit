@@ -3,7 +3,7 @@ export type {
   ICellProps,
   ICellBaseProps,
   ICellContentProps,
-  ICellTextProps,
+  ICellLabelProps,
   CellAlign,
   CellHorizontalPadding,
 } from "./cell.types";
