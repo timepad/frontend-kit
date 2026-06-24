@@ -1,0 +1,157 @@
+@import "../../assets/tokens/index.less";
+
+.ccheckbox {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  cursor: pointer;
+
+  .column-gap-size(s, var(--space-6));
+  .column-gap-size(m, var(--space-8));
+  .column-gap-size(l, var(--space-12));
+
+  .control-margin-size(s, 2px);
+  .control-margin-size(m, 3px);
+  .control-margin-size(l, 4px);
+
+  &:hover::after {
+    content: "";
+    position: absolute;
+    inset: -5px -12px;
+    background-color: var(--btn-hover);
+    border-radius: var(--radius-16);
+    z-index: -1;
+  }
+
+  &:has(&__field:disabled) {
+    pointer-events: none;
+  }
+
+  &__label {
+    display: flex;
+    color: var(--text-primary) !important;
+
+    & > :nth-child(2) {
+      color: var(--text-tertiary) !important;
+    }
+
+    .column-gap-size(s, var(--space-4));
+    .column-gap-size(m, var(--space-6));
+    .column-gap-size(l, var(--space-8));
+  }
+
+  &__description {
+    color: var(--text-secondary) !important;
+  }
+
+  &__control {
+    position: relative;
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
+  &--size-s &__control {
+    margin: 2px;
+  }
+  &--size-m &__control {
+    margin: 3px;
+  }
+  &--size-l &__control {
+    margin: 4px;
+  }
+
+  &__description {
+    color: var(--text-secondary) !important;
+  }
+
+  &__field {
+    display: block;
+    flex-shrink: 0;
+    position: relative;
+    appearance: none;
+    margin: 0;
+    border-style: solid;
+    border-color: var(--greyscale-300);
+    background-color: var(--bg-primary);
+    cursor: inherit;
+
+    &:checked,
+    &--indeterminate {
+      border-color: var(--btn-primary-active);
+      background-color: var(--btn-primary-active);
+    }
+
+    &:hover:not(&--error):not(:disabled) {
+      border-color: var(--btn-primary-active);
+    }
+
+    &:disabled {
+      border-color: var(--greyscale-300);
+      background-color: var(--bg-disabled);
+    }
+
+    &:disabled:checked,
+    &:disabled&--indeterminate {
+      border-color: transparent;
+      background-color: var(--btn-inactive);
+    }
+
+    &--error:not(:disabled) {
+      border-color: var(--accent-negative);
+
+      &:checked,
+      &.ccheckbox__field--indeterminate {
+        background-color: var(--accent-negative);
+      }
+    }
+
+    .field-size(s, 16px, 16px, 1px, 4px);
+    .field-size(m, 18px, 18px, 1.5px, 6px);
+    .field-size(l, 24px, 24px, 2px, 8px);
+  }
+
+  &__icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    color: var(--greyscale-100);
+
+    svg {
+      display: block;
+      flex-shrink: 0;
+    }
+
+    &--visible {
+      opacity: 1;
+    }
+  }
+
+  &__field:disabled + &__icon {
+    color: var(--icon-tertiary);
+  }
+}
+
+.column-gap-size(@size-name; @gap) {
+  &--size-@{size-name} {
+    column-gap: @gap;
+  }
+}
+
+.field-size(@size-name; @w; @h; @border-width; @radius) {
+  &--size-@{size-name} {
+    width: @w;
+    height: @h;
+    border-width: @border-width;
+    border-radius: @radius;
+  }
+}
+
+.control-margin-size(@size-name; @margin) {
+  &--size-@{size-name} &__control {
+    margin: @margin;
+  }
+}
