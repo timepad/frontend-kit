@@ -2,11 +2,11 @@
 
 .csnackbar {
   padding: var(--space-12);
-  width: 100%;
   box-sizing: border-box;
 
   &__content {
     display: flex;
+    align-items: center;
     gap: var(--space-8);
     padding: 0 var(--space-8);
     border-radius: var(--radius-16);
@@ -14,7 +14,7 @@
     color: var(--text-inverted);
   }
 
-  &__left {
+  &__icon-container {
     display: flex;
     flex-shrink: 0;
     align-items: center;
@@ -55,14 +55,13 @@
     color: inherit !important;
   }
 
-  &__right {
+  &__action-button-container {
     display: flex;
     flex-shrink: 0;
     align-items: center;
   }
 
-  &__action-button,
-  &__action-icon-button {
+  &__action-button {
     color: var(--text-inverted) !important;
   }
 }

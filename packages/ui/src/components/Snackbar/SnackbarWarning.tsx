@@ -2,19 +2,17 @@ import { FC } from "react";
 
 import { SnackbarBase } from "./Snackbar";
 import { IconWarningCircle24Fill } from "../../assets/icons";
-import { ISnackbarVariantProps } from "./snackbar.types";
+import { ISnackbarBaseProps, ISnackbarVariantProps } from "./snackbar.types";
 
-export const SnackbarWarning: FC<ISnackbarVariantProps> = ({
-  children,
-  ...props
-}) => {
+export const SnackbarWarning: FC<ISnackbarVariantProps> = ({ children, ...props }) => {
   return (
     <SnackbarBase
-      variant="warning"
-      icon={<IconWarningCircle24Fill />}
-      {...props}
-    >
-      {children}
-    </SnackbarBase>
+      {...({
+        ...props,
+        children,
+        variant: "warning",
+        icon: <IconWarningCircle24Fill />,
+      } as ISnackbarBaseProps)}
+    />
   );
 };

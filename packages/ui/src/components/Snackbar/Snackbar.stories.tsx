@@ -1,14 +1,19 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta } from "@storybook/react";
+import type { ReactElement } from "react";
 
 import { Snackbar } from "./Snackbar";
-import { SnackbarAfter } from "./snackbar.types";
+import { ISnackbarVariantProps, SnackbarActionButton } from "./snackbar.types";
 import { IconWarningDescription24Fill } from "../../assets/icons";
 
-const afterOptions: (SnackbarAfter | undefined)[] = [undefined, "button", "icon-button"];
+const actionButtonOptions: (SnackbarActionButton | undefined)[] = [
+  undefined,
+  "button",
+  "icon-button",
+];
 
 const meta = {
   title: "Components/Snackbar",
-  component: Snackbar,
+  component: Snackbar.Success,
   parameters: {
     layout: "centered",
     docs: {
@@ -24,16 +29,16 @@ const meta = {
   ],
   tags: ["autodocs"],
   argTypes: {
-    after: {
+    actionButton: {
       description: `
 Тип правого действия.
 
 - **undefined** — без действия
 - **button** — текстовая кнопка (требует \`actionLabel\`)
-- **icon-button** — кнопка закрытия
+- **icon-button** — кнопка закрытия (можно передать \`actionAriaLabel\`)
       `,
       control: "select",
-      options: afterOptions,
+      options: actionButtonOptions,
       labels: {
         undefined: "без действия",
         button: "button",
@@ -59,101 +64,70 @@ const meta = {
       },
     },
     actionLabel: {
-      description: "Текст кнопки действия. Используется при `after=\"button\"`.",
+      description: "Текст кнопки действия. Используется при `actionButton=\"button\"`.",
       control: "text",
       table: {
         type: { summary: "string" },
       },
     },
-    onAction: {
+    actionAriaLabel: {
+      description: "Aria-label для icon-button. Используется при `actionButton=\"icon-button\"`.",
+      control: "text",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "Закрыть" },
+      },
+    },
+    onActionClick: {
       description: "Обработчик клика по кнопке действия.",
       action: "action clicked",
       table: {
-        type: { summary: "() => void" },
-      },
-    },
-    variant: {
-      table: {
-        disable: true,
-      },
-    },
-    icon: {
-      table: {
-        disable: true,
+        type: { summary: "MouseEventHandler<HTMLButtonElement>" },
       },
     },
   },
-} satisfies Meta<typeof Snackbar>;
+} satisfies Meta<typeof Snackbar.Success>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+
+type Story = {
+  render?: (args: ISnackbarVariantProps) => ReactElement;
+  args?: ISnackbarVariantProps;
+};
 
 export const Success: Story = {
-  render: (args) => (
-    <Snackbar.Success
-      title={args.title}
-      after={args.after}
-      actionLabel={args.actionLabel}
-      onAction={args.onAction}
-    >
-      {args.children}
-    </Snackbar.Success>
-  ),
+  render: (args) => <Snackbar.Success {...args} />,
   args: {
     title: "Какое-то сообщение.",
     children: "Текст уведомления",
-    after: "button",
+    actionButton: "button",
     actionLabel: "Кнопка",
   },
 };
 
 export const Error: Story = {
-  render: (args) => (
-    <Snackbar.Error
-      after={args.after}
-      actionLabel={args.actionLabel}
-      onAction={args.onAction}
-    >
-      {args.children}
-    </Snackbar.Error>
-  ),
+  render: (args) => <Snackbar.Error {...args} />,
   args: {
     children: "Текст уведомления",
-    after: "button",
+    actionButton: "button",
     actionLabel: "Кнопка",
   },
 };
 
 export const Warning: Story = {
-  render: (args) => (
-    <Snackbar.Warning
-      after={args.after}
-      actionLabel={args.actionLabel}
-      onAction={args.onAction}
-    >
-      {args.children}
-    </Snackbar.Warning>
-  ),
+  render: (args) => <Snackbar.Warning {...args} />,
   args: {
     children: "Текст уведомления",
-    after: "button",
+    actionButton: "button",
     actionLabel: "Кнопка",
   },
 };
 
 export const Info: Story = {
-  render: (args) => (
-    <Snackbar.Info
-      after={args.after}
-      actionLabel={args.actionLabel}
-      onAction={args.onAction}
-    >
-      {args.children}
-    </Snackbar.Info>
-  ),
+  render: (args) => <Snackbar.Info {...args} />,
   args: {
     children: "Текст уведомления",
-    after: "button",
+    actionButton: "button",
     actionLabel: "Кнопка",
   },
 };
@@ -162,36 +136,28 @@ export const CustomIcon: Story = {
   render: (args) => (
     <Snackbar.Custom
       icon={<IconWarningDescription24Fill />}
-      after={args.after}
-      actionLabel={args.actionLabel}
-      onAction={args.onAction}
-    >
-      {args.children}
-    </Snackbar.Custom>
+      {...args}
+    />
   ),
   args: {
     children: "Текст уведомления",
-    after: "button",
+    actionButton: "button",
     actionLabel: "Кнопка",
   },
 };
 
 export const WithoutAction: Story = {
-  render: (args) => <Snackbar.Success>{args.children}</Snackbar.Success>,
+  render: (args) => <Snackbar.Success {...args} />,
   args: {
     children: "Текст уведомления",
   },
 };
 
 export const WithCloseButton: Story = {
-  render: (args) => (
-    <Snackbar.Success after="icon-button" onAction={args.onAction}>
-      {args.children}
-    </Snackbar.Success>
-  ),
+  render: (args) => <Snackbar.Success {...args} />,
   args: {
     children: "Текст уведомления",
-    after: "icon-button",
+    actionButton: "icon-button",
   },
 };
 
@@ -201,34 +167,34 @@ export const AllVariants: Story = {
   },
   render: () => (
   <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-    <Snackbar.Success title="Какое-то сообщение." after="button" actionLabel="Кнопка">
+    <Snackbar.Success title="Какое-то сообщение." actionButton="button" actionLabel="Кнопка">
       Текст уведомления
     </Snackbar.Success>
-    <Snackbar.Success title="Какое-то сообщение." after="icon-button">
+    <Snackbar.Success title="Какое-то сообщение." actionButton="icon-button">
       Текст уведомления
     </Snackbar.Success>
-    <Snackbar.Error title="Какое-то сообщение." after="button" actionLabel="Кнопка">
+    <Snackbar.Error title="Какое-то сообщение." actionButton="button" actionLabel="Кнопка">
       Текст уведомления
     </Snackbar.Error>
-    <Snackbar.Error title="Какое-то сообщение." after="icon-button">
+    <Snackbar.Error title="Какое-то сообщение." actionButton="icon-button">
       Текст уведомления
     </Snackbar.Error>
-    <Snackbar.Warning title="Какое-то сообщение." after="button" actionLabel="Кнопка">
+    <Snackbar.Warning title="Какое-то сообщение." actionButton="button" actionLabel="Кнопка">
       Текст уведомления
     </Snackbar.Warning>
-    <Snackbar.Warning title="Какое-то сообщение." after="icon-button">
+    <Snackbar.Warning title="Какое-то сообщение." actionButton="icon-button">
       Текст уведомления
     </Snackbar.Warning>
-    <Snackbar.Info title="Какое-то сообщение." after="button" actionLabel="Кнопка">
+    <Snackbar.Info title="Какое-то сообщение." actionButton="button" actionLabel="Кнопка">
       Текст уведомления
     </Snackbar.Info>
-    <Snackbar.Info title="Какое-то сообщение." after="icon-button">
+    <Snackbar.Info title="Какое-то сообщение." actionButton="icon-button">
       Текст уведомления
     </Snackbar.Info>
     <Snackbar.Custom
       icon={<IconWarningDescription24Fill />}
       title="Какое-то сообщение."
-      after="button"
+      actionButton="button"
       actionLabel="Кнопка"
     >
       Текст уведомления
@@ -236,7 +202,7 @@ export const AllVariants: Story = {
     <Snackbar.Custom
       icon={<IconWarningDescription24Fill />}
       title="Какое-то сообщение."
-      after="icon-button"
+      actionButton="icon-button"
     >
       Текст уведомления
     </Snackbar.Custom>

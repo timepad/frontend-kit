@@ -14,44 +14,41 @@ import { SnackbarSuccess } from "./SnackbarSuccess";
 import { SnackbarCustom } from "./SnackbarCustom";
 
 export const SnackbarBase: FC<ISnackbarBaseProps> = ({
-  children,
   className,
   icon,
   variant,
   title,
-  after,
+  children,
+  actionButton,
   actionLabel,
-  onAction,
+  onActionClick,
   actionAriaLabel = "Закрыть",
   ...props
 }) => {
   const snackbarClasses = classNames(component("snackbar")(), className);
 
   const contentClassName = component("snackbar", "content")();
-  const leftClassName = component("snackbar", "left")();
+  const iconContainerClassName = component("snackbar", "icon-container")();
   const iconClassName = component("snackbar", "icon")({
     [`${variant}`]: !!variant && variant !== "custom",
   });
   const textClassName = component("snackbar", "text")();
   const titleClassName = component("snackbar", "title")();
   const messageClassName = component("snackbar", "message")();
-  const rightClassName = component("snackbar", "right")();
+  const actionButtonContainerClassName = component("snackbar", "action-button-container")();
   const actionButtonClassName = component("snackbar", "action-button")();
-  const actionIconButtonClassName = component("snackbar", "action-icon-button")();
 
-  const showActionButton = after === "button" && actionLabel;
-  const showActionIconButton = after === "icon-button";
+  const showActionButton = actionButton === "button" && actionLabel;
+  const showActionIconButton = actionButton === "icon-button";
 
   return (
     <div className={snackbarClasses} {...props}>
       <div className={contentClassName}>
-        {icon && (
-          <div className={leftClassName}>
-            <div className={iconClassName} aria-hidden="true">
-              {icon}
-            </div>
+        <div className={iconContainerClassName}>
+          <div className={iconClassName} aria-hidden="true">
+            {icon}
           </div>
-        )}
+        </div>
 
         <div className={textClassName}>
           {title && (
@@ -73,28 +70,28 @@ export const SnackbarBase: FC<ISnackbarBaseProps> = ({
         </div>
 
         {showActionButton && (
-          <div className={rightClassName}>
+          <div className={actionButtonContainerClassName}>
             <Button
               type="button"
               className={actionButtonClassName}
               label={actionLabel}
               size="s"
               variant="transparent"
-              onClick={onAction}
+              onClick={onActionClick}
             />
           </div>
         )}
 
         {showActionIconButton && (
-          <div className={rightClassName}>
+          <div className={actionButtonContainerClassName}>
             <IconButton
               type="button"
-              className={actionIconButtonClassName}
+              className={actionButtonClassName}
               icon={<IconCross24Outline />}
               size="s"
               variant="transparent"
               ariaLabel={actionAriaLabel}
-              onClick={onAction}
+              onClick={onActionClick}
             />
           </div>
         )}
