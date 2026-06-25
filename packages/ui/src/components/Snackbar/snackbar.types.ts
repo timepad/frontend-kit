@@ -12,7 +12,6 @@ type ISnackbarCommonProps = Omit<
   icon: ReactNode;
   title?: string;
   label: string;
-  onActionClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
 };
 
 type SnackbarActionProps =
@@ -20,16 +19,19 @@ type SnackbarActionProps =
       actionButton?: undefined;
       actionLabel?: never;
       actionAriaLabel?: never;
+      onActionClick?: never;
     }
   | {
       actionButton: "button";
       actionLabel: string;
       actionAriaLabel?: never;
+      onActionClick: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
     }
   | {
       actionButton: "icon-button";
       actionAriaLabel?: string;
       actionLabel?: never;
+      onActionClick: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
     };
 
 export type { SnackbarActionProps };
