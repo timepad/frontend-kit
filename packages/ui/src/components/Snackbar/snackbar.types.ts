@@ -11,7 +11,7 @@ type ISnackbarCommonProps = Omit<
   variant: SnackbarVariant;
   icon: ReactNode;
   title?: string;
-  children: ReactNode;
+  label: string;
   onActionClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
 };
 

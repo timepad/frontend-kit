@@ -56,7 +56,7 @@ const meta = {
         type: { summary: "ReactNode" },
       },
     },
-    children: {
+    label: {
       description: "Основной текст уведомления (P4 REGULAR).",
       control: "text",
       table: {
@@ -99,7 +99,7 @@ export const Success: Story = {
   render: (args) => <Snackbar.Success {...args} />,
   args: {
     title: "Какое-то сообщение.",
-    children: "Текст уведомления",
+    label: "Текст уведомления",
     actionButton: "button",
     actionLabel: "Кнопка",
   },
@@ -108,7 +108,7 @@ export const Success: Story = {
 export const Error: Story = {
   render: (args) => <Snackbar.Error {...args} />,
   args: {
-    children: "Текст уведомления",
+    label: "Текст уведомления",
     actionButton: "button",
     actionLabel: "Кнопка",
   },
@@ -117,7 +117,7 @@ export const Error: Story = {
 export const Warning: Story = {
   render: (args) => <Snackbar.Warning {...args} />,
   args: {
-    children: "Текст уведомления",
+    label: "Текст уведомления",
     actionButton: "button",
     actionLabel: "Кнопка",
   },
@@ -126,7 +126,7 @@ export const Warning: Story = {
 export const Info: Story = {
   render: (args) => <Snackbar.Info {...args} />,
   args: {
-    children: "Текст уведомления",
+    label: "Текст уведомления",
     actionButton: "button",
     actionLabel: "Кнопка",
   },
@@ -140,7 +140,7 @@ export const CustomIcon: Story = {
     />
   ),
   args: {
-    children: "Текст уведомления",
+    label: "Текст уведомления",
     actionButton: "button",
     actionLabel: "Кнопка",
   },
@@ -149,63 +149,45 @@ export const CustomIcon: Story = {
 export const WithoutAction: Story = {
   render: (args) => <Snackbar.Success {...args} />,
   args: {
-    children: "Текст уведомления",
+    label: "Текст уведомления",
   },
 };
 
 export const WithCloseButton: Story = {
   render: (args) => <Snackbar.Success {...args} />,
   args: {
-    children: "Текст уведомления",
+    label: "Текст уведомления",
     actionButton: "icon-button",
   },
 };
 
 export const AllVariants: Story = {
   args: {
-    children: "Текст уведомления",
+    label: "Текст уведомления",
   },
   render: () => (
   <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-    <Snackbar.Success title="Какое-то сообщение." actionButton="button" actionLabel="Кнопка">
-      Текст уведомления
-    </Snackbar.Success>
-    <Snackbar.Success title="Какое-то сообщение." actionButton="icon-button">
-      Текст уведомления
-    </Snackbar.Success>
-    <Snackbar.Error title="Какое-то сообщение." actionButton="button" actionLabel="Кнопка">
-      Текст уведомления
-    </Snackbar.Error>
-    <Snackbar.Error title="Какое-то сообщение." actionButton="icon-button">
-      Текст уведомления
-    </Snackbar.Error>
-    <Snackbar.Warning title="Какое-то сообщение." actionButton="button" actionLabel="Кнопка">
-      Текст уведомления
-    </Snackbar.Warning>
-    <Snackbar.Warning title="Какое-то сообщение." actionButton="icon-button">
-      Текст уведомления
-    </Snackbar.Warning>
-    <Snackbar.Info title="Какое-то сообщение." actionButton="button" actionLabel="Кнопка">
-      Текст уведомления
-    </Snackbar.Info>
-    <Snackbar.Info title="Какое-то сообщение." actionButton="icon-button">
-      Текст уведомления
-    </Snackbar.Info>
+    <Snackbar.Success title="Какое-то сообщение." label="Какое-то сообщение в лайбл" actionButton="button" actionLabel="Кнопка" />
+    <Snackbar.Success title="Какое-то сообщение." label="Какое-то сообщение в лайбл" actionButton="icon-button" />
+    <Snackbar.Error title="Какое-то сообщение." label="Какое-то сообщение в лайбл" actionButton="button" actionLabel="Кнопка" />
+    <Snackbar.Error title="Какое-то сообщение." label="Какое-то сообщение в лайбл" actionButton="icon-button" />
+    <Snackbar.Warning title="Какое-то сообщение." label="Какое-то сообщение в лайбл" actionButton="button" actionLabel="Кнопка" />
+    <Snackbar.Warning title="Какое-то сообщение." label="Какое-то сообщение в лайбл" actionButton="icon-button" />
+    <Snackbar.Info title="Какое-то сообщение." label="Какое-то сообщение в лайбл" actionButton="button" actionLabel="Кнопка" />
+    <Snackbar.Info title="Какое-то сообщение." label="Какое-то сообщение в лайбл" actionButton="icon-button" />
     <Snackbar.Custom
       icon={<IconWarningDescription24Fill />}
       title="Какое-то сообщение."
+      label="Какое-то сообщение в лайбл"
       actionButton="button"
       actionLabel="Кнопка"
-    >
-      Текст уведомления
-    </Snackbar.Custom>
+    />
     <Snackbar.Custom
       icon={<IconWarningDescription24Fill />}
       title="Какое-то сообщение."
+      label="Какое-то сообщение в лайбл"
       actionButton="icon-button"
-    >
-      Текст уведомления
-    </Snackbar.Custom>
+    />
   </div>
   ),
 };

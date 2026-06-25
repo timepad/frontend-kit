@@ -18,7 +18,7 @@ export const SnackbarBase: FC<ISnackbarBaseProps> = ({
   icon,
   variant,
   title,
-  children,
+  label,
   actionButton,
   actionLabel,
   onActionClick,
@@ -38,7 +38,7 @@ export const SnackbarBase: FC<ISnackbarBaseProps> = ({
   const actionButtonContainerClassName = component("snackbar", "action-button-container")();
   const actionButtonClassName = component("snackbar", "action-button")();
 
-  const showActionButton = actionButton === "button" && actionLabel;
+  const showActionButton = actionButton === "button";
   const showActionIconButton = actionButton === "icon-button";
 
   return (
@@ -65,7 +65,7 @@ export const SnackbarBase: FC<ISnackbarBaseProps> = ({
             as="span"
             className={messageClassName}
           >
-            {children}
+            {label}
           </Typography.Paragraph>
         </div>
 
