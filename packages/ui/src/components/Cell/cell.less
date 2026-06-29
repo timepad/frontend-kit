@@ -5,28 +5,16 @@
 .ccell {
   min-width: 0;
   cursor: default;
-  overflow: hidden;
 
   --cell-bg-color: transparent;
-  --cell-padding-inline: 0;
 
   color: var(--text-primary);
   background-color: var(--cell-bg-color);
   border-radius: var(--radius-20);
 
   each(@cell-horizontal-paddings, {
-    &--padding-@{value} {
+    &--padding-@{value} &__body {
       --cell-padding-inline: ~"var(--space-@{value})";
-
-      .ccell__left,
-      .ccell__body > .ccell__content:first-child {
-        padding-left: ~"var(--space-@{value})";
-      }
-
-      .ccell__content .ccell__right,
-      .ccell__body > .ccell__content:last-child:not(:has(.ccell__right)) {
-        padding-right: ~"var(--space-@{value})";
-      }
     }
   });
 
@@ -34,7 +22,8 @@
     display: grid;
     grid-template-columns: max-content minmax(0, 1fr);
     column-gap: var(--space-12);
-    padding: var(--space-10) 0;
+    padding-block: var(--space-10);
+    padding-inline: var(--cell-padding-inline);
     min-width: 0;
 
     &--with-separator {
@@ -62,12 +51,12 @@
     align-items: center;
   }
 
-  &--align-top &__left,
-  &--align-top &__content {
+  &--align-top &__left {
     align-self: start;
   }
 
   &--align-top &__content {
+    align-self: start;
     align-items: start;
   }
 
@@ -95,17 +84,12 @@
   &__caption {
     display: -webkit-box;
     -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
     overflow: hidden;
-    text-overflow: ellipsis;
     margin: 0;
   }
 
-  &__label {
-    -webkit-line-clamp: 3;
-  }
-
   &__caption {
-    -webkit-line-clamp: 3;
     color: var(--text-secondary);
   }
 
