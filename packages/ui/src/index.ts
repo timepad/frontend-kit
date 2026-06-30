@@ -9,5 +9,6 @@ export { Switch } from "./components/Switch";
 export { Textarea } from "./components/Textarea";
 export { Typography } from "./components/Typography";
 export { Divider } from "./components/Divider";
+export { Snackbar } from "./components/Snackbar";
 export * from "./assets/icons";
 export * from "./P";
