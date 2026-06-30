@@ -1,6 +1,7 @@
 @import "../../assets/tokens/index.less";
 
 @cell-horizontal-paddings: 0, 8, 12, 16;
+@cell-vertical-paddings: 0, 4, 10;
 
 .ccell {
   min-width: 0;
@@ -18,11 +19,17 @@
     }
   });
 
+  each(@cell-vertical-paddings, {
+    &--padding-vertical-@{value} &__body {
+      --cell-padding-block: ~"var(--space-@{value})";
+    }
+  });
+
   &__body {
     display: grid;
     grid-template-columns: max-content minmax(0, 1fr);
     column-gap: var(--space-12);
-    padding-block: var(--space-10);
+    padding-block: var(--cell-padding-block);
     padding-inline: var(--cell-padding-inline);
     min-width: 0;
 
@@ -53,11 +60,6 @@
 
   &--align-top &__left {
     align-self: start;
-  }
-
-  &--align-top &__content {
-    align-self: start;
-    align-items: start;
   }
 
   &__content {

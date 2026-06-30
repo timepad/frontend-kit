@@ -9,6 +9,7 @@ import { CellContent } from "./CellContent";
 const CellComponent: FC<ICellProps> = ({
   className,
   horizontalPadding = 0,
+  verticalPadding = 0,
   align = "center",
   backgroundColor,
   withSeparator = false,
@@ -19,6 +20,7 @@ const CellComponent: FC<ICellProps> = ({
   const cellClassName = classNames(
     component("cell")({
       [`padding-${horizontalPadding}`]: true,
+      [`padding-vertical-${verticalPadding}`]: true,
       [`align-${align}`]: true,
     }),
     className,

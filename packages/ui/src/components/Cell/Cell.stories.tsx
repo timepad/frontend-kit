@@ -52,6 +52,10 @@ const meta = {
       control: "select",
       options: [0, 8, 12, 16],
     },
+    verticalPadding: {
+      control: "select",
+      options: [0, 4, 10],
+    },
     align: {
       control: "inline-radio",
       options: ["center", "top"],
@@ -75,6 +79,7 @@ const meta = {
   args: {
     align: "center",
     horizontalPadding: 0,
+    verticalPadding: 0,
     backgroundColor: "var(--bg-primary)",
   },
 } satisfies Meta<CellStoryArgs>;
@@ -102,11 +107,13 @@ const listCellProps: ICellProps = {
 const cellStoryProps = ({
   align,
   horizontalPadding,
+  verticalPadding,
   backgroundColor,
   withSeparator,
 }: ICellProps): ICellProps => ({
   align,
   horizontalPadding,
+  verticalPadding,
   backgroundColor: resolveCellBackground(backgroundColor),
   withSeparator,
 });
