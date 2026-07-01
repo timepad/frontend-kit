@@ -1,0 +1,67 @@
+@import "../../assets/tokens/index.less";
+
+.csnackbar {
+  padding: var(--space-12);
+  box-sizing: border-box;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    padding: 0 var(--space-8);
+    border-radius: var(--radius-16);
+    background-color: var(--bg-inverted);
+    color: var(--text-inverted);
+  }
+
+  &__icon-container {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    padding: var(--space-10) 0 var(--space-10) var(--space-8);
+  }
+
+  &__icon {
+    display: inline-flex;
+
+    &--success {
+      color: var(--light-green);
+    }
+
+    &--error {
+      color: var(--light-red);
+    }
+
+    &--warning {
+      color: var(--light-yellow);
+    }
+
+    &--info {
+      color: var(--normal-purple);
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--space-2);
+    min-width: 0;
+    padding: var(--space-12) 0;
+  }
+
+  &__title,
+  &__message {
+    color: inherit !important;
+  }
+
+  &__action-button-container {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+  }
+
+  &__action-button {
+    color: var(--text-inverted) !important;
+  }
+}
