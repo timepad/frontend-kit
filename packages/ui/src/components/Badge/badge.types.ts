@@ -17,7 +17,7 @@ export type BadgeSize = "s" | "m" | "l";
 /**
  * Вариант (дизайн-пресет) бейджа.
  */
-export type BadgeVariant = "default" | "secondary" | "outline";
+export type BadgeVariant = "primary" | "secondary" | "outline";
 
 /**
  * Семантическое состояние бейджа.

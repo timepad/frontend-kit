@@ -4,14 +4,14 @@ import { classNames, component } from "@frontend-kit/utils";
 import "./badge.less";
 import { IBadgeProps } from "./badge.types";
 import { BadgeLabel } from "./BadgeLabel";
-import { BadgeDefault } from "./BadgeDefault";
 import { BadgeSecondary } from "./BadgeSecondary";
 import { BadgeOutline } from "./BadgeOutline";
+import { BadgePrimary } from "./BadgePrimary";
 
 export const BadgeBase: FC<IBadgeProps> = ({
   label,
   size = "m",
-  variant = "default",
+  variant = "primary",
   appearance = "accent",
   iconPosition = "left",
   icon,
@@ -21,9 +21,8 @@ export const BadgeBase: FC<IBadgeProps> = ({
   const hasIcon = !!icon;
 
   const badgeClassName = classNames(
-    component("badge", variant)(),
+    component("badge", variant)({ [appearance]: true }),
     component("badge")({
-      [appearance]: true,
       [`size-${size}`]: true,
       "has-icon": hasIcon,
       "icon-position-left": hasIcon && iconPosition === "left",
@@ -47,7 +46,7 @@ export const BadgeBase: FC<IBadgeProps> = ({
 };
 
 export const Badge = Object.assign(BadgeBase, {
-  Default: BadgeDefault,
+  Primary: BadgePrimary,
   Secondary: BadgeSecondary,
   Outline: BadgeOutline,
 });

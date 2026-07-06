@@ -11,31 +11,55 @@
     color: inherit !important;
   }
 
-  &__default {
-    background-color: var(--accent-active);
+  &__primary {
     color: var(--text-inverted);
+
+    &--accent {
+      background-color: var(--accent-active);
+    }
+
+    &--positive {
+      background-color: var(--accent-positive);
+    }
+
+    &--negative {
+      background-color: var(--accent-negative);
+    }
   }
 
   &__secondary {
     background-color: var(--bg-secondary);
-    color: var(--accent-active);
+
+    &--accent {
+      color: var(--accent-active);
+    }
+
+    &--positive {
+      color: var(--accent-positive);
+    }
+
+    &--negative {
+      color: var(--accent-negative);
+    }
   }
 
   &__outline {
     background-color: transparent;
-    outline: 1px solid var(--accent-active);
-    color: var(--accent-active);
-  }
 
-  &--accent {
-  }
+    &--accent {
+      outline: 1px solid var(--accent-active);
+      color: var(--accent-active);
+    }
 
-  &--positive {
-    background-color: var(--accent-positive);
-  }
+    &--positive {
+      outline: 1px solid var(--accent-positive);
+      color: var(--accent-positive);
+    }
 
-  &--negative {
-    background-color: var(--accent-negative);
+    &--negative {
+      outline: 1px solid  var(--accent-negative);
+      color: var(--accent-negative);
+    }
   }
 
   &--size-s {

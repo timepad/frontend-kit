@@ -60,13 +60,13 @@ const meta: Meta<typeof Badge> = {
       description: `
 Вариант (дизайн-пресет) бейджа.
 
-- **default**
+- **primary**
 - **secondary**
 - **outline**
       `,
       table: {
-        type: { summary: `"default" | "secondary" | "outline"` },
-        defaultValue: { summary: "default" },
+        type: { summary: `"primary" | "secondary" | "outline"` },
+        defaultValue: { summary: "primary" },
       },
       control: false,
     },
@@ -136,8 +136,8 @@ const meta: Meta<typeof Badge> = {
 export default meta;
 type Story = StoryObj<typeof Badge>;
 
-export const Default: Story = {
-  render: (args) => <Badge.Default {...args} />,
+export const Primary: Story = {
+  render: (args) => <Badge.Primary {...args} />,
 };
 
 export const Secondary: Story = {
