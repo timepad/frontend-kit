@@ -1,40 +1,14 @@
 @import "../../assets/tokens/index.less";
 
-// Модификаторы размера с column-gap. Вызывать внутри блока — & берётся из контекста.
-.size-column-gaps(@gap-s; @gap-m; @gap-l) {
-  &--size-s {
-    column-gap: @gap-s;
-  }
-  &--size-m {
-    column-gap: @gap-m;
-  }
-  &--size-l {
-    column-gap: @gap-l;
-  }
-}
-
-// Модификатор размера для кружка. @dot-size по умолчанию 12px; для size-l передать 16px.
-.field-size(@size-name; @w; @h; @margin; @border-width; @dot-size: 12px) {
-  &--size-@{size-name} {
-    width: @w;
-    height: @h;
-    margin: @margin;
-    border-width: @border-width;
-
-    &::after when not (@dot-size = 12px) {
-      width: @dot-size;
-      height: @dot-size;
-    }
-  }
-}
-
 .cradio {
   display: flex;
   align-items: flex-start;
   position: relative;
   cursor: pointer;
 
-  .size-column-gaps(var(--space-6), var(--space-8), var(--space-12));
+  .column-gap-size(s, var(--space-6));
+  .column-gap-size(m, var(--space-8));
+  .column-gap-size(l, var(--space-12));
 
   &:hover::after {
     content: "";
@@ -57,7 +31,9 @@
       color: var(--text-tertiary) !important;
     }
 
-    .size-column-gaps(var(--space-4), var(--space-6), var(--space-8));
+    .column-gap-size(s, var(--space-6));
+    .column-gap-size(m, var(--space-8));
+    .column-gap-size(l, var(--space-12));
   }
 
   &__description {
@@ -118,5 +94,25 @@
     .field-size(s, 16px, 16px, 2px, 1px);
     .field-size(m, 18px, 18px, 3px, 1.5px);
     .field-size(l, 24px, 24px, 4px, 2px, 16px);
+  }
+}
+
+.field-size(@size-name; @w; @h; @margin; @border-width; @dot-size: 12px) {
+  &--size-@{size-name} {
+    width: @w;
+    height: @h;
+    margin: @margin;
+    border-width: @border-width;
+
+    &::after when not (@dot-size = 12px) {
+      width: @dot-size;
+      height: @dot-size;
+    }
+  }
+}
+
+.column-gap-size(@size-name; @gap) {
+  &--size-@{size-name} {
+    column-gap: @gap;
   }
 }
