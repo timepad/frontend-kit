@@ -14,10 +14,10 @@ const meta = {
       codePanel: true,
       description: {
         component: [
-          "Внешний вид для полосы прокрутки.",
-          "По умолчанию `axis=\"auto\"` (`overflow: auto`) — браузер сам показывает нужные полосы. `axis` ограничивает направление при необходимости.",
-          "Scrollbar не вычисляет свои размеры: ограничение через `height`, `max-height`, `width` или `max-width` задаёт потребитель.",
-          "Без ограничения контейнер растянется по содержимому и переполнения (полос прокрутки) не возникнет.",
+          "Тонкий primitive над нативной прокруткой.",
+          "Публичный API направления: только `axis=\"auto\" | \"vertical\" | \"horizontal\"` (по умолчанию `auto`).",
+          "При `auto` браузер сам показывает нужные полосы по размеру контента — отдельного значения вроде `both` нет.",
+          "Размеры контейнера (`height`, `max-height`, `width`, `max-width`) задаёт потребитель: без ограничения переполнения не будет.",
         ].join(" "),
       },
     },
@@ -27,6 +27,7 @@ const meta = {
     axis: {
       control: "select",
       options: [...axisOptions],
+      description: "Публичный prop. `auto` — полосы по контенту; `vertical` / `horizontal` — ограничение оси.",
     },
   },
   args: {
@@ -38,61 +39,45 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const itemStyle = {
+  padding: "12px 16px",
+  borderRadius: 8,
+  background: "var(--bg-secondary)",
+  color: "var(--text-secondary)",
+} as const;
+
+const containerStyle = { border: "1px dashed var(--bg-stroke)" } as const;
+
+/** Контент выше контейнера — появляется вертикальная полоса. */
 const verticalContent = (
   <div style={{ display: "flex", flexDirection: "column", gap: 12, padding: 16 }}>
     {Array.from({ length: 20 }, (_, index) => (
-      <div
-        key={index}
-        style={{
-          padding: "12px 16px",
-          borderRadius: 8,
-          background: "var(--bg-secondary)",
-          color: "var(--text-secondary)",
-        }}
-      >
+      <div key={index} style={itemStyle}>
         Элемент списка {index + 1}
       </div>
     ))}
   </div>
 );
 
+/** Контент шире контейнера — появляется горизонтальная полоса. */
 const horizontalContent = (
   <div style={{ display: "flex", gap: 12, padding: 16, width: "max-content" }}>
     {Array.from({ length: 20 }, (_, index) => (
-      <div
-        key={index}
-        style={{
-          flexShrink: 0,
-          width: 160,
-          padding: "12px 16px",
-          borderRadius: 8,
-          background: "var(--bg-secondary)",
-          color: "var(--text-secondary)",
-        }}
-      >
+      <div key={index} style={{ ...itemStyle, flexShrink: 0, width: 160 }}>
         Колонка {index + 1}
       </div>
     ))}
   </div>
 );
 
+/** Контент больше по обеим осям — при `axis="auto"` видны обе полосы. */
 const bothContent = (
   <div style={{ padding: 16, width: "max-content" }}>
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       {Array.from({ length: 20 }, (_, rowIndex) => (
         <div key={rowIndex} style={{ display: "flex", gap: 12 }}>
           {Array.from({ length: 8 }, (_, colIndex) => (
-            <div
-              key={colIndex}
-              style={{
-                flexShrink: 0,
-                width: 120,
-                padding: "12px 16px",
-                borderRadius: 8,
-                background: "var(--bg-secondary)",
-                color: "var(--text-secondary)",
-              }}
-            >
+            <div key={colIndex} style={{ ...itemStyle, flexShrink: 0, width: 120 }}>
               {rowIndex + 1}:{colIndex + 1}
             </div>
           ))}
@@ -102,14 +87,15 @@ const bothContent = (
   </div>
 );
 
-const containerStyle = { border: "1px dashed var(--bg-stroke)" } as const;
-
 export const Playground: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Размеры заданы на экземпляре (`height` / `width`). Без такого ограничения скролла не будет — см. сторис Without size constraint.",
+        story: [
+          "Контрол `axis` соответствует публичному типу `ScrollbarAxis`.",
+          "При смене значения подставляется контент другого размера, чтобы было видно,",
+          "как при `auto` автоматически появляются нужные полосы, а при ограничении оси — только одна.",
+        ].join(" "),
       },
     },
   },
@@ -138,10 +124,37 @@ export const Playground: Story = {
   },
 };
 
+export const Auto: Story = {
+  args: { axis: "auto" },
+  argTypes: {
+    axis: { table: { disable: true } },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "`axis=\"auto\"`: контент переполняет контейнер по обеим осям — браузер показывает вертикальную и горизонтальную полосы.",
+      },
+    },
+  },
+  render: () => (
+    <Scrollbar style={{ ...containerStyle, height: 320, width: 320 }}>
+      {bothContent}
+    </Scrollbar>
+  ),
+};
+
 export const Vertical: Story = {
   args: { axis: "vertical" },
   argTypes: {
     axis: { table: { disable: true } },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "`axis=\"vertical\"`: только вертикальная прокрутка, контент выше контейнера.",
+      },
+    },
   },
   render: () => (
     <Scrollbar axis="vertical" style={{ ...containerStyle, height: 320, width: 320 }}>
@@ -155,22 +168,16 @@ export const Horizontal: Story = {
   argTypes: {
     axis: { table: { disable: true } },
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "`axis=\"horizontal\"`: только горизонтальная прокрутка, контент шире контейнера.",
+      },
+    },
+  },
   render: () => (
     <Scrollbar axis="horizontal" style={{ ...containerStyle, width: 400 }}>
       {horizontalContent}
-    </Scrollbar>
-  ),
-};
-
-export const Both: Story = {
-  name: "Auto (both)",
-  args: { axis: "auto" },
-  argTypes: {
-    axis: { table: { disable: true } },
-  },
-  render: () => (
-    <Scrollbar style={{ ...containerStyle, height: 320, width: 320 }}>
-      {bothContent}
     </Scrollbar>
   ),
 };
@@ -184,7 +191,7 @@ export const WithoutSizeConstraint: Story = {
     docs: {
       description: {
         story:
-          "Только декоративная рамка, без `height` / `max-height`. Контейнер растягивается по содержимому — полоса прокрутки не появляется.",
+          "Без `height` / `max-height` контейнер растягивается по содержимому — полоса прокрутки не появляется.",
       },
     },
   },

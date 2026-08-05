@@ -1,28 +1,43 @@
 @import "../../assets/tokens/index.less";
 
-@scrollbar-thumb-size: var(--space-4);
-@scrollbar-offset: var(--space-4);
-@scrollbar-track-size: calc(@scrollbar-thumb-size + @scrollbar-offset);
-@scrollbar-thumb-color: color-mix(
-  in srgb,
-  var(--scrollbar-thumb) 50%,
-  transparent
-);
+/*
+ * Настраиваемые CSS custom properties (можно переопределять на экземпляре):
+ * --scrollbar-thumb-size
+ * --scrollbar-offset
+ * --scrollbar-thumb-color
+ * --scrollbar-thumb-opacity
+ * --scrollbar-thumb-radius
+ */
 
 .cscrollbar {
+  --scrollbar-thumb-size: var(--space-4);
+  --scrollbar-offset: var(--space-4);
+  --scrollbar-thumb-color: var(--scrollbar-thumb);
+  --scrollbar-thumb-opacity: 0.5;
+  --scrollbar-thumb-radius: var(--radius-40);
+  --scrollbar-track-size: calc(
+    var(--scrollbar-thumb-size) + var(--scrollbar-offset)
+  );
+  --scrollbar-thumb-fill: color-mix(
+    in srgb,
+    var(--scrollbar-thumb-color) calc(100% * var(--scrollbar-thumb-opacity)),
+    transparent
+  );
+
   box-sizing: border-box;
+  /* Нативная прокрутка */
   overflow: auto;
 
   /* standard — только где нет ::-webkit-scrollbar */
   @supports not selector(::-webkit-scrollbar) {
     scrollbar-width: thin;
-    scrollbar-color: @scrollbar-thumb-color transparent;
+    scrollbar-color: var(--scrollbar-thumb-fill) transparent;
   }
 
   /* legacy */
   &::-webkit-scrollbar {
-    width: @scrollbar-track-size;
-    height: @scrollbar-track-size;
+    width: var(--scrollbar-track-size);
+    height: var(--scrollbar-track-size);
   }
 
   &::-webkit-scrollbar-track {
@@ -34,9 +49,9 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: @scrollbar-thumb-color;
-    border-radius: var(--radius-40);
-    border: calc(@scrollbar-offset / 2) solid transparent;
+    background-color: var(--scrollbar-thumb-fill);
+    border-radius: var(--scrollbar-thumb-radius);
+    border: calc(var(--scrollbar-offset) / 2) solid transparent;
     background-clip: content-box;
   }
 
