@@ -20,9 +20,10 @@ export const Link: FC<ILinkProps> = ({
     const hasIcon = !!icon;
 
     const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-        if (!onClick) return;
-        event.preventDefault();
-        onClick(to, event);
+        if (onClick) {
+            event.preventDefault();
+            onClick(to, event);
+        }
     };
 
     const linkClassName = classNames(
