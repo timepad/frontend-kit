@@ -82,10 +82,10 @@ const meta = {
             },
         },
         onClick: {
-            description: "Колбэк при клике на ссылку.",
+            description: "Колбэк при клике на ссылку. Первым аргументом получает `to`.",
             action: "clicked",
             table: {
-                type: { summary: "(e: MouseEvent) => void" },
+                type: { summary: "(to: string, e: MouseEvent) => void" },
             },
         },
         className: {
