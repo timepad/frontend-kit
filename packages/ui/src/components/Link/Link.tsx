@@ -8,8 +8,6 @@ import {LinkLabel} from "./LinkLabel";
 export const Link: FC<ILinkProps> = ({
                          to,
                          onClick,
-                         target,
-                         rel,
                          size = 'm',
                          icon,
                          iconPosition = 'left',
@@ -50,8 +48,6 @@ export const Link: FC<ILinkProps> = ({
         <a
             href={to}
             className={linkClassName}
-            target={target}
-            rel={target === '_blank' ? rel ?? 'noopener noreferrer' : rel}
             onClick={handleClick}
             {...rest}
         >
