@@ -1,7 +1,11 @@
 import { HTMLAttributes } from "react";
 
-export type ScrollbarFlow = "horizontal" | "vertical";
+export type ScrollbarAxis = "auto" | "vertical" | "horizontal";
 
 export interface IScrollbarProps extends HTMLAttributes<HTMLDivElement> {
-  flow?: ScrollbarFlow;
+  /**
+   * Ограничение оси прокрутки.
+   * По умолчанию `auto` — браузер сам показывает нужные полосы.
+   */
+  axis?: ScrollbarAxis;
 }

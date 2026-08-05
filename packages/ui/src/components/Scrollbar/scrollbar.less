@@ -3,20 +3,23 @@
 @scrollbar-thumb-size: var(--space-4);
 @scrollbar-offset: var(--space-4);
 @scrollbar-track-size: calc(@scrollbar-thumb-size + @scrollbar-offset);
-
-.scrollbar-thumb() {
-  background-color: var(--icon-tertiary);
-  border-radius: var(--radius-40);
-  background-clip: padding-box;
-  opacity: 0.5;
-}
+@scrollbar-thumb-color: color-mix(
+  in srgb,
+  var(--scrollbar-thumb) 50%,
+  transparent
+);
 
 .cscrollbar {
   box-sizing: border-box;
   overflow: auto;
-  scrollbar-width: thin; // тощина скроллбара для Firefox
-  scrollbar-color: rgba(155, 159, 166, 0.5) transparent; // цвет скроллбара для Firefox
 
+  /* standard — только где нет ::-webkit-scrollbar */
+  @supports not selector(::-webkit-scrollbar) {
+    scrollbar-width: thin;
+    scrollbar-color: @scrollbar-thumb-color transparent;
+  }
+
+  /* legacy */
   &::-webkit-scrollbar {
     width: @scrollbar-track-size;
     height: @scrollbar-track-size;
@@ -30,24 +33,19 @@
     background: transparent;
   }
 
-  &::-webkit-scrollbar-thumb:vertical {
-    .scrollbar-thumb();
-    width: @scrollbar-thumb-size;
-    border-right: @scrollbar-offset solid transparent;
+  &::-webkit-scrollbar-thumb {
+    background-color: @scrollbar-thumb-color;
+    border-radius: var(--radius-40);
+    border: calc(@scrollbar-offset / 2) solid transparent;
+    background-clip: content-box;
   }
 
-  &::-webkit-scrollbar-thumb:horizontal {
-    .scrollbar-thumb();
-    height: @scrollbar-thumb-size;
-    border-bottom: @scrollbar-offset solid transparent;
-  }
-
-  &--flow-vertical {
+  &--axis-vertical {
     overflow-x: hidden;
     overflow-y: auto;
   }
 
-  &--flow-horizontal {
+  &--axis-horizontal {
     overflow-x: auto;
     overflow-y: hidden;
   }

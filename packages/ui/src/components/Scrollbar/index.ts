@@ -1,2 +1,2 @@
 export { Scrollbar } from "./Scrollbar";
-export type { IScrollbarProps, ScrollbarFlow } from "./scrollbar.types";
+export type { IScrollbarProps, ScrollbarAxis } from "./scrollbar.types";

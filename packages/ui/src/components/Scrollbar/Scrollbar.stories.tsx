@@ -1,11 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Scrollbar } from "./Scrollbar";
-import type { IScrollbarProps, ScrollbarFlow } from "./scrollbar.types";
+import type { ScrollbarAxis } from "./scrollbar.types";
 
-type PlaygroundFlow = ScrollbarFlow | "both";
-
-const flowOptions = ["vertical", "horizontal", "both"] as const satisfies readonly PlaygroundFlow[];
+const axisOptions = ["auto", "vertical", "horizontal"] as const satisfies readonly ScrollbarAxis[];
 
 const meta = {
   title: "Components/Scrollbar",
@@ -15,19 +13,26 @@ const meta = {
     docs: {
       codePanel: true,
       description: {
-        component:
-          "Внешний вид для полосы прокрутки. Без `flow` скролл работает в обоих направлениях. `flow` ограничивает направление.",
+        component: [
+          "Внешний вид для полосы прокрутки.",
+          "По умолчанию `axis=\"auto\"` (`overflow: auto`) — браузер сам показывает нужные полосы. `axis` ограничивает направление при необходимости.",
+          "Scrollbar не вычисляет свои размеры: ограничение через `height`, `max-height`, `width` или `max-width` задаёт потребитель.",
+          "Без ограничения контейнер растянется по содержимому и переполнения (полос прокрутки) не возникнет.",
+        ].join(" "),
       },
     },
   },
   tags: ["autodocs"],
   argTypes: {
-    flow: { control: "select", options: [...flowOptions] },
+    axis: {
+      control: "select",
+      options: [...axisOptions],
+    },
   },
   args: {
-    flow: "vertical",
+    axis: "auto",
   },
-} satisfies Meta<Omit<IScrollbarProps, "flow"> & { flow: PlaygroundFlow }>;
+} satisfies Meta<typeof Scrollbar>;
 
 export default meta;
 
@@ -100,62 +105,92 @@ const bothContent = (
 const containerStyle = { border: "1px dashed var(--bg-stroke)" } as const;
 
 export const Playground: Story = {
-  render: ({ flow }) => {
-    const playgroundFlow = flow as PlaygroundFlow;
-
-    if (playgroundFlow === "horizontal") {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Размеры заданы на экземпляре (`height` / `width`). Без такого ограничения скролла не будет — см. сторис Without size constraint.",
+      },
+    },
+  },
+  render: ({ axis = "auto" }) => {
+    if (axis === "horizontal") {
       return (
-        <Scrollbar flow="horizontal" style={{ ...containerStyle, width: 400 }}>
+        <Scrollbar axis="horizontal" style={{ ...containerStyle, width: 400 }}>
           {horizontalContent}
         </Scrollbar>
       );
     }
 
-    if (playgroundFlow === "both") {
+    if (axis === "vertical") {
       return (
-        <Scrollbar style={{ ...containerStyle, height: 320, width: 320 }}>
-          {bothContent}
+        <Scrollbar axis="vertical" style={{ ...containerStyle, height: 320, width: 320 }}>
+          {verticalContent}
         </Scrollbar>
       );
     }
 
     return (
-      <Scrollbar flow="vertical" style={{ ...containerStyle, height: 320, width: 320 }}>
-        {verticalContent}
+      <Scrollbar axis="auto" style={{ ...containerStyle, height: 320, width: 320 }}>
+        {bothContent}
       </Scrollbar>
     );
   },
 };
 
 export const Vertical: Story = {
+  args: { axis: "vertical" },
   argTypes: {
-    flow: { table: { disable: true } },
+    axis: { table: { disable: true } },
   },
   render: () => (
-    <Scrollbar flow="vertical" style={{ height: 320, width: 320, border: "1px dashed var(--bg-stroke)" }}>
+    <Scrollbar axis="vertical" style={{ ...containerStyle, height: 320, width: 320 }}>
       {verticalContent}
     </Scrollbar>
   ),
 };
 
 export const Horizontal: Story = {
+  args: { axis: "horizontal" },
   argTypes: {
-    flow: { table: { disable: true } },
+    axis: { table: { disable: true } },
   },
   render: () => (
-    <Scrollbar flow="horizontal" style={{ width: 400, border: "1px dashed var(--bg-stroke)" }}>
+    <Scrollbar axis="horizontal" style={{ ...containerStyle, width: 400 }}>
       {horizontalContent}
     </Scrollbar>
   ),
 };
 
 export const Both: Story = {
+  name: "Auto (both)",
+  args: { axis: "auto" },
   argTypes: {
-    flow: { table: { disable: true } },
+    axis: { table: { disable: true } },
   },
   render: () => (
-    <Scrollbar style={{ height: 320, width: 320, border: "1px dashed var(--bg-stroke)" }}>
+    <Scrollbar style={{ ...containerStyle, height: 320, width: 320 }}>
       {bothContent}
+    </Scrollbar>
+  ),
+};
+
+export const WithoutSizeConstraint: Story = {
+  name: "Without size constraint",
+  argTypes: {
+    axis: { table: { disable: true } },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Только декоративная рамка, без `height` / `max-height`. Контейнер растягивается по содержимому — полоса прокрутки не появляется.",
+      },
+    },
+  },
+  render: () => (
+    <Scrollbar style={{ ...containerStyle, width: 320 }}>
+      {verticalContent}
     </Scrollbar>
   ),
 };

@@ -12,6 +12,5 @@ export { Divider } from "./components/Divider";
 export { Snackbar } from "./components/Snackbar";
 export { Cell } from "./components/Cell";
 export { Scrollbar } from "./components/Scrollbar";
-export type { IScrollbarProps, ScrollbarFlow } from "./components/Scrollbar";
 export * from "./assets/icons";
 export * from "./P";
