@@ -11,5 +11,6 @@ export { Typography } from "./components/Typography";
 export { Divider } from "./components/Divider";
 export { Snackbar } from "./components/Snackbar";
 export { Cell } from "./components/Cell";
+export { Link } from "./components/Link";
 export * from "./assets/icons";
 export * from "./P";
