@@ -1,0 +1,104 @@
+@import "../../assets/tokens/index.less";
+
+@cell-horizontal-paddings: 0, 8, 12, 16;
+@cell-vertical-paddings: 0, 4, 10;
+
+.ccell {
+  min-width: 0;
+  cursor: default;
+
+  --cell-bg-color: transparent;
+
+  color: var(--text-primary);
+  background-color: var(--cell-bg-color);
+  border-radius: var(--radius-20);
+
+  each(@cell-horizontal-paddings, {
+    &--padding-@{value} &__body {
+      --cell-padding-inline: ~"var(--space-@{value})";
+    }
+  });
+
+  each(@cell-vertical-paddings, {
+    &--padding-vertical-@{value} &__body {
+      --cell-padding-block: ~"var(--space-@{value})";
+    }
+  });
+
+  &__body {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    column-gap: var(--space-12);
+    padding-block: var(--cell-padding-block);
+    padding-inline: var(--cell-padding-inline);
+    min-width: 0;
+
+    &--with-separator {
+      grid-template-rows: auto auto;
+      row-gap: var(--space-10);
+      padding-bottom: 0;
+
+      &::after {
+        content: "";
+        grid-column: 2;
+        grid-row: 2;
+        justify-self: stretch;
+        min-width: 0;
+        height: 1px;
+        background-color: var(--bg-stroke);
+      }
+    }
+  }
+
+  &__left {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    display: flex;
+    align-items: center;
+  }
+
+  &--align-top &__left {
+    align-self: start;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    column-gap: var(--space-12);
+    grid-column: 2;
+    grid-row: 1;
+    align-items: center;
+    justify-self: stretch;
+    min-width: 0;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    min-width: 0;
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  &__label,
+  &__caption {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  &__caption {
+    color: var(--text-secondary);
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
