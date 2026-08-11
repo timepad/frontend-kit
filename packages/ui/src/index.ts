@@ -1,4 +1,5 @@
 export { Counter } from "./components/Counter";
+export { Tabbar } from "./components/Tabbar";
 export { Breadcrumbs } from "./components/Breadcrumbs";
 export { Avatar, AvatarStatus } from "./components/Avatar";
 export { Button } from "./components/Button";
