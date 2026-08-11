@@ -35,7 +35,6 @@ export const Tab: FC<ITabProps> = ({
       className={tabClassName}
       disabled={disabled}
       role="tab"
-      tabIndex={active ? 0 : -1}
       type={type}
       {...rest}
     >
