@@ -24,6 +24,7 @@ const meta = {
     showLabels: true,
   },
   argTypes: {
+    backgroundColor: { control: "color" },
     children: { table: { disable: true } },
   },
   decorators: [
@@ -59,11 +60,13 @@ const getNotificationProps = (
 };
 
 const TabbarDemo = ({
+  backgroundColor,
   count = 5,
   notificationVariant = "counter",
   shadow = true,
   showLabels = true,
 }: {
+  backgroundColor?: string;
   count?: number;
   notificationVariant?: NotificationVariant;
   shadow?: boolean;
@@ -72,7 +75,11 @@ const TabbarDemo = ({
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <Tabbar shadow={shadow} showLabels={showLabels}>
+    <Tabbar
+      backgroundColor={backgroundColor}
+      shadow={shadow}
+      showLabels={showLabels}
+    >
       {items.slice(0, count).map(({ label, icon }, index) => (
         <Tabbar.Tab
           active={activeIndex === index}
@@ -88,9 +95,17 @@ const TabbarDemo = ({
 };
 
 export const Playground: Story = {
-  render: ({ shadow, showLabels }) => (
-    <TabbarDemo shadow={shadow} showLabels={showLabels} />
+  render: ({ backgroundColor, shadow, showLabels }) => (
+    <TabbarDemo
+      backgroundColor={backgroundColor}
+      shadow={shadow}
+      showLabels={showLabels}
+    />
   ),
+};
+
+export const CustomBackground: Story = {
+  render: () => <TabbarDemo backgroundColor="#F0F3FF" />,
 };
 
 export const Notify: Story = {

@@ -7,6 +7,8 @@ import type {
 export interface ITabbarProps extends HTMLAttributes<HTMLDivElement> {
   /** Вкладки Tabbar. По дизайну поддерживается от 3 до 5 вкладок. */
   children: ReactNode;
+  /** Пользовательский цвет фона. По умолчанию используется --bg-primary. */
+  backgroundColor?: string;
   /** Показывает подписи у всех вкладок. */
   showLabels?: boolean;
   /** Добавляет тень для Tabbar, закреплённого над прокручиваемым контентом. */
