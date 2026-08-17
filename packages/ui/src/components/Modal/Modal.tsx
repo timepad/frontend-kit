@@ -9,10 +9,11 @@ import { ModalBody } from "./ModalBody";
 import { useDragPanel } from "./useDragPanel";
 import { IModalContextValue, IModalProps } from "./modal.types";
 import { ModalContext } from "./modal.context";
+import { LayerHost, useLayer } from "../../primitives/Layer";
 
 const ModalRoot: FC<PropsWithChildren<IModalProps>> = ({
-  isOpen,
-  onClose,
+  open,
+  onOpenChange,
   children,
   className,
   size = "s",
@@ -20,8 +21,14 @@ const ModalRoot: FC<PropsWithChildren<IModalProps>> = ({
   headerAlign = "center",
   withFooterDivider = false,
   withBackdropBlur = true,
+  ...props
 }) => {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
+
+  const { dismiss } = useLayer({
+    open,
+    onOpenChange,
+  });
 
   const { isMobilePortraitMax } = useMedia();
   const {
@@ -30,42 +37,43 @@ const ModalRoot: FC<PropsWithChildren<IModalProps>> = ({
     handlePointerMove,
     finishDragging,
     resetDrag,
-  } = useDragPanel(onClose, isMobilePortraitMax);
+  } = useDragPanel(onOpenChange ? dismiss : undefined, isMobilePortraitMax);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
 
-    if (isOpen && !dialog.open) {
+    if (open && !dialog.open) {
       dialog.showModal();
     }
 
-    if (!isOpen && dialog.open) {
+    if (!open && dialog.open) {
       dialog.close();
       resetDrag();
     }
-  }, [isOpen, resetDrag]);
+  }, [open, resetDrag]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
 
+    // Нативный cancel не закрывает dialog — Escape обрабатывает LayerProvider / useLayer.
     const handleCancel = (event: Event) => {
       event.preventDefault();
-      onClose?.();
     };
 
     dialog.addEventListener("cancel", handleCancel);
     return () => dialog.removeEventListener("cancel", handleCancel);
-  }, [onClose]);
+  }, []);
 
   const handleBackdropClick = (event: React.MouseEvent<HTMLDialogElement>) => {
-    if (event.target === dialogRef.current) {
-      onClose?.();
-    }
+    if (event.target !== dialogRef.current) return;
+
+    dismiss("backdrop");
   };
 
   const modalSize = isMobilePortraitMax ? "s" : size;
+  const showFooterDivider = modalSize !== "s" && withFooterDivider;
 
   const contextValue = useMemo(() => {
     return {
@@ -73,14 +81,16 @@ const ModalRoot: FC<PropsWithChildren<IModalProps>> = ({
       footerDirection: isMobilePortraitMax ? "column" : footerDirection,
       headerAlign,
       isMobileDevice: isMobilePortraitMax,
-      withFooterDivider,
+      withFooterDivider: showFooterDivider,
+      dismiss,
     } satisfies IModalContextValue;
   }, [
     isMobilePortraitMax,
     modalSize,
     footerDirection,
     headerAlign,
-    withFooterDivider,
+    showFooterDivider,
+    dismiss,
   ]);
 
   const modalClassName = classNames(
@@ -100,26 +110,29 @@ const ModalRoot: FC<PropsWithChildren<IModalProps>> = ({
 
   return (
     <dialog
+      {...props}
       ref={dialogRef}
       onClick={handleBackdropClick}
       className={modalClassName}
     >
-      <div className={contentClassName} style={contentStyles}>
-        {isMobilePortraitMax && onClose && (
-          <div
-            aria-hidden="true"
-            className={component("modal", "drag-panel")()}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={finishDragging}
-            onPointerCancel={finishDragging}
-            onLostPointerCapture={finishDragging}
-          />
-        )}
-        <ModalContext.Provider value={contextValue}>
-          {children}
-        </ModalContext.Provider>
-      </div>
+      <LayerHost>
+        <div className={contentClassName} style={contentStyles}>
+          {isMobilePortraitMax && onOpenChange && (
+            <div
+              aria-hidden="true"
+              className={component("modal", "drag-panel")()}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={finishDragging}
+              onPointerCancel={finishDragging}
+              onLostPointerCapture={finishDragging}
+            />
+          )}
+          <ModalContext.Provider value={contextValue}>
+            {children}
+          </ModalContext.Provider>
+        </div>
+      </LayerHost>
     </dialog>
   );
 };

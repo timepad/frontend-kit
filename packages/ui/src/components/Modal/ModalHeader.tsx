@@ -31,10 +31,17 @@ const BtnBack: FC<IBtnBackProps> = ({ onBack }) => {
 const BtnClose: FC<IBtnCloseProps> = ({ onClose }) => {
   const btnCloseClassName = component("modal-header", "btn-close")();
 
+  const { dismiss } = useModalContext();
+
+  const handleCloseClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    onClose?.(event);
+    dismiss("action");
+  };
+
   return (
     <div className={btnCloseClassName}>
       <IconButton
-        onClick={onClose}
+        onClick={handleCloseClick}
         icon={<IconCross24Outline />}
         variant="secondary"
         ariaLabel="Закрыть модальное окно"
@@ -49,10 +56,7 @@ const Title: FC<PropsWithChildren> = ({ children }) => {
   const titleClassName = component("modal-header", "title")();
 
   return (
-    <Typography.Header
-      tag="H3 ACCENT BOLD"
-      className={titleClassName}
-    >
+    <Typography.Header tag="H3 ACCENT BOLD" className={titleClassName}>
       {children}
     </Typography.Header>
   );

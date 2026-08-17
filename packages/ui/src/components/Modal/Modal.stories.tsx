@@ -9,6 +9,8 @@ import {
   ModalSize,
 } from "./modal.types";
 import { Typography } from "../Typography";
+import { Button } from "../Button";
+import { LayerProvider } from "../../primitives/Layer";
 
 const modalSizeOptions = ["s", "m", "l", "full"] as const satisfies ModalSize[];
 const footerDirectionOptions = [
@@ -157,17 +159,16 @@ const ModalStoryView = (args: ModalStoryArgs) => {
   const { size, footerDirection, headerAlign, withFooterDivider, ...slotArgs } =
     args;
   const [open, setOpen] = useState(false);
+  const handleOpenChange = (nextOpen: boolean) => setOpen(nextOpen);
   const handleClose = () => setOpen(false);
 
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)}>
-        Открыть окно
-      </button>
+      <Button label="Открыть окно" onClick={() => setOpen(true)} />
 
       <Modal
-        isOpen={open}
-        onClose={handleClose}
+        open={open}
+        onOpenChange={handleOpenChange}
         size={size}
         footerDirection={footerDirection}
         headerAlign={headerAlign}
@@ -190,9 +191,16 @@ const meta = {
   parameters: {
     layout: "centered",
     docs: { codePanel: true },
-    controls: { exclude: ["isOpen"], include: [...playgroundControls] },
+    controls: { exclude: ["open"], include: [...playgroundControls] },
   },
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <LayerProvider>
+        <Story />
+      </LayerProvider>
+    ),
+  ],
   render: renderModalStory(ModalStoryView),
   argTypes: {
     size: {
@@ -392,13 +400,14 @@ const NestedModalsStoryView = ({
 
   return (
     <>
-      <button type="button" onClick={() => setFirstOpen(true)}>
-        Открыть первое окно
-      </button>
+      <Button
+        label="Открыть первое окно"
+        onClick={() => setFirstOpen(true)}
+      />
 
       <Modal
-        isOpen={firstOpen}
-        onClose={() => setFirstOpen(false)}
+        open={firstOpen}
+        onOpenChange={setFirstOpen}
         size={size}
         footerDirection={footerDirection}
         headerAlign={headerAlign}
@@ -417,13 +426,12 @@ const NestedModalsStoryView = ({
             Esc и клик по backdrop закрывают только верхнее окно. Первое окно
             остаётся открытым, пока вы его не закроете отдельно.
           </Typography.Paragraph>
-          <button
-            type="button"
+          <Button
+            label="Открыть второе окно"
+            variant="secondary"
             onClick={() => setSecondOpen(true)}
             style={{ marginTop: 16 }}
-          >
-            Открыть второе окно
-          </button>
+          />
         </Modal.Body>
 
         <Modal.Footer>
@@ -433,8 +441,8 @@ const NestedModalsStoryView = ({
       </Modal>
 
       <Modal
-        isOpen={secondOpen}
-        onClose={() => setSecondOpen(false)}
+        open={secondOpen}
+        onOpenChange={setSecondOpen}
         size="s"
         footerDirection="column"
       >
@@ -487,17 +495,23 @@ const BtnBackStoryView = ({
     setStep(1);
   };
 
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (!nextOpen) {
+      handleClose();
+      return;
+    }
+    setOpen(true);
+  };
+
   const isFirstStep = step === 1;
 
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)}>
-        Открыть окно
-      </button>
+      <Button label="Открыть окно" onClick={() => setOpen(true)} />
 
       <Modal
-        isOpen={open}
-        onClose={handleClose}
+        open={open}
+        onOpenChange={handleOpenChange}
         size={size}
         footerDirection={footerDirection}
         headerAlign={headerAlign}
@@ -523,13 +537,11 @@ const BtnBackStoryView = ({
                 Нажмите «Далее», чтобы перейти ко второму шагу и увидеть BtnBack
                 в шапке (M/L/Full) или в футере (S).
               </Typography.Paragraph>
-              <button
-                type="button"
+              <Button
+                label="Далее"
                 onClick={() => goToStep(2)}
                 style={{ marginTop: 16 }}
-              >
-                Далее
-              </button>
+              />
             </>
           ) : (
             <Typography.Paragraph tag="P4 REGULAR">

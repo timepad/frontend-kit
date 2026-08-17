@@ -1,5 +1,10 @@
 import { MouseEvent, DetailedHTMLProps, HTMLAttributes } from "react";
 
+import type {
+  LayerDismissHandler,
+  LayerOpenChangeHandler,
+} from "../../primitives/Layer";
+
 /**
  * Размер модального окна.
  *
@@ -43,6 +48,7 @@ export interface IModalContextValue {
   isMobileDevice: boolean;
   /** Верхняя граница-разделитель у футера (`box-shadow`). */
   withFooterDivider: boolean;
+  dismiss: LayerDismissHandler;
 }
 
 /** Обработчик клика по кнопкам модалки (close, back, footer actions). */
@@ -50,16 +56,22 @@ export type ButtonClickHandler = (
   event?: MouseEvent<HTMLButtonElement>,
 ) => void;
 
-export interface IModalProps extends DetailedHTMLProps<
-  HTMLAttributes<HTMLDialogElement>,
-  HTMLDialogElement
+export interface IModalProps extends Omit<
+  DetailedHTMLProps<HTMLAttributes<HTMLDialogElement>, HTMLDialogElement>,
+  "onChange"
 > {
-  isOpen: boolean;
-  onClose?: ButtonClickHandler;
+  /** Управляемое состояние открытия. */
+  open: boolean;
+  /**
+   * Изменение состояния открытия.
+   * При закрытии вторым аргументом передаётся `{ reason }`:
+   * `escape` | `backdrop` | `drag` | `action` | `outside-press`.
+   */
+  onOpenChange?: LayerOpenChangeHandler;
   size?: ModalSize;
   footerDirection?: ModalFooterDirection;
   headerAlign?: ModalHeaderAlign;
-  /** Разделитель над футером. По умолчанию `false`. */
+  /** Разделитель над футером. По умолчанию `false`. Для `size=s` игнорируется. */
   withFooterDivider?: boolean;
   /** Размытие фона (`::backdrop`). По умолчанию `true`. */
   withBackdropBlur?: boolean;
@@ -67,7 +79,8 @@ export interface IModalProps extends DetailedHTMLProps<
 
 /** Пропсы для {@link Modal.Header.BtnClose}. */
 export interface IBtnCloseProps {
-  onClose: ButtonClickHandler;
+  /** Дополнительный колбэк; закрытие слоя идёт через `dismiss("action")`. */
+  onClose?: ButtonClickHandler;
 }
 
 /** Пропсы для {@link Modal.Header.BtnBack}. */

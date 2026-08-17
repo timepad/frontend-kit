@@ -6,7 +6,7 @@ import {
   CSSProperties,
 } from "react";
 
-import { ButtonClickHandler } from "./modal.types";
+import type { LayerDismissHandler } from "../../primitives/Layer";
 
 const CLOSE_DRAG_DISTANCE = 96;
 
@@ -19,7 +19,7 @@ interface IUseDragPanelResult {
 }
 
 export const useDragPanel = (
-  onClose: ButtonClickHandler | undefined,
+  dismiss: LayerDismissHandler | undefined,
   isMobileDevice: boolean,
 ): IUseDragPanelResult => {
   const startYRef = useRef(0);
@@ -59,7 +59,7 @@ export const useDragPanel = (
     setDragY(0);
 
     if (distance >= CLOSE_DRAG_DISTANCE) {
-      onClose?.();
+      dismiss?.("drag");
     }
   };
 
