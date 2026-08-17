@@ -153,7 +153,7 @@ export const Badge: FC<BadgeProps> = ({
 
   &--appearance-accent {
     color: var(--text-inverted);
-    background: var(--accent-notification);
+    background: var(--accent-active);
   }
 }
 ```

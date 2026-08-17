@@ -14,7 +14,7 @@
     content: "";
     position: absolute;
     inset: -5px -12px;
-    background-color: var(--btn-hover);
+    background-color: var(--control-hover);
     border-radius: var(--radius-16);
     z-index: -1;
   }
@@ -63,24 +63,24 @@
     }
 
     &:checked {
-      border-color: var(--btn-primary-active);
+      border-color: var(--control-primary-active);
 
       &::after {
-        background-color: var(--btn-primary-active);
+        background-color: var(--control-primary-active);
       }
     }
 
     &:hover:not(&--error):not(:disabled) {
-      border-color: var(--btn-primary-active);
+      border-color: var(--control-primary-active);
     }
 
     &:disabled {
-      border-color: var(--btn-inactive);
+      border-color: var(--control-inactive);
     }
 
     &:disabled:checked {
       &::after {
-        background-color: var(--btn-inactive);
+        background-color: var(--control-inactive);
       }
     }
 

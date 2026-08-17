@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Badge } from "./Badge";
-import type { Appearance, BadgeSize, IconPosition } from "./badge.types";
+import type { Appearance, BadgeSize, BadgeVariant, IconPosition } from "./badge.types";
 import {
   IconCross16Outline,
   IconLock16Fill,
@@ -9,6 +9,12 @@ import {
 } from "../../assets/icons";
 
 const sizeOptions = ["s", "m", "l"] as const satisfies BadgeSize[];
+
+const variantOptions = [
+  "primary",
+  "secondary",
+  "outline",
+] as const satisfies BadgeVariant[];
 
 const appearanceOptions = [
   "accent",
@@ -36,10 +42,10 @@ const meta: Meta<typeof Badge> = {
     ),
   ],
   argTypes: {
-    label: {
+    children: {
       control: "text",
-      description: "Текст бейджа.",
-      table: { type: { summary: "string" } },
+      description: "Содержимое бейджа.",
+      table: { type: { summary: "ReactNode" } },
     },
     size: {
       description: `
@@ -64,11 +70,12 @@ const meta: Meta<typeof Badge> = {
 - **secondary**
 - **outline**
       `,
+      control: "select",
+      options: variantOptions,
       table: {
-        type: { summary: `"primary" | "secondary" | "outline"` },
+        type: { summary: variantOptions.join(" | ") },
         defaultValue: { summary: "primary" },
       },
-      control: false,
     },
     appearance: {
       description: `
@@ -127,8 +134,9 @@ const meta: Meta<typeof Badge> = {
     },
   },
   args: {
-    label: "Badge",
+    children: "Badge",
     size: "m",
+    variant: "primary",
     appearance: "accent",
   },
 };
@@ -137,27 +145,33 @@ export default meta;
 type Story = StoryObj<typeof Badge>;
 
 export const Primary: Story = {
-  render: (args) => <Badge.Primary {...args} />,
+  args: {
+    variant: "primary",
+  },
 };
 
 export const Secondary: Story = {
-  render: (args) => <Badge.Secondary {...args} />,
+  args: {
+    variant: "secondary",
+  },
 };
 
 export const Outline: Story = {
-  render: (args) => <Badge.Outline {...args} />,
+  args: {
+    variant: "outline",
+  },
 };
 
 export const Positive: Story = {
   args: {
-    label: "Positive",
+    children: "Positive",
     appearance: "positive",
   },
 };
 
 export const Negative: Story = {
   args: {
-    label: "Negative",
+    children: "Negative",
     appearance: "negative",
   },
 };

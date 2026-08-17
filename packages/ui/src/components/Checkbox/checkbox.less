@@ -18,7 +18,7 @@
     content: "";
     position: absolute;
     inset: -5px -12px;
-    background-color: var(--btn-hover);
+    background-color: var(--control-hover);
     border-radius: var(--radius-16);
     z-index: -1;
   }
@@ -77,12 +77,12 @@
 
     &:checked,
     &--indeterminate {
-      border-color: var(--btn-primary-active);
-      background-color: var(--btn-primary-active);
+      border-color: var(--control-primary-active);
+      background-color: var(--control-primary-active);
     }
 
     &:hover:not(&--error):not(:disabled) {
-      border-color: var(--btn-primary-active);
+      border-color: var(--control-primary-active);
     }
 
     &:disabled {
@@ -93,7 +93,7 @@
     &:disabled:checked,
     &:disabled&--indeterminate {
       border-color: transparent;
-      background-color: var(--btn-inactive);
+      background-color: var(--control-inactive);
     }
 
     &--error:not(:disabled) {

@@ -1,9 +1,4 @@
-import {
-  DetailedHTMLProps,
-  HTMLAttributes,
-  ReactElement,
-  SVGProps,
-} from "react";
+import { HTMLAttributes, ReactElement, ReactNode, SVGProps } from "react";
 
 /**
  * Размер бейджа.
@@ -32,11 +27,8 @@ export type Appearance = "accent" | "positive" | "negative";
  */
 export type IconPosition = "left" | "right";
 
-type BaseBadgeProps = DetailedHTMLProps<
-  HTMLAttributes<HTMLDivElement>,
-  HTMLDivElement
-> & {
-  label: string;
+type BaseBadgeProps = Omit<HTMLAttributes<HTMLSpanElement>, "children"> & {
+  children: ReactNode;
   variant?: BadgeVariant;
   appearance?: Appearance;
 };
@@ -55,9 +47,3 @@ type RegularBadgeProps = {
 
 export type IBadgeProps = BaseBadgeProps &
   (SmallBadgeProps | RegularBadgeProps);
-
-type OmitDistributive<T, K extends PropertyKey> = T extends any
-  ? Omit<T, K>
-  : never;
-
-export type IBadgeVariantProps = OmitDistributive<IBadgeProps, "variant">;
