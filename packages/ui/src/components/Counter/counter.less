@@ -1,0 +1,41 @@
+@import "../../assets/tokens/index.less";
+
+.ccounter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  border-radius: 100px;
+  user-select: none;
+  background-color: var(--accent-notification);
+
+  &--appearance-custom {
+    background-color: var(--counter-bg, var(--accent-notification));
+  }
+
+  &__text {
+    color: var(--text-inverted) !important;
+  }
+
+  &--size-xs {
+    width: 6px;
+    height: 6px;
+  }
+
+  &--size-s {
+    padding: 0 4px;
+
+    &.ccounter--shape-circle {
+      width: 16px;
+    }
+  }
+
+  &--size-m {
+    padding: 0 6px;
+
+    &.ccounter--shape-circle {
+      width: 20px;
+    }
+  }
+}
