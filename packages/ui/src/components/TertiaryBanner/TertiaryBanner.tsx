@@ -45,7 +45,11 @@ export const TertiaryBannerBase: FC<ITertiaryBannerBaseProps> = ({
           </div>
         </div>
       )}
-      <Typography.Caption className={textClassName} tag="C1 REGULAR">
+      <Typography.Caption
+        className={textClassName}
+        tag="C1 REGULAR"
+        color={appearance === "inverted" ? "text-inverted" : "text-primary"}
+      >
         {children}
       </Typography.Caption>
     </div>

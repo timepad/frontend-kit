@@ -65,7 +65,7 @@ export const Radio = forwardRef<HTMLInputElement, IRadioProps>(
               {label}
             </Typography.Paragraph>
             {extraLabel && (
-              <Typography.Paragraph tag={labelTag[size]}>
+              <Typography.Paragraph tag={labelTag[size]} color="text-tertiary">
                 {extraLabel}
               </Typography.Paragraph>
             )}
@@ -75,6 +75,7 @@ export const Radio = forwardRef<HTMLInputElement, IRadioProps>(
               tag={descriptionTag}
               className={descriptionClassName}
               id={descriptionId}
+              color="text-secondary"
             >
               {description}
             </DescriptionComponent>

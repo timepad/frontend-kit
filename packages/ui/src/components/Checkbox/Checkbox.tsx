@@ -85,7 +85,7 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
               {label}
             </Typography.Paragraph>
             {extraLabel && (
-              <Typography.Paragraph tag={labelTag[size]}>
+              <Typography.Paragraph tag={labelTag[size]} color="text-tertiary">
                 {extraLabel}
               </Typography.Paragraph>
             )}
@@ -95,6 +95,7 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
               tag={descriptionTag}
               className={descriptionClassName}
               id={descriptionId}
+              color="text-secondary"
             >
               {description}
             </DescriptionComponent>

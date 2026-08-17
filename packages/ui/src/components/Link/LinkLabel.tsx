@@ -13,6 +13,7 @@ export const LinkLabel: FC<ILinkLabelProps> = ({ size, children }) => {
             <Typography.Paragraph
                 tag="P4 REGULAR"
                 as="span"
+                color="text-link-primary"
                 className={linkLabelClassName}
             >
                 {children}
@@ -25,6 +26,7 @@ export const LinkLabel: FC<ILinkLabelProps> = ({ size, children }) => {
             <Typography.Paragraph
                 tag="P3 REGULAR"
                 as="span"
+                color="text-link-primary"
                 className={linkLabelClassName}
             >
                 {children}
@@ -37,6 +39,7 @@ export const LinkLabel: FC<ILinkLabelProps> = ({ size, children }) => {
         <Typography.Caption
             tag="C1 REGULAR"
             as="span"
+            color="text-link-primary"
             className={linkLabelClassName}
         >
             {children}

@@ -17,6 +17,7 @@ export const BadgeLabel: FC<IBadgeLabelProps> = ({ size, children }) => {
       <Typography.Paragraph
         tag="P4 SEMIBOLD"
         as="span"
+        color="inherit"
         className={badgeLabelClassName}
       >
         {children}
@@ -29,6 +30,7 @@ export const BadgeLabel: FC<IBadgeLabelProps> = ({ size, children }) => {
       <Typography.Caption
         tag="C1 SEMIBOLD"
         as="span"
+        color="inherit"
         className={badgeLabelClassName}
       >
         {children}
@@ -40,6 +42,7 @@ export const BadgeLabel: FC<IBadgeLabelProps> = ({ size, children }) => {
     <Typography.Caption
       tag="C1 REGULAR"
       as="span"
+      color="inherit"
       className={badgeLabelClassName}
     >
       {children}

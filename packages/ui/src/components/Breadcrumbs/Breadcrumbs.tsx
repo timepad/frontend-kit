@@ -76,6 +76,7 @@ const BreadcrumbNode: FC<IBreadcrumbNodeProps> = ({ item, isCurrent }) => {
     >
       <Typography.Caption
         tag="C1 REGULAR"
+        color={isCurrent ? "text-primary" : "text-link-secondary"}
         className={component("breadcrumbs", "link-text")()}
       >
         {label}

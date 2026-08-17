@@ -55,6 +55,7 @@ export const SnackbarBase: FC<ISnackbarBaseProps> = ({
             <Typography.Paragraph
               tag="P4 BOLD"
               as="span"
+              color="text-inverted"
               className={titleClassName}
             >
               {title}
@@ -63,6 +64,7 @@ export const SnackbarBase: FC<ISnackbarBaseProps> = ({
           <Typography.Paragraph
             tag="P4 REGULAR"
             as="span"
+            color="text-inverted"
             className={messageClassName}
           >
             {label}

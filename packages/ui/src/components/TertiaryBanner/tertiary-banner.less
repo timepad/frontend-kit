@@ -1,3 +1,5 @@
+@import "../../assets/tokens/index.less";
+
 .ctertiary-banner {
   display: flex;
   align-items: flex-start;
@@ -18,13 +20,8 @@
     left: -4px;
   }
 
-  &__text {
-    color: inherit !important;
-  }
-
   &--base {
     background-color: var(--bg-secondary);
-    color: var(--text-primary);
 
     .ctertiary-banner__icon {
       &--info {
@@ -44,7 +41,6 @@
 
   &--inverted {
     background-color: var(--bg-inverted);
-    color: var(--text-inverted);
 
     .ctertiary-banner__icon {
       &--info {

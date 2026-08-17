@@ -2,7 +2,7 @@ import { FC, ReactNode } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./button.less";
-import { ButtonVariant, IButtonProps } from "./button.types";
+import { IButtonProps } from "./button.types";
 import { Typography } from "../Typography";
 
 export const Button: FC<IButtonProps> = ({
@@ -35,11 +35,7 @@ export const Button: FC<IButtonProps> = ({
   const iconClassName = component("button", "icon")();
 
   return (
-    <button
-      className={buttonClassName}
-      type={type}
-      {...rest}
-    >
+    <button className={buttonClassName} type={type} {...rest}>
       <span className={contentClassName}>
         <ButtonLabel size={size}>{label}</ButtonLabel>
 
@@ -66,6 +62,7 @@ const ButtonLabel: FC<IButtonLabelProps> = ({ size, children }) => {
       <Typography.Paragraph
         tag="P4 BOLD"
         as="span"
+        color="inherit"
         className={buttonLabelClassName}
       >
         {children}
@@ -77,6 +74,7 @@ const ButtonLabel: FC<IButtonLabelProps> = ({ size, children }) => {
     <Typography.Caption
       tag="C1 BOLD"
       as="span"
+      color="inherit"
       className={buttonLabelClassName}
     >
       {children}

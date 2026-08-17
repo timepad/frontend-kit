@@ -87,11 +87,16 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
     const actionIconClassName = component("input", "action-icon")();
 
     const captionClassName = component("input", "caption")();
+    const textColor = isError ? "text-negative" : "text-secondary";
 
     return (
       <div className={inputClassName}>
         <label htmlFor={inputId}>
-          <Typography.Paragraph tag="P4 REGULAR" className={labelClassName}>
+          <Typography.Paragraph
+            tag="P4 REGULAR"
+            color={textColor}
+            className={labelClassName}
+          >
             {label}
             {disabled && (
               <span aria-hidden="true" className={disabledIconClassName}>
@@ -147,6 +152,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
         {caption && (
           <Typography.Caption
             tag="C1 REGULAR"
+            color={textColor}
             className={captionClassName}
             id={captionId}
           >

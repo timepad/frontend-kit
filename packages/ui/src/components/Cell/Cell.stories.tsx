@@ -376,7 +376,7 @@ export const List: Story = {
             <Cell.Content.Text.Caption>{listCaption}</Cell.Content.Text.Caption>
           </Cell.Content.Text>
           <Cell.Content.Right>
-            <Typography.Paragraph style={{color: "var(--text-secondary)"}} tag="P4 REGULAR">Data</Typography.Paragraph>
+            <Typography.Paragraph color="text-secondary" tag="P4 REGULAR">Data</Typography.Paragraph>
           </Cell.Content.Right>
         </Cell.Content>
       </Cell>

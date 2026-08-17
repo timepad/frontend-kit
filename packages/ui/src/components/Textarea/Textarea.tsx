@@ -81,11 +81,12 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
     const disabledIconClassName = component("textarea", "disabled-icon")();
 
     const captionClassName = component("textarea", "caption")();
+    const textColor = isError ? "text-negative" : "text-secondary";
 
     return (
       <div className={textareaClassName}>
         <label htmlFor={textareaId}>
-          <Typography.Paragraph tag="P4 REGULAR" className={labelClassName}>
+          <Typography.Paragraph tag="P4 REGULAR" color={textColor} className={labelClassName}>
             {label}
             {disabled && (
               <span aria-hidden="true" className={disabledIconClassName}>
@@ -111,6 +112,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
           <Typography.Caption
             id={captionId}
             tag="C1 REGULAR"
+            color={textColor}
             className={captionClassName}
           >
             {caption}

@@ -18,6 +18,7 @@ export const TypographyBase: FC<ITypographyBaseProps> = ({
   fontType,
   variant,
   innerRef,
+  color,
   ...props
 }) => {
   const typographyClassName = classNames(
@@ -28,14 +29,15 @@ export const TypographyBase: FC<ITypographyBaseProps> = ({
       [fontWeight]: true,
       [`font-${fontType}`]: true,
       uppercase: !!uppercase,
+      [`${color}`]: !!color,
     }),
-    className
+    className,
   );
 
   return createElement(
     as,
     { ref: innerRef, className: typographyClassName, ...props },
-    children
+    children,
   );
 };
 
