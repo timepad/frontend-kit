@@ -7,7 +7,7 @@ function applyTo(config, { tsconfig } = {}) {
   config.resolve = config.resolve || {};
   config.resolve.alias = { ...(config.resolve.alias || {}), ...aliases() };
 
-  // патчим TypeScript-resolve приложения и исключаем frontend-kit из его TS-правил
+  // frontend-kit компилируется отдельным правилом, поэтому исключаем его из TS-правил приложения
   config.module = config.module || {};
   config.module.rules = config.module.rules || [];
   patchAssets(config);

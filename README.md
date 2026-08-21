@@ -332,9 +332,36 @@ yarn install
 
 У разработчика и CI должен быть доступ к репозиторию `timepad/frontend-kit`. В приложении должны быть установлены `react` и `react-dom` версии 18.
 
-### 2. Подключите Webpack helper
+### 2. Подключите TypeScript preset
 
-Helper добавляет aliases для всех пакетов, патчит TypeScript-resolve в существующих правилах `ts-loader` и создаёт отдельное правило для исходников `frontend-kit`. Для Webpack-сборки отдельно изменять `tsconfig.json` не требуется.
+Webpack helper настраивает resolve только во время сборки. Чтобы те же импорты понимали IDE и отдельный `tsc --noEmit`, укажите preset в `tsconfig.json` приложения:
+
+```json
+{
+  "extends": "frontend-kit/config/tsconfig.json"
+}
+```
+
+Preset добавляет `paths` для `@frontend-kit/ui`, `@frontend-kit/hooks` и `@frontend-kit/utils`, а также декларации Less и SVG-иконок. Остальные настройки TypeScript остаются в приложении.
+
+Если приложение уже наследует другой `tsconfig` и использует TypeScript 5+, конфигурации можно перечислить массивом. Более поздние конфигурации имеют больший приоритет:
+
+```json
+{
+  "extends": [
+    "./tsconfig.base.json",
+    "frontend-kit/config/tsconfig.json"
+  ]
+}
+```
+
+Если в самом приложении уже задан `compilerOptions.paths`, TypeScript не объединит его с `paths` из preset. В этом случае перенесите aliases frontend-kit в `paths` приложения вручную.
+
+После изменения перезапустите TypeScript Service в IDE.
+
+### 3. Подключите Webpack helper
+
+Helper добавляет Webpack aliases для всех пакетов и создаёт отдельное `transpileOnly`-правило для исходников `frontend-kit`. Из обычных правил `ts-loader` приложения эти исходники исключаются, чтобы не компилировать их дважды.
 
 Также helper подключает ресурсы UI-kit к существующей конфигурации приложения:
 
@@ -344,7 +371,7 @@ Helper добавляет aliases для всех пакетов, патчит T
 - не даёт существующему `ignore-loader` отбрасывать шрифты UI-kit;
 - если отдельного обработчика для этих шрифтов нет, добавляет Webpack 5 `asset/resource` и складывает файлы в `fonts/`.
 
-Патч TypeScript-resolve действует внутри `ts-loader`. Если проект запускает отдельный `tsc --noEmit` или использует TypeScript-resolve в ESLint/IDE, этим инструментам могут дополнительно понадобиться `paths` в `tsconfig.json`.
+TypeScript resolve настраивается preset из предыдущего шага и одинаково работает в IDE, отдельном `tsc` и `ts-loader`.
 
 ```js
 // webpack.config.js
