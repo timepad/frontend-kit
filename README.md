@@ -55,7 +55,10 @@ yarn build-storybook
 
 ```text
 frontend-kit/
-├── config/                         # готовые helpers для Webpack потребителя
+├── config/
+│   ├── index.js                    # Webpack helper для потребителя
+│   ├── tsconfig.json               # TypeScript preset для IDE и tsc
+│   └── types.d.ts                  # декларации Less и SVG-модулей
 ├── packages/
 │   ├── ui/
 │   │   ├── .storybook/
@@ -139,7 +142,7 @@ export const Badge: FC<BadgeProps> = ({
 
 ```less
 // badge.less
-@import "../../assets/tokens/index.less";
+@import (reference) "../../assets/tokens/index.less";
 
 .cbadge {
   display: inline-flex;
@@ -334,7 +337,9 @@ yarn install
 
 ### 2. Подключите TypeScript preset
 
-Webpack helper настраивает resolve только во время сборки. Чтобы те же импорты понимали IDE и отдельный `tsc --noEmit`, укажите preset в `tsconfig.json` приложения:
+Webpack aliases из helper доступны только во время Webpack-сборки. IDE и отдельный `tsc --noEmit` не читают `webpack.config.js`, поэтому для них подключите TypeScript preset в `tsconfig.json` приложения:
+
+#### Проект без собственных `paths` (OTP)
 
 ```json
 {
@@ -342,9 +347,17 @@ Webpack helper настраивает resolve только во время сб�
 }
 ```
 
-Preset добавляет `paths` для `@frontend-kit/ui`, `@frontend-kit/hooks` и `@frontend-kit/utils`, декларации Less и SVG-иконок, а также разрешает проверку source-компонентов в проектах с classic JSX. Остальные настройки TypeScript остаются в приложении.
+Добавьте `extends` к существующему `tsconfig.json`, не удаляя его `compilerOptions`, `include` и `exclude`.
 
-Если приложение уже наследует другой `tsconfig` и использует TypeScript 5+, конфигурации можно перечислить массивом. Более поздние конфигурации имеют больший приоритет:
+Preset добавляет:
+
+- `paths` для `@frontend-kit/ui`, `@frontend-kit/hooks` и `@frontend-kit/utils`;
+- декларации модулей для Less и `*.svg?react`, подключаемые публичным entrypoint UI;
+- `allowUmdGlobalAccess`, необходимый для проверки source-компонентов в проектах с classic JSX.
+
+Остальные настройки TypeScript остаются в приложении. В частности, preset не меняет `jsx` всего проекта.
+
+Если приложение уже наследует другой `tsconfig`, не содержащий `compilerOptions.paths`, и использует TypeScript 5+, конфигурации можно перечислить массивом. Более поздние конфигурации имеют больший приоритет:
 
 ```json
 {
@@ -355,13 +368,52 @@ Preset добавляет `paths` для `@frontend-kit/ui`, `@frontend-kit/hook
 }
 ```
 
-Если в самом приложении уже задан `compilerOptions.paths`, TypeScript не объединит его с `paths` из preset. В этом случае перенесите aliases frontend-kit в `paths` приложения вручную.
+#### Проект с собственными `paths` (NTP)
+
+TypeScript не объединяет объекты `compilerOptions.paths`: `paths` приложения полностью заменяет `paths` из preset. Поэтому сохраните `extends`, но добавьте aliases frontend-kit в существующий объект вручную.
+
+Для NTP с `baseUrl: "src"` конфигурация выглядит так:
+
+```json
+{
+  "extends": "frontend-kit/config/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "*": [
+        "*",
+        "src/*"
+      ],
+      "@frontend-kit/ui": [
+        "../node_modules/frontend-kit/packages/ui/src/index.ts"
+      ],
+      "@frontend-kit/ui/*": [
+        "../node_modules/frontend-kit/packages/ui/src/*"
+      ],
+      "@frontend-kit/hooks": [
+        "../node_modules/frontend-kit/packages/hooks/src/index.ts"
+      ],
+      "@frontend-kit/hooks/*": [
+        "../node_modules/frontend-kit/packages/hooks/src/*"
+      ],
+      "@frontend-kit/utils": [
+        "../node_modules/frontend-kit/packages/utils/src/index.ts"
+      ],
+      "@frontend-kit/utils/*": [
+        "../node_modules/frontend-kit/packages/utils/src/*"
+      ]
+    }
+  }
+}
+```
+
+Значения начинаются с `../node_modules`, потому что TypeScript считает их относительно `baseUrl: "src"`. `tsconfig.dev.json`, наследующий этот основной конфиг, отдельно менять не требуется.
 
 После изменения перезапустите TypeScript Service в IDE.
 
 ### 3. Подключите Webpack helper
 
-Helper добавляет Webpack aliases для всех пакетов и создаёт отдельное `transpileOnly`-правило для исходников `frontend-kit`. Из обычных правил `ts-loader` приложения эти исходники исключаются, чтобы не компилировать их дважды.
+Helper добавляет Webpack aliases для всех пакетов и создаёт отдельное `transpileOnly`-правило для исходников `frontend-kit`. Из обычных правил `ts-loader` приложения эти исходники исключаются, чтобы не компилировать их дважды. Только это отдельное правило использует `jsx: "react-jsx"`; настройка `jsx` приложения не изменяется.
 
 Также helper подключает ресурсы UI-kit к существующей конфигурации приложения:
 
@@ -404,6 +456,8 @@ module.exports = kit.applyTo(config, { tsconfig: "tsconfig.json" });
 В приложении должны быть установлены `ts-loader`, `css-loader`, `less-loader` и `@svgr/webpack`. Helper переиспользует Less- и SVG-loaders из существующих правил приложения. Если приложение не использует `mini-css-extract-plugin`, оно должно самостоятельно добавить loader, который вставляет или извлекает стили.
 
 Готовый helper рассчитан на Webpack. Для другого сборщика aliases и обработку source-файлов нужно настроить отдельно.
+
+Если сборка проекта с classic JSX выдаёт `TS2686: React refers to a UMD global`, сначала проверьте, что проект наследует актуальный `frontend-kit/config/tsconfig.json`. Затем обновите SHA зависимости, выполните `yarn install` и убедитесь, что в `node_modules/frontend-kit` установлена свежая версия. Переключать весь проект на `jsx: "react-jsx"` не требуется: helper применяет эту настройку только к исходникам frontend-kit.
 
 ### Локальная проверка интеграции
 

@@ -1,3 +1,5 @@
+/// <reference path="../../../config/types.d.ts" />
+
 import "./assets/tokens/index.less";
 
 export { Counter } from "./components/Counter";

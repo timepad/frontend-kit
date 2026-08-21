@@ -9,6 +9,5 @@
       "@frontend-kit/utils": ["../packages/utils/src/index.ts"],
       "@frontend-kit/utils/*": ["../packages/utils/src/*"]
     }
-  },
-  "files": ["./types.d.ts"]
+  }
 }
