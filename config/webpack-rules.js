@@ -84,6 +84,5 @@ module.exports = {
   flattenRules,
   hasLoader,
   loaderEntries,
-  loaderName,
   ruleMatches,
 };
