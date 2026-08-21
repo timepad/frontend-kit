@@ -18,6 +18,7 @@ function makeTsRule(tsconfig) {
     loader: 'ts-loader',
     options: {
       transpileOnly: true,
+      compilerOptions: { jsx: 'react-jsx' },
       ...(tsconfig ? { configFile: tsconfig } : {})
     }
   };

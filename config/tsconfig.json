@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowUmdGlobalAccess": true,
     "paths": {
       "@frontend-kit/ui": ["../packages/ui/src/index.ts"],
       "@frontend-kit/ui/*": ["../packages/ui/src/*"],

@@ -342,7 +342,7 @@ Webpack helper настраивает resolve только во время сб�
 }
 ```
 
-Preset добавляет `paths` для `@frontend-kit/ui`, `@frontend-kit/hooks` и `@frontend-kit/utils`, а также декларации Less и SVG-иконок. Остальные настройки TypeScript остаются в приложении.
+Preset добавляет `paths` для `@frontend-kit/ui`, `@frontend-kit/hooks` и `@frontend-kit/utils`, декларации Less и SVG-иконок, а также разрешает проверку source-компонентов в проектах с classic JSX. Остальные настройки TypeScript остаются в приложении.
 
 Если приложение уже наследует другой `tsconfig` и использует TypeScript 5+, конфигурации можно перечислить массивом. Более поздние конфигурации имеют больший приоритет:
 
