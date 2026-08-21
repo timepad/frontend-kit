@@ -1,24 +1,87 @@
 const { includes } = require('./aliases');
+const { createResolveModuleName, resolveModuleName } = require('./resolve-module');
+const { addExclude, loaderName } = require('./webpack-rules');
 
-function makeTsRule(opts = {}) {
-  const { tsconfig, transpileOnly = true, test = /\.[jt]sx?$/ } = opts;
+function isTsLoader(loader) {
+  return /(^|[\\/])ts-loader(?:[\\/]|$|\?)/.test(loaderName(loader) || '');
+}
+
+function patchLoaderOptions(options = {}) {
+  if (options.resolveModuleName?.__frontendKitResolver) {
+    return options;
+  }
+
   return {
-    test,
+    ...options,
+    resolveModuleName: options.resolveModuleName
+      ? createResolveModuleName(options.resolveModuleName)
+      : resolveModuleName,
+  };
+}
+
+function patchLoader(loader) {
+  if (typeof loader === 'string') {
+    return { loader, options: patchLoaderOptions() };
+  }
+
+  return { ...loader, options: patchLoaderOptions(loader.options) };
+}
+
+function patchRule(rule) {
+  if (!rule || typeof rule !== 'object') {
+    return { rule, hasTsLoader: false };
+  }
+
+  const patchedRule = { ...rule };
+  let hasTsLoader = false;
+
+  if (isTsLoader(rule?.loader)) {
+    patchedRule.options = patchLoaderOptions(rule.options);
+    hasTsLoader = true;
+  }
+
+  if (Array.isArray(rule?.use)) {
+    patchedRule.use = rule.use.map((loader) => {
+      if (!isTsLoader(loader)) return loader;
+      hasTsLoader = true;
+      return patchLoader(loader);
+    });
+  } else if (isTsLoader(rule?.use)) {
+    patchedRule.use = patchLoader(rule.use);
+    hasTsLoader = true;
+  }
+
+  for (const key of ['oneOf', 'rules']) {
+    if (!Array.isArray(rule[key])) continue;
+
+    const nested = rule[key].map(patchRule);
+    patchedRule[key] = nested.map((result) => result.rule);
+    hasTsLoader ||= nested.some((result) => result.hasTsLoader);
+  }
+
+  return { rule: patchedRule, hasTsLoader };
+}
+
+function patchTypeScriptRules(rules) {
+  return rules.map((rule) => {
+    const result = patchRule(rule);
+    return result.hasTsLoader
+      ? addExclude(result.rule, includes())
+      : result.rule;
+  });
+}
+
+function makeTsRule(tsconfig) {
+  return {
+    test: /\.[jt]sx?$/,
     include: includes(),
     loader: 'ts-loader',
     options: {
-      transpileOnly,
+      transpileOnly: true,
+      resolveModuleName,
       ...(tsconfig ? { configFile: tsconfig } : {})
     }
   };
 }
 
-// Помощник: добавить exclude для наших папок в существующее правило
-function excludeKitFrom(rule) {
-  const inc = includes();
-  const prev = Array.isArray(rule.exclude) ? rule.exclude : (rule.exclude ? [rule.exclude] : []);
-  rule.exclude = [...prev, ...inc];
-  return rule;
-}
-
-module.exports = { makeTsRule, excludeKitFrom };
+module.exports = { makeTsRule, patchTypeScriptRules };

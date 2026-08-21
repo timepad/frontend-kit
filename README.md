@@ -334,7 +334,17 @@ yarn install
 
 ### 2. Подключите Webpack helper
 
-Helper добавляет aliases для всех пакетов и отдельное правило `ts-loader` для исходников `frontend-kit`. Отдельно изменять `tsconfig.json` не требуется.
+Helper добавляет aliases для всех пакетов, патчит TypeScript-resolve в существующих правилах `ts-loader` и создаёт отдельное правило для исходников `frontend-kit`. Для Webpack-сборки отдельно изменять `tsconfig.json` не требуется.
+
+Также helper подключает ресурсы UI-kit к существующей конфигурации приложения:
+
+- переиспользует найденный loader `mini-css-extract-plugin` для Less-файлов `@frontend-kit/ui`;
+- переиспользует всю существующую Less-chain приложения, включая `css-loader`, `postcss-loader` и `less-loader`;
+- подключает SVG-иконки UI-kit через существующий `@svgr/webpack`;
+- не даёт существующему `ignore-loader` отбрасывать шрифты UI-kit;
+- если отдельного обработчика для этих шрифтов нет, добавляет Webpack 5 `asset/resource` и складывает файлы в `fonts/`.
+
+Патч TypeScript-resolve действует внутри `ts-loader`. Если проект запускает отдельный `tsc --noEmit` или использует TypeScript-resolve в ESLint/IDE, этим инструментам могут дополнительно понадобиться `paths` в `tsconfig.json`.
 
 ```js
 // webpack.config.js
@@ -364,7 +374,7 @@ const config = {
 module.exports = kit.applyTo(config, { tsconfig: "tsconfig.json" });
 ```
 
-Обычно больше ничего настраивать не нужно. Проверьте только, что существующие правила проекта обрабатывают Less, SVG и шрифты из `node_modules/frontend-kit`. Если у правила задан ограничивающий `include`, добавьте туда директорию `frontend-kit`. `ts-loader` должен быть установлен, так как его использует helper.
+В приложении должны быть установлены `ts-loader`, `css-loader`, `less-loader` и `@svgr/webpack`. Helper переиспользует Less- и SVG-loaders из существующих правил приложения. Если приложение не использует `mini-css-extract-plugin`, оно должно самостоятельно добавить loader, который вставляет или извлекает стили.
 
 Готовый helper рассчитан на Webpack. Для другого сборщика aliases и обработку source-файлов нужно настроить отдельно.
 
@@ -423,7 +433,7 @@ const className = classNames(
 );
 ```
 
-Стили компонентов и дизайн-токены подключаются их внутренними Less-импортами. Светлая тема применяется через `:root`, тёмная — атрибутом на общем контейнере:
+Стили компонентов и дизайн-токены подключаются автоматически при импорте из `@frontend-kit/ui`. Глобальные CSS variables и `@font-face` добавляются один раз, а стили каждого компонента — только когда компонент попал в bundle. Светлая тема применяется через `:root`, тёмная — атрибутом на общем контейнере:
 
 ```html
 <html data-theme="dark">

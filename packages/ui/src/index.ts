@@ -1,3 +1,5 @@
+import "./assets/tokens/index.less";
+
 export { Counter } from "./components/Counter";
 export { Breadcrumbs } from "./components/Breadcrumbs";
 export { Avatar, AvatarStatus } from "./components/Avatar";
@@ -13,4 +15,3 @@ export { Snackbar } from "./components/Snackbar";
 export { Cell } from "./components/Cell";
 export { Link } from "./components/Link";
 export * from "./assets/icons";
-export * from "./P";
