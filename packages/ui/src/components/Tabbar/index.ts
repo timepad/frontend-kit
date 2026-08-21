@@ -1,2 +1,7 @@
 export { Tabbar } from "./Tabbar";
-export type { ITabbarProps, ITabProps } from "./tabbar.types";
+export type {
+  ITabbarProps,
+  ITabButtonProps,
+  ITabLinkProps,
+  ITabProps,
+} from "./tabbar.types";

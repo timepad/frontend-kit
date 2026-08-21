@@ -16,6 +16,7 @@
 
   &__tab {
     display: flex;
+    box-sizing: border-box;
     flex: 1 1 0;
     min-width: 0;
     height: 56px;
@@ -29,6 +30,7 @@
     color: var(--icon-tertiary);
     background: transparent;
     cursor: pointer;
+    text-decoration: none;
     -webkit-tap-highlight-color: transparent;
 
     &:focus-visible {
@@ -54,6 +56,12 @@
     flex: 0 0 24px;
     align-items: center;
     justify-content: center;
+  }
+
+  &__icon-graphic {
+    display: flex;
+    width: 24px;
+    height: 24px;
 
     > svg {
       display: block;
@@ -81,6 +89,7 @@
     top: 0;
     left: 16px;
     z-index: 1;
+    box-shadow: 0 0 0 1px var(--tabbar-bg, var(--bg-primary));
 
     &--notify {
       left: 18px;

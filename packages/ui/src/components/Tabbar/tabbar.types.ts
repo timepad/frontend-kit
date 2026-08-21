@@ -1,10 +1,11 @@
 import type {
+  AnchorHTMLAttributes,
   ButtonHTMLAttributes,
-  HTMLAttributes,
+  ComponentPropsWithoutRef,
   ReactNode,
 } from "react";
 
-export interface ITabbarProps extends HTMLAttributes<HTMLDivElement> {
+export type ITabbarProps = Omit<ComponentPropsWithoutRef<"nav">, "children"> & {
   /** Вкладки Tabbar. По дизайну поддерживается от 3 до 5 вкладок. */
   children: ReactNode;
   /** Пользовательский цвет фона. По умолчанию используется --bg-primary. */
@@ -13,7 +14,7 @@ export interface ITabbarProps extends HTMLAttributes<HTMLDivElement> {
   showLabels?: boolean;
   /** Добавляет тень для Tabbar, закреплённого над прокручиваемым контентом. */
   shadow?: boolean;
-}
+};
 
 type TabNotificationProps =
   | {
@@ -27,15 +28,32 @@ type TabNotificationProps =
       notify?: boolean;
     };
 
-export type ITabProps = Omit<
+type ITabCommonProps = TabNotificationProps & {
+  /** Иконка размером 24px. */
+  icon: ReactNode;
+  /** Подпись вкладки и её доступное имя. */
+  label: string;
+  /** Активной может быть только одна вкладка. */
+  active?: boolean;
+};
+
+export type ITabButtonProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
   "children"
 > &
-  TabNotificationProps & {
-    /** Иконка размером 24px. */
-    icon: ReactNode;
-    /** Подпись вкладки и её доступное имя. */
-    label: string;
-    /** Активной может быть только одна вкладка. */
-    active?: boolean;
+  ITabCommonProps & {
+    /** По умолчанию вкладка рендерится как кнопка. */
+    as?: "button";
   };
+
+export type ITabLinkProps = Omit<
+  AnchorHTMLAttributes<HTMLAnchorElement>,
+  "children"
+> &
+  ITabCommonProps & {
+    /** Используйте ссылку, когда вкладка ведёт на отдельный URL. */
+    as: "a";
+    href: string;
+  };
+
+export type ITabProps = ITabButtonProps | ITabLinkProps;

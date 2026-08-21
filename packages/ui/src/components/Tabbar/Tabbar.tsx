@@ -25,15 +25,14 @@ const TabbarComponent: FC<ITabbarProps> = ({
 
   return (
     <TabbarContext.Provider value={showLabels}>
-      <div
+      <nav
         aria-label="Основная навигация"
         className={tabbarClassName}
-        role="tablist"
         style={{ ...backgroundStyle, ...style }}
         {...rest}
       >
         {children}
-      </div>
+      </nav>
     </TabbarContext.Provider>
   );
 };

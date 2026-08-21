@@ -112,6 +112,24 @@ export const Notify: Story = {
   render: () => <TabbarDemo notificationVariant="notify" />,
 };
 
+export const Links: Story = {
+  render: () => (
+    <Tabbar>
+      {items.map(({ label, icon }, index) => (
+        <Tabbar.Tab
+          active={index === 0}
+          as="a"
+          href={`#${label.toLowerCase()}`}
+          icon={icon}
+          key={label}
+          label={label}
+          {...getNotificationProps("counter", index)}
+        />
+      ))}
+    </Tabbar>
+  ),
+};
+
 export const ThreeTabs: Story = {
   render: () => <TabbarDemo count={3} notificationVariant="none" />,
 };

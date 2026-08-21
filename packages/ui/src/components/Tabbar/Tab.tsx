@@ -6,55 +6,116 @@ import { Typography } from "../Typography";
 import { TabbarContext } from "./tabbarContext";
 import type { ITabProps } from "./tabbar.types";
 
-export const Tab: FC<ITabProps> = ({
-  active = false,
-  className,
-  counter,
-  disabled,
-  icon,
-  label,
-  notify = false,
-  type = "button",
-  ...rest
-}) => {
+export const Tab: FC<ITabProps> = (props) => {
   const showLabels = useContext(TabbarContext);
+  const active = props.active ?? false;
+  const notify = props.notify ?? false;
 
   const tabClassName = classNames(
     component("tabbar", "tab")({ active }),
-    className,
+    props.className,
   );
   const iconClassName = component("tabbar", "icon")();
+  const iconGraphicClassName = component("tabbar", "icon-graphic")();
   const labelClassName = component("tabbar", "label")();
   const counterClassName = component("tabbar", "counter")();
   const notifyClassName = component("tabbar", "counter")({ notify: true });
+  const ariaLabel =
+    props["aria-label"] ?? getTabAriaLabel(props.label, props.counter, notify);
 
-  return (
-    <button
-      aria-label={label}
-      aria-selected={active}
-      className={tabClassName}
-      disabled={disabled}
-      role="tab"
-      type={type}
-      {...rest}
-    >
-      <span aria-hidden="true" className={iconClassName}>
-        {icon}
-        {counter !== undefined && (
-          <Counter className={counterClassName} size="s" value={counter} />
+  const content = (
+    <>
+      <span className={iconClassName}>
+        <span aria-hidden="true" className={iconGraphicClassName}>
+          {props.icon}
+        </span>
+        {props.counter !== undefined && (
+          <Counter
+            aria-hidden="true"
+            className={counterClassName}
+            size="s"
+            value={props.counter}
+          />
         )}
-        {notify && <Counter className={notifyClassName} size="xs" />}
+        {notify && (
+          <Counter aria-hidden="true" className={notifyClassName} size="xs" />
+        )}
       </span>
 
       {showLabels && (
         <Typography.Caption
-          aria-hidden="true"
+          as="span"
           className={labelClassName}
           tag={active ? "C1 SEMIBOLD" : "C1 REGULAR"}
         >
-          {label}
+          {props.label}
         </Typography.Caption>
       )}
+    </>
+  );
+
+  if (props.as === "a") {
+    const {
+      active,
+      as,
+      className,
+      counter,
+      icon,
+      label,
+      notify,
+      ...linkProps
+    } = props;
+
+    return (
+      <a
+        {...linkProps}
+        aria-current={active ? "page" : undefined}
+        aria-label={ariaLabel}
+        className={tabClassName}
+      >
+        {content}
+      </a>
+    );
+  }
+
+  const {
+    active: buttonActive,
+    as,
+    className,
+    counter,
+    icon,
+    label,
+    notify: buttonNotify,
+    type = "button",
+    ...buttonProps
+  } = props;
+
+  return (
+    <button
+      {...buttonProps}
+      aria-current={active ? "page" : undefined}
+      aria-label={ariaLabel}
+      className={tabClassName}
+      type={type}
+    >
+      {content}
     </button>
   );
+};
+
+const getTabAriaLabel = (
+  label: string,
+  counter?: number,
+  notify?: boolean,
+): string => {
+  if (counter !== undefined) {
+    const normalizedCounter = Number.isFinite(counter)
+      ? Math.max(0, Math.round(counter))
+      : 0;
+
+    return `${label}. Уведомления: ${normalizedCounter}`;
+  }
+
+  if (notify) return `${label}. Есть непрочитанные уведомления`;
+  return label;
 };
