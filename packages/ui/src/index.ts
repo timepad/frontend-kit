@@ -3,7 +3,7 @@ export { Breadcrumbs } from "./components/Breadcrumbs";
 export { Avatar, AvatarStatus } from "./components/Avatar";
 export { Button } from "./components/Button";
 export { IconButton } from "./components/IconButton";
-export { Input } from "./components/Input";
+export { Input, PhoneInput, PriceInput, TimeInput, TimeRangeInput, DiscountInput } from "./components/Input";
 export { Radio } from "./components/Radio";
 export { Switch } from "./components/Switch";
 export { Textarea } from "./components/Textarea";
