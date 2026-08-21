@@ -83,7 +83,7 @@ export const Price: Story = {
 
     // raw: "3000" -> display: "3 000"
     parse: (t: string) => normalizeLeadingZeros(parseDigits(t)),
-    format: (r: string) => formatThousands(r, " "),
+    format: formatThousands,
 
     emptyVisual: "0",
     showEmptyVisual: true,
@@ -109,7 +109,6 @@ export const Discount: Story = {
       const n = Math.min(100, Math.max(0, Number(d)));
       return String(n);
     },
-    format: (r: string) => r,
 
     emptyVisual: "0",
     showEmptyVisual: true,

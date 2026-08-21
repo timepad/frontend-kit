@@ -1,4 +1,4 @@
-import { forwardRef, useCallback } from "react";
+import { forwardRef } from "react";
 import { FormattedInput } from "../FormattedInput";
 import { formatThousands, parseDigits } from "../FormattedInput/formattedInputHelpers";
 import type { PriceInputProps } from "./input.types";
@@ -9,8 +9,6 @@ import type { PriceInputProps } from "./input.types";
  */
 export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
   ({ value = "", onValueChange = () => {}, currencySymbol = "₽", label, ...rest }, ref) => {
-    const suffixSlot = useCallback(() => currencySymbol, [currencySymbol]);
-
     return (
       <FormattedInput
         {...rest}
@@ -19,7 +17,7 @@ export const PriceInput = forwardRef<HTMLInputElement, PriceInputProps>(
         onValueChange={onValueChange}
         format={formatThousands}
         parse={parseDigits}
-        suffixSlot={suffixSlot}
+        suffixSlot={() => currencySymbol}
         inputMode="numeric"
         emptyVisual="0"
         maxLen={9} // Ограничение до 999 999 999
