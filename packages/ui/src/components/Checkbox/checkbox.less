@@ -1,14 +1,14 @@
 @import "../../assets/tokens/index.less";
 
-.ccheckbox {
+.fk-ccheckbox {
   display: flex;
   align-items: flex-start;
   position: relative;
   cursor: pointer;
 
-  .column-gap-size(s, var(--space-6));
-  .column-gap-size(m, var(--space-8));
-  .column-gap-size(l, var(--space-12));
+  .column-gap-size(s, var(--fk-space-6));
+  .column-gap-size(m, var(--fk-space-8));
+  .column-gap-size(l, var(--fk-space-12));
 
   .control-margin-size(s, 2px);
   .control-margin-size(m, 3px);
@@ -18,8 +18,8 @@
     content: "";
     position: absolute;
     inset: -5px -12px;
-    background-color: var(--btn-hover);
-    border-radius: var(--radius-16);
+    background-color: var(--fk-btn-hover);
+    border-radius: var(--fk-radius-16);
     z-index: -1;
   }
 
@@ -29,19 +29,19 @@
 
   &__label {
     display: flex;
-    color: var(--text-primary) !important;
+    color: var(--fk-text-primary) !important;
 
     & > :nth-child(2) {
-      color: var(--text-tertiary) !important;
+      color: var(--fk-text-tertiary) !important;
     }
 
-    .column-gap-size(s, var(--space-4));
-    .column-gap-size(m, var(--space-6));
-    .column-gap-size(l, var(--space-8));
+    .column-gap-size(s, var(--fk-space-4));
+    .column-gap-size(m, var(--fk-space-6));
+    .column-gap-size(l, var(--fk-space-8));
   }
 
   &__description {
-    color: var(--text-secondary) !important;
+    color: var(--fk-text-secondary) !important;
   }
 
   &__control {
@@ -61,7 +61,7 @@
   }
 
   &__description {
-    color: var(--text-secondary) !important;
+    color: var(--fk-text-secondary) !important;
   }
 
   &__field {
@@ -71,37 +71,37 @@
     appearance: none;
     margin: 0;
     border-style: solid;
-    border-color: var(--greyscale-300);
-    background-color: var(--bg-primary);
+    border-color: var(--fk-greyscale-300);
+    background-color: var(--fk-bg-primary);
     cursor: inherit;
 
     &:checked,
     &--indeterminate {
-      border-color: var(--btn-primary-active);
-      background-color: var(--btn-primary-active);
+      border-color: var(--fk-btn-primary-active);
+      background-color: var(--fk-btn-primary-active);
     }
 
     &:hover:not(&--error):not(:disabled) {
-      border-color: var(--btn-primary-active);
+      border-color: var(--fk-btn-primary-active);
     }
 
     &:disabled {
-      border-color: var(--greyscale-300);
-      background-color: var(--bg-disabled);
+      border-color: var(--fk-greyscale-300);
+      background-color: var(--fk-bg-disabled);
     }
 
     &:disabled:checked,
     &:disabled&--indeterminate {
       border-color: transparent;
-      background-color: var(--btn-inactive);
+      background-color: var(--fk-btn-inactive);
     }
 
     &--error:not(:disabled) {
-      border-color: var(--accent-negative);
+      border-color: var(--fk-accent-negative);
 
       &:checked,
-      &.ccheckbox__field--indeterminate {
-        background-color: var(--accent-negative);
+      &.fk-ccheckbox__field--indeterminate {
+        background-color: var(--fk-accent-negative);
       }
     }
 
@@ -118,7 +118,7 @@
     justify-content: center;
     pointer-events: none;
     opacity: 0;
-    color: var(--greyscale-100);
+    color: var(--fk-greyscale-100);
 
     svg {
       display: block;
@@ -131,7 +131,7 @@
   }
 
   &__field:disabled + &__icon {
-    color: var(--icon-tertiary);
+    color: var(--fk-icon-tertiary);
   }
 }
 

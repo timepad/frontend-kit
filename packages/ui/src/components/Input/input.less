@@ -1,19 +1,19 @@
 @import "../../assets/tokens/index.less";
 
-.cinput {
+.fk-cinput {
   display: flex;
   flex-direction: column;
-  row-gap: var(--space-4);
-  color: var(--text-secondary);
+  row-gap: var(--fk-space-4);
+  color: var(--fk-text-secondary);
 
   &__label {
     display: flex;
     color: inherit !important;
-    column-gap: var(--space-4);
+    column-gap: var(--fk-space-4);
 
     &--required::after {
       content: "*";
-      color: var(--text-negative);
+      color: var(--fk-text-negative);
     }
   }
 
@@ -28,39 +28,39 @@
   &__field {
     width: 100%;
     height: 32px;
-    padding: var(--space-4) var(--space-32) var(--space-4) var(--space-10);
+    padding: var(--fk-space-4) var(--fk-space-32) var(--fk-space-4) var(--fk-space-10);
     box-sizing: border-box;
-    background-color: var(--bg-secondary);
+    background-color: var(--fk-bg-secondary);
     border: none;
-    border-radius: var(--radius-8);
-    outline: 1px solid var(--bg-stroke);
-    color: var(--text-primary);
-    font-family: var(--font-regular);
+    border-radius: var(--fk-radius-8);
+    outline: 1px solid var(--fk-bg-stroke);
+    color: var(--fk-text-primary);
+    font-family: var(--fk-font-regular);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: 20px;
 
     &::placeholder {
-      color: var(--text-tertiary);
+      color: var(--fk-text-tertiary);
     }
 
     &:focus,
     &:focus-visible {
-      outline-color: var(--btn-primary-active);
-      caret-color: var(--greyscale-800);
+      outline-color: var(--fk-btn-primary-active);
+      caret-color: var(--fk-greyscale-800);
     }
   }
 
   &__disabled-icon {
     display: inline-flex;
-    color: var(--icon-tertiary);
+    color: var(--fk-icon-tertiary);
   }
 
   &__action-icon {
     position: absolute !important;
     right: 0;
-    color: var(--icon-tertiary) !important;
+    color: var(--fk-icon-tertiary) !important;
   }
 
   &__error-icon {
@@ -70,11 +70,11 @@
     top: 50%;
     transform: translateY(-50%);
     padding: 4px;
-    color: var(--accent-negative) !important;
+    color: var(--fk-accent-negative) !important;
   }
 
   &--error {
-    color: var(--text-negative) !important;
+    color: var(--fk-text-negative) !important;
   }
 
   // маска
@@ -86,25 +86,25 @@
     display: flex;
     align-items: center;
 
-    padding: var(--space-4) var(--space-32) var(--space-4) var(--space-10);
+    padding: var(--fk-space-4) var(--fk-space-32) var(--fk-space-4) var(--fk-space-10);
     white-space: pre;
 
-    font-family: var(--font-regular);
+    font-family: var(--fk-font-regular);
     font-size: 14px;
     line-height: 20px;
   }
 
   &__mask-char {
-    color: var(--text-primary);
+    color: var(--fk-text-primary);
   }
 
   &__mask-char--rest {
-    color: var(--text-tertiary);
+    color: var(--fk-text-tertiary);
   }
 
   &__field[data-masked="true"] {
     color: transparent;
-    caret-color: var(--text-primary);
+    caret-color: var(--fk-text-primary);
   }
 
   // форматтер
@@ -120,16 +120,16 @@
     bottom: 0;
 
     /* = padding-left инпута */
-    left: var(--space-10);
+    left: var(--fk-space-10);
 
     /* = padding-right инпута + иконки справа */
-    right: var(--space-32);
+    right: var(--fk-space-32);
 
     overflow: hidden;
     display: flex;
     align-items: center;
 
-    font-family: var(--font-regular);
+    font-family: var(--fk-font-regular);
     font-size: 14px;
     line-height: 20px;
     font-weight: 400;
@@ -141,31 +141,31 @@
     align-items: center;
     white-space: pre;
 
-    transform: translateX(calc(var(--fi-scroll-left, 0px) * -1));
+    transform: translateX(calc(var(--fk-fi-scroll-left, 0px) * -1));
     will-change: transform;
   }
 
   &__formatted-content {
     white-space: pre;
-    color: var(--text-primary);
+    color: var(--fk-text-primary);
   }
 
   &__formatted-content--empty {
-    color: var(--text-tertiary);
+    color: var(--fk-text-tertiary);
   }
 
   &__formatted-suffix {
     margin-left: 4px;
     white-space: nowrap;
-    color: var(--text-tertiary);
+    color: var(--fk-text-tertiary);
 
     &--filled {
-      color: var(--text-primary);
+      color: var(--fk-text-primary);
     }
   }
 
   &__field[data-formatted="true"] {
     color: transparent;
-    caret-color: var(--greyscale-800);
+    caret-color: var(--fk-greyscale-800);
   }
 }

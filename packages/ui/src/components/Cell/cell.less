@@ -3,39 +3,39 @@
 @cell-horizontal-paddings: 0, 8, 12, 16;
 @cell-vertical-paddings: 0, 4, 10;
 
-.ccell {
+.fk-ccell {
   min-width: 0;
   cursor: default;
 
-  --cell-bg-color: transparent;
+  --fk-cell-bg-color: transparent;
 
-  color: var(--text-primary);
-  background-color: var(--cell-bg-color);
-  border-radius: var(--radius-20);
+  color: var(--fk-text-primary);
+  background-color: var(--fk-cell-bg-color);
+  border-radius: var(--fk-radius-20);
 
   each(@cell-horizontal-paddings, {
     &--padding-@{value} &__body {
-      --cell-padding-inline: ~"var(--space-@{value})";
+      --fk-cell-padding-inline: ~"var(--fk-space-@{value})";
     }
   });
 
   each(@cell-vertical-paddings, {
     &--padding-vertical-@{value} &__body {
-      --cell-padding-block: ~"var(--space-@{value})";
+      --fk-cell-padding-block: ~"var(--fk-space-@{value})";
     }
   });
 
   &__body {
     display: grid;
     grid-template-columns: max-content minmax(0, 1fr);
-    column-gap: var(--space-12);
-    padding-block: var(--cell-padding-block);
-    padding-inline: var(--cell-padding-inline);
+    column-gap: var(--fk-space-12);
+    padding-block: var(--fk-cell-padding-block);
+    padding-inline: var(--fk-cell-padding-inline);
     min-width: 0;
 
     &--with-separator {
       grid-template-rows: auto auto;
-      row-gap: var(--space-10);
+      row-gap: var(--fk-space-10);
       padding-bottom: 0;
 
       &::after {
@@ -45,7 +45,7 @@
         justify-self: stretch;
         min-width: 0;
         height: 1px;
-        background-color: var(--bg-stroke);
+        background-color: var(--fk-bg-stroke);
       }
     }
   }
@@ -65,7 +65,7 @@
   &__content {
     display: grid;
     grid-template-columns: minmax(0, 1fr) max-content;
-    column-gap: var(--space-12);
+    column-gap: var(--fk-space-12);
     grid-column: 2;
     grid-row: 1;
     align-items: center;
@@ -76,7 +76,7 @@
   &__text {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: var(--fk-space-2);
     min-width: 0;
     grid-column: 1;
     grid-row: 1;
@@ -92,7 +92,7 @@
   }
 
   &__caption {
-    color: var(--text-secondary);
+    color: var(--fk-text-secondary);
   }
 
   &__right {

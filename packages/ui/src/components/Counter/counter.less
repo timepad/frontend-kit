@@ -1,6 +1,6 @@
 @import "../../assets/tokens/index.less";
 
-.ccounter {
+.fk-ccounter {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -8,14 +8,14 @@
   flex-shrink: 0;
   border-radius: 100px;
   user-select: none;
-  background-color: var(--accent-notification);
+  background-color: var(--fk-accent-notification);
 
   &--appearance-custom {
-    background-color: var(--counter-bg, var(--accent-notification));
+    background-color: var(--fk-counter-bg, var(--fk-accent-notification));
   }
 
   &__text {
-    color: var(--text-inverted) !important;
+    color: var(--fk-text-inverted) !important;
   }
 
   &--size-xs {
@@ -26,7 +26,7 @@
   &--size-s {
     padding: 0 4px;
 
-    &.ccounter--shape-circle {
+    &.fk-ccounter--shape-circle {
       width: 16px;
     }
   }
@@ -34,7 +34,7 @@
   &--size-m {
     padding: 0 6px;
 
-    &.ccounter--shape-circle {
+    &.fk-ccounter--shape-circle {
       width: 20px;
     }
   }
