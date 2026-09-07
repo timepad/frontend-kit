@@ -25,9 +25,12 @@
   "files": [
     "src"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "./src/index.ts",
+    "**/*.less"
+  ],
   "exports": {
-    ".": "./src/index.tsx",
+    ".": "./src/index.ts",
     "./*": "./src/*.tsx"
   },
   "peerDependencies": {

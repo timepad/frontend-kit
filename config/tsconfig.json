@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowUmdGlobalAccess": true,
+    "paths": {
+      "@frontend-kit/ui": ["../packages/ui/src/index.ts"],
+      "@frontend-kit/ui/*": ["../packages/ui/src/*"],
+      "@frontend-kit/hooks": ["../packages/hooks/src/index.ts"],
+      "@frontend-kit/hooks/*": ["../packages/hooks/src/*"],
+      "@frontend-kit/utils": ["../packages/utils/src/index.ts"],
+      "@frontend-kit/utils/*": ["../packages/utils/src/*"]
+    }
+  }
+}
