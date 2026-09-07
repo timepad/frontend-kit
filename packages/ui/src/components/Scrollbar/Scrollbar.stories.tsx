@@ -12,14 +12,6 @@ const meta = {
     layout: "centered",
     docs: {
       codePanel: true,
-      description: {
-        component: [
-          "Тонкий primitive над нативной прокруткой.",
-          "Публичный API направления: только `axis=\"auto\" | \"vertical\" | \"horizontal\"` (по умолчанию `auto`).",
-          "При `auto` браузер сам показывает нужные полосы по размеру контента — отдельного значения вроде `both` нет.",
-          "Размеры контейнера (`height`, `max-height`, `width`, `max-width`) задаёт потребитель: без ограничения переполнения не будет.",
-        ].join(" "),
-      },
     },
   },
   tags: ["autodocs"],
@@ -91,11 +83,8 @@ export const Playground: Story = {
   parameters: {
     docs: {
       description: {
-        story: [
-          "Контрол `axis` соответствует публичному типу `ScrollbarAxis`.",
-          "При смене значения подставляется контент другого размера, чтобы было видно,",
+        story:
           "как при `auto` автоматически появляются нужные полосы, а при ограничении оси — только одна.",
-        ].join(" "),
       },
     },
   },
