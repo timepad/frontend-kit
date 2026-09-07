@@ -39,9 +39,9 @@ export const Link: FC<ILinkProps> = ({
 
     const content = (
         <span className={contentClassName}>
-        <LinkLabel tag={tag} as="span" className={linkLabelClassName}>
-            {children}
-        </LinkLabel>
+            <LinkLabel tag={tag} as="span" className={linkLabelClassName}>
+                {children}
+            </LinkLabel>
             {hasIcon && (
                 <span className={linkIconClassName} aria-hidden="true">{icon}</span>
                 )

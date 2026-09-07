@@ -37,12 +37,19 @@ export const Button: FC<IButtonProps> = ({
     "content",
   )({ "icon-position-left": hasIcon && iconPosition === "left" });
 
+  const buttonLabelClassName = component("button", "label")();
+
   const iconClassName = component("button", "icon")();
 
   return (
     <button className={buttonClassName} type={type} {...rest}>
       <span className={contentClassName}>
-        <ButtonLabel tag={tag} as="span" inheritColor>
+        <ButtonLabel
+          tag={tag}
+          as="span"
+          className={buttonLabelClassName}
+          inheritColor
+        >
           {label}
         </ButtonLabel>
 
