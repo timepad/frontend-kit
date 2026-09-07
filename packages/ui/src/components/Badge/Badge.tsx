@@ -1,14 +1,18 @@
-import { forwardRef } from "react";
+import { ComponentType, forwardRef } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./badge.less";
-import { IBadgeProps } from "./badge.types";
-import { BadgeLabel } from "./BadgeLabel";
+import { BadgeSize, IBadgeProps } from "./badge.types";
+import {
+  CaptionVariantTag,
+  ParagraphVariantTag,
+  Typography,
+} from "../Typography";
 
 export const Badge = forwardRef<HTMLSpanElement, IBadgeProps>(
   (
     {
-      children,
+      label,
       size = "m",
       variant = "primary",
       appearance = "accent",
@@ -20,6 +24,7 @@ export const Badge = forwardRef<HTMLSpanElement, IBadgeProps>(
     ref,
   ) => {
     const hasIcon = !!icon;
+    const { BadgeLabel, tag } = badgeLabel[size];
 
     const badgeClassName = classNames(
       component("badge", variant)({ [appearance]: true }),
@@ -30,12 +35,13 @@ export const Badge = forwardRef<HTMLSpanElement, IBadgeProps>(
       }),
       className,
     );
-
     const iconClassName = component("badge", "icon")();
 
     return (
       <span className={badgeClassName} {...props} ref={ref}>
-        <BadgeLabel size={size}>{children}</BadgeLabel>
+        <BadgeLabel tag={tag} as="span" inheritColor>
+          {label}
+        </BadgeLabel>
 
         {hasIcon && (
           <span aria-hidden="true" className={iconClassName}>
@@ -46,5 +52,25 @@ export const Badge = forwardRef<HTMLSpanElement, IBadgeProps>(
     );
   },
 );
+
+const badgeLabel: Record<
+  BadgeSize,
+  {
+    BadgeLabel: ComponentType<any>;
+    tag:
+      | Extract<ParagraphVariantTag, "P4 SEMIBOLD">
+      | Extract<CaptionVariantTag, "C1 REGULAR" | "C1 SEMIBOLD">;
+  }
+> = {
+  s: { BadgeLabel: Typography.Caption, tag: "C1 REGULAR" },
+  m: {
+    BadgeLabel: Typography.Caption,
+    tag: "C1 SEMIBOLD",
+  },
+  l: {
+    BadgeLabel: Typography.Paragraph,
+    tag: "P4 SEMIBOLD",
+  },
+};
 
 Badge.displayName = "Badge";

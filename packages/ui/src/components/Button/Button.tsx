@@ -1,9 +1,13 @@
-import { FC, ReactNode } from "react";
+import { ComponentType, FC, ReactNode } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./button.less";
-import { IButtonProps } from "./button.types";
-import { Typography } from "../Typography";
+import { ButtonSize, IButtonProps } from "./button.types";
+import {
+  CaptionVariantTag,
+  ParagraphVariantTag,
+  Typography,
+} from "../Typography";
 
 export const Button: FC<IButtonProps> = ({
   size = "m",
@@ -16,6 +20,7 @@ export const Button: FC<IButtonProps> = ({
   ...rest
 }) => {
   const hasIcon = !!icon;
+  const { ButtonLabel, tag } = buttonLabel[size];
 
   const buttonClassName = classNames(
     // button variant: cbutton__primary
@@ -37,7 +42,9 @@ export const Button: FC<IButtonProps> = ({
   return (
     <button className={buttonClassName} type={type} {...rest}>
       <span className={contentClassName}>
-        <ButtonLabel size={size}>{label}</ButtonLabel>
+        <ButtonLabel tag={tag} as="span" inheritColor>
+          {label}
+        </ButtonLabel>
 
         {hasIcon && (
           <span aria-hidden="true" className={iconClassName}>
@@ -49,35 +56,22 @@ export const Button: FC<IButtonProps> = ({
   );
 };
 
-interface IButtonLabelProps {
-  size: IButtonProps["size"];
-  children: ReactNode;
-}
-
-const ButtonLabel: FC<IButtonLabelProps> = ({ size, children }) => {
-  const buttonLabelClassName = component("button", "label")();
-
-  if (size === "m" || size === "l") {
-    return (
-      <Typography.Paragraph
-        tag="P4 BOLD"
-        as="span"
-        color="inherit"
-        className={buttonLabelClassName}
-      >
-        {children}
-      </Typography.Paragraph>
-    );
+const buttonLabel: Record<
+  ButtonSize,
+  {
+    ButtonLabel: ComponentType<any>;
+    tag:
+      | Extract<ParagraphVariantTag, "P4 BOLD">
+      | Extract<CaptionVariantTag, "C1 BOLD">;
   }
-
-  return (
-    <Typography.Caption
-      tag="C1 BOLD"
-      as="span"
-      color="inherit"
-      className={buttonLabelClassName}
-    >
-      {children}
-    </Typography.Caption>
-  );
+> = {
+  s: { ButtonLabel: Typography.Caption, tag: "C1 BOLD" },
+  m: {
+    ButtonLabel: Typography.Paragraph,
+    tag: "P4 BOLD",
+  },
+  l: {
+    ButtonLabel: Typography.Paragraph,
+    tag: "P4 BOLD",
+  },
 };

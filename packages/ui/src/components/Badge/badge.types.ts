@@ -28,7 +28,7 @@ export type Appearance = "accent" | "positive" | "negative";
 export type IconPosition = "left" | "right";
 
 type BaseBadgeProps = Omit<HTMLAttributes<HTMLSpanElement>, "children"> & {
-  children: ReactNode;
+  label: ReactNode;
   variant?: BadgeVariant;
   appearance?: Appearance;
 };

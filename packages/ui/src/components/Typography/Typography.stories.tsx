@@ -36,23 +36,6 @@ const meta = {
     uppercase: {
       description: "Преобразует текст в верхний регистр.",
     },
-    color: {
-      description:
-        "Семантический цвет текста. По умолчанию используется --text-primary. inherit наследует цвет родителя.",
-      control: "select",
-      options: [
-        "inherit",
-        "text-primary",
-        "text-primary-alt",
-        "text-secondary",
-        "text-tertiary",
-        "text-inverted",
-        "text-positive",
-        "text-negative",
-        "text-link-primary",
-        "text-link-secondary",
-      ],
-    },
   },
 } satisfies Meta<typeof Typography>;
 

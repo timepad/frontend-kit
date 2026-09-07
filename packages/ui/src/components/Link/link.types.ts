@@ -10,8 +10,3 @@ export type ILinkProps = Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'hr
   iconPosition?: IconPositionType;
   onClick?: (to: string, event: React.MouseEvent<HTMLAnchorElement>) => void;
 };
-
-export interface ILinkLabelProps {
-  size: LinkSizeType;
-  children: React.ReactNode;
-}

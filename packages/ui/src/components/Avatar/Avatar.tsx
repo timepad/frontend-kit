@@ -36,7 +36,7 @@ const AvatarComponent: FC<IAvatarProps> = ({
         {image ? (
             <div className={imageClassName} role="img" style={{backgroundImage: `url("${image}")`}}/>
         ) : (
-            <TextComponent as="span" tag={textTag} color="text-primary-alt" className={initialsClassName}>
+            <TextComponent as="span" tag={textTag} className={initialsClassName}>
               {getInitials(text, size)}
             </TextComponent>
         )}

@@ -45,24 +45,6 @@ export type FontType = "accent" | "regular";
  */
 export type Size = 1 | 2 | 3 | 4;
 
-/**
- * Семантический цвет текста.
- *
- * По умолчанию используется --text-primary.
- * **inherit** — наследует цвет от родителя.
- */
-export type TypographyColor =
-  | "inherit"
-  | "text-primary"
-  | "text-primary-alt"
-  | "text-secondary"
-  | "text-tertiary"
-  | "text-inverted"
-  | "text-positive"
-  | "text-negative"
-  | "text-link-primary"
-  | "text-link-secondary";
-
 export interface ILeadVariant {
   variant: Extract<TypographyVariant, "lead">;
   size: Exclude<Size, 4>;
@@ -99,20 +81,20 @@ export interface ICaptionVariant {
  * - **as** — HTML-тег, который будет отрендерен (span, p, h1 и т.д.)
  * - **innerRef** — ref, пробрасываемый к DOM-элементу
  * - **uppercase** — приводит текст к верхнему регистру
- * - **color** — семантический цвет текста или inherit
+ * - **inheritColor** — наследует цвет родительского компонента
  *
  * Также наследует все стандартные HTML-атрибуты
  * (id, className, onClick и т.д.).
  */
-export interface ITypographyCommonProps extends Omit<
-  DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>,
-  "color"
+export interface ITypographyCommonProps extends DetailedHTMLProps<
+  HTMLAttributes<HTMLElement>,
+  HTMLElement
 > {
   children: ReactNode;
   as?: keyof ReactHTML;
   innerRef?: LegacyRef<HTMLElement>;
   uppercase?: boolean;
-  color?: TypographyColor;
+  inheritColor?: boolean;
 }
 
 export type ITypographyBaseProps = ITypographyCommonProps &

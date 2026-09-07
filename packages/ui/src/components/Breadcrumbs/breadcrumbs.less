@@ -2,7 +2,7 @@
 
 .cbreadcrumbs {
   display: flex;
-  
+
   &__list {
     display: flex;
     align-items: center;
@@ -22,6 +22,7 @@
   }
 
   &__link {
+    color: var(--text-link-secondary);
     text-decoration: none;
     cursor: pointer;
 
@@ -31,6 +32,7 @@
     }
 
     &--current {
+      color: var(--text-primary);
       cursor: default;
       pointer-events: none;
     }

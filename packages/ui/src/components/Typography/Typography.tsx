@@ -18,7 +18,7 @@ export const TypographyBase: FC<ITypographyBaseProps> = ({
   fontType,
   variant,
   innerRef,
-  color,
+  inheritColor,
   ...props
 }) => {
   const typographyClassName = classNames(
@@ -29,7 +29,7 @@ export const TypographyBase: FC<ITypographyBaseProps> = ({
       [fontWeight]: true,
       [`font-${fontType}`]: true,
       uppercase: !!uppercase,
-      [`${color}`]: !!color,
+      ["inherit-color"]: !!inheritColor,
     }),
     className,
   );

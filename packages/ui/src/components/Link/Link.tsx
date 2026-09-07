@@ -1,9 +1,9 @@
-import React, {FC} from 'react';
+import React, {ComponentType, FC} from 'react';
 import {classNames, component} from "@frontend-kit/utils";
 
 import "./link.less";
-import {ILinkProps} from "./link.types";
-import {LinkLabel} from "./LinkLabel";
+import {ILinkProps, LinkSizeType} from "./link.types";
+import {CaptionVariantTag, ParagraphVariantTag, Typography} from '../Typography';
 
 export const Link: FC<ILinkProps> = ({
                          to,
@@ -33,10 +33,15 @@ export const Link: FC<ILinkProps> = ({
 
     const linkIconClassName = component("link", "icon")();
     const contentClassName = component("link", "content")({ "icon-position-left": hasIcon && iconPosition === "left" });
+    const linkLabelClassName = component("link", "label")();
+
+    const {LinkLabel, tag} = linkLabel[size]
 
     const content = (
         <span className={contentClassName}>
-            <LinkLabel size={size}>{children}</LinkLabel>
+        <LinkLabel tag={tag} as="span" className={linkLabelClassName}>
+            {children}
+        </LinkLabel>
             {hasIcon && (
                 <span className={linkIconClassName} aria-hidden="true">{icon}</span>
                 )
@@ -55,3 +60,17 @@ export const Link: FC<ILinkProps> = ({
         </a>
     );
 }
+
+const linkLabel: Record<
+  LinkSizeType,
+  {
+    LinkLabel: ComponentType<any>;
+    tag:
+      | Extract<ParagraphVariantTag, "P4 REGULAR" | "P3 REGULAR">
+      | Extract<CaptionVariantTag, "C1 REGULAR">;
+  }
+> = {
+  s: { LinkLabel: Typography.Caption, tag: "C1 REGULAR" },
+  m: { LinkLabel: Typography.Paragraph, tag: "P4 REGULAR" },
+  l: { LinkLabel: Typography.Paragraph, tag: "P3 REGULAR" },
+};

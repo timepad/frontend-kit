@@ -32,6 +32,7 @@
   }
 
   &__initials {
+    color: var(--text-primary-alt);
     leading-trim: both;
     text-edge: cap;
   }
@@ -49,7 +50,8 @@
       z-index: -1;
       background: var(--bg-primary);
       inset: calc(-1 * var(--avatar-status-ring));
-      border-radius: calc(var(--avatar-status-radius) + var(--avatar-status-ring)
+      border-radius: calc(
+        var(--avatar-status-radius) + var(--avatar-status-ring)
       );
     }
   }

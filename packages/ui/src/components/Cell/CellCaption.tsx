@@ -15,12 +15,7 @@ export const CellCaption: FC<ICellBaseProps> = ({
   );
 
   return (
-    <Typography.Caption
-      tag="C1 REGULAR"
-      className={captionClassName}
-      {...rest}
-      color="text-secondary"
-    >
+    <Typography.Caption tag="C1 REGULAR" className={captionClassName} {...rest}>
       {children}
     </Typography.Caption>
   );

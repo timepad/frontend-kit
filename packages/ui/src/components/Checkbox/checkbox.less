@@ -29,10 +29,19 @@
 
   &__label {
     display: flex;
+    color: var(--text-primary);
+
+    & > :nth-child(2) {
+      color: var(--text-tertiary);
+    }
 
     .column-gap-size(s, var(--space-4));
     .column-gap-size(m, var(--space-6));
     .column-gap-size(l, var(--space-8));
+  }
+
+  &__description {
+    color: var(--text-secondary);
   }
 
   &__control {

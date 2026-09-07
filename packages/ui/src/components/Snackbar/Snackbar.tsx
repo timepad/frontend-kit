@@ -33,8 +33,6 @@ export const SnackbarBase: FC<ISnackbarBaseProps> = ({
     [`${variant}`]: !!variant && variant !== "custom",
   });
   const textClassName = component("snackbar", "text")();
-  const titleClassName = component("snackbar", "title")();
-  const messageClassName = component("snackbar", "message")();
   const actionButtonContainerClassName = component("snackbar", "action-button-container")();
   const actionButtonClassName = component("snackbar", "action-button")();
 
@@ -55,8 +53,7 @@ export const SnackbarBase: FC<ISnackbarBaseProps> = ({
             <Typography.Paragraph
               tag="P4 BOLD"
               as="span"
-              color="text-inverted"
-              className={titleClassName}
+              inheritColor
             >
               {title}
             </Typography.Paragraph>
@@ -64,8 +61,7 @@ export const SnackbarBase: FC<ISnackbarBaseProps> = ({
           <Typography.Paragraph
             tag="P4 REGULAR"
             as="span"
-            color="text-inverted"
-            className={messageClassName}
+            inheritColor
           >
             {label}
           </Typography.Paragraph>

@@ -42,7 +42,7 @@ const meta: Meta<typeof Badge> = {
     ),
   ],
   argTypes: {
-    children: {
+    label: {
       control: "text",
       description: "Содержимое бейджа.",
       table: { type: { summary: "ReactNode" } },
@@ -134,7 +134,7 @@ const meta: Meta<typeof Badge> = {
     },
   },
   args: {
-    children: "Badge",
+    label: "Badge",
     size: "m",
     variant: "primary",
     appearance: "accent",
@@ -164,14 +164,14 @@ export const Outline: Story = {
 
 export const Positive: Story = {
   args: {
-    children: "Positive",
+    label: "Positive",
     appearance: "positive",
   },
 };
 
 export const Negative: Story = {
   args: {
-    children: "Negative",
+    label: "Negative",
     appearance: "negative",
   },
 };

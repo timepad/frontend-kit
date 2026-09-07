@@ -16,6 +16,6 @@ export interface ICellProps extends HTMLAttributes<HTMLDivElement> {
 
 export type ICellBaseProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;
 
-export interface ICellLabelProps extends Omit<HTMLAttributes<HTMLDivElement>, "color"> {
+export interface ICellLabelProps extends HTMLAttributes<HTMLDivElement> {
   bold?: boolean;
 }

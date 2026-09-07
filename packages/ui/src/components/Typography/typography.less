@@ -3,7 +3,6 @@
 .ctypography {
   margin: 0;
   padding: 0;
-  color: var(--text-primary);
 
   &__lead {
     &--1 {
@@ -118,34 +117,11 @@
     font-family: var(--font-regular);
   }
 
-  &--inherit {
+  &--inherit-color {
     color: inherit;
   }
-  &--text-primary {
-    color: var(--text-primary);
-  }
-  &--text-primary-alt {
-    color: var(--text-primary-alt);
-  }
-  &--text-secondary {
-    color: var(--text-secondary);
-  }
-  &--text-tertiary {
-    color: var(--text-tertiary);
-  }
-  &--text-inverted {
-    color: var(--text-inverted);
-  }
-  &--text-positive {
-    color: var(--text-positive);
-  }
-  &--text-negative {
-    color: var(--text-negative);
-  }
-  &--text-link-primary {
-    color: var(--text-link-primary);
-  }
-  &--text-link-secondary {
-    color: var(--text-link-secondary);
-  }
+}
+
+:where(.ctypography) {
+  color: var(--text-primary);
 }

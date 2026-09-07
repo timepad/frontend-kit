@@ -23,7 +23,7 @@ export const Counter: FC<ICounterProps> = ({
       const { Component, tag } = valueCounter[size as CounterSM];
 
       return (
-          <Component tag={tag} className={textClassName} color="text-inverted">
+          <Component tag={tag} as="span" className={textClassName}>
               {displayText}
           </Component>
       )
