@@ -1,13 +1,9 @@
-import { ComponentType, FC, ReactNode } from "react";
+import { FC } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./button.less";
 import { ButtonSize, IButtonProps } from "./button.types";
-import {
-  CaptionVariantTag,
-  ParagraphVariantTag,
-  Typography,
-} from "../Typography";
+import { createTypographyComponent, Typography } from "../Typography";
 
 export const Button: FC<IButtonProps> = ({
   size = "m",
@@ -20,7 +16,7 @@ export const Button: FC<IButtonProps> = ({
   ...rest
 }) => {
   const hasIcon = !!icon;
-  const { ButtonLabel, tag } = buttonLabel[size];
+  const { LabelComponent } = buttonLabel[size];
 
   const buttonClassName = classNames(
     // button variant: cbutton__primary
@@ -44,14 +40,13 @@ export const Button: FC<IButtonProps> = ({
   return (
     <button className={buttonClassName} type={type} {...rest}>
       <span className={contentClassName}>
-        <ButtonLabel
-          tag={tag}
+        <LabelComponent
           as="span"
           className={buttonLabelClassName}
           inheritColor
         >
           {label}
-        </ButtonLabel>
+        </LabelComponent>
 
         {hasIcon && (
           <span aria-hidden="true" className={iconClassName}>
@@ -65,20 +60,15 @@ export const Button: FC<IButtonProps> = ({
 
 const buttonLabel: Record<
   ButtonSize,
-  {
-    ButtonLabel: ComponentType<any>;
-    tag:
-      | Extract<ParagraphVariantTag, "P4 BOLD">
-      | Extract<CaptionVariantTag, "C1 BOLD">;
-  }
+  { LabelComponent: ReturnType<typeof createTypographyComponent> }
 > = {
-  s: { ButtonLabel: Typography.Caption, tag: "C1 BOLD" },
+  s: {
+    LabelComponent: createTypographyComponent(Typography.Caption, "C1 BOLD"),
+  },
   m: {
-    ButtonLabel: Typography.Paragraph,
-    tag: "P4 BOLD",
+    LabelComponent: createTypographyComponent(Typography.Paragraph, "P4 BOLD"),
   },
   l: {
-    ButtonLabel: Typography.Paragraph,
-    tag: "P4 BOLD",
+    LabelComponent: createTypographyComponent(Typography.Paragraph, "P4 BOLD"),
   },
 };

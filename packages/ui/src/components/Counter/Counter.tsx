@@ -1,9 +1,9 @@
-import { type ComponentType, type CSSProperties, FC } from "react";
+import { type CSSProperties, FC } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./counter.less";
 import { CounterSize, CounterSM, ICounterProps } from "./counter.types";
-import { CaptionVariantTag, ParagraphVariantTag, Typography } from "../Typography";
+import { createTypographyComponent, Typography } from "../Typography";
 
 export const Counter: FC<ICounterProps> = ({
   size = "m",
@@ -20,12 +20,12 @@ export const Counter: FC<ICounterProps> = ({
 
   const content = () => {
       if (indicator) return null;
-      const { Component, tag } = valueCounter[size as CounterSM];
+      const TextComponent = valueCounter[size as CounterSM];
 
       return (
-          <Component tag={tag} as="span" className={textClassName}>
+          <TextComponent as="span" className={textClassName}>
               {displayText}
-          </Component>
+          </TextComponent>
       )
   }
 
@@ -64,13 +64,8 @@ const isIndicatorOnly = (size: CounterSize, value?: number): boolean => {
 
 const valueCounter: Record<
   CounterSM,
-  {
-      Component: ComponentType<any>;
-      tag:
-      | Extract<ParagraphVariantTag, "P4 SEMIBOLD">
-      | Extract<CaptionVariantTag, "C1 SEMIBOLD">;
-  }
+  ReturnType<typeof createTypographyComponent>
 > = {
-  s: { Component: Typography.Caption, tag: "C1 SEMIBOLD" },
-  m: { Component: Typography.Paragraph, tag: "P4 SEMIBOLD"},
+  s: createTypographyComponent(Typography.Caption, "C1 SEMIBOLD"),
+  m: createTypographyComponent(Typography.Paragraph, "P4 SEMIBOLD"),
 };

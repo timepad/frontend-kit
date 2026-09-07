@@ -1,13 +1,9 @@
-import { ComponentType, forwardRef } from "react";
+import { forwardRef } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./badge.less";
 import { BadgeSize, IBadgeProps } from "./badge.types";
-import {
-  CaptionVariantTag,
-  ParagraphVariantTag,
-  Typography,
-} from "../Typography";
+import { createTypographyComponent, Typography } from "../Typography";
 
 export const Badge = forwardRef<HTMLSpanElement, IBadgeProps>(
   (
@@ -24,7 +20,7 @@ export const Badge = forwardRef<HTMLSpanElement, IBadgeProps>(
     ref,
   ) => {
     const hasIcon = !!icon;
-    const { BadgeLabel, tag } = badgeLabel[size];
+    const { LabelComponent } = badgeLabel[size];
 
     const badgeClassName = classNames(
       component("badge", variant)({ [appearance]: true }),
@@ -39,9 +35,9 @@ export const Badge = forwardRef<HTMLSpanElement, IBadgeProps>(
 
     return (
       <span className={badgeClassName} {...props} ref={ref}>
-        <BadgeLabel tag={tag} as="span" inheritColor>
+        <LabelComponent as="span" inheritColor>
           {label}
-        </BadgeLabel>
+        </LabelComponent>
 
         {hasIcon && (
           <span aria-hidden="true" className={iconClassName}>
@@ -55,21 +51,16 @@ export const Badge = forwardRef<HTMLSpanElement, IBadgeProps>(
 
 const badgeLabel: Record<
   BadgeSize,
-  {
-    BadgeLabel: ComponentType<any>;
-    tag:
-      | Extract<ParagraphVariantTag, "P4 SEMIBOLD">
-      | Extract<CaptionVariantTag, "C1 REGULAR" | "C1 SEMIBOLD">;
-  }
+  { LabelComponent: ReturnType<typeof createTypographyComponent> }
 > = {
-  s: { BadgeLabel: Typography.Caption, tag: "C1 REGULAR" },
+  s: {
+    LabelComponent: createTypographyComponent(Typography.Caption, "C1 REGULAR"),
+  },
   m: {
-    BadgeLabel: Typography.Caption,
-    tag: "C1 SEMIBOLD",
+    LabelComponent: createTypographyComponent(Typography.Caption, "C1 SEMIBOLD"),
   },
   l: {
-    BadgeLabel: Typography.Paragraph,
-    tag: "P4 SEMIBOLD",
+    LabelComponent: createTypographyComponent(Typography.Paragraph, "P4 SEMIBOLD"),
   },
 };
 
