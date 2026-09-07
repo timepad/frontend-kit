@@ -1,3 +1,7 @@
+/// <reference path="../../../config/types.d.ts" />
+
+import "./assets/tokens/index.less";
+
 export { Counter } from "./components/Counter";
 export { Breadcrumbs } from "./components/Breadcrumbs";
 export { Avatar, AvatarStatus } from "./components/Avatar";
@@ -14,4 +18,3 @@ export { Cell } from "./components/Cell";
 export { Link } from "./components/Link";
 export { TabsButton } from "./components/TabsButton";
 export * from "./assets/icons";
-export * from "./P";
