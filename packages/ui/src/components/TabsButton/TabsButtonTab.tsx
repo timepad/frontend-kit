@@ -8,7 +8,7 @@ import { Counter } from "../Counter";
 import { CounterSM } from "../Counter/counter.types";
 
 export const TabsButtonTab: FC<ITabsButtonTabProps> = ({
-  value,
+  tabId,
   label,
   disabled,
   className,
@@ -17,9 +17,9 @@ export const TabsButtonTab: FC<ITabsButtonTabProps> = ({
   notify,
   ...rest
 }) => {
-  const { value: selectedValue, setValue, size } = useTabsButtonContext();
+  const { activeTabId, setActiveTabId, size } = useTabsButtonContext();
 
-  const isSelected = selectedValue === value;
+  const isSelected = activeTabId === tabId;
 
   const { Component: LabelComponent, tag } = tabLabelConfig[size];
 
@@ -39,7 +39,7 @@ export const TabsButtonTab: FC<ITabsButtonTabProps> = ({
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
-    setValue(value);
+    setActiveTabId(tabId);
   };
 
   return (
@@ -47,11 +47,11 @@ export const TabsButtonTab: FC<ITabsButtonTabProps> = ({
       {...rest}
       type="button"
       role="tab"
-      id={`tab-${value}`}
+      id={`tab-${tabId}`}
       className={tabClassName}
       disabled={disabled}
       aria-selected={isSelected}
-      aria-controls={`panel-${value}`}
+      aria-controls={`panel-${tabId}`}
       onClick={handleClick}
     >
       <span className={contentClassName}>

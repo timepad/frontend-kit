@@ -1,4 +1,4 @@
-@import "../../assets/tokens/index.less";
+@import (reference) "../../assets/tokens/index.less";
 
 .ctabs-button {
   display: flex;
@@ -6,10 +6,25 @@
   min-width: 0;
 
   &__list {
+    --tabs-button-list-offset: 0;
+    --tabs-button-list-row-gap: 0;
+
     display: flex;
     align-items: stretch;
     min-width: 0;
     width: 100%;
+    padding-block: var(--tabs-button-list-offset);
+    margin-block: calc(var(--tabs-button-list-offset) * -1);
+
+    &--size-s {
+      --tabs-button-list-offset: var(--space-6);
+      --tabs-button-list-row-gap: var(--space-12);
+    }
+
+    &--size-m {
+      --tabs-button-list-offset: var(--space-2);
+      --tabs-button-list-row-gap: var(--space-4);
+    }
 
     &--overflow-scroll {
       flex-wrap: nowrap;
@@ -17,8 +32,10 @@
       overflow-y: hidden;
       overscroll-behavior-x: contain;
       scrollbar-width: none;
+      // Скрывает полосу прокрутки в IE и Edge Legacy; Autoprefixer не добавляет это свойство.
       -ms-overflow-style: none;
 
+      // Скрывает полосу прокрутки в версиях Safari и Chromium без поддержки scrollbar-width.
       &::-webkit-scrollbar {
         display: none;
       }
@@ -26,6 +43,7 @@
 
     &--overflow-wrap {
       flex-wrap: wrap;
+      row-gap: var(--tabs-button-list-row-gap);
     }
   }
 
@@ -38,6 +56,11 @@
     white-space: nowrap;
     background: transparent;
     color: var(--text-secondary);
+
+    &::before {
+      position: absolute;
+      content: "";
+    }
 
     &::after {
       position: absolute;
@@ -59,11 +82,19 @@
     &--size-s {
       padding: var(--space-6) var(--space-8);
       border-radius: var(--radius-8);
+
+      &::before {
+        inset: calc(var(--space-6) * -1) 0;
+      }
     }
 
     &--size-m {
       padding: var(--space-8) var(--space-10);
       border-radius: var(--radius-10);
+
+      &::before {
+        inset: calc(var(--space-2) * -1) 0;
+      }
     }
 
     &--size-l {

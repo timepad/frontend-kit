@@ -4,22 +4,22 @@ import { ITabsButtonPanelProps } from "./tabs-button.types";
 import { useTabsButtonContext } from "./tabsButtonContext";
 
 export const TabsButtonPanel: FC<PropsWithChildren<ITabsButtonPanelProps>> = ({
-  value,
+  tabId,
   className,
   children,
   hidden,
   ...rest
 }) => {
-  const { value: selectedValue } = useTabsButtonContext();
-  const isSelected = selectedValue === value;
+  const { activeTabId } = useTabsButtonContext();
+  const isSelected = activeTabId === tabId;
 
   return (
     <div
       {...rest}
-      id={`panel-${value}`}
+      id={`panel-${tabId}`}
       role="tabpanel"
       className={className}
-      aria-labelledby={`tab-${value}`}
+      aria-labelledby={`tab-${tabId}`}
       hidden={hidden ?? !isSelected}
     >
       {children}

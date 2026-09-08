@@ -12,34 +12,32 @@ const TabsButtonRoot: FC<PropsWithChildren<ITabsButtonProps>> = ({
   children,
   className,
   size = "m",
-  overflow = "scroll",
-  value,
-  defaultValue = "",
-  onValueChange,
+  activeTabId,
+  defaultActiveTabId = "",
+  onActiveTabChange,
   ...rest
 }) => {
-  const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
-  const isControlled = value !== undefined;
-  const currentValue = isControlled ? value : uncontrolledValue;
+  const [uncontrolledActiveTabId, setUncontrolledActiveTabId] = useState(defaultActiveTabId);
+  const isControlled = activeTabId !== undefined;
+  const currentActiveTabId = isControlled ? activeTabId : uncontrolledActiveTabId;
 
-  const setValue = useCallback(
-    (nextValue: string) => {
+  const setActiveTabId = useCallback(
+    (nextTabId: string) => {
       if (!isControlled) {
-        setUncontrolledValue(nextValue);
+        setUncontrolledActiveTabId(nextTabId);
       }
-      onValueChange?.(nextValue);
+      onActiveTabChange?.(nextTabId);
     },
-    [isControlled, onValueChange],
+    [isControlled, onActiveTabChange],
   );
 
   const contextValue = useMemo(
     () => ({
-      value: currentValue,
-      setValue,
+      activeTabId: currentActiveTabId,
+      setActiveTabId,
       size,
-      overflow,
     }),
-    [currentValue, setValue, size, overflow],
+    [currentActiveTabId, setActiveTabId, size],
   );
 
   const rootClassName = classNames(component("tabs-button")(), className);

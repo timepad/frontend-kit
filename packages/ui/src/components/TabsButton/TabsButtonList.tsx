@@ -6,10 +6,11 @@ import { useTabsButtonContext } from "./tabsButtonContext";
 
 export const TabsButtonList: FC<PropsWithChildren<ITabsButtonListProps>> = ({
   className,
+  overflow = "scroll",
   children,
   ...rest
 }) => {
-  const { overflow, value } = useTabsButtonContext();
+  const { activeTabId, size } = useTabsButtonContext();
   const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -24,10 +25,13 @@ export const TabsButtonList: FC<PropsWithChildren<ITabsButtonListProps>> = ({
     if (!selectedTab) return;
 
     scrollTabFullyIntoView(list, selectedTab);
-  }, [overflow, value]);
+  }, [overflow, activeTabId]);
 
   const listClassName = classNames(
-    component("tabs-button", "list")({ [`overflow-${overflow}`]: true }),
+    component(
+      "tabs-button",
+      "list",
+    )({ [`overflow-${overflow}`]: true, [`size-${size}`]: true }),
     className,
   );
 

@@ -22,21 +22,23 @@ export interface ITabsButtonProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   "defaultValue" | "onChange"
 > {
-  /** Контролируемое выбранное значение таба. */
-  value?: string;
-  /** Начальное значение для неконтролируемого режима. */
-  defaultValue?: string;
+  /** Идентификатор активного таба в контролируемом режиме. */
+  activeTabId?: string;
+  /** Идентификатор изначально активного таба в неконтролируемом режиме. */
+  defaultActiveTabId?: string;
   /** Вызывается при смене активного таба. */
-  onValueChange?: (value: string) => void;
+  onActiveTabChange?: (tabId: string) => void;
   size?: TabsButtonSize;
-  overflow?: TabsButtonOverflow;
 }
 
 /**
  * Контейнер списка табов (`role="tablist"`).
  * Передайте `aria-label` или `aria-labelledby`, чтобы список имел доступное имя.
  */
-export type ITabsButtonListProps = HTMLAttributes<HTMLDivElement>;
+export interface ITabsButtonListProps extends HTMLAttributes<HTMLDivElement> {
+  /** Поведение списка при переполнении. По умолчанию — scroll. */
+  overflow?: TabsButtonOverflow;
+}
 
 type TabsButtonTabNotificationProps =
   | {
@@ -55,19 +57,18 @@ export type ITabsButtonTabProps = Omit<
   "type" | "value"
 > &
   TabsButtonTabNotificationProps & {
-    /** Уникальный ключ таба, связывается с одноимённой панелью. */
-    value: string;
+    /** Уникальный идентификатор таба, связывается с панелью с таким же tabId. */
+    tabId: string;
     label: string;
   };
 
 export interface ITabsButtonPanelProps extends HTMLAttributes<HTMLDivElement> {
   /** Ключ таба, к которому относится панель. */
-  value: string;
+  tabId: string;
 }
 
 export interface ITabsButtonContextValue {
-  value: string;
-  setValue: (value: string) => void;
+  activeTabId: string;
+  setActiveTabId: (tabId: string) => void;
   size: TabsButtonSize;
-  overflow: TabsButtonOverflow;
 }
