@@ -2,41 +2,41 @@
 
 /*
  * Настраиваемые CSS custom properties (можно переопределять на контейнере):
- * --scrollbar-thumb-size
- * --scrollbar-offset
- * --scrollbar-thumb-color
- * --scrollbar-thumb-opacity
- * --scrollbar-thumb-radius
+ * --fk-scrollbar-thumb-size
+ * --fk-scrollbar-offset
+ * --fk-scrollbar-thumb-color
+ * --fk-scrollbar-thumb-opacity
+ * --fk-scrollbar-thumb-radius
  */
 
-.cscrollbar {
-  --scrollbar-thumb-size: var(--space-4);
-  --scrollbar-offset: var(--space-4);
-  --scrollbar-thumb-color: var(--scrollbar-thumb);
-  --scrollbar-thumb-opacity: 0.5;
-  --scrollbar-thumb-radius: var(--radius-40);
-  --scrollbar-track-size: calc(
-    var(--scrollbar-thumb-size) + var(--scrollbar-offset)
+.fk-cscrollbar {
+  --fk-scrollbar-thumb-size: var(--fk-space-4);
+  --fk-scrollbar-offset: var(--fk-space-4);
+  --fk-scrollbar-thumb-color: var(--fk-scrollbar-thumb);
+  --fk-scrollbar-thumb-opacity: 0.5;
+  --fk-scrollbar-thumb-radius: var(--fk-radius-40);
+  --fk-scrollbar-track-size: calc(
+    var(--fk-scrollbar-thumb-size) + var(--fk-scrollbar-offset)
   );
-  --scrollbar-thumb-fill: color-mix(
+  --fk-scrollbar-thumb-fill: color-mix(
     in srgb,
-    var(--scrollbar-thumb-color) calc(100% * var(--scrollbar-thumb-opacity)),
+    var(--fk-scrollbar-thumb-color) calc(100% * var(--fk-scrollbar-thumb-opacity)),
     transparent
   );
 }
 
-.cscrollbar,
-.cscrollbar * {
+.fk-cscrollbar,
+.fk-cscrollbar * {
   /* standard — только где нет ::-webkit-scrollbar */
   @supports not selector(::-webkit-scrollbar) {
     scrollbar-width: thin;
-    scrollbar-color: var(--scrollbar-thumb-fill) transparent;
+    scrollbar-color: var(--fk-scrollbar-thumb-fill) transparent;
   }
 
   /* legacy */
   &::-webkit-scrollbar {
-    width: var(--scrollbar-track-size);
-    height: var(--scrollbar-track-size);
+    width: var(--fk-scrollbar-track-size);
+    height: var(--fk-scrollbar-track-size);
   }
 
   &::-webkit-scrollbar-track {
@@ -48,9 +48,9 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbar-thumb-fill);
-    border-radius: var(--scrollbar-thumb-radius);
-    border: calc(var(--scrollbar-offset) / 2) solid transparent;
+    background-color: var(--fk-scrollbar-thumb-fill);
+    border-radius: var(--fk-scrollbar-thumb-radius);
+    border: calc(var(--fk-scrollbar-offset) / 2) solid transparent;
     background-clip: content-box;
   }
 }

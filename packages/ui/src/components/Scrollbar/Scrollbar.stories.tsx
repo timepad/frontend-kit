@@ -10,7 +10,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Добавить className="cscrollbar" существующему контейнеру. Стили подключаются при импорте @frontend-kit/ui. Настройка доступна через CSS-переменные --scrollbar-thumb-size, --scrollbar-offset, --scrollbar-thumb-color, --scrollbar-thumb-opacity и --scrollbar-thumb-radius на контейнере.',
+          'Добавить className="fk-cscrollbar" существующему контейнеру. Стили подключаются при импорте @frontend-kit/ui. Настройка доступна через CSS-переменные --fk-scrollbar-thumb-size, --fk-scrollbar-offset, --fk-scrollbar-thumb-color, --fk-scrollbar-thumb-opacity и --fk-scrollbar-thumb-radius на контейнере.',
       },
     },
   },
@@ -24,11 +24,11 @@ type Story = StoryObj<typeof meta>;
 const itemStyle = {
   padding: "12px 16px",
   borderRadius: 8,
-  background: "var(--bg-secondary)",
-  color: "var(--text-secondary)",
+  background: "var(--fk-bg-secondary)",
+  color: "var(--fk-text-secondary)",
 } as const;
 
-const containerStyle = { border: "1px dashed var(--bg-stroke)" } as const;
+const containerStyle = { border: "1px dashed var(--fk-bg-stroke)" } as const;
 
 /** Контент выше контейнера — появляется вертикальная полоса. */
 const verticalContent = (
@@ -71,7 +71,7 @@ const bothContent = (
 
 export const Descendants: Story = {
   render: () => (
-    <main className="cscrollbar" style={{ display: "grid", gap: 24 }}>
+    <main className="fk-cscrollbar" style={{ display: "grid", gap: 24 }}>
       <section>
         <h3>Вертикальная прокрутка</h3>
         <div style={{ ...containerStyle, height: 240, width: 400, overflowY: "auto" }}>
@@ -90,7 +90,7 @@ export const Descendants: Story = {
 
 export const Container: Story = {
   render: () => (
-    <div className="cscrollbar" style={{ ...containerStyle, height: 320, width: 320, overflow: "auto" }}>
+    <div className="fk-cscrollbar" style={{ ...containerStyle, height: 320, width: 320, overflow: "auto" }}>
       {bothContent}
     </div>
   ),
@@ -98,7 +98,7 @@ export const Container: Story = {
 
 export const WithoutSizeConstraint: Story = {
   render: () => (
-    <div className="cscrollbar" style={{ ...containerStyle, width: 320 }}>
+    <div className="fk-cscrollbar" style={{ ...containerStyle, width: 320 }}>
       {verticalContent}
     </div>
   ),
@@ -109,23 +109,23 @@ export const CustomAppearance: Story = {
     docs: {
       description: {
         story:
-          "CSS-переменные задаются на контейнере с cscrollbar через style или CSS-класс.",
+          "CSS-переменные задаются на контейнере с fk-cscrollbar через style или CSS-класс.",
       },
     },
   },
   render: () => (
     <div
-      className="cscrollbar"
+      className="fk-cscrollbar"
       style={{
         ...containerStyle,
         height: 320,
         width: 320,
         overflow: "auto",
-        "--scrollbar-thumb-size": "8px",
-        "--scrollbar-offset": "4px",
-        "--scrollbar-thumb-color": "#8054d9",
-        "--scrollbar-thumb-opacity": 1,
-        "--scrollbar-thumb-radius": "2px",
+        "--fk-scrollbar-thumb-size": "8px",
+        "--fk-scrollbar-offset": "4px",
+        "--fk-scrollbar-thumb-color": "#8054d9",
+        "--fk-scrollbar-thumb-opacity": 1,
+        "--fk-scrollbar-thumb-radius": "2px",
       } as CSSProperties}
     >
       {bothContent}
@@ -144,15 +144,15 @@ export const CustomDescendants: Story = {
   },
   render: () => (
     <main
-      className="cscrollbar"
+      className="fk-cscrollbar"
       style={{
         display: "grid",
         gap: 24,
-        "--scrollbar-thumb-size": "6px",
-        "--scrollbar-offset": "6px",
-        "--scrollbar-thumb-color": "#16836b",
-        "--scrollbar-thumb-opacity": 0.7,
-        "--scrollbar-thumb-radius": "12px",
+        "--fk-scrollbar-thumb-size": "6px",
+        "--fk-scrollbar-offset": "6px",
+        "--fk-scrollbar-thumb-color": "#16836b",
+        "--fk-scrollbar-thumb-opacity": 0.7,
+        "--fk-scrollbar-thumb-radius": "12px",
       } as CSSProperties}
     >
       <section>
