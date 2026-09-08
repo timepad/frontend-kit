@@ -21,7 +21,7 @@ export const AvatarStatus: FC<IAvatarStatusProps> = ({
     className,
   );
   const iconClassName = component("avatar-status", "icon")();
-  const statusStyle = { "--avatar-status-bg": appearance === "custom" ? color : undefined } as CSSProperties;
+  const statusStyle = { "--fk-avatar-status-bg": appearance === "custom" ? color : undefined } as CSSProperties;
 
   return (
     <span
