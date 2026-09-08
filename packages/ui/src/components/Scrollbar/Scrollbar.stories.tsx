@@ -1,31 +1,21 @@
+import type { CSSProperties } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Scrollbar } from "./Scrollbar";
-import type { ScrollbarAxis } from "./scrollbar.types";
-
-const axisOptions = ["auto", "vertical", "horizontal"] as const satisfies readonly ScrollbarAxis[];
+import "../../assets/styles/scrollbar.less";
 
 const meta = {
   title: "Components/Scrollbar",
-  component: Scrollbar,
   parameters: {
     layout: "centered",
     docs: {
-      codePanel: true,
+      description: {
+        component:
+          'Добавить className="cscrollbar" существующему контейнеру. Стили подключаются при импорте @frontend-kit/ui. Настройка доступна через CSS-переменные --scrollbar-thumb-size, --scrollbar-offset, --scrollbar-thumb-color, --scrollbar-thumb-opacity и --scrollbar-thumb-radius на контейнере.',
+      },
     },
   },
   tags: ["autodocs"],
-  argTypes: {
-    axis: {
-      control: "select",
-      options: [...axisOptions],
-      description: "Публичный prop. `auto` — полосы по контенту; `vertical` / `horizontal` — ограничение оси.",
-    },
-  },
-  args: {
-    axis: "auto",
-  },
-} satisfies Meta<typeof Scrollbar>;
+} satisfies Meta;
 
 export default meta;
 
@@ -62,7 +52,7 @@ const horizontalContent = (
   </div>
 );
 
-/** Контент больше по обеим осям — при `axis="auto"` видны обе полосы. */
+/** Контент больше по обеим осям. */
 const bothContent = (
   <div style={{ padding: 16, width: "max-content" }}>
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -79,114 +69,104 @@ const bothContent = (
   </div>
 );
 
-export const Playground: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "как при `auto` автоматически появляются нужные полосы, а при ограничении оси — только одна.",
-      },
-    },
-  },
-  render: ({ axis = "auto" }) => {
-    if (axis === "horizontal") {
-      return (
-        <Scrollbar axis="horizontal" style={{ ...containerStyle, width: 400 }}>
-          {horizontalContent}
-        </Scrollbar>
-      );
-    }
-
-    if (axis === "vertical") {
-      return (
-        <Scrollbar axis="vertical" style={{ ...containerStyle, height: 320, width: 320 }}>
+export const Descendants: Story = {
+  render: () => (
+    <main className="cscrollbar" style={{ display: "grid", gap: 24 }}>
+      <section>
+        <h3>Вертикальная прокрутка</h3>
+        <div style={{ ...containerStyle, height: 240, width: 400, overflowY: "auto" }}>
           {verticalContent}
-        </Scrollbar>
-      );
-    }
-
-    return (
-      <Scrollbar axis="auto" style={{ ...containerStyle, height: 320, width: 320 }}>
-        {bothContent}
-      </Scrollbar>
-    );
-  },
+        </div>
+      </section>
+      <section>
+        <h3>Горизонтальная прокрутка</h3>
+        <div style={{ ...containerStyle, width: 400, overflowX: "auto" }}>
+          {horizontalContent}
+        </div>
+      </section>
+    </main>
+  ),
 };
 
-export const Auto: Story = {
-  args: { axis: "auto" },
-  argTypes: {
-    axis: { table: { disable: true } },
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "`axis=\"auto\"`: контент переполняет контейнер по обеим осям — браузер показывает вертикальную и горизонтальную полосы.",
-      },
-    },
-  },
+export const Container: Story = {
   render: () => (
-    <Scrollbar style={{ ...containerStyle, height: 320, width: 320 }}>
+    <div className="cscrollbar" style={{ ...containerStyle, height: 320, width: 320, overflow: "auto" }}>
       {bothContent}
-    </Scrollbar>
-  ),
-};
-
-export const Vertical: Story = {
-  args: { axis: "vertical" },
-  argTypes: {
-    axis: { table: { disable: true } },
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "`axis=\"vertical\"`: только вертикальная прокрутка, контент выше контейнера.",
-      },
-    },
-  },
-  render: () => (
-    <Scrollbar axis="vertical" style={{ ...containerStyle, height: 320, width: 320 }}>
-      {verticalContent}
-    </Scrollbar>
-  ),
-};
-
-export const Horizontal: Story = {
-  args: { axis: "horizontal" },
-  argTypes: {
-    axis: { table: { disable: true } },
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "`axis=\"horizontal\"`: только горизонтальная прокрутка, контент шире контейнера.",
-      },
-    },
-  },
-  render: () => (
-    <Scrollbar axis="horizontal" style={{ ...containerStyle, width: 400 }}>
-      {horizontalContent}
-    </Scrollbar>
+    </div>
   ),
 };
 
 export const WithoutSizeConstraint: Story = {
-  name: "Without size constraint",
-  argTypes: {
-    axis: { table: { disable: true } },
-  },
+  render: () => (
+    <div className="cscrollbar" style={{ ...containerStyle, width: 320 }}>
+      {verticalContent}
+    </div>
+  ),
+};
+
+export const CustomAppearance: Story = {
   parameters: {
     docs: {
       description: {
         story:
-          "Без `height` / `max-height` контейнер растягивается по содержимому — полоса прокрутки не появляется.",
+          "CSS-переменные задаются на контейнере с cscrollbar через style или CSS-класс.",
       },
     },
   },
   render: () => (
-    <Scrollbar style={{ ...containerStyle, width: 320 }}>
-      {verticalContent}
-    </Scrollbar>
+    <div
+      className="cscrollbar"
+      style={{
+        ...containerStyle,
+        height: 320,
+        width: 320,
+        overflow: "auto",
+        "--scrollbar-thumb-size": "8px",
+        "--scrollbar-offset": "4px",
+        "--scrollbar-thumb-color": "#8054d9",
+        "--scrollbar-thumb-opacity": 1,
+        "--scrollbar-thumb-radius": "2px",
+      } as CSSProperties}
+    >
+      {bothContent}
+    </div>
+  ),
+};
+
+export const CustomDescendants: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Класс и переменные заданы один раз на общем контейнере. Вложенные области с вертикальной и горизонтальной прокруткой получают одинаковое оформление без дополнительных классов или обёрток.",
+      },
+    },
+  },
+  render: () => (
+    <main
+      className="cscrollbar"
+      style={{
+        display: "grid",
+        gap: 24,
+        "--scrollbar-thumb-size": "6px",
+        "--scrollbar-offset": "6px",
+        "--scrollbar-thumb-color": "#16836b",
+        "--scrollbar-thumb-opacity": 0.7,
+        "--scrollbar-thumb-radius": "12px",
+      } as CSSProperties}
+    >
+      <section>
+        <h3>Вертикальная прокрутка</h3>
+        <div style={{ ...containerStyle, height: 240, width: 400, overflowY: "auto" }}>
+          {verticalContent}
+        </div>
+      </section>
+      <section>
+        <h3>Горизонтальная прокрутка</h3>
+        <div style={{ ...containerStyle, width: 400, overflowX: "auto" }}>
+          {horizontalContent}
+        </div>
+      </section>
+    </main>
   ),
 };

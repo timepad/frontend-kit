@@ -1,7 +1,7 @@
-@import "../../assets/tokens/index.less";
+@import "../tokens/index.less";
 
 /*
- * Настраиваемые CSS custom properties (можно переопределять на экземпляре):
+ * Настраиваемые CSS custom properties (можно переопределять на контейнере):
  * --scrollbar-thumb-size
  * --scrollbar-offset
  * --scrollbar-thumb-color
@@ -23,11 +23,10 @@
     var(--scrollbar-thumb-color) calc(100% * var(--scrollbar-thumb-opacity)),
     transparent
   );
+}
 
-  box-sizing: border-box;
-  /* Нативная прокрутка */
-  overflow: auto;
-
+.cscrollbar,
+.cscrollbar * {
   /* standard — только где нет ::-webkit-scrollbar */
   @supports not selector(::-webkit-scrollbar) {
     scrollbar-width: thin;
@@ -53,15 +52,5 @@
     border-radius: var(--scrollbar-thumb-radius);
     border: calc(var(--scrollbar-offset) / 2) solid transparent;
     background-clip: content-box;
-  }
-
-  &--axis-vertical {
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-
-  &--axis-horizontal {
-    overflow-x: auto;
-    overflow-y: hidden;
   }
 }
