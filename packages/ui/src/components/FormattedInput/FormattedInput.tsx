@@ -106,7 +106,7 @@ export const FormattedInput = forwardRef<HTMLInputElement, FormattedInputProps>(
       if (!inputEl || !overlayEl) return;
 
       const sync = () => {
-        overlayEl.style.setProperty("--fi-scroll-left", `${inputEl.scrollLeft}px`);
+        overlayEl.style.setProperty("--fk-fi-scroll-left", `${inputEl.scrollLeft}px`);
       };
 
       sync();

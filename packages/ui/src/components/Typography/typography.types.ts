@@ -30,8 +30,8 @@ export type FontWeight = "bold" | "semi-bold" | "medium" | "regular";
 /**
  * Предустановленные типы шрифтов дизайн-системы.
  *
- * - **accent** — акцентный шрифт (TT Backwards Sans)
- * - **regular** — основной системный шрифт (Inter)
+ * - **accent** — акцентный шрифт (TP FK TT Backwards Sans)
+ * - **regular** — основной системный шрифт (TP FK Inter)
  */
 export type FontType = "accent" | "regular";
 
