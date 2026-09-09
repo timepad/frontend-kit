@@ -1,6 +1,6 @@
 @import (reference) "../../assets/tokens/index.less";
 
-.cbadge {
+.fk-cbadge {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -10,34 +10,34 @@
   }
 
   &__primary {
-    color: var(--text-inverted);
+    color: var(--fk-text-inverted);
 
     &--accent {
-      background-color: var(--accent-active);
+      background-color: var(--fk-accent-active);
     }
 
     &--positive {
-      background-color: var(--accent-positive);
+      background-color: var(--fk-accent-positive);
     }
 
     &--negative {
-      background-color: var(--accent-negative);
+      background-color: var(--fk-accent-negative);
     }
   }
 
   &__secondary {
-    background-color: var(--bg-secondary);
+    background-color: var(--fk-bg-secondary);
 
     &--accent {
-      color: var(--accent-active);
+      color: var(--fk-accent-active);
     }
 
     &--positive {
-      color: var(--accent-positive);
+      color: var(--fk-accent-positive);
     }
 
     &--negative {
-      color: var(--accent-negative);
+      color: var(--fk-accent-negative);
     }
   }
 
@@ -45,58 +45,58 @@
     background-color: transparent;
 
     &--accent {
-      outline: 1px solid var(--accent-active);
-      color: var(--accent-active);
+      outline: 1px solid var(--fk-accent-active);
+      color: var(--fk-accent-active);
     }
 
     &--positive {
-      outline: 1px solid var(--accent-positive);
-      color: var(--accent-positive);
+      outline: 1px solid var(--fk-accent-positive);
+      color: var(--fk-accent-positive);
     }
 
     &--negative {
-      outline: 1px solid var(--accent-negative);
-      color: var(--accent-negative);
+      outline: 1px solid var(--fk-accent-negative);
+      color: var(--fk-accent-negative);
     }
   }
 
   &--size-s {
-    border-radius: var(--radius-6);
-    padding: var(--space-0) var(--space-4);
+    border-radius: var(--fk-radius-6);
+    padding: var(--fk-space-0) var(--fk-space-4);
   }
 
   &--size-m {
-    border-radius: var(--radius-6);
-    padding: var(--space-2) var(--space-4);
-    column-gap: var(--space-2);
+    border-radius: var(--fk-radius-6);
+    padding: var(--fk-space-2) var(--fk-space-4);
+    column-gap: var(--fk-space-2);
   }
 
   &--size-l {
-    border-radius: var(--radius-10);
-    padding: var(--space-4) var(--space-6);
-    column-gap: var(--space-4);
+    border-radius: var(--fk-radius-10);
+    padding: var(--fk-space-4) var(--fk-space-6);
+    column-gap: var(--fk-space-4);
   }
 
   &--has-icon {
-    &.cbadge--size-m {
-      padding-left: var(--space-4);
-      padding-right: var(--space-2);
+    &.fk-cbadge--size-m {
+      padding-left: var(--fk-space-4);
+      padding-right: var(--fk-space-2);
     }
 
-    &.cbadge--size-l {
-      padding-left: var(--space-6);
-      padding-right: var(--space-4);
+    &.fk-cbadge--size-l {
+      padding-left: var(--fk-space-6);
+      padding-right: var(--fk-space-4);
     }
 
-    &.cbadge--icon-position-left {
-      &.cbadge--size-m {
-        padding-left: var(--space-2);
-        padding-right: var(--space-4);
+    &.fk-cbadge--icon-position-left {
+      &.fk-cbadge--size-m {
+        padding-left: var(--fk-space-2);
+        padding-right: var(--fk-space-4);
       }
 
-      &.cbadge--size-l {
-        padding-left: var(--space-4);
-        padding-right: var(--space-6);
+      &.fk-cbadge--size-l {
+        padding-left: var(--fk-space-4);
+        padding-right: var(--fk-space-6);
       }
     }
   }

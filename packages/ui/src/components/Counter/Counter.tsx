@@ -39,7 +39,7 @@ export const Counter: FC<ICounterProps> = ({
   );
 
   const textClassName = component("counter", "text")();
-  const customBg = appearance === "custom" ? ({ "--counter-bg": color } as CSSProperties) : {};
+  const customBg = appearance === "custom" ? ({ "--fk-counter-bg": color } as CSSProperties) : {};
 
   return (
       <span className={rootClassName} style={{ ...customBg, ...style }} {...rest}>

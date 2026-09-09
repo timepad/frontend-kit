@@ -137,7 +137,7 @@ export const Badge: FC<BadgeProps> = ({
 );
 ```
 
-Префикс `c` для класса добавляет `component()`. В примере получится `cbadge cbadge--appearance-neutral`.
+Префикс `fk-c` для класса добавляет `component()`. В примере получится `fk-cbadge fk-cbadge--appearance-neutral`.
 
 ### 4. Добавьте стили
 
@@ -145,19 +145,19 @@ export const Badge: FC<BadgeProps> = ({
 // badge.less
 @import (reference) "../../assets/tokens/index.less";
 
-.cbadge {
+.fk-cbadge {
   display: inline-flex;
-  border-radius: var(--radius-8);
-  padding: var(--space-4) var(--space-8);
+  border-radius: var(--fk-radius-8);
+  padding: var(--fk-space-4) var(--fk-space-8);
 
   &--appearance-neutral {
-    color: var(--text-primary);
-    background: var(--bg-secondary);
+    color: var(--fk-text-primary);
+    background: var(--fk-bg-secondary);
   }
 
   &--appearance-accent {
-    color: var(--text-inverted);
-    background: var(--accent-active);
+    color: var(--fk-text-inverted);
+    background: var(--fk-accent-notification);
   }
 }
 ```
@@ -292,7 +292,7 @@ export {
 - `themes.less` — семантические переменные светлой и тёмной тем;
 - `index.less` — единая точка подключения токенов.
 
-Новый токен должен иметь семантическое имя и, если применимо, значение для обеих тем. Компоненты используют CSS variables (`var(--text-primary)`), а не внутренние Less-переменные карты.
+Новый токен должен иметь семантическое имя и, если применимо, значение для обеих тем. Компоненты используют CSS variables (`var(--fk-text-primary)`), а не внутренние Less-переменные карты.
 
 ## Проверка изменений
 

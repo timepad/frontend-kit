@@ -16,9 +16,9 @@ export const IconButton: FC<IIconButtonProps> = ({
 }) => {
 
   const iconButtonClassName = classNames(
-    // button variant: cicon-button__primary
+    // button variant: fk-cicon-button__primary
     component("icon-button", variant)(),
-    // button size: cicon-button cicon-button--size-xs
+    // button size: fk-cicon-button fk-cicon-button--size-xs
     component("icon-button")({
       [`size-${size}`]: true,
     }),

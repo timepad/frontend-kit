@@ -22,9 +22,9 @@ export const TypographyBase: FC<ITypographyBaseProps> = ({
   ...props
 }) => {
   const typographyClassName = classNames(
-    // typography variant with size modifier: ctypography__lead ctypography__lead--1
+    // typography variant with size modifier: fk-ctypography__lead fk-ctypography__lead--1
     component("typography", variant)({ [`${size}`]: !!size }),
-    // font-weight, text-transform, font-family styles: ctypography ctypography--bold ctypography--font-accent ctypography--uppercase
+    // font-weight, text-transform, font-family styles: fk-ctypography fk-ctypography--bold fk-ctypography--font-accent fk-ctypography--uppercase
     component("typography")({
       [fontWeight]: true,
       [`font-${fontType}`]: true,

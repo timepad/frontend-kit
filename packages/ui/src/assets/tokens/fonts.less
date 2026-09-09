@@ -1,6 +1,6 @@
-/* TT Backwards Sans */
+/* TP FK TT Backwards Sans */
 @font-face {
-  font-family: "TT Backwards Sans";
+  font-family: "TP FK TT Backwards Sans";
   src: url("../fonts/TT-Backwards-Sans-Bold.woff2") format("woff2"),
     url("../fonts/TT-Backwards-Sans-Bold.woff") format("woff");
   font-weight: 700;
@@ -9,7 +9,7 @@
 }
 
 @font-face {
-  font-family: "TT Backwards Sans";
+  font-family: "TP FK TT Backwards Sans";
   src: url("../fonts/TT-Backwards-Sans-Regular.woff2") format("woff2"),
     url("../fonts/TT-Backwards-Sans-Regular.woff") format("woff");
   font-weight: 400;
@@ -17,9 +17,9 @@
   font-display: swap;
 }
 
-/* Inter */
+/* TP FK Inter */
 @font-face {
-  font-family: "Inter";
+  font-family: "TP FK Inter";
   src: url("../fonts/InterVariable.woff2") format("woff2-variations");
   font-weight: 100 900;
   font-style: normal;
@@ -27,12 +27,12 @@
 }
 
 @fonts: {
-  accent: "TT Backwards Sans";
-  regular: "Inter";
+  accent: "TP FK TT Backwards Sans";
+  regular: "TP FK Inter";
 };
 
 @emit-fonts: {
   each(@fonts, {
-     --font-@{key}: @{value};
+     --fk-font-@{key}: @{value};
   });
 };

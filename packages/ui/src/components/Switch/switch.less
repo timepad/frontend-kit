@@ -1,6 +1,6 @@
 @import (reference) "../../assets/tokens/index.less";
 
-.cswitch {
+.fk-cswitch {
   display: flex;
   align-items: center;
   position: relative;
@@ -14,18 +14,18 @@
     appearance: none;
     margin: 0;
     cursor: inherit;
-    background-color: var(--bg-secondary);
+    background-color: var(--fk-bg-secondary);
     transition: background-color 160ms ease, box-shadow 160ms ease;
 
     &:checked {
-      background-color: var(--control-primary-active);
+      background-color: var(--fk-control-primary-active);
     }
 
     &:checked:disabled {
       background-color: color-mix(
               in srgb,
-              var(--control-primary-active) 40%,
-              var(--control-inactive)
+              var(--fk-control-primary-active) 40%,
+              var(--fk-control-inactive)
       );
     }
   }
@@ -37,7 +37,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--greyscale-0);
+    background-color: var(--fk-greyscale-0);
     border-radius: 50%;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 3px 8px 0 rgba(0, 0, 0, 0.15), 0 3px 1px 0 rgba(0, 0, 0, 0.06);
     transition: transform 160ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -49,7 +49,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--icon-tertiary);
+    color: var(--fk-icon-tertiary);
   }
 
   .switch-size(m, 40px, 24px, 20px, 18px, 16px);
