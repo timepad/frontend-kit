@@ -3,7 +3,6 @@
 .fk-ctypography {
   margin: 0;
   padding: 0;
-  color: var(--fk-text-primary);
 
   &__lead {
     &--1 {
@@ -117,4 +116,12 @@
   &--font-regular {
     font-family: var(--fk-font-regular);
   }
+
+  &--inherit-color {
+    color: inherit;
+  }
+}
+
+:where(.fk-ctypography) {
+  color: var(--fk-text-primary);
 }

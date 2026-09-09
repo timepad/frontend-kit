@@ -1,9 +1,9 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./button.less";
-import { ButtonVariant, IButtonProps } from "./button.types";
-import { Typography } from "../Typography";
+import { ButtonSize, IButtonProps } from "./button.types";
+import { createTypographyComponent, Typography } from "../Typography";
 
 export const Button: FC<IButtonProps> = ({
   size = "m",
@@ -16,6 +16,7 @@ export const Button: FC<IButtonProps> = ({
   ...rest
 }) => {
   const hasIcon = !!icon;
+  const { LabelComponent } = buttonLabel[size];
 
   const buttonClassName = classNames(
     // button variant: fk-cbutton__primary
@@ -32,16 +33,20 @@ export const Button: FC<IButtonProps> = ({
     "content",
   )({ "icon-position-left": hasIcon && iconPosition === "left" });
 
+  const buttonLabelClassName = component("button", "label")();
+
   const iconClassName = component("button", "icon")();
 
   return (
-    <button
-      className={buttonClassName}
-      type={type}
-      {...rest}
-    >
+    <button className={buttonClassName} type={type} {...rest}>
       <span className={contentClassName}>
-        <ButtonLabel size={size}>{label}</ButtonLabel>
+        <LabelComponent
+          as="span"
+          className={buttonLabelClassName}
+          inheritColor
+        >
+          {label}
+        </LabelComponent>
 
         {hasIcon && (
           <span aria-hidden="true" className={iconClassName}>
@@ -53,33 +58,17 @@ export const Button: FC<IButtonProps> = ({
   );
 };
 
-interface IButtonLabelProps {
-  size: IButtonProps["size"];
-  children: ReactNode;
-}
-
-const ButtonLabel: FC<IButtonLabelProps> = ({ size, children }) => {
-  const buttonLabelClassName = component("button", "label")();
-
-  if (size === "m" || size === "l") {
-    return (
-      <Typography.Paragraph
-        tag="P4 BOLD"
-        as="span"
-        className={buttonLabelClassName}
-      >
-        {children}
-      </Typography.Paragraph>
-    );
-  }
-
-  return (
-    <Typography.Caption
-      tag="C1 BOLD"
-      as="span"
-      className={buttonLabelClassName}
-    >
-      {children}
-    </Typography.Caption>
-  );
+const buttonLabel: Record<
+  ButtonSize,
+  { LabelComponent: ReturnType<typeof createTypographyComponent> }
+> = {
+  s: {
+    LabelComponent: createTypographyComponent(Typography.Caption, "C1 BOLD"),
+  },
+  m: {
+    LabelComponent: createTypographyComponent(Typography.Paragraph, "P4 BOLD"),
+  },
+  l: {
+    LabelComponent: createTypographyComponent(Typography.Paragraph, "P4 BOLD"),
+  },
 };
