@@ -17,9 +17,13 @@ const TabsButtonRoot: FC<PropsWithChildren<ITabsButtonProps>> = ({
   onActiveTabChange,
   ...rest
 }) => {
-  const [uncontrolledActiveTabId, setUncontrolledActiveTabId] = useState(defaultActiveTabId);
+  const [uncontrolledActiveTabId, setUncontrolledActiveTabId] =
+    useState(defaultActiveTabId);
+
   const isControlled = activeTabId !== undefined;
-  const currentActiveTabId = isControlled ? activeTabId : uncontrolledActiveTabId;
+  const currentActiveTabId = isControlled
+    ? activeTabId
+    : uncontrolledActiveTabId;
 
   const setActiveTabId = useCallback(
     (nextTabId: string) => {

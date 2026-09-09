@@ -105,7 +105,7 @@ const PanelBody = ({ title, text }: { title: string; text: string }) => (
 );
 
 const UncontrolledTabs = ({ overflow, ...args }: TabsButtonStoryArgs) => (
-  <TabsButton {...args} defaultActiveTabId={args.defaultActiveTabId ?? "overview"}>
+  <TabsButton {...args}>
     <TabsButton.List overflow={overflow} aria-label="Разделы события">
       <TabsButton.Tab tabId="overview" label="Обзор" />
       <TabsButton.Tab tabId="tickets" label="Билеты" />
@@ -180,7 +180,7 @@ export const CounterBadge: Story = {
     defaultActiveTabId: "tickets",
   },
   render: ({ overflow, ...args }) => (
-    <TabsButton {...args} defaultActiveTabId={args.defaultActiveTabId ?? "tickets"}>
+    <TabsButton {...args}>
       <TabsButton.List overflow={overflow} aria-label="Разделы события">
         <TabsButton.Tab tabId="overview" label="Обзор" />
         <TabsButton.Tab tabId="tickets" label="Билеты" counter={1} />
@@ -208,7 +208,7 @@ export const Notify: Story = {
     defaultActiveTabId: "tickets",
   },
   render: ({ overflow, ...args }) => (
-    <TabsButton {...args} defaultActiveTabId={args.defaultActiveTabId ?? "tickets"}>
+    <TabsButton {...args}>
       <TabsButton.List overflow={overflow} aria-label="Разделы события">
         <TabsButton.Tab tabId="overview" label="Обзор" />
         <TabsButton.Tab tabId="tickets" label="Билеты" notify />
@@ -233,7 +233,7 @@ export const DisabledTab: Story = {
     defaultActiveTabId: "overview",
   },
   render: ({ overflow, ...args }) => (
-    <TabsButton {...args} defaultActiveTabId={args.defaultActiveTabId ?? "overview"}>
+    <TabsButton {...args}>
       <TabsButton.List overflow={overflow} aria-label="Разделы события">
         <TabsButton.Tab tabId="overview" label="Обзор" />
         <TabsButton.Tab tabId="tickets" label="Билеты" />
@@ -266,7 +266,7 @@ export const Wrap: Story = {
     ),
   ],
   render: ({ overflow, ...args }) => (
-    <TabsButton {...args} defaultActiveTabId={args.defaultActiveTabId ?? "overview"}>
+    <TabsButton {...args}>
       <TabsButton.List overflow={overflow} aria-label="Разделы события">
         {manyTabs.map((tab) => (
           <TabsButton.Tab key={tab.tabId} tabId={tab.tabId} label={tab.label} />
@@ -298,7 +298,7 @@ export const Scroll: Story = {
     ),
   ],
   render: ({ overflow, ...args }) => (
-    <TabsButton {...args} defaultActiveTabId={args.defaultActiveTabId ?? "reviews"}>
+    <TabsButton {...args}>
       <TabsButton.List overflow={overflow} aria-label="Разделы события">
         {manyTabs.map((tab) => (
           <TabsButton.Tab key={tab.tabId} tabId={tab.tabId} label={tab.label} />

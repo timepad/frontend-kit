@@ -39,7 +39,10 @@ export const TabsButtonTab: FC<ITabsButtonTabProps> = ({
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
-    setActiveTabId(tabId);
+
+    if (!isSelected) {
+      setActiveTabId(tabId);
+    }
   };
 
   return (
@@ -64,12 +67,11 @@ export const TabsButtonTab: FC<ITabsButtonTabProps> = ({
             size={counterSize[size]}
             {...(isSelected
               ? { appearance: "accent" }
-              : { appearance: "custom", color: "#696D73" })}
+              : { appearance: "custom", color: "var(--fk-text-secondary)" })}
           />
         )}
         {notify && <Counter size="xs" />}
       </span>
-      <span></span>
     </button>
   );
 };
