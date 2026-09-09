@@ -28,7 +28,8 @@ const manyTabs = [
   { tabId: "reviews", label: "Отзывы" },
 ] as const;
 
-type TabsButtonStoryArgs = ITabsButtonProps & Pick<ITabsButtonListProps, "overflow">;
+type TabsButtonStoryArgs = ITabsButtonProps &
+  Pick<ITabsButtonListProps, "overflow">;
 
 const meta = {
   title: "Components/TabsButton",
@@ -152,8 +153,9 @@ export const Controlled: Story = {
     return (
       <TabsButton
         {...args}
-        activeTabId={args.activeTabId}
-        onActiveTabChange={(nextTabId) => updateArgs({ activeTabId: nextTabId })}
+        onActiveTabChange={(nextTabId) =>
+          updateArgs({ activeTabId: nextTabId })
+        }
       >
         <TabsButton.List overflow={overflow} aria-label="Разделы события">
           <TabsButton.Tab tabId="overview" label="Обзор" />
@@ -161,10 +163,16 @@ export const Controlled: Story = {
           <TabsButton.Tab tabId="stats" label="Статистика" />
         </TabsButton.List>
         <TabsButton.Panel tabId="overview">
-          <PanelBody title="Обзор" text="Контролируемый режим: состояние снаружи." />
+          <PanelBody
+            title="Обзор"
+            text="Контролируемый режим: состояние снаружи."
+          />
         </TabsButton.Panel>
         <TabsButton.Panel tabId="tickets">
-          <PanelBody title="Билеты" text="Смена таба обновляет activeTabId через onActiveTabChange." />
+          <PanelBody
+            title="Билеты"
+            text="Смена таба обновляет activeTabId через onActiveTabChange."
+          />
         </TabsButton.Panel>
         <TabsButton.Panel tabId="stats">
           <PanelBody title="Статистика" text="Панель статистики." />
