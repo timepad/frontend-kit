@@ -18,9 +18,9 @@ export const Button: FC<IButtonProps> = ({
   const hasIcon = !!icon;
 
   const buttonClassName = classNames(
-    // button variant: cbutton__primary
+    // button variant: fk-cbutton__primary
     component("button", variant)(),
-    // button size: cbutton cbutton--size-m
+    // button size: fk-cbutton fk-cbutton--size-m
     component("button")({
       [`size-${size}`]: true,
     }),

@@ -27,7 +27,7 @@ const CellComponent: FC<ICellProps> = ({
   );
 
   const fillStyle = backgroundColor
-    ? ({ "--cell-bg-color": backgroundColor } as CSSProperties)
+    ? ({ "--fk-cell-bg-color": backgroundColor } as CSSProperties)
     : undefined;
 
   const bodyClassName = component("cell", "body")({

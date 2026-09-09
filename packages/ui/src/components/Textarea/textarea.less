@@ -1,37 +1,37 @@
 @import (reference) "../../assets/tokens/index.less";
 
-.ctextarea {
+.fk-ctextarea {
   display: flex;
   flex-direction: column;
-  row-gap: var(--space-4);
-  color: var(--text-secondary);
+  row-gap: var(--fk-space-4);
+  color: var(--fk-text-secondary);
 
   &__label {
     display: flex;
     color: inherit !important;
-    column-gap: var(--space-4);
+    column-gap: var(--fk-space-4);
 
     &--required::after {
       content: "*";
-      color: var(--text-negative);
+      color: var(--fk-text-negative);
     }
   }
 
   &__disabled-icon {
     display: inline-flex;
-    color: var(--icon-tertiary);
+    color: var(--fk-icon-tertiary);
   }
 
   &__field {
     width: 100%;
-    padding: var(--space-6) var(--space-10);
+    padding: var(--fk-space-6) var(--fk-space-10);
     box-sizing: border-box;
-    background-color: var(--bg-secondary);
+    background-color: var(--fk-bg-secondary);
     border: none;
-    border-radius: var(--radius-8);
-    outline: 1px solid var(--bg-stroke);
-    color: var(--text-primary);
-    font-family: var(--font-regular);
+    border-radius: var(--fk-radius-8);
+    outline: 1px solid var(--fk-bg-stroke);
+    color: var(--fk-text-primary);
+    font-family: var(--fk-font-regular);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -39,13 +39,13 @@
     resize: none;
 
     &::placeholder {
-      color: var(--text-tertiary);
+      color: var(--fk-text-tertiary);
     }
 
     &:focus,
     &:focus-visible {
-      outline-color: var(--btn-primary-active);
-      caret-color: var(--greyscale-800);
+      outline-color: var(--fk-btn-primary-active);
+      caret-color: var(--fk-greyscale-800);
     }
 
     &--size-m {
@@ -66,6 +66,6 @@
   }
 
   &--error {
-    color: var(--text-negative) !important;
+    color: var(--fk-text-negative) !important;
   }
 }
