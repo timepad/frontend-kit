@@ -34,7 +34,6 @@ export const TertiaryBannerBase: FC<ITertiaryBannerBaseProps> = ({
     "icon",
   )({ [`${variant}`]: !!variant });
 
-  const textClassName = component("tertiary-banner", "text")();
 
   return (
     <div className={bannerClasses} {...props}>
@@ -45,7 +44,10 @@ export const TertiaryBannerBase: FC<ITertiaryBannerBaseProps> = ({
           </div>
         </div>
       )}
-      <Typography.Caption className={textClassName} tag="C1 REGULAR">
+      <Typography.Caption
+        tag="C1 REGULAR"
+        inheritColor
+      >
         {children}
       </Typography.Caption>
     </div>

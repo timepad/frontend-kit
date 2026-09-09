@@ -1,13 +1,13 @@
-import { forwardRef, useId, ComponentType } from "react";
+import { forwardRef, useId } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 import { IconCheck16Outline, IconMinus16Outline } from "../../assets/icons";
 
 import "./checkbox.less";
 import { ICheckboxProps, CheckboxSize } from "./checkbox.types";
 import {
+  createTypographyComponent,
   Typography,
   ParagraphVariantTag,
-  CaptionVariantTag,
 } from "../Typography";
 
 export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
@@ -30,8 +30,7 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
 
     const checkboxId = id ?? defaultId;
     const descriptionId = description ? `${checkboxId}-description` : undefined;
-    const { DescriptionComponent, descriptionTag } =
-      descriptionTypography[size];
+    const DescriptionComponent = descriptionTypography[size];
 
     const icon = indeterminate ? (
       <IconMinus16Outline />
@@ -92,7 +91,6 @@ export const Checkbox = forwardRef<HTMLInputElement, ICheckboxProps>(
           </div>
           {description && (
             <DescriptionComponent
-              tag={descriptionTag}
               className={descriptionClassName}
               id={descriptionId}
             >
@@ -113,20 +111,9 @@ const labelTag: Record<CheckboxSize, ParagraphVariantTag> = {
 
 const descriptionTypography: Record<
   CheckboxSize,
-  {
-    DescriptionComponent: ComponentType<any>;
-    descriptionTag:
-      | Extract<ParagraphVariantTag, "P4 REGULAR" | "P2 REGULAR">
-      | Extract<CaptionVariantTag, "C1 REGULAR">;
-  }
+  ReturnType<typeof createTypographyComponent>
 > = {
-  s: { DescriptionComponent: Typography.Caption, descriptionTag: "C1 REGULAR" },
-  m: {
-    DescriptionComponent: Typography.Paragraph,
-    descriptionTag: "P4 REGULAR",
-  },
-  l: {
-    DescriptionComponent: Typography.Paragraph,
-    descriptionTag: "P2 REGULAR",
-  },
+  s: createTypographyComponent(Typography.Caption, "C1 REGULAR"),
+  m: createTypographyComponent(Typography.Paragraph, "P4 REGULAR"),
+  l: createTypographyComponent(Typography.Paragraph, "P2 REGULAR"),
 };

@@ -81,6 +81,7 @@ export interface ICaptionVariant {
  * - **as** — HTML-тег, который будет отрендерен (span, p, h1 и т.д.)
  * - **innerRef** — ref, пробрасываемый к DOM-элементу
  * - **uppercase** — приводит текст к верхнему регистру
+ * - **inheritColor** — наследует цвет родительского компонента
  *
  * Также наследует все стандартные HTML-атрибуты
  * (id, className, onClick и т.д.).
@@ -93,6 +94,7 @@ export interface ITypographyCommonProps extends DetailedHTMLProps<
   as?: keyof ReactHTML;
   innerRef?: LegacyRef<HTMLElement>;
   uppercase?: boolean;
+  inheritColor?: boolean;
 }
 
 export type ITypographyBaseProps = ITypographyCommonProps &
