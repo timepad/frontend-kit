@@ -1,9 +1,9 @@
-import { ComponentType, FC, MouseEvent } from "react";
+import { FC, MouseEvent } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import { ITabsButtonTabProps, TabsButtonSize } from "./tabs-button.types";
 import { useTabsButtonContext } from "./tabsButtonContext";
-import { ParagraphVariantTag, Typography } from "../Typography";
+import { createTypographyComponent, Typography } from "../Typography";
 import { Counter } from "../Counter";
 import { CounterSM } from "../Counter/counter.types";
 
@@ -21,7 +21,7 @@ export const TabsButtonTab: FC<ITabsButtonTabProps> = ({
 
   const isSelected = activeTabId === tabId;
 
-  const { Component: LabelComponent, tag } = tabLabelConfig[size];
+  const LabelComponent = tabLabel[size];
 
   const tabClassName = classNames(
     component(
@@ -35,7 +35,6 @@ export const TabsButtonTab: FC<ITabsButtonTabProps> = ({
   );
 
   const contentClassName = component("tabs-button", "tab-content")();
-  const labelClassName = component("tabs-button", "tab-label")();
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
@@ -58,7 +57,7 @@ export const TabsButtonTab: FC<ITabsButtonTabProps> = ({
       onClick={handleClick}
     >
       <span className={contentClassName}>
-        <LabelComponent as="span" tag={tag} className={labelClassName}>
+        <LabelComponent as="span" inheritColor>
           {label}
         </LabelComponent>
         {counter !== undefined && (
@@ -82,16 +81,11 @@ const counterSize: Record<TabsButtonSize, CounterSM> = {
   l: "m",
 };
 
-const tabLabelConfig: Record<
+const tabLabel: Record<
   TabsButtonSize,
-  {
-    Component: ComponentType<any>;
-    tag:
-      | Extract<ParagraphVariantTag, "P4 SEMIBOLD" | "P3 SEMIBOLD">
-      | "H4 BOLD";
-  }
+  ReturnType<typeof createTypographyComponent>
 > = {
-  s: { Component: Typography.Paragraph, tag: "P4 SEMIBOLD" },
-  m: { Component: Typography.Paragraph, tag: "P3 SEMIBOLD" },
-  l: { Component: Typography.Header, tag: "H4 BOLD" },
+  s: createTypographyComponent(Typography.Paragraph, "P4 SEMIBOLD"),
+  m: createTypographyComponent(Typography.Paragraph, "P3 SEMIBOLD"),
+  l: createTypographyComponent(Typography.Header, "H4 BOLD"),
 };
