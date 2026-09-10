@@ -1,18 +1,17 @@
-@import "../../assets/tokens/index.less";
+@import (reference) "../../assets/tokens/index.less";
 
-.cavatar {
-  --avatar-stroke-width: 1px;
-  --avatar-status-rotate: 2deg;
-  --avatar-status-radius: 0px;
-  --avatar-status-ring: 0px;
+.fk-cavatar {
+  --fk-avatar-stroke-width: 1px;
+  --fk-avatar-status-rotate: 2deg;
+  --fk-avatar-status-radius: 0px;
+  --fk-avatar-status-ring: 0px;
 
   display: inline-flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
   position: relative;
-  background-color: var(--light-purple);
-  color: var(--text-primary-alt);
+  background-color: var(--fk-light-purple);
   user-select: none;
 
   &--stroke::after {
@@ -20,7 +19,7 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    box-shadow: inset 0 0 0 var(--avatar-stroke-width) var(--bg-stroke);
+    box-shadow: inset 0 0 0 var(--fk-avatar-stroke-width) var(--fk-bg-stroke);
   }
 
   &__image {
@@ -33,6 +32,7 @@
   }
 
   &__initials {
+    color: var(--fk-text-primary-alt);
     leading-trim: both;
     text-edge: cap;
   }
@@ -42,15 +42,16 @@
     right: 0;
     bottom: 0;
     z-index: 1;
-    transform: translate(30%, 30%) rotate(var(--avatar-status-rotate));
+    transform: translate(30%, 30%) rotate(var(--fk-avatar-status-rotate));
 
     &::after {
       content: "";
       position: absolute;
       z-index: -1;
-      background: var(--bg-primary);
-      inset: calc(-1 * var(--avatar-status-ring));
-      border-radius: calc(var(--avatar-status-radius) + var(--avatar-status-ring)
+      background: var(--fk-bg-primary);
+      inset: calc(-1 * var(--fk-avatar-status-ring));
+      border-radius: calc(
+        var(--fk-avatar-status-radius) + var(--fk-avatar-status-ring)
       );
     }
   }
@@ -58,47 +59,47 @@
   &--size-24 {
     width: 24px;
     height: 24px;
-    border-radius: var(--radius-40);
+    border-radius: var(--fk-radius-40);
   }
 
   &--size-32 {
     width: 32px;
     height: 32px;
-    border-radius: var(--radius-40);
+    border-radius: var(--fk-radius-40);
   }
 
   &--size-40 {
     width: 40px;
     height: 40px;
-    border-radius: var(--radius-8);
-    --avatar-status-radius: var(--radius-6);
-    --avatar-status-ring: 2px;
+    border-radius: var(--fk-radius-8);
+    --fk-avatar-status-radius: var(--fk-radius-6);
+    --fk-avatar-status-ring: 2px;
   }
 
   &--size-48 {
     width: 48px;
     height: 48px;
-    border-radius: var(--radius-10);
-    --avatar-status-radius: var(--radius-6);
-    --avatar-status-ring: 2px;
+    border-radius: var(--fk-radius-10);
+    --fk-avatar-status-radius: var(--fk-radius-6);
+    --fk-avatar-status-ring: 2px;
   }
 
   &--size-64 {
-    --avatar-status-rotate: 4deg;
+    --fk-avatar-status-rotate: 4deg;
     width: 64px;
     height: 64px;
-    border-radius: var(--radius-12);
-    --avatar-status-radius: var(--radius-6);
-    --avatar-status-ring: 3px;
+    border-radius: var(--fk-radius-12);
+    --fk-avatar-status-radius: var(--fk-radius-6);
+    --fk-avatar-status-ring: 3px;
   }
 
   &--size-80 {
-    --avatar-stroke-width: 2px;
-    --avatar-status-rotate: 4deg;
+    --fk-avatar-stroke-width: 2px;
+    --fk-avatar-status-rotate: 4deg;
     width: 80px;
     height: 80px;
-    border-radius: var(--radius-16);
-    --avatar-status-radius: var(--radius-10);
-    --avatar-status-ring: 4px;
+    border-radius: var(--fk-radius-16);
+    --fk-avatar-status-radius: var(--fk-radius-10);
+    --fk-avatar-status-ring: 4px;
   }
 }

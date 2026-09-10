@@ -1,11 +1,11 @@
 @import "../../assets/tokens/index.less";
 
-.cmodal-footer {
-  padding: var(--space-12) var(--space-20) var(--space-20) var(--space-20);
+.fk-cmodal-footer {
+  padding: var(--fk-space-12) var(--fk-space-20) var(--fk-space-20) var(--fk-space-20);
 
   &__buttons {
     display: flex;
-    column-gap: var(--space-12);
+    column-gap: var(--fk-space-12);
     grid-row: 2;
 
     &--full-width {
@@ -36,15 +36,15 @@
   &--inline-actions {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-12);
+    row-gap: var(--fk-space-12);
   }
 
   &--toolbar {
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto;
-    column-gap: var(--space-12);
-    row-gap: var(--space-12);
+    column-gap: var(--fk-space-12);
+    row-gap: var(--fk-space-12);
 
     &:not(:has(.cmodal-footer__btn-back)) {
       .cmodal-footer__buttons {
@@ -78,10 +78,10 @@
   }
 
   &--mobile {
-    padding: var(--space-8) var(--space-16) var(--space-16) var(--space-16);
+    padding: var(--fk-space-8) var(--fk-space-16) var(--fk-space-16) var(--fk-space-16);
   }
 
   &--divider {
-    box-shadow: 0 -1px 0 0 var(--bg-stroke);
+    box-shadow: 0 -1px 0 0 var(--fk-bg-stroke);
   }
 }

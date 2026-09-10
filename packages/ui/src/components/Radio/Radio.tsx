@@ -1,10 +1,10 @@
-import { forwardRef, useId, type ComponentType } from "react";
+import { forwardRef, useId } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./radio.less";
 import { IRadioProps, RadioSize } from "./radio.types";
 import {
-  CaptionVariantTag,
+  createTypographyComponent,
   ParagraphVariantTag,
   Typography,
 } from "../Typography";
@@ -28,8 +28,7 @@ export const Radio = forwardRef<HTMLInputElement, IRadioProps>(
     const radioId = id ?? defaultId;
     const descriptionId = description ? `${radioId}-description` : undefined;
 
-    const { DescriptionComponent, descriptionTag } =
-      descriptionTypography[size];
+    const DescriptionComponent = descriptionTypography[size];
 
     const radioClassName = classNames(
       component("radio")({ [`size-${size}`]: true }),
@@ -72,7 +71,6 @@ export const Radio = forwardRef<HTMLInputElement, IRadioProps>(
           </div>
           {description && (
             <DescriptionComponent
-              tag={descriptionTag}
               className={descriptionClassName}
               id={descriptionId}
             >
@@ -96,20 +94,9 @@ const labelTag: Record<
 
 const descriptionTypography: Record<
   RadioSize,
-  {
-    DescriptionComponent: ComponentType<any>;
-    descriptionTag:
-      | Extract<ParagraphVariantTag, "P4 REGULAR" | "P2 REGULAR">
-      | Extract<CaptionVariantTag, "C1 REGULAR">;
-  }
+  ReturnType<typeof createTypographyComponent>
 > = {
-  s: { DescriptionComponent: Typography.Caption, descriptionTag: "C1 REGULAR" },
-  m: {
-    DescriptionComponent: Typography.Paragraph,
-    descriptionTag: "P4 REGULAR",
-  },
-  l: {
-    DescriptionComponent: Typography.Paragraph,
-    descriptionTag: "P2 REGULAR",
-  },
+  s: createTypographyComponent(Typography.Caption, "C1 REGULAR"),
+  m: createTypographyComponent(Typography.Paragraph, "P4 REGULAR"),
+  l: createTypographyComponent(Typography.Paragraph, "P2 REGULAR"),
 };

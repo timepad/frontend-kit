@@ -1,24 +1,27 @@
 const { includes } = require('./aliases');
+const { addExclude, flattenRules, hasLoader } = require('./webpack-rules');
 
-function makeTsRule(opts = {}) {
-  const { tsconfig, transpileOnly = true, test = /\.[jt]sx?$/ } = opts;
+function patchTypeScriptRules(rules) {
+  for (const rule of flattenRules(rules)) {
+    if (hasLoader(rule, 'ts-loader')) {
+      addExclude(rule, includes());
+    }
+  }
+
+  return rules;
+}
+
+function makeTsRule(tsconfig) {
   return {
-    test,
+    test: /\.[jt]sx?$/,
     include: includes(),
     loader: 'ts-loader',
     options: {
-      transpileOnly,
+      transpileOnly: true,
+      compilerOptions: { jsx: 'react-jsx' },
       ...(tsconfig ? { configFile: tsconfig } : {})
     }
   };
 }
 
-// Помощник: добавить exclude для наших папок в существующее правило
-function excludeKitFrom(rule) {
-  const inc = includes();
-  const prev = Array.isArray(rule.exclude) ? rule.exclude : (rule.exclude ? [rule.exclude] : []);
-  rule.exclude = [...prev, ...inc];
-  return rule;
-}
-
-module.exports = { makeTsRule, excludeKitFrom };
+module.exports = { makeTsRule, patchTypeScriptRules };

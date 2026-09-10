@@ -1,9 +1,9 @@
 @import "../../assets/tokens/index.less";
 
-.cmodal {
+.fk-cmodal {
   border: none;
   padding: 0;
-  border-radius: var(--radius-20);
+  border-radius: var(--fk-radius-20);
 
   &:not([open]) {
     display: none;
@@ -16,7 +16,7 @@
   }
 
   &::backdrop {
-    background-color: var(--bg-overlay);
+    background-color: var(--fk-bg-overlay);
   }
 
   &__content {
@@ -26,7 +26,7 @@
     flex: 1 1 auto;
     min-height: 0;
     overflow: hidden;
-    background-color: var(--bg-modal);
+    background-color: var(--fk-bg-modal);
 
     &--mobile {
       position: fixed;
@@ -37,7 +37,7 @@
       width: 100dvw;
       overflow: unset;
       margin: 0;
-      border-radius: var(--radius-16) var(--radius-16) 0 0;
+      border-radius: var(--fk-radius-16) var(--fk-radius-16) 0 0;
       transition: transform 300ms ease-out;
     }
   }
@@ -49,8 +49,8 @@
     top: -8px;
     width: 36px;
     height: 4px;
-    background: var(--greyscale-0);
-    border-radius: var(--radius-4);
+    background: var(--fk-greyscale-0);
+    border-radius: var(--fk-radius-4);
     opacity: 0.4;
     cursor: grab;
     touch-action: none;

@@ -23,6 +23,7 @@
 - [Проверка изменений](#проверка-изменений)
 - [Подключение в другой репозиторий](#подключение-в-другой-репозиторий)
 - [Использование](#использование)
+- [Известные ограничения](#известные-ограничения)
 - [Обновление зависимости](#обновление-зависимости)
 
 ## Локальный запуск
@@ -55,7 +56,10 @@ yarn build-storybook
 
 ```text
 frontend-kit/
-├── config/                         # готовые helpers для Webpack потребителя
+├── config/
+│   ├── index.js                    # Webpack helper для потребителя
+│   ├── tsconfig.json               # TypeScript preset для IDE и tsc
+│   └── types.d.ts                  # декларации Less и SVG-модулей
 ├── packages/
 │   ├── ui/
 │   │   ├── .storybook/
@@ -133,27 +137,27 @@ export const Badge: FC<BadgeProps> = ({
 );
 ```
 
-Префикс `c` для класса добавляет `component()`. В примере получится `cbadge cbadge--appearance-neutral`.
+Префикс `fk-c` для класса добавляет `component()`. В примере получится `fk-cbadge fk-cbadge--appearance-neutral`.
 
 ### 4. Добавьте стили
 
 ```less
 // badge.less
-@import "../../assets/tokens/index.less";
+@import (reference) "../../assets/tokens/index.less";
 
-.cbadge {
+.fk-cbadge {
   display: inline-flex;
-  border-radius: var(--radius-8);
-  padding: var(--space-4) var(--space-8);
+  border-radius: var(--fk-radius-8);
+  padding: var(--fk-space-4) var(--fk-space-8);
 
   &--appearance-neutral {
-    color: var(--text-primary);
-    background: var(--bg-secondary);
+    color: var(--fk-text-primary);
+    background: var(--fk-bg-secondary);
   }
 
   &--appearance-accent {
-    color: var(--text-inverted);
-    background: var(--accent-notification);
+    color: var(--fk-text-inverted);
+    background: var(--fk-accent-notification);
   }
 }
 ```
@@ -288,7 +292,7 @@ export {
 - `themes.less` — семантические переменные светлой и тёмной тем;
 - `index.less` — единая точка подключения токенов.
 
-Новый токен должен иметь семантическое имя и, если применимо, значение для обеих тем. Компоненты используют CSS variables (`var(--text-primary)`), а не внутренние Less-переменные карты.
+Новый токен должен иметь семантическое имя и, если применимо, значение для обеих тем. Компоненты используют CSS variables (`var(--fk-text-primary)`), а не внутренние Less-переменные карты.
 
 ## Проверка изменений
 
@@ -332,9 +336,97 @@ yarn install
 
 У разработчика и CI должен быть доступ к репозиторию `timepad/frontend-kit`. В приложении должны быть установлены `react` и `react-dom` версии 18.
 
-### 2. Подключите Webpack helper
+### 2. Подключите TypeScript preset
 
-Helper добавляет aliases для всех пакетов и отдельное правило `ts-loader` для исходников `frontend-kit`. Отдельно изменять `tsconfig.json` не требуется.
+Webpack aliases из helper доступны только во время Webpack-сборки. IDE и отдельный `tsc --noEmit` не читают `webpack.config.js`, поэтому для них подключите TypeScript preset в `tsconfig.json` приложения:
+
+#### Проект без собственных `paths` (OTP)
+
+```json
+{
+  "extends": "frontend-kit/config/tsconfig.json"
+}
+```
+
+Добавьте `extends` к существующему `tsconfig.json`, не удаляя его `compilerOptions`, `include` и `exclude`.
+
+Preset добавляет:
+
+- `paths` для `@frontend-kit/ui`, `@frontend-kit/hooks` и `@frontend-kit/utils`;
+- декларации модулей для Less и `*.svg?react`, подключаемые публичным entrypoint UI;
+- `allowUmdGlobalAccess`, необходимый для проверки source-компонентов в проектах с classic JSX.
+
+Остальные настройки TypeScript остаются в приложении. В частности, preset не меняет `jsx` всего проекта.
+
+Preset также не задаёт `files`, `include` и `exclude`. Поэтому собственные ambient-декларации потребителя, например `custom.d.ts` с `declare module "*.svg"`, продолжают входить в TypeScript-программу. Декларации Less и `*.svg?react` frontend-kit подключаются из публичного entrypoint `@frontend-kit/ui`.
+
+Если приложение уже наследует другой `tsconfig`, не содержащий `compilerOptions.paths`, и использует TypeScript 5+, конфигурации можно перечислить массивом. Более поздние конфигурации имеют больший приоритет:
+
+```json
+{
+  "extends": [
+    "./tsconfig.base.json",
+    "frontend-kit/config/tsconfig.json"
+  ]
+}
+```
+
+#### Проект с собственными `paths` (NTP)
+
+TypeScript не объединяет объекты `compilerOptions.paths`: `paths` приложения полностью заменяет `paths` из preset. Поэтому сохраните `extends`, но добавьте aliases frontend-kit в существующий объект вручную.
+
+Для NTP с `baseUrl: "src"` конфигурация выглядит так:
+
+```json
+{
+  "extends": "frontend-kit/config/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "*": [
+        "*",
+        "src/*"
+      ],
+      "@frontend-kit/ui": [
+        "../node_modules/frontend-kit/packages/ui/src/index.ts"
+      ],
+      "@frontend-kit/ui/*": [
+        "../node_modules/frontend-kit/packages/ui/src/*"
+      ],
+      "@frontend-kit/hooks": [
+        "../node_modules/frontend-kit/packages/hooks/src/index.ts"
+      ],
+      "@frontend-kit/hooks/*": [
+        "../node_modules/frontend-kit/packages/hooks/src/*"
+      ],
+      "@frontend-kit/utils": [
+        "../node_modules/frontend-kit/packages/utils/src/index.ts"
+      ],
+      "@frontend-kit/utils/*": [
+        "../node_modules/frontend-kit/packages/utils/src/*"
+      ]
+    }
+  }
+}
+```
+
+Значения начинаются с `../node_modules`, потому что TypeScript считает их относительно `baseUrl: "src"`. `tsconfig.dev.json`, наследующий этот основной конфиг, отдельно менять не требуется.
+
+После изменения перезапустите TypeScript Service в IDE.
+
+### 3. Подключите Webpack helper
+
+Helper добавляет Webpack aliases для всех пакетов и создаёт отдельное `transpileOnly`-правило для исходников `frontend-kit`. Из обычных правил `ts-loader` приложения эти исходники исключаются, чтобы не компилировать их дважды. Только это отдельное правило использует `jsx: "react-jsx"`; настройка `jsx` приложения не изменяется.
+
+Также helper подключает ресурсы UI-kit к существующей конфигурации приложения:
+
+- переиспользует найденный loader `mini-css-extract-plugin` для Less-файлов `@frontend-kit/ui`;
+- переиспользует всю существующую Less-chain приложения, включая `css-loader`, `postcss-loader` и `less-loader`;
+- подключает SVG-иконки UI-kit через существующий `@svgr/webpack`;
+- не даёт существующему `ignore-loader` отбрасывать шрифты UI-kit;
+- если отдельного обработчика для этих шрифтов нет, добавляет Webpack 5 `asset/resource` и складывает файлы в `fonts/`.
+
+TypeScript resolve настраивается preset из предыдущего шага и одинаково работает в IDE, отдельном `tsc` и `ts-loader`.
 
 ```js
 // webpack.config.js
@@ -364,9 +456,11 @@ const config = {
 module.exports = kit.applyTo(config, { tsconfig: "tsconfig.json" });
 ```
 
-Обычно больше ничего настраивать не нужно. Проверьте только, что существующие правила проекта обрабатывают Less, SVG и шрифты из `node_modules/frontend-kit`. Если у правила задан ограничивающий `include`, добавьте туда директорию `frontend-kit`. `ts-loader` должен быть установлен, так как его использует helper.
+В приложении должны быть установлены `ts-loader`, `css-loader`, `less-loader` и `@svgr/webpack`. Helper переиспользует Less- и SVG-loaders из существующих правил приложения. Если приложение не использует `mini-css-extract-plugin`, оно должно самостоятельно добавить loader, который вставляет или извлекает стили.
 
 Готовый helper рассчитан на Webpack. Для другого сборщика aliases и обработку source-файлов нужно настроить отдельно.
+
+Если сборка проекта с classic JSX выдаёт `TS2686: React refers to a UMD global`, сначала проверьте, что проект наследует актуальный `frontend-kit/config/tsconfig.json`. Затем обновите SHA зависимости, выполните `yarn install` и убедитесь, что в `node_modules/frontend-kit` установлена свежая версия. Переключать весь проект на `jsx: "react-jsx"` не требуется: helper применяет эту настройку только к исходникам frontend-kit.
 
 ### Локальная проверка интеграции
 
@@ -423,11 +517,25 @@ const className = classNames(
 );
 ```
 
-Стили компонентов и дизайн-токены подключаются их внутренними Less-импортами. Светлая тема применяется через `:root`, тёмная — атрибутом на общем контейнере:
+Стили компонентов и дизайн-токены подключаются автоматически при импорте из `@frontend-kit/ui`. Глобальные CSS variables и `@font-face` добавляются один раз. Less-файлы помечены как side effects, поэтому при импорте из корневого barrel-файла Webpack может включить стили других реэкспортируемых компонентов, даже если их React-экспорты затем удалены tree shaking. Не импортируйте `assets/tokens/index.less` в приложении повторно.
+
+Светлая тема применяется через `:root`, тёмная — атрибутом на общем контейнере:
 
 ```html
 <html data-theme="dark">
 ```
+
+## Известные ограничения
+
+### React 16
+
+Публичные пакеты frontend-kit рассчитаны на React 18. В UI есть компоненты, использующие `useId`; корневой `@frontend-kit/ui` реэкспортирует их вместе с остальными компонентами. Поэтому проект на React 16/типах React 17 может получить `TS2305: Module 'react' has no exported member 'useId'`, даже если импортирует только компонент без React 18 API. Webpack и TypeScript helpers не решают эту несовместимость.
+
+### Совместное использование с `front-components`
+
+У frontend-kit и старого `front-components` пока нет изолированных CSS namespaces. Например, оба Counter используют селектор `.ccounter`, поэтому правила старого компонента участвуют в cascade нового.
+
+Кроме того, Less-файлы компонентов `front-components` импортируют его общий `assets/css/bundle.less`. Если приложение уже подключает этот bundle отдельно, DevTools может показывать одинаковое правило старого `.ccounter { position: relative; }` два раза. Это дублирование создаёт `front-components`, а не Webpack helper frontend-kit. До разделения namespaces проверяйте пересечения классов при переносе каждого компонента.
 
 ## Обновление зависимости
 

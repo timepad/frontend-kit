@@ -1,11 +1,19 @@
 const path = require('path');
-const KIT_ROOT = path.dirname(require.resolve('frontend-kit/package.json'));
+const KIT_ROOT = path.resolve(__dirname, '..');
 const PKGS = ['ui', 'hooks', 'utils'];
+
+function packageSource(name) {
+  if (!PKGS.includes(name)) {
+    return undefined;
+  }
+
+  return path.join(KIT_ROOT, 'packages', name, 'src');
+}
 
 function aliases() {
   const map = {};
   for (const name of PKGS) {
-    map[`@frontend-kit/${name}`] = path.join(KIT_ROOT, 'packages', name, 'src');
+    map[`@frontend-kit/${name}`] = packageSource(name);
   }
   return map;
 }
@@ -15,4 +23,4 @@ function includes() {
   return PKGS.map((name) => path.join(KIT_ROOT, 'packages', name));
 }
 
-module.exports = { aliases, includes, KIT_ROOT, PKGS };
+module.exports = { aliases, includes, packageSource, KIT_ROOT, PKGS };
