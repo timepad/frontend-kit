@@ -1,21 +1,21 @@
-@import "../../assets/tokens/index.less";
+@import (reference) "../../assets/tokens/index.less";
 
-.cradio {
+.fk-cradio {
   display: flex;
   align-items: flex-start;
   position: relative;
   cursor: pointer;
 
-  .column-gap-size(s, var(--space-6));
-  .column-gap-size(m, var(--space-8));
-  .column-gap-size(l, var(--space-12));
+  .column-gap-size(s, var(--fk-space-6));
+  .column-gap-size(m, var(--fk-space-8));
+  .column-gap-size(l, var(--fk-space-12));
 
   &:hover::after {
     content: "";
     position: absolute;
     inset: -5px -12px;
-    background-color: var(--btn-hover);
-    border-radius: var(--radius-16);
+    background-color: var(--fk-control-hover);
+    border-radius: var(--fk-radius-16);
     z-index: -1;
   }
 
@@ -25,19 +25,19 @@
 
   &__label {
     display: flex;
-    color: var(--text-primary) !important;
+    color: var(--fk-text-primary);
 
     & > :nth-child(2) {
-      color: var(--text-tertiary) !important;
+      color: var(--fk-text-tertiary);
     }
 
-    .column-gap-size(s, var(--space-6));
-    .column-gap-size(m, var(--space-8));
-    .column-gap-size(l, var(--space-12));
+    .column-gap-size(s, var(--fk-space-6));
+    .column-gap-size(m, var(--fk-space-8));
+    .column-gap-size(l, var(--fk-space-12));
   }
 
   &__description {
-    color: var(--text-secondary) !important;
+    color: var(--fk-text-secondary);
   }
 
   &__field {
@@ -47,7 +47,7 @@
     appearance: none;
     margin: 0;
     border-radius: 50%;
-    border-color: var(--greyscale-300);
+    border-color: var(--fk-greyscale-300);
     border-style: solid;
     cursor: inherit;
 
@@ -63,32 +63,32 @@
     }
 
     &:checked {
-      border-color: var(--btn-primary-active);
+      border-color: var(--fk-control-primary-active);
 
       &::after {
-        background-color: var(--btn-primary-active);
+        background-color: var(--fk-control-primary-active);
       }
     }
 
     &:hover:not(&--error):not(:disabled) {
-      border-color: var(--btn-primary-active);
+      border-color: var(--fk-control-primary-active);
     }
 
     &:disabled {
-      border-color: var(--btn-inactive);
+      border-color: var(--fk-control-inactive);
     }
 
     &:disabled:checked {
       &::after {
-        background-color: var(--btn-inactive);
+        background-color: var(--fk-control-inactive);
       }
     }
 
     &--error:not(:disabled) {
-      border-color: var(--accent-negative);
+      border-color: var(--fk-accent-negative);
 
       &:checked::after {
-        background-color: var(--accent-negative);
+        background-color: var(--fk-accent-negative);
       }
     }
     .field-size(s, 16px, 16px, 2px, 1px);

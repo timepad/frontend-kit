@@ -15,10 +15,10 @@ import {
 
 const fillColorOptions = [
   "transparent",
-  "var(--bg-primary)",
-  "var(--bg-secondary)",
-  "var(--light-purple)",
-  "var(--normal-purple)",
+  "var(--fk-bg-primary)",
+  "var(--fk-bg-secondary)",
+  "var(--fk-light-purple)",
+  "var(--fk-normal-purple)",
 ] as const;
 
 const resolveCellBackground = (backgroundColor?: string) =>
@@ -80,7 +80,7 @@ const meta = {
     align: "center",
     horizontalPadding: 0,
     verticalPadding: 0,
-    backgroundColor: "var(--bg-primary)",
+    backgroundColor: "var(--fk-bg-primary)",
   },
 } satisfies Meta<CellStoryArgs>;
 
@@ -93,15 +93,15 @@ const leftIconBgStyle: CSSProperties = {
   justifyContent: "center",
   width: 48,
   height: 48,
-  borderRadius: "var(--radius-8)",
-  background: "var(--bg-secondary)",
+  borderRadius: "var(--fk-radius-8)",
+  background: "var(--fk-bg-secondary)",
 };
 
 const longCaption = "Описание в три строки максимум, а остально будет обрезаться троеточием барабарабарабара береберебере барабарабарабара береберебере барабарабарабара береберебере места ещё много очень, очень много места";
 const listCaption = "Описание в три строки максимум";
 
 const listCellProps: ICellProps = {
-  backgroundColor: "var(--bg-primary)",
+  backgroundColor: "var(--fk-bg-primary)",
 };
 
 const cellStoryProps = ({
@@ -304,7 +304,7 @@ export const List: Story = {
             <Cell.Content.Text.Caption>{listCaption}</Cell.Content.Text.Caption>
           </Cell.Content.Text>
           <Cell.Content.Right>
-            <div style={{display: "flex", alignItems: 'center', color: "var(--icon-tertiary)"}}>
+            <div style={{display: "flex", alignItems: 'center', color: "var(--fk-icon-tertiary)"}}>
               <Counter size="m" value={100} />
               <IconChevronRight24Outline style={{ cursor: "pointer" }} onClick={() => alert("клик")} />
             </div>
@@ -376,7 +376,7 @@ export const List: Story = {
             <Cell.Content.Text.Caption>{listCaption}</Cell.Content.Text.Caption>
           </Cell.Content.Text>
           <Cell.Content.Right>
-            <Typography.Paragraph style={{color: "var(--text-secondary)"}} tag="P4 REGULAR">Data</Typography.Paragraph>
+            <Typography.Paragraph style={{color: "var(--fk-text-secondary)"}} tag="P4 REGULAR">Data</Typography.Paragraph>
           </Cell.Content.Right>
         </Cell.Content>
       </Cell>

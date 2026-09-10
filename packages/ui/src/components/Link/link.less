@@ -1,13 +1,13 @@
-@import "../../assets/tokens/index.less";
+@import (reference) "../../assets/tokens/index.less";
 
-.clink {
+.fk-clink {
   display: inline-flex;
   align-items: center;
   text-decoration: none;
   cursor: pointer;
 
   &:hover {
-    .clink__label {
+    .fk-clink__label {
       text-decoration: underline;
       text-decoration-thickness: 1px;
     }
@@ -16,7 +16,7 @@
   &__content {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-4);
+    gap: var(--fk-space-4);
 
     &--icon-position-left {
       flex-direction: row-reverse;
@@ -28,6 +28,7 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    color: var(--fk-text-link-primary);
 
     svg {
       width: 16px;
@@ -38,24 +39,24 @@
 
   &__label {
     display: inline-block;
-    color: var(--dark-purple) !important;
     text-decoration: none;
+    color: var(--fk-text-link-primary);
   }
 
   &--size-s {
-    .clink__label {
+    .fk-clink__label {
       text-underline-offset: 3px;
     }
   }
 
   &--size-m {
-    .clink__label {
+    .fk-clink__label {
       text-underline-offset: 4px;
     }
   }
 
   &--size-l {
-    .clink__label {
+    .fk-clink__label {
       text-underline-offset: 5px;
     }
   }

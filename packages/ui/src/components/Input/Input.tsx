@@ -30,6 +30,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
       onClearField,
       required,
       id,
+      fieldOverlay,
       ...rest
     },
     ref,
@@ -86,12 +87,14 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
 
     const actionIconClassName = component("input", "action-icon")();
 
-    const captionClassName = component("input", "caption")();
-
     return (
       <div className={inputClassName}>
         <label htmlFor={inputId}>
-          <Typography.Paragraph tag="P4 REGULAR" className={labelClassName}>
+          <Typography.Paragraph
+            tag="P4 REGULAR"
+            className={labelClassName}
+            inheritColor
+          >
             {label}
             {disabled && (
               <span aria-hidden="true" className={disabledIconClassName}>
@@ -102,6 +105,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
         </label>
 
         <div className={fieldContainerClassName}>
+          {fieldOverlay}
           <input
             className={fieldClassName}
             ref={inputRef}
@@ -145,11 +149,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
         </div>
 
         {caption && (
-          <Typography.Caption
-            tag="C1 REGULAR"
-            className={captionClassName}
-            id={captionId}
-          >
+          <Typography.Caption tag="C1 REGULAR" id={captionId} inheritColor>
             {caption}
           </Typography.Caption>
         )}
