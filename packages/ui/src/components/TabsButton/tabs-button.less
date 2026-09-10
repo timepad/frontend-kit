@@ -75,7 +75,10 @@
     }
 
     &--selected {
-      background-color: var(--fk-control-tertiary-active);
+      background-color: var(
+        --fk-tabs-button-active-tab-background,
+        var(--fk-control-tertiary-active)
+      );
       color: var(--fk-text-primary);
     }
 

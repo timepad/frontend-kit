@@ -1,4 +1,11 @@
-import { FC, PropsWithChildren, useCallback, useMemo, useState } from "react";
+import {
+  CSSProperties,
+  FC,
+  PropsWithChildren,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./tabs-button.less";
@@ -15,6 +22,8 @@ const TabsButtonRoot: FC<PropsWithChildren<ITabsButtonProps>> = ({
   activeTabId,
   defaultActiveTabId = "",
   onActiveTabChange,
+  activeTabBackground,
+  style,
   ...rest
 }) => {
   const [uncontrolledActiveTabId, setUncontrolledActiveTabId] =
@@ -45,10 +54,19 @@ const TabsButtonRoot: FC<PropsWithChildren<ITabsButtonProps>> = ({
   );
 
   const rootClassName = classNames(component("tabs-button")(), className);
+  const backgroundStyle = activeTabBackground
+    ? ({
+        "--fk-tabs-button-active-tab-background": activeTabBackground,
+      } as CSSProperties)
+    : undefined;
 
   return (
     <TabsButtonContext.Provider value={contextValue}>
-      <div className={rootClassName} {...rest}>
+      <div
+        className={rootClassName}
+        style={{ ...backgroundStyle, ...style }}
+        {...rest}
+      >
         {children}
       </div>
     </TabsButtonContext.Provider>

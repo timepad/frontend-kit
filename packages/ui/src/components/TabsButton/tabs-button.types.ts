@@ -29,6 +29,8 @@ export interface ITabsButtonProps extends Omit<
   /** Вызывается при смене активного таба. */
   onActiveTabChange?: (tabId: string) => void;
   size?: TabsButtonSize;
+  /** Фон активного таба. Принимает любое допустимое CSS-значение цвета. */
+  activeTabBackground?: string;
 }
 
 /**

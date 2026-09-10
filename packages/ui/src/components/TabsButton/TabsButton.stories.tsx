@@ -83,6 +83,14 @@ const meta = {
         defaultValue: { summary: "scroll" },
       },
     },
+    activeTabBackground: {
+      description: "Фон активного таба.",
+      control: "color",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "var(--fk-control-tertiary-active)" },
+      },
+    },
     activeTabId: {
       table: { disable: true },
     },
@@ -138,6 +146,16 @@ export const Default: Story = {
     size: "m",
     overflow: "scroll",
     defaultActiveTabId: "overview",
+  },
+  render: (args) => <UncontrolledTabs {...args} />,
+};
+
+export const CustomActiveTabBackground: Story = {
+  args: {
+    size: "m",
+    overflow: "scroll",
+    defaultActiveTabId: "overview",
+    activeTabBackground: "#FEECA3",
   },
   render: (args) => <UncontrolledTabs {...args} />,
 };
