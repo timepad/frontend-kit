@@ -8,7 +8,7 @@ import type {
 export type ITabbarProps = Omit<ComponentPropsWithoutRef<"nav">, "children"> & {
   /** Вкладки Tabbar. По дизайну поддерживается от 3 до 5 вкладок. */
   children: ReactNode;
-  /** Пользовательский цвет фона. По умолчанию используется --bg-primary. */
+  /** Пользовательский цвет фона. По умолчанию используется --fk-bg-primary. */
   backgroundColor?: string;
   /** Показывает подписи у всех вкладок. */
   showLabels?: boolean;

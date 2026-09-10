@@ -20,7 +20,7 @@ const TabbarComponent: FC<ITabbarProps> = ({
     className,
   );
   const backgroundStyle = backgroundColor
-    ? ({ "--tabbar-bg": backgroundColor } as CSSProperties)
+    ? ({ "--fk-tabbar-bg": backgroundColor } as CSSProperties)
     : undefined;
 
   return (
