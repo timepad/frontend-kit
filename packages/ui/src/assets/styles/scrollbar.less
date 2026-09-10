@@ -1,0 +1,56 @@
+@import "../tokens/index.less";
+
+/*
+ * Настраиваемые CSS custom properties (можно переопределять на контейнере):
+ * --fk-scrollbar-thumb-size
+ * --fk-scrollbar-offset
+ * --fk-scrollbar-thumb-color
+ * --fk-scrollbar-thumb-opacity
+ * --fk-scrollbar-thumb-radius
+ */
+
+.fk-cscrollbar {
+  --fk-scrollbar-thumb-size: var(--fk-space-4);
+  --fk-scrollbar-offset: var(--fk-space-4);
+  --fk-scrollbar-thumb-color: var(--fk-scrollbar-thumb);
+  --fk-scrollbar-thumb-opacity: 0.5;
+  --fk-scrollbar-thumb-radius: var(--fk-radius-40);
+  --fk-scrollbar-track-size: calc(
+    var(--fk-scrollbar-thumb-size) + var(--fk-scrollbar-offset)
+  );
+  --fk-scrollbar-thumb-fill: color-mix(
+    in srgb,
+    var(--fk-scrollbar-thumb-color) calc(100% * var(--fk-scrollbar-thumb-opacity)),
+    transparent
+  );
+}
+
+.fk-cscrollbar,
+.fk-cscrollbar * {
+  /* standard — только где нет ::-webkit-scrollbar */
+  @supports not selector(::-webkit-scrollbar) {
+    scrollbar-width: thin;
+    scrollbar-color: var(--fk-scrollbar-thumb-fill) transparent;
+  }
+
+  /* legacy */
+  &::-webkit-scrollbar {
+    width: var(--fk-scrollbar-track-size);
+    height: var(--fk-scrollbar-track-size);
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--fk-scrollbar-thumb-fill);
+    border-radius: var(--fk-scrollbar-thumb-radius);
+    border: calc(var(--fk-scrollbar-offset) / 2) solid transparent;
+    background-clip: content-box;
+  }
+}
