@@ -3,6 +3,7 @@
 import "./assets/tokens/index.less";
 import "./assets/styles/scrollbar.less";
 
+export { Badge } from "./components/Badge";
 export { Counter } from "./components/Counter";
 export { Breadcrumbs } from "./components/Breadcrumbs";
 export { Avatar, AvatarStatus } from "./components/Avatar";

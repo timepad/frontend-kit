@@ -8,7 +8,6 @@
 
   &__label {
     display: flex;
-    color: inherit !important;
     column-gap: var(--fk-space-4);
 
     &--required::after {
@@ -44,7 +43,7 @@
 
     &:focus,
     &:focus-visible {
-      outline-color: var(--fk-btn-primary-active);
+      outline-color: var(--fk-control-primary-active);
       caret-color: var(--fk-greyscale-800);
     }
 
@@ -61,11 +60,7 @@
     }
   }
 
-  &__caption {
-    color: inherit !important;
-  }
-
   &--error {
-    color: var(--fk-text-negative) !important;
+    color: var(--fk-text-negative);
   }
 }

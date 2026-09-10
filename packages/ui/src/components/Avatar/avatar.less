@@ -12,7 +12,6 @@
   box-sizing: border-box;
   position: relative;
   background-color: var(--fk-light-purple);
-  color: var(--fk-text-primary-alt);
   user-select: none;
 
   &--stroke::after {
@@ -33,6 +32,7 @@
   }
 
   &__initials {
+    color: var(--fk-text-primary-alt);
     leading-trim: both;
     text-edge: cap;
   }
@@ -50,7 +50,8 @@
       z-index: -1;
       background: var(--fk-bg-primary);
       inset: calc(-1 * var(--fk-avatar-status-ring));
-      border-radius: calc(var(--fk-avatar-status-radius) + var(--fk-avatar-status-ring)
+      border-radius: calc(
+        var(--fk-avatar-status-radius) + var(--fk-avatar-status-ring)
       );
     }
   }

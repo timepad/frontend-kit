@@ -1,12 +1,11 @@
-import { type ComponentType, FC } from "react";
+import { FC } from "react";
 import { classNames, component } from "@frontend-kit/utils";
 
 import "./avatar.less";
 import { AvatarSize, IAvatarProps } from "./avatar.types";
 import { AvatarStatusSize } from "./AvatarStatus/avatar-status.types";
 import { AvatarStatus } from "./AvatarStatus";
-import { CaptionVariantTag, Typography } from "../Typography";
-import { HeaderVariantTag, ParagraphVariantTag } from "../Typography/configs";
+import { createTypographyComponent, Typography } from "../Typography";
 
 const AvatarComponent: FC<IAvatarProps> = ({
   text,
@@ -28,7 +27,7 @@ const AvatarComponent: FC<IAvatarProps> = ({
   const imageClassName = component("avatar", "image")();
   const statusClassName = component("avatar", "status")();
 
-  const { TextComponent, textTag } = textAvatar[size];
+  const TextComponent = textAvatar[size];
   const statusSize = avatarStatusSizes[size];
 
   return (
@@ -36,7 +35,7 @@ const AvatarComponent: FC<IAvatarProps> = ({
         {image ? (
             <div className={imageClassName} role="img" style={{backgroundImage: `url("${image}")`}}/>
         ) : (
-            <TextComponent as="span" tag={textTag} className={initialsClassName}>
+            <TextComponent as="span" className={initialsClassName}>
               {getInitials(text, size)}
             </TextComponent>
         )}
@@ -77,34 +76,13 @@ const getInitials = (name?: string, size: AvatarSize = 40) => {
 };
 
 const textAvatar: Record<
-    AvatarSize,
-    {
-      TextComponent: ComponentType<any>;
-      textTag:
-          | Extract<ParagraphVariantTag, "P4 REGULAR" | "P3 BOLD">
-          | Extract<HeaderVariantTag, "H4 BOLD" | "H3 BOLD" | "H2 BOLD" | "H1 BOLD">
-          | Extract<CaptionVariantTag, "C1 BOLD">;
-    }
+  AvatarSize,
+  ReturnType<typeof createTypographyComponent>
 > = {
-  24: { TextComponent: Typography.Caption, textTag: "C1 BOLD" },
-  32: {
-    TextComponent: Typography.Paragraph,
-    textTag: "P3 BOLD",
-  },
-  40: {
-    TextComponent: Typography.Header,
-    textTag: "H4 BOLD",
-  },
-  48: {
-    TextComponent: Typography.Header,
-    textTag: "H3 BOLD",
-  },
-  64: {
-    TextComponent: Typography.Header,
-    textTag: "H2 BOLD",
-  },
-  80: {
-    TextComponent: Typography.Header,
-    textTag: "H1 BOLD",
-  },
+  24: createTypographyComponent(Typography.Caption, "C1 BOLD"),
+  32: createTypographyComponent(Typography.Paragraph, "P3 BOLD"),
+  40: createTypographyComponent(Typography.Header, "H4 BOLD"),
+  48: createTypographyComponent(Typography.Header, "H3 BOLD"),
+  64: createTypographyComponent(Typography.Header, "H2 BOLD"),
+  80: createTypographyComponent(Typography.Header, "H1 BOLD"),
 };

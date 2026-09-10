@@ -15,6 +15,8 @@ export const Breadcrumbs: FC<IBreadcrumbsProps> = ({
   type = "default",
   ...rest
 }) => {
+  const currentIndex = items.findIndex((item) => item.isCurrent);
+
   const breadcrumbsClassName = classNames(
     component("breadcrumbs")(),
     className,
@@ -39,7 +41,8 @@ export const Breadcrumbs: FC<IBreadcrumbsProps> = ({
         <div className={itemListClassName}>
           {items.map((item, index) => {
             const isLast = index === items.length - 1;
-            const isCurrent = item.isCurrent ?? isLast;
+            const isCurrent =
+              currentIndex >= 0 ? index === currentIndex : isLast;
 
             return (
               <div className={itemClassName} key={index}>
@@ -74,10 +77,7 @@ const BreadcrumbNode: FC<IBreadcrumbNodeProps> = ({ item, isCurrent }) => {
       onClick={onClick}
       aria-current={isCurrent ? "page" : "false"}
     >
-      <Typography.Caption
-        tag="C1 REGULAR"
-        className={component("breadcrumbs", "link-text")()}
-      >
+      <Typography.Caption tag="C1 REGULAR" as="span" inheritColor>
         {label}
       </Typography.Caption>
     </a>

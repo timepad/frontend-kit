@@ -14,7 +14,7 @@
     content: "";
     position: absolute;
     inset: -5px -12px;
-    background-color: var(--fk-btn-hover);
+    background-color: var(--fk-control-hover);
     border-radius: var(--fk-radius-16);
     z-index: -1;
   }
@@ -25,10 +25,10 @@
 
   &__label {
     display: flex;
-    color: var(--fk-text-primary) !important;
+    color: var(--fk-text-primary);
 
     & > :nth-child(2) {
-      color: var(--fk-text-tertiary) !important;
+      color: var(--fk-text-tertiary);
     }
 
     .column-gap-size(s, var(--fk-space-6));
@@ -37,7 +37,7 @@
   }
 
   &__description {
-    color: var(--fk-text-secondary) !important;
+    color: var(--fk-text-secondary);
   }
 
   &__field {
@@ -63,24 +63,24 @@
     }
 
     &:checked {
-      border-color: var(--fk-btn-primary-active);
+      border-color: var(--fk-control-primary-active);
 
       &::after {
-        background-color: var(--fk-btn-primary-active);
+        background-color: var(--fk-control-primary-active);
       }
     }
 
     &:hover:not(&--error):not(:disabled) {
-      border-color: var(--fk-btn-primary-active);
+      border-color: var(--fk-control-primary-active);
     }
 
     &:disabled {
-      border-color: var(--fk-btn-inactive);
+      border-color: var(--fk-control-inactive);
     }
 
     &:disabled:checked {
       &::after {
-        background-color: var(--fk-btn-inactive);
+        background-color: var(--fk-control-inactive);
       }
     }
 

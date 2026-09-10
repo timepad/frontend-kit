@@ -80,12 +80,14 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
 
     const disabledIconClassName = component("textarea", "disabled-icon")();
 
-    const captionClassName = component("textarea", "caption")();
-
     return (
       <div className={textareaClassName}>
         <label htmlFor={textareaId}>
-          <Typography.Paragraph tag="P4 REGULAR" className={labelClassName}>
+          <Typography.Paragraph
+            tag="P4 REGULAR"
+            className={labelClassName}
+            inheritColor
+          >
             {label}
             {disabled && (
               <span aria-hidden="true" className={disabledIconClassName}>
@@ -108,11 +110,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
           {...rest}
         />
         {caption && (
-          <Typography.Caption
-            id={captionId}
-            tag="C1 REGULAR"
-            className={captionClassName}
-          >
+          <Typography.Caption id={captionId} tag="C1 REGULAR" inheritColor>
             {caption}
           </Typography.Caption>
         )}
