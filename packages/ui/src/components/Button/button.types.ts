@@ -22,7 +22,7 @@ export type ButtonVariant =
   | "primary-alternate"
   | "secondary"
   | "negative"
-  | "transparent"
+  | "transparent";
 
 /**
  * Позиция иконки относительно текста кнопки.
@@ -37,4 +37,5 @@ export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   icon?: ReactElement<SVGProps<SVGSVGElement>>;
   iconPosition?: IconPosition;
+  fullWidth?: boolean;
 }
