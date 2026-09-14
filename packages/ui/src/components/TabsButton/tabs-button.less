@@ -1,0 +1,130 @@
+@import (reference) "../../assets/tokens/index.less";
+
+.fk-ctabs-button {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  &__list {
+    --fk-tabs-button-list-offset: 0;
+    --fk-tabs-button-list-row-gap: 0;
+
+    display: flex;
+    align-items: stretch;
+    min-width: 0;
+    width: 100%;
+    padding-block: var(--fk-tabs-button-list-offset);
+    margin-block: calc(var(--fk-tabs-button-list-offset) * -1);
+
+    &--size-s {
+      --fk-tabs-button-list-offset: var(--fk-space-6);
+      --fk-tabs-button-list-row-gap: var(--fk-space-12);
+    }
+
+    &--size-m {
+      --fk-tabs-button-list-offset: var(--fk-space-2);
+      --fk-tabs-button-list-row-gap: var(--fk-space-4);
+    }
+
+    &--overflow-scroll {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+      // Скрывает полосу прокрутки в IE и Edge Legacy; Autoprefixer не добавляет это свойство.
+      -ms-overflow-style: none;
+
+      // Скрывает полосу прокрутки в версиях Safari и Chromium без поддержки scrollbar-width.
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    &--overflow-wrap {
+      flex-wrap: wrap;
+      row-gap: var(--fk-tabs-button-list-row-gap);
+    }
+  }
+
+  &__tab {
+    position: relative;
+    margin: 0;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    white-space: nowrap;
+    background: transparent;
+    color: var(--fk-text-secondary);
+
+    &::before {
+      position: absolute;
+      content: "";
+    }
+
+    &::after {
+      position: absolute;
+      content: "";
+      inset: 0;
+      border-radius: inherit;
+      background-color: var(--fk-control-hover);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.1s ease-out;
+      z-index: 0;
+    }
+
+    &--selected {
+      background-color: var(
+        --fk-tabs-button-active-tab-background,
+        var(--fk-control-tertiary-active)
+      );
+      color: var(--fk-text-primary);
+    }
+
+    &--size-s {
+      padding: var(--fk-space-6) var(--fk-space-8);
+      border-radius: var(--fk-radius-8);
+
+      &::before {
+        inset: calc(var(--fk-space-6) * -1) 0;
+      }
+    }
+
+    &--size-m {
+      padding: var(--fk-space-8) var(--fk-space-10);
+      border-radius: var(--fk-radius-10);
+
+      &::before {
+        inset: calc(var(--fk-space-2) * -1) 0;
+      }
+    }
+
+    &--size-l {
+      padding: var(--fk-space-12);
+      border-radius: var(--fk-radius-12);
+    }
+
+    &:hover:not(:disabled)::after {
+      opacity: 1;
+    }
+
+    &:focus-visible {
+      outline: 1px solid var(--fk-control-primary-active);
+      outline-offset: -1px;
+    }
+
+    &:disabled {
+      color: var(--fk-text-tertiary);
+      cursor: not-allowed;
+    }
+  }
+
+  &__tab-content {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    column-gap: var(--fk-space-6);
+  }
+}
