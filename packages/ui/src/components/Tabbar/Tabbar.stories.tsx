@@ -29,7 +29,13 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div style={{ width: 430, paddingTop: 32, background: "var(--bg-secondary)" }}>
+      <div
+        style={{
+          width: 430,
+          paddingTop: 32,
+          background: "var(--fk-bg-secondary)",
+        }}
+      >
         <Story />
       </div>
     ),
