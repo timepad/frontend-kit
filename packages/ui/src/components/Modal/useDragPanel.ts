@@ -19,7 +19,7 @@ interface IUseDragPanelResult {
 }
 
 export const useDragPanel = (
-  dismiss: LayerDismissHandler | undefined,
+  dismissTop: LayerDismissHandler | undefined,
   isMobileDevice: boolean,
 ): IUseDragPanelResult => {
   const startYRef = useRef(0);
@@ -59,7 +59,7 @@ export const useDragPanel = (
     setDragY(0);
 
     if (distance >= CLOSE_DRAG_DISTANCE) {
-      dismiss?.("drag");
+      dismissTop?.("drag");
     }
   };
 

@@ -36,6 +36,14 @@ export interface IUseLayerResult {
   layerId: string;
   /** `true`, если слой верхний в стеке открытых слоёв. */
   isTop: boolean;
-  /** Закрыть слой с указанием причины. */
-  dismiss: LayerDismissHandler;
+  /**
+   * Закрыть слой только если он верхний.
+   * Для системных событий: Escape, backdrop, outside-press, drag.
+   */
+  dismissTop: LayerDismissHandler;
+  /**
+   * Закрыть именно этот слой, независимо от позиции в стеке.
+   * Для явного action и программного закрытия.
+   */
+  closeSelf: LayerDismissHandler;
 }

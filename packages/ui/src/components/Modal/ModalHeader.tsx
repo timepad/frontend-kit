@@ -31,11 +31,11 @@ const BtnBack: FC<IBtnBackProps> = ({ onBack }) => {
 const BtnClose: FC<IBtnCloseProps> = ({ onClose }) => {
   const btnCloseClassName = component("modal-header", "btn-close")();
 
-  const { dismiss } = useModalContext();
+  const { closeSelf } = useModalContext();
 
   const handleCloseClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClose?.(event);
-    dismiss("action");
+    closeSelf("action");
   };
 
   return (

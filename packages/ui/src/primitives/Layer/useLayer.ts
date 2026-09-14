@@ -15,7 +15,9 @@ import {
 
 /**
  * Регистрирует слой в стеке при `open === true`.
- * `dismiss` закрывает слой только если он верхний в стеке.
+ *
+ * - `dismissTop` — только верхний слой (Escape, backdrop, outside-press, drag).
+ * - `closeSelf` — этот слой независимо от стека (action, программное закрытие).
  */
 export const useLayer = ({
   open,
@@ -28,7 +30,11 @@ export const useLayer = ({
   const onOpenChangeRef = useRef(onOpenChange);
   onOpenChangeRef.current = onOpenChange;
 
-  const dismiss = useCallback(
+  const closeSelf = useCallback((reason: LayerDismissReason) => {
+    onOpenChangeRef.current?.(false, { reason });
+  }, []);
+
+  const dismissTop = useCallback(
     (reason: LayerDismissReason) => {
       if (!store.isTop(layerId)) return;
 
@@ -40,12 +46,13 @@ export const useLayer = ({
   useEffect(() => {
     if (!open) return;
 
-    store.register(layerId, dismiss);
+    // В store для Escape / dismissTop кладётся только top-only обработчик.
+    store.register(layerId, dismissTop);
 
     return () => {
       store.unregister(layerId);
     };
-  }, [open, layerId, dismiss, store]);
+  }, [open, layerId, dismissTop, store]);
 
   const isTop = useSyncExternalStore(
     store.subscribe,
@@ -58,6 +65,7 @@ export const useLayer = ({
   return {
     layerId,
     isTop,
-    dismiss,
+    dismissTop,
+    closeSelf,
   };
 };

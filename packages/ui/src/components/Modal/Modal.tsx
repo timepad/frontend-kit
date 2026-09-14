@@ -24,8 +24,10 @@ const ModalRoot: FC<PropsWithChildren<IModalProps>> = ({
   ...props
 }) => {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
+  const openRef = useRef(open);
+  openRef.current = open;
 
-  const { dismiss } = useLayer({
+  const { dismissTop, closeSelf } = useLayer({
     open,
     onOpenChange,
   });
@@ -37,7 +39,7 @@ const ModalRoot: FC<PropsWithChildren<IModalProps>> = ({
     handlePointerMove,
     finishDragging,
     resetDrag,
-  } = useDragPanel(onOpenChange ? dismiss : undefined, isMobilePortraitMax);
+  } = useDragPanel(onOpenChange ? dismissTop : undefined, isMobilePortraitMax);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -57,19 +59,30 @@ const ModalRoot: FC<PropsWithChildren<IModalProps>> = ({
     const dialog = dialogRef.current;
     if (!dialog) return;
 
-    // Нативный cancel не закрывает dialog — Escape обрабатывает LayerProvider / useLayer.
+    // Escape не закрывает dialog нативно — его обрабатывает LayerProvider.
     const handleCancel = (event: Event) => {
       event.preventDefault();
     };
 
+    // Любое нативное закрытие (form method=dialog, dialog.close() извне)
+    // синхронизируем с controlled `open`.
+    const handleClose = () => {
+      if (!openRef.current) return;
+      closeSelf("action");
+    };
+
     dialog.addEventListener("cancel", handleCancel);
-    return () => dialog.removeEventListener("cancel", handleCancel);
-  }, []);
+    dialog.addEventListener("close", handleClose);
+    return () => {
+      dialog.removeEventListener("cancel", handleCancel);
+      dialog.removeEventListener("close", handleClose);
+    };
+  }, [closeSelf]);
 
   const handleBackdropClick = (event: React.MouseEvent<HTMLDialogElement>) => {
     if (event.target !== dialogRef.current) return;
 
-    dismiss("backdrop");
+    dismissTop("backdrop");
   };
 
   const modalSize = isMobilePortraitMax ? "s" : size;
@@ -82,7 +95,7 @@ const ModalRoot: FC<PropsWithChildren<IModalProps>> = ({
       headerAlign,
       isMobileDevice: isMobilePortraitMax,
       withFooterDivider: showFooterDivider,
-      dismiss,
+      closeSelf,
     } satisfies IModalContextValue;
   }, [
     isMobilePortraitMax,
@@ -90,7 +103,7 @@ const ModalRoot: FC<PropsWithChildren<IModalProps>> = ({
     footerDirection,
     headerAlign,
     showFooterDivider,
-    dismiss,
+    closeSelf,
   ]);
 
   const modalClassName = classNames(

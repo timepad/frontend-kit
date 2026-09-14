@@ -48,7 +48,8 @@ export interface IModalContextValue {
   isMobileDevice: boolean;
   /** Верхняя граница-разделитель у футера (`box-shadow`). */
   withFooterDivider: boolean;
-  dismiss: LayerDismissHandler;
+  /** Явное закрытие этого модального окна (не зависит от стека слоёв). */
+  closeSelf: LayerDismissHandler;
 }
 
 /** Обработчик клика по кнопкам модалки (close, back, footer actions). */
@@ -79,7 +80,7 @@ export interface IModalProps extends Omit<
 
 /** Пропсы для {@link Modal.Header.BtnClose}. */
 export interface IBtnCloseProps {
-  /** Дополнительный колбэк; закрытие слоя идёт через `dismiss("action")`. */
+  /** Дополнительный колбэк; закрытие слоя идёт через `closeSelf("action")`. */
   onClose?: ButtonClickHandler;
 }
 
