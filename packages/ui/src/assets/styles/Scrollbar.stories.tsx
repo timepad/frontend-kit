@@ -1,16 +1,16 @@
 import type { CSSProperties } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import "../../assets/styles/scrollbar.less";
+import "../../styles";
 
 const meta = {
-  title: "Components/Scrollbar",
+  title: "Styles/Scrollbar",
   parameters: {
     layout: "centered",
     docs: {
       description: {
         component:
-          'Добавить className="fk-cscrollbar" существующему контейнеру. Стили подключаются при импорте @frontend-kit/ui. Настройка доступна через CSS-переменные --fk-scrollbar-thumb-size, --fk-scrollbar-offset, --fk-scrollbar-thumb-color, --fk-scrollbar-thumb-opacity и --fk-scrollbar-thumb-radius на контейнере.',
+          'Добавить className="fk-cscrollbar" существующему контейнеру. Для отдельного подключения стилей: import "@frontend-kit/ui/styles". При импорте @frontend-kit/ui стили также подключаются автоматически. Сборщик должен поддерживать Less. Настройка доступна через CSS-переменные --fk-scrollbar-thumb-size, --fk-scrollbar-offset, --fk-scrollbar-thumb-color, --fk-scrollbar-thumb-opacity и --fk-scrollbar-thumb-radius на контейнере.',
       },
     },
   },
