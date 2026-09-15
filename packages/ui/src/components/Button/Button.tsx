@@ -13,6 +13,7 @@ export const Button: FC<IButtonProps> = ({
   label,
   className,
   type = "button",
+  fullWidth,
   ...rest
 }) => {
   const hasIcon = !!icon;
@@ -24,6 +25,7 @@ export const Button: FC<IButtonProps> = ({
     // button size: fk-cbutton fk-cbutton--size-m
     component("button")({
       [`size-${size}`]: true,
+      ["full-width"]: fullWidth,
     }),
     className,
   );
