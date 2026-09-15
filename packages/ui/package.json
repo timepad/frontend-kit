@@ -27,10 +27,12 @@
   ],
   "sideEffects": [
     "./src/index.ts",
+    "./src/styles.ts",
     "**/*.less"
   ],
   "exports": {
     ".": "./src/index.ts",
+    "./styles": "./src/styles.ts",
     "./*": "./src/*.tsx"
   },
   "peerDependencies": {

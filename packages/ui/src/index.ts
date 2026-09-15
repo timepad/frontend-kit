@@ -1,6 +1,6 @@
 /// <reference path="../../../config/types.d.ts" />
 
-import "./assets/tokens/index.less";
+import "./styles";
 
 export { Badge } from "./components/Badge";
 export { Counter } from "./components/Counter";
