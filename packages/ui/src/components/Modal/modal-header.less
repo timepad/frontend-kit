@@ -9,20 +9,20 @@
   padding: var(--fk-space-20);
 
   &:not(:has(&__btn-back))&--align-start {
-    .cmodal-header__title {
+    .fk-cmodal-header__title {
       grid-column: 1 / span 2;
     }
 
-    .cmodal-header__subtitle {
+    .fk-cmodal-header__subtitle {
       grid-column: 1 / span 2;
     }
   }
   &:not(:has(&__btn-back)):not(:has(&__btn-close)) {
-    .cmodal-header__title {
+    .fk-cmodal-header__title {
       grid-column: 1 / span 3;
     }
 
-    .cmodal-header__subtitle {
+    .fk-cmodal-header__subtitle {
       grid-column: 1 / span 3;
     }
   }
@@ -53,8 +53,8 @@
   }
 
   &--align-start {
-    .cmodal-header__title,
-    .cmodal-header__subtitle {
+    .fk-cmodal-header__title,
+    .fk-cmodal-header__subtitle {
       justify-self: start;
     }
   }

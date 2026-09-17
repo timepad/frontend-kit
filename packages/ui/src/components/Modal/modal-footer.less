@@ -46,32 +46,32 @@
     column-gap: var(--fk-space-12);
     row-gap: var(--fk-space-12);
 
-    &:not(:has(.cmodal-footer__btn-back)) {
-      .cmodal-footer__buttons {
+    &:not(:has(.fk-cmodal-footer__btn-back)) {
+      .fk-cmodal-footer__buttons {
         grid-row: 1 / span 2;
         align-self: center;
         justify-self: end;
       }
 
-      .cmodal-footer__after-content {
+      .fk-cmodal-footer__after-content {
         grid-row: 2;
       }
     }
 
-    &:not(:has(.cmodal-footer__before-content)) {
-      .cmodal-footer__buttons {
+    &:not(:has(.fk-cmodal-footer__before-content)) {
+      .fk-cmodal-footer__buttons {
         grid-row: 1;
       }
 
-      .cmodal-footer__after-content {
+      .fk-cmodal-footer__after-content {
         grid-row: 2;
       }
     }
 
-    &:not(:has(.cmodal-footer__btn-back)):not(
-        :has(.cmodal-footer__before-content)
+    &:not(:has(.fk-cmodal-footer__btn-back)):not(
+        :has(.fk-cmodal-footer__before-content)
       ) {
-      .cmodal-footer__after-content {
+      .fk-cmodal-footer__after-content {
         grid-row: 1;
       }
     }
