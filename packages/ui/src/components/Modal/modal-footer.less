@@ -1,7 +1,8 @@
 @import "../../assets/tokens/index.less";
 
 .fk-cmodal-footer {
-  padding: var(--fk-space-12) var(--fk-space-20) var(--fk-space-20) var(--fk-space-20);
+  padding: var(--fk-space-12) var(--fk-space-20) var(--fk-space-20)
+    var(--fk-space-20);
 
   &__buttons {
     display: flex;
@@ -56,29 +57,27 @@
       .fk-cmodal-footer__after-content {
         grid-row: 2;
       }
-    }
 
-    &:not(:has(.fk-cmodal-footer__before-content)) {
-      .fk-cmodal-footer__buttons {
-        grid-row: 1;
+      &:not(:has(.fk-cmodal-footer__before-content)),
+      &:not(:has(.fk-cmodal-footer__after-content)) {
+        .fk-cmodal-footer__buttons {
+          grid-row: 1;
+        }
       }
 
-      .fk-cmodal-footer__after-content {
-        grid-row: 2;
-      }
-    }
-
-    &:not(:has(.fk-cmodal-footer__btn-back)):not(
-        :has(.fk-cmodal-footer__before-content)
-      ) {
-      .fk-cmodal-footer__after-content {
+      &:not(:has(.fk-cmodal-footer__before-content))
+        .fk-cmodal-footer__after-content,
+      &:not(:has(.fk-cmodal-footer__after-content))
+        .fk-cmodal-footer__before-content {
         grid-row: 1;
+        align-self: center;
       }
     }
   }
 
   &--mobile {
-    padding: var(--fk-space-8) var(--fk-space-16) var(--fk-space-16) var(--fk-space-16);
+    padding: var(--fk-space-8) var(--fk-space-16) var(--fk-space-16)
+      var(--fk-space-16);
   }
 
   &--divider {
