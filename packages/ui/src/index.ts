@@ -1,9 +1,10 @@
 /// <reference path="../../../config/types.d.ts" />
 
-import "./assets/tokens/index.less";
+import "./styles";
 
 export { Badge } from "./components/Badge";
 export { Counter } from "./components/Counter";
+export { Tabbar } from "./components/Tabbar";
 export { Breadcrumbs } from "./components/Breadcrumbs";
 export { Avatar, AvatarStatus } from "./components/Avatar";
 export { Button } from "./components/Button";
@@ -43,4 +44,5 @@ export { Divider } from "./components/Divider";
 export { Snackbar } from "./components/Snackbar";
 export { Cell } from "./components/Cell";
 export { Link } from "./components/Link";
+export { TabsButton } from "./components/TabsButton";
 export * from "./assets/icons";
