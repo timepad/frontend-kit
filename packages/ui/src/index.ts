@@ -4,6 +4,7 @@ import "./styles";
 
 export * from "./assets/icons";
 
+export { Accordion } from "./components/Accordion";
 export { Avatar, AvatarStatus } from "./components/Avatar";
 export { Badge } from "./components/Badge";
 export { Breadcrumbs } from "./components/Breadcrumbs";
