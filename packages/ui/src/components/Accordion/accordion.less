@@ -15,7 +15,6 @@
     align-items: center;
     width: 100%;
     column-gap: var(--fk-space-16);
-    border: none;
     cursor: pointer;
   }
 
@@ -37,6 +36,11 @@
     transition-delay: 1ms;
   }
 
+  &__divider-container {
+    margin: 0 var(--fk-space-24);
+    background-color: var(--fk-accordion-background);
+  }
+
   &__inner {
     overflow: hidden;
     min-height: 0;
@@ -54,6 +58,29 @@
 
     .fk-caccordion__icon {
       transform: rotate(180deg);
+    }
+  }
+
+  &--divider {
+    border-radius: unset;
+    padding: 0;
+    background-color: transparent;
+
+    .fk-caccordion__card {
+      border-radius: var(--fk-accordion-radius);
+      padding: var(--fk-space-16);
+      background-color: var(--fk-accordion-background);
+      box-sizing: border-box;
+    }
+
+    .fk-caccordion__content {
+      background-color: transparent;
+    }
+
+    .fk-caccordion__slot {
+      border-radius: var(--fk-accordion-radius);
+      background-color: var(--fk-accordion-background);
+      padding: var(--fk-space-16);
     }
   }
 

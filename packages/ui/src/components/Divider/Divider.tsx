@@ -6,11 +6,15 @@ import { IDividerProps } from "./divider.types";
 
 export const Divider: FC<IDividerProps> = ({
   flow = "horizontal",
+  variant = "solid",
   className,
   ...rest
 }) => {
   const dividerClassName = classNames(
-    component("divider")({ [`flow-${flow}`]: true }),
+    component("divider")({
+      [`flow-${flow}`]: true,
+      [`variant-${variant}`]: true,
+    }),
     className,
   );
 

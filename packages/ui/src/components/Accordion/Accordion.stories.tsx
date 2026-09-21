@@ -19,8 +19,7 @@ const meta = {
         style={{
           width: 400,
           minHeight: 200,
-          height: "100%",
-          background: "#F4F2F8",
+          background: "var(--fk-bg-stroke)",
           padding: 24,
         }}
       >
@@ -28,22 +27,73 @@ const meta = {
       </div>
     ),
   ],
+  argTypes: {
+    card: {
+      control: "text",
+      description: "Заголовок секции. Текст или любой ReactNode.",
+      table: { type: { summary: "ReactNode" } },
+    },
+    children: {
+      control: "text",
+      description: "Содержимое раскрытой секции.",
+      table: { type: { summary: "ReactNode" } },
+    },
+    open: {
+      control: "boolean",
+      description: "Управляемое состояние раскрытия.",
+    },
+    defaultOpen: {
+      control: "boolean",
+      description: "Начальное состояние в неконтролируемом режиме.",
+      table: { defaultValue: { summary: "false" } },
+    },
+    divider: {
+      control: "boolean",
+      description:
+        "Разделяет заголовок и содержимое на две карточки с пунктирным разделителем.",
+      table: { defaultValue: { summary: "false" } },
+    },
+    accordionBackground: {
+      control: "color",
+      description: "Цвет фона карточек. По умолчанию --fk-bg-primary.",
+      table: { type: { summary: "string" } },
+    },
+    onOpenChange: { table: { disable: true } },
+    onClick: { table: { disable: true } },
+    className: { table: { disable: true } },
+    style: { table: { disable: true } },
+  },
+  args: {
+    card: "Grid is awesome",
+    children:
+      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, amet!",
+    divider: false,
+    defaultOpen: false,
+  },
 } satisfies Meta<typeof Accordion>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {
+export const Playground: Story = {};
+
+export const Open: Story = {
   args: {
-    card: "Grid is awesome",
-    children:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, amet!",
+    defaultOpen: true,
+  },
+};
+
+export const WithDivider: Story = {
+  args: {
+    divider: true,
+    defaultOpen: true,
   },
 };
 
 export const WithTypography: Story = {
   args: {
+    defaultOpen: true,
     card: (
       <Typography.Paragraph tag="P3 BOLD">
         Заголовок секции
@@ -58,9 +108,6 @@ export const WithTypography: Story = {
 };
 
 export const Group: Story = {
-  args: {
-    card: "Grid is awesome",
-  },
   render: () => (
     <div style={{ display: "grid", gap: 8 }}>
       <Accordion card="Grid is awesome" defaultOpen>
@@ -71,7 +118,7 @@ export const Group: Story = {
         harum autem delectus mollitia ab assumenda nemo facilis ea aliquam
         deleniti earum recusandae.
       </Accordion>
-      <Accordion card="Tell me more">
+      <Accordion card="Tell me more" divider defaultOpen>
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, amet!
       </Accordion>
     </div>

@@ -4,6 +4,7 @@ import { useMedia } from "@frontend-kit/hooks";
 
 import "./accordion.less";
 import { IAccordionProps } from "./accordion.types";
+import { Divider } from "../Divider";
 import { IconChevronDown24Outline } from "../../assets/icons";
 
 export const Accordion: FC<IAccordionProps> = ({
@@ -16,6 +17,7 @@ export const Accordion: FC<IAccordionProps> = ({
   onOpenChange,
   accordionBackground,
   onClick,
+  divider = false,
   ...rest
 }) => {
   const { isMobilePortraitMax } = useMedia();
@@ -40,6 +42,7 @@ export const Accordion: FC<IAccordionProps> = ({
     component("accordion")({
       mobile: isMobilePortraitMax,
       expanded,
+      divider,
     }),
     className,
   );
@@ -48,6 +51,10 @@ export const Accordion: FC<IAccordionProps> = ({
   const contentClassName = component("accordion", "content")();
   const innerClassName = component("accordion", "inner")();
   const slotClassName = component("accordion", "slot")();
+  const dividerContainerClassName = component(
+    "accordion",
+    "divider-container",
+  )();
 
   const backgroundStyle = accordionBackground
     ? ({
@@ -70,7 +77,7 @@ export const Accordion: FC<IAccordionProps> = ({
         onClick={handleToggle}
       >
         {card}
-        <span className={iconClassName}>
+        <span className={iconClassName} aria-hidden="true">
           <IconChevronDown24Outline />
         </span>
       </div>
@@ -81,6 +88,11 @@ export const Accordion: FC<IAccordionProps> = ({
         aria-hidden={!expanded}
       >
         <div className={innerClassName}>
+          {divider && (
+            <div className={dividerContainerClassName}>
+              <Divider variant="dashed" />
+            </div>
+          )}
           <div className={slotClassName}>{children}</div>
         </div>
       </div>
