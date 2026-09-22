@@ -1,22 +1,28 @@
-import { HTMLAttributes, ReactNode } from "react";
+import { HTMLAttributes, ReactNode, MouseEventHandler } from "react";
 
 /**
  * Пропсы компонента Accordion.
  *
  * Расширяет нативные атрибуты корневого `<div>`.
+ * `onClick` относится к кнопке заголовка, а не к корню.
  */
-export interface IAccordionProps extends HTMLAttributes<HTMLDivElement> {
+export interface IAccordionProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "onClick"
+> {
   /**
-   * Заголовок секции.
-   * Принимает текст или любой ReactNode, например Typography.
+   * Заголовок секции, рендерится внутри `<button>`.
+   * Текст или любой ReactNode. Для Typography укажите `as="span"`.
    */
   card: ReactNode;
   /** Содержимое раскрытой секции. */
   children?: ReactNode;
-  /** Управляемое состояние раскрытия. */
+  /**
+   * Начальное состояние раскрытия.
+   * Если передан `onOpenChange`, становится управляемым.
+   * По умолчанию `false`.
+   */
   open?: boolean;
-  /** Начальное состояние в неконтролируемом режиме. По умолчанию `false`. */
-  defaultOpen?: boolean;
   /** Вызывается при изменении состояния раскрытия. */
   onOpenChange?: (open: boolean) => void;
   /**
@@ -31,4 +37,6 @@ export interface IAccordionProps extends HTMLAttributes<HTMLDivElement> {
    * По умолчанию `false`.
    */
   divider?: boolean;
+  /** Обработчик клика по кнопке заголовка. */
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }

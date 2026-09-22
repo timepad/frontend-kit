@@ -12,8 +12,7 @@ export const Accordion: FC<IAccordionProps> = ({
   children,
   className,
   style,
-  defaultOpen = false,
-  open: openProp,
+  open = false,
   onOpenChange,
   accordionBackground,
   onClick,
@@ -22,12 +21,12 @@ export const Accordion: FC<IAccordionProps> = ({
 }) => {
   const { isMobilePortraitMax } = useMedia();
   const contentId = useId();
-  const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(open);
 
-  const isControlled = openProp !== undefined;
-  const expanded = isControlled ? !!openProp : uncontrolledOpen;
+  const isControlled = onOpenChange !== undefined;
+  const expanded = isControlled ? !!open : uncontrolledOpen;
 
-  const handleToggle = (event: MouseEvent<HTMLDivElement>) => {
+  const handleToggle = (event: MouseEvent<HTMLButtonElement>) => {
     const nextOpen = !expanded;
 
     if (!isControlled) {
@@ -46,7 +45,7 @@ export const Accordion: FC<IAccordionProps> = ({
     }),
     className,
   );
-  const cardClassName = classNames(component("accordion", "card")());
+  const cardClassName = component("accordion", "card")();
   const iconClassName = component("accordion", "icon")();
   const contentClassName = component("accordion", "content")();
   const innerClassName = component("accordion", "inner")();
@@ -68,9 +67,8 @@ export const Accordion: FC<IAccordionProps> = ({
       style={{ ...backgroundStyle, ...style }}
       {...rest}
     >
-      <div
-        role="button"
-        tabIndex={0}
+      <button
+        type="button"
         className={cardClassName}
         aria-expanded={expanded}
         aria-controls={contentId}
@@ -80,7 +78,7 @@ export const Accordion: FC<IAccordionProps> = ({
         <span className={iconClassName} aria-hidden="true">
           <IconChevronDown24Outline />
         </span>
-      </div>
+      </button>
       <div
         id={contentId}
         className={contentClassName}

@@ -8,6 +8,7 @@ const meta = {
   component: Accordion,
   parameters: {
     layout: "centered",
+    actions: { argTypesRegex: undefined },
     docs: {
       codePanel: true,
     },
@@ -30,7 +31,8 @@ const meta = {
   argTypes: {
     card: {
       control: "text",
-      description: "Заголовок секции. Текст или любой ReactNode.",
+      description:
+        "Заголовок секции внутри <button>. Для Typography укажите as=\"span\".",
       table: { type: { summary: "ReactNode" } },
     },
     children: {
@@ -40,11 +42,8 @@ const meta = {
     },
     open: {
       control: "boolean",
-      description: "Управляемое состояние раскрытия.",
-    },
-    defaultOpen: {
-      control: "boolean",
-      description: "Начальное состояние в неконтролируемом режиме.",
+      description:
+        "Начальное состояние раскрытия. С `onOpenChange` становится управляемым.",
       table: { defaultValue: { summary: "false" } },
     },
     divider: {
@@ -58,7 +57,7 @@ const meta = {
       description: "Цвет фона карточек. По умолчанию --fk-bg-primary.",
       table: { type: { summary: "string" } },
     },
-    onOpenChange: { table: { disable: true } },
+    onOpenChange: { table: { disable: true }, control: false, action: false },
     onClick: { table: { disable: true } },
     className: { table: { disable: true } },
     style: { table: { disable: true } },
@@ -68,8 +67,10 @@ const meta = {
     children:
       "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, amet!",
     divider: false,
-    defaultOpen: false,
+    open: false,
+    onOpenChange: undefined,
   },
+  render: ({ onOpenChange: _onOpenChange, ...args }) => <Accordion {...args} />,
 } satisfies Meta<typeof Accordion>;
 
 export default meta;
@@ -80,22 +81,22 @@ export const Playground: Story = {};
 
 export const Open: Story = {
   args: {
-    defaultOpen: true,
+    open: true,
   },
 };
 
 export const WithDivider: Story = {
   args: {
     divider: true,
-    defaultOpen: true,
+    open: true,
   },
 };
 
 export const WithTypography: Story = {
   args: {
-    defaultOpen: true,
+    open: true,
     card: (
-      <Typography.Paragraph tag="P3 BOLD">
+      <Typography.Paragraph tag="P3 BOLD" as="span">
         Заголовок секции
       </Typography.Paragraph>
     ),
@@ -110,7 +111,7 @@ export const WithTypography: Story = {
 export const Group: Story = {
   render: () => (
     <div style={{ display: "grid", gap: 8 }}>
-      <Accordion card="Grid is awesome" defaultOpen>
+      <Accordion card="Grid is awesome" open>
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, amet!
       </Accordion>
       <Accordion card="It's full of neat tricks">
@@ -118,7 +119,7 @@ export const Group: Story = {
         harum autem delectus mollitia ab assumenda nemo facilis ea aliquam
         deleniti earum recusandae.
       </Accordion>
-      <Accordion card="Tell me more" divider defaultOpen>
+      <Accordion card="Tell me more" divider open>
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, amet!
       </Accordion>
     </div>

@@ -11,10 +11,14 @@
   background-color: var(--fk-accordion-background);
 
   &__card {
+    all: unset;
     display: flex;
     align-items: center;
     width: 100%;
     column-gap: var(--fk-space-16);
+    box-sizing: border-box;
+    font: inherit;
+    color: inherit;
     cursor: pointer;
   }
 
