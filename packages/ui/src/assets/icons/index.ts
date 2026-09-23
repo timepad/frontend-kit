@@ -194,6 +194,12 @@ import IconUndo32Outline from "./arrows/Undo-32-Outline.svg?react";
 import IconAddUser16Outline from "./objects/AddUser-16-Outline.svg?react";
 import IconAddUser24Outline from "./objects/AddUser-24-Outline.svg?react";
 import IconAddUser32Outline from "./objects/AddUser-32-Outline.svg?react";
+import IconDocument16Fill from "./objects/Document-16-Fill.svg?react";
+import IconDocument16Outline from "./objects/Document-16-Outline.svg?react";
+import IconDocument24Fill from "./objects/Document-24-Fill.svg?react";
+import IconDocument24Outline from "./objects/Document-24-Outline.svg?react";
+import IconDocument32Fill from "./objects/Document-32-Fill.svg?react";
+import IconDocument32Outline from "./objects/Document-32-Outline.svg?react";
 import IconUser16Outline from "./objects/User-16-Outline.svg?react";
 import IconUser24Outline from "./objects/User-24-Outline.svg?react";
 import IconUser32Outline from "./objects/User-32-Outline.svg?react";
@@ -396,6 +402,12 @@ export {
     IconAddUser16Outline,
     IconAddUser24Outline,
     IconAddUser32Outline,
+    IconDocument16Fill,
+    IconDocument16Outline,
+    IconDocument24Fill,
+    IconDocument24Outline,
+    IconDocument32Fill,
+    IconDocument32Outline,
     IconUser16Outline,
     IconUser24Outline,
     IconUser32Outline,
