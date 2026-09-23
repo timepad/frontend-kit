@@ -1,0 +1,94 @@
+@import (reference) "../../assets/tokens/index.less";
+
+.fk-caccordion {
+  --fk-accordion-radius: var(--fk-radius-20);
+  --fk-accordion-duration: 300ms;
+  --fk-accordion-easing: cubic-bezier(0.2, 0, 0.4, 0.9);
+  --fk-accordion-background: var(--fk-bg-primary);
+
+  border-radius: var(--fk-accordion-radius);
+  padding: var(--fk-space-16);
+  background-color: var(--fk-accordion-background);
+
+  &__card {
+    all: unset;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    column-gap: var(--fk-space-16);
+    box-sizing: border-box;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  &__icon {
+    margin-inline-start: auto;
+    transition: transform var(--fk-accordion-duration)
+      var(--fk-accordion-easing);
+
+    svg {
+      display: block;
+    }
+  }
+
+  &__content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--fk-accordion-duration)
+      var(--fk-accordion-easing);
+    transition-delay: 1ms;
+  }
+
+  &__divider-container {
+    margin: 0 var(--fk-space-24);
+    background-color: var(--fk-accordion-background);
+  }
+
+  &__inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  &__slot {
+    padding-top: var(--fk-space-16);
+    box-sizing: border-box;
+  }
+
+  &--expanded {
+    .fk-caccordion__content {
+      grid-template-rows: 1fr;
+    }
+
+    .fk-caccordion__icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  &--divider {
+    border-radius: unset;
+    padding: 0;
+    background-color: transparent;
+
+    .fk-caccordion__card {
+      border-radius: var(--fk-accordion-radius);
+      padding: var(--fk-space-16);
+      background-color: var(--fk-accordion-background);
+      box-sizing: border-box;
+    }
+
+    .fk-caccordion__content {
+      background-color: transparent;
+    }
+
+    .fk-caccordion__slot {
+      border-radius: var(--fk-accordion-radius);
+      background-color: var(--fk-accordion-background);
+      padding: var(--fk-space-16);
+    }
+  }
+
+  &--mobile {
+    --fk-accordion-radius: var(--fk-radius-16);
+  }
+}
