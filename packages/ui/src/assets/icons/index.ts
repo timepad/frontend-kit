@@ -198,6 +198,7 @@ import IconUser16Outline from "./objects/User-16-Outline.svg?react";
 import IconUser24Outline from "./objects/User-24-Outline.svg?react";
 import IconUser32Outline from "./objects/User-32-Outline.svg?react";
 import IconDocument24Fill from "./objects/Document-24-Fill.svg?react";
+import IconDocument32Fill from "./objects/Document-32-Fill.svg?react";
 
 
 export {
@@ -401,4 +402,5 @@ export {
     IconUser24Outline,
     IconUser32Outline,
     IconDocument24Fill,
+    IconDocument32Fill,
 };
