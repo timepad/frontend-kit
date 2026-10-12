@@ -33,6 +33,16 @@
     padding-inline: var(--fk-cell-padding-inline);
     min-width: 0;
 
+    // Пустая первая колонка всё равно занимает column-gap.
+    &:not(:has(> .fk-ccell__left)) {
+      column-gap: 0;
+
+      > .fk-ccell__content,
+      &::after {
+        grid-column: 1 / -1;
+      }
+    }
+
     &--with-separator {
       grid-template-rows: auto auto;
       row-gap: var(--fk-space-10);
@@ -71,6 +81,15 @@
     align-items: center;
     justify-self: stretch;
     min-width: 0;
+
+    // Тот же зазор между текстом и правым слотом, если слота нет.
+    &:not(:has(> .fk-ccell__right)) {
+      column-gap: 0;
+
+      > .fk-ccell__text {
+        grid-column: 1 / -1;
+      }
+    }
   }
 
   &__text {
