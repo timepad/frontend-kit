@@ -33,6 +33,10 @@
     padding-inline: var(--fk-cell-padding-inline);
     min-width: 0;
 
+    &:not(:has(> .fk-ccell__left)) {
+      column-gap: 0;
+    }
+
     &--with-separator {
       grid-template-rows: auto auto;
       row-gap: var(--fk-space-10);
@@ -71,6 +75,10 @@
     align-items: center;
     justify-self: stretch;
     min-width: 0;
+
+    &:not(:has(> .fk-ccell__right)) {
+      column-gap: 0;
+    }
   }
 
   &__text {
