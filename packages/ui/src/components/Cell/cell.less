@@ -33,14 +33,8 @@
     padding-inline: var(--fk-cell-padding-inline);
     min-width: 0;
 
-    // Пустая первая колонка всё равно занимает column-gap.
     &:not(:has(> .fk-ccell__left)) {
       column-gap: 0;
-
-      > .fk-ccell__content,
-      &::after {
-        grid-column: 1 / -1;
-      }
     }
 
     &--with-separator {
