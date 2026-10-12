@@ -82,13 +82,8 @@
     justify-self: stretch;
     min-width: 0;
 
-    // Тот же зазор между текстом и правым слотом, если слота нет.
     &:not(:has(> .fk-ccell__right)) {
       column-gap: 0;
-
-      > .fk-ccell__text {
-        grid-column: 1 / -1;
-      }
     }
   }
 
