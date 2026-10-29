@@ -16,6 +16,14 @@ export interface ICellProps extends HTMLAttributes<HTMLDivElement> {
 
 export type ICellBaseProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;
 
+export const CELL_LABEL_TAGS = [
+  "P3 REGULAR",
+  "P4 REGULAR",
+  "P3 SEMIBOLD",
+] as const;
+
+export type CellLabelTag = (typeof CELL_LABEL_TAGS)[number];
+
 export interface ICellLabelProps extends HTMLAttributes<HTMLDivElement> {
-  bold?: boolean;
+  tag?: CellLabelTag;
 }
