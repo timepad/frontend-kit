@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Cell } from "./Cell";
-import { CELL_LABEL_TAGS, CellLabelTag, ICellProps } from "./cell.types";
+import { CellLabelTag, ICellProps } from "./cell.types";
 import { Avatar } from "../Avatar";
 import { Counter } from "../Counter";
 import { IconButton } from "../IconButton";
@@ -29,6 +29,8 @@ const resolveCellBackground = (backgroundColor?: string) =>
 type CellStoryArgs = ICellProps & {
   tag?: CellLabelTag;
 };
+
+const cellLabelTags: CellLabelTag[] = ["P3 REGULAR", "P4 REGULAR", "P3 SEMIBOLD"];
 
 const meta = {
   title: "Components/Cell",
@@ -73,7 +75,7 @@ const meta = {
     tag: {
       name: "Label",
       control: "select",
-      options: [...CELL_LABEL_TAGS],
+      options: cellLabelTags,
       table: { disable: true },
     },
   },
@@ -108,7 +110,7 @@ const listCellProps: ICellProps = {
 const labelArgType = {
   name: "Label",
   control: "select",
-  options: [...CELL_LABEL_TAGS],
+  options: cellLabelTags,
   table: { disable: false },
 } as const;
 
