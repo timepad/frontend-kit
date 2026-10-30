@@ -20,12 +20,6 @@ export type ICellBaseProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;
 
 export type CellLabelTag = Extract<ParagraphVariantTag, "P3 REGULAR" | "P4 REGULAR" | "P3 SEMIBOLD">;
 
-export const CELL_LABEL_TAGS: readonly CellLabelTag[] = [
-  "P3 REGULAR",
-  "P4 REGULAR",
-  "P3 SEMIBOLD",
-];
-
 export interface ICellLabelProps extends HTMLAttributes<HTMLDivElement> {
   tag?: CellLabelTag;
 }
