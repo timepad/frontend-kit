@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Cell } from "./Cell";
-import { ICellProps } from "./cell.types";
+import { CellLabelTag, ICellProps } from "./cell.types";
 import { Avatar } from "../Avatar";
 import { Counter } from "../Counter";
 import { IconButton } from "../IconButton";
@@ -27,8 +27,10 @@ const resolveCellBackground = (backgroundColor?: string) =>
     : backgroundColor;
 
 type CellStoryArgs = ICellProps & {
-  bold?: boolean;
+  tag?: CellLabelTag;
 };
+
+const cellLabelTags: CellLabelTag[] = ["P3 REGULAR", "P4 REGULAR", "P3 SEMIBOLD"];
 
 const meta = {
   title: "Components/Cell",
@@ -70,9 +72,10 @@ const meta = {
       control: "boolean",
       table: { disable: true },
     },
-    bold: {
-      name: "Bold",
-      control: "boolean",
+    tag: {
+      name: "Label",
+      control: "select",
+      options: cellLabelTags,
       table: { disable: true },
     },
   },
@@ -103,6 +106,13 @@ const listCaption = "Описание в три строки максимум";
 const listCellProps: ICellProps = {
   backgroundColor: "var(--fk-bg-primary)",
 };
+
+const labelArgType = {
+  name: "Label",
+  control: "select",
+  options: cellLabelTags,
+  table: { disable: false },
+} as const;
 
 const cellStoryProps = ({
   align,
@@ -159,25 +169,23 @@ export const Default: Story = {
 export const TextOnly: Story = {
   args: {
     withSeparator: false,
-    bold: false,
+    tag: "P4 REGULAR",
   },
   argTypes: {
     align: { table: { disable: true } },
     withSeparator: {
       table: { disable: false },
     },
-    bold: {
-      table: { disable: false },
-    },
+    tag: labelArgType,
   },
   render: (args) => {
-    const { withSeparator = false, bold = false, ...cellArgs } = args as CellStoryArgs;
+    const { withSeparator = false, tag = "P4 REGULAR", ...cellArgs } = args as CellStoryArgs;
 
     return (
       <Cell {...cellStoryProps({ ...cellArgs, withSeparator })}>
         <Cell.Content>
           <Cell.Content.Text>
-            <Cell.Content.Text.Label bold={bold}>
+            <Cell.Content.Text.Label tag={tag}>
               Заголовок Text
             </Cell.Content.Text.Label>
           </Cell.Content.Text>
@@ -190,26 +198,24 @@ export const TextOnly: Story = {
 export const CaptionAboveText: Story = {
   args: {
     withSeparator: false,
-    bold: true,
+    tag: "P3 REGULAR",
   },
   argTypes: {
     align: { table: { disable: true } },
     withSeparator: {
       table: { disable: false },
     },
-    bold: {
-      table: { disable: false },
-    },
+    tag: labelArgType,
   },
   render: (args) => {
-    const { withSeparator = false, bold = true, ...cellArgs } = args as CellStoryArgs;
+    const { withSeparator = false, tag = "P3 REGULAR", ...cellArgs } = args as CellStoryArgs;
 
     return (
       <Cell {...cellStoryProps({ ...cellArgs, align: "top", withSeparator })}>
         <Cell.Content>
           <Cell.Content.Text>
             <Cell.Content.Text.Caption>Описание сверху</Cell.Content.Text.Caption>
-            <Cell.Content.Text.Label bold={bold}>Заголовок снизу</Cell.Content.Text.Label>
+            <Cell.Content.Text.Label tag={tag}>Заголовок снизу</Cell.Content.Text.Label>
           </Cell.Content.Text>
         </Cell.Content>
       </Cell>
@@ -221,25 +227,23 @@ export const TextAboveCaption: Story = {
   args: {
     horizontalPadding: 0,
     withSeparator: true,
-    bold: true,
+    tag: "P3 REGULAR",
   },
   argTypes: {
     align: { table: { disable: true } },
     withSeparator: {
       table: { disable: false },
     },
-    bold: {
-      table: { disable: false },
-    },
+    tag: labelArgType,
   },
   render: (args) => {
-    const { withSeparator = false, bold = true, ...cellArgs } = args as CellStoryArgs;
+    const { withSeparator = false, tag = "P3 REGULAR", ...cellArgs } = args as CellStoryArgs;
 
     return (
         <Cell {...cellStoryProps({ ...cellArgs, horizontalPadding: 0, withSeparator })}>
           <Cell.Content>
             <Cell.Content.Text>
-              <Cell.Content.Text.Label bold={bold}>Только текстовый блок</Cell.Content.Text.Label>
+              <Cell.Content.Text.Label tag={tag}>Только текстовый блок</Cell.Content.Text.Label>
               <Cell.Content.Text.Caption>
                 Левый и правый слоты опциональны
               </Cell.Content.Text.Caption>
@@ -253,19 +257,17 @@ export const TextAboveCaption: Story = {
 export const WithAvatar: Story = {
   args: {
     withSeparator: true,
-    bold: true,
+    tag: "P3 REGULAR",
   },
   argTypes: {
     align: { table: { disable: true } },
     withSeparator: {
       table: { disable: false },
     },
-    bold: {
-      table: { disable: false },
-    },
+    tag: labelArgType,
   },
   render: (args) => {
-    const { withSeparator = false, bold = true, ...cellArgs } = args as CellStoryArgs;
+    const { withSeparator = false, tag = "P3 REGULAR", ...cellArgs } = args as CellStoryArgs;
 
     return (
       <Cell {...cellStoryProps({ ...cellArgs, withSeparator })}>
@@ -274,7 +276,7 @@ export const WithAvatar: Story = {
         </Cell.Left>
         <Cell.Content>
           <Cell.Content.Text>
-            <Cell.Content.Text.Label bold={bold}>Алексей Ветров</Cell.Content.Text.Label>
+            <Cell.Content.Text.Label tag={tag}>Алексей Ветров</Cell.Content.Text.Label>
             <Cell.Content.Text.Caption>Онлайн</Cell.Content.Text.Caption>
           </Cell.Content.Text>
           <Cell.Content.Right>
