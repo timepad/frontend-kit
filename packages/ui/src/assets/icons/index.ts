@@ -194,8 +194,27 @@ import IconUndo32Outline from "./arrows/Undo-32-Outline.svg?react";
 import IconAddUser16Outline from "./objects/AddUser-16-Outline.svg?react";
 import IconAddUser24Outline from "./objects/AddUser-24-Outline.svg?react";
 import IconAddUser32Outline from "./objects/AddUser-32-Outline.svg?react";
+import IconRuble16Fill from "./objects/Ruble-16-Fill.svg?react";
+import IconRuble16Outline from "./objects/Ruble-16-Outline.svg?react";
+import IconRuble24Fill from "./objects/Ruble-24-Fill.svg?react";
+import IconRuble24Outline from "./objects/Ruble-24-Outline.svg?react";
+import IconRuble32Fill from "./objects/Ruble-32-Fill.svg?react";
+import IconRuble32Outline from "./objects/Ruble-32-Outline.svg?react";
+import IconStar16Fill from "./objects/Star-16-Fill.svg?react";
+import IconStar16Outline from "./objects/Star-16-Outline.svg?react";
+import IconStar20Fill from "./objects/Star-20-Fill.svg?react";
+import IconStar20Outline from "./objects/Star-20-Outline.svg?react";
+import IconStar24Fill from "./objects/Star-24-Fill.svg?react";
+import IconStar24Outline from "./objects/Star-24-Outline.svg?react";
+import IconStar32Fill from "./objects/Star-32-Fill.svg?react";
+import IconStar32Outline from "./objects/Star-32-Outline.svg?react";
+import IconUser16Fill from "./objects/User-16-Fill.svg?react";
 import IconUser16Outline from "./objects/User-16-Outline.svg?react";
+import IconUser20Fill from "./objects/User-20-Fill.svg?react";
+import IconUser20Outline from "./objects/User-20-Outline.svg?react";
+import IconUser24Fill from "./objects/User-24-Fill.svg?react";
 import IconUser24Outline from "./objects/User-24-Outline.svg?react";
+import IconUser32Fill from "./objects/User-32-Fill.svg?react";
 import IconUser32Outline from "./objects/User-32-Outline.svg?react";
 
 
@@ -396,7 +415,26 @@ export {
     IconAddUser16Outline,
     IconAddUser24Outline,
     IconAddUser32Outline,
+    IconRuble16Fill,
+    IconRuble16Outline,
+    IconRuble24Fill,
+    IconRuble24Outline,
+    IconRuble32Fill,
+    IconRuble32Outline,
+    IconStar16Fill,
+    IconStar16Outline,
+    IconStar20Fill,
+    IconStar20Outline,
+    IconStar24Fill,
+    IconStar24Outline,
+    IconStar32Fill,
+    IconStar32Outline,
+    IconUser16Fill,
     IconUser16Outline,
+    IconUser20Fill,
+    IconUser20Outline,
+    IconUser24Fill,
     IconUser24Outline,
+    IconUser32Fill,
     IconUser32Outline,
 };
