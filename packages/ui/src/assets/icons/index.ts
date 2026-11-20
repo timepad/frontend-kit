@@ -194,6 +194,14 @@ import IconUndo32Outline from "./arrows/Undo-32-Outline.svg?react";
 import IconAddUser16Outline from "./objects/AddUser-16-Outline.svg?react";
 import IconAddUser24Outline from "./objects/AddUser-24-Outline.svg?react";
 import IconAddUser32Outline from "./objects/AddUser-32-Outline.svg?react";
+import IconCompany16Fill from "./objects/Company-16-Fill.svg?react";
+import IconCompany16Outline from "./objects/Company-16-Outline.svg?react";
+import IconCompany20Fill from "./objects/Company-20-Fill.svg?react";
+import IconCompany20Outline from "./objects/Company-20-Outline.svg?react";
+import IconCompany24Fill from "./objects/Company-24-Fill.svg?react";
+import IconCompany24Outline from "./objects/Company-24-Outline.svg?react";
+import IconCompany32Fill from "./objects/Company-32-Fill.svg?react";
+import IconCompany32Outline from "./objects/Company-32-Outline.svg?react";
 import IconUser16Outline from "./objects/User-16-Outline.svg?react";
 import IconUser24Outline from "./objects/User-24-Outline.svg?react";
 import IconUser32Outline from "./objects/User-32-Outline.svg?react";
@@ -396,6 +404,14 @@ export {
     IconAddUser16Outline,
     IconAddUser24Outline,
     IconAddUser32Outline,
+    IconCompany16Fill,
+    IconCompany16Outline,
+    IconCompany20Fill,
+    IconCompany20Outline,
+    IconCompany24Fill,
+    IconCompany24Outline,
+    IconCompany32Fill,
+    IconCompany32Outline,
     IconUser16Outline,
     IconUser24Outline,
     IconUser32Outline,
