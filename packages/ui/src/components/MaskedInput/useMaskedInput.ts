@@ -81,9 +81,9 @@ export const useMaskedInput = (params: UseMaskedInputParams) => {
 
   useLayoutEffect(() => {
     if (
-      pendingCaretMaskPos.current != null &&
-      inputRef.current &&
-      document.activeElement === inputRef.current
+        pendingCaretMaskPos.current != null &&
+        inputRef.current &&
+        inputRef.current.matches(":focus")
     ) {
       setCaretToSlotRight(inputRef.current, pendingCaretMaskPos.current);
       pendingCaretMaskPos.current = null;
@@ -114,7 +114,7 @@ export const useMaskedInput = (params: UseMaskedInputParams) => {
     if (disabled || readOnly) return;
     const el = e.currentTarget;
     queueMicrotask(() => {
-      if (document.activeElement === el) snapCaret(el);
+      if (el.matches(":focus")) snapCaret(el);
     });
   };
 
