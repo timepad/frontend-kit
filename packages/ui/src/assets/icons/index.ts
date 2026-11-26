@@ -216,6 +216,8 @@ import IconUser24Fill from "./objects/User-24-Fill.svg?react";
 import IconUser24Outline from "./objects/User-24-Outline.svg?react";
 import IconUser32Fill from "./objects/User-32-Fill.svg?react";
 import IconUser32Outline from "./objects/User-32-Outline.svg?react";
+import IconDocument24Fill from "./objects/Document-24-Fill.svg?react";
+import IconDocument32Fill from "./objects/Document-32-Fill.svg?react";
 
 // systems
 import IconDots16Fill from "./systems/Dots-16-Fill.svg?react";
@@ -446,6 +448,8 @@ export {
     IconUser24Outline,
     IconUser32Fill,
     IconUser32Outline,
+    IconDocument24Fill,
+    IconDocument32Fill,
 
     // systems
     IconDots16Fill,

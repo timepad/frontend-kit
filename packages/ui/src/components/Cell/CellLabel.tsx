@@ -5,7 +5,7 @@ import { Typography } from "../Typography";
 import { ICellLabelProps } from "./cell.types";
 
 export const CellLabel: FC<PropsWithChildren<ICellLabelProps>> = ({
-  bold = true,
+  tag = "P3 REGULAR",
   className,
   children,
   ...rest
@@ -13,11 +13,7 @@ export const CellLabel: FC<PropsWithChildren<ICellLabelProps>> = ({
   const labelClassName = classNames(component("cell", "label")(), className);
 
   return (
-    <Typography.Paragraph
-      tag={bold ? "P4 BOLD" : "P4 REGULAR"}
-      className={labelClassName}
-      {...rest}
-    >
+    <Typography.Paragraph tag={tag} className={labelClassName} {...rest}>
       {children}
     </Typography.Paragraph>
   );

@@ -1,5 +1,7 @@
 import { HTMLAttributes, PropsWithChildren } from "react";
 
+import type { ParagraphVariantTag } from "../Typography";
+
 export type CellHorizontalPadding = 0 | 8 | 12 | 16;
 
 export type CellVerticalPadding = 0 | 4 | 10;
@@ -16,6 +18,8 @@ export interface ICellProps extends HTMLAttributes<HTMLDivElement> {
 
 export type ICellBaseProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;
 
+export type CellLabelTag = Extract<ParagraphVariantTag, "P3 REGULAR" | "P4 REGULAR" | "P3 SEMIBOLD">;
+
 export interface ICellLabelProps extends HTMLAttributes<HTMLDivElement> {
-  bold?: boolean;
+  tag?: CellLabelTag;
 }
