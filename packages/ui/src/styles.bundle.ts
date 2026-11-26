@@ -17,6 +17,7 @@ import "./components/Modal/modal.less";
 import "./components/Modal/modal-body.less";
 import "./components/Modal/modal-footer.less";
 import "./components/Modal/modal-header.less";
+import "./components/Pagination/pagination.less";
 import "./components/Radio/radio.less";
 import "./components/Snackbar/snackbar.less";
 import "./components/Switch/switch.less";
