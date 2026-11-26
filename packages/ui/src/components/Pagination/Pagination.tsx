@@ -124,12 +124,12 @@ const PaginationStep: FC<
     usePaginationContext();
 
   const step = stepConfig[direction];
-  const FallbackIcon = step.icon[size];
+  const Chevron = step.icon[size];
   const targetPage = direction === "prev" ? page - 1 : page + 1;
+  const isFirstPage = page <= 1;
+  const isLastPage = page >= pageCount;
   const isDisabled =
-    disabled ||
-    pageCount === 0 ||
-    (direction === "prev" ? page <= 1 : page >= pageCount);
+    disabled || (direction === "prev" ? isFirstPage : isLastPage);
 
   if (!label) {
     return (
@@ -137,7 +137,7 @@ const PaginationStep: FC<
         <IconButton
           size={size}
           variant="transparent"
-          icon={icon && icon !== true ? icon : <FallbackIcon />}
+          icon={<Chevron />}
           ariaLabel={ariaLabel ?? step.ariaLabel}
           disabled={isDisabled}
           onClick={() => selectPage(targetPage)}
@@ -152,7 +152,7 @@ const PaginationStep: FC<
         size={size}
         variant="transparent"
         label={label}
-        icon={icon === true ? <FallbackIcon /> : icon}
+        icon={icon ? <Chevron /> : undefined}
         iconPosition={step.iconPosition}
         disabled={isDisabled}
         aria-label={ariaLabel}

@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, ReactElement, SVGProps } from "react";
+import { FC, HTMLAttributes, SVGProps } from "react";
 
 import { IconPosition } from "../Button/button.types";
 import {
@@ -59,19 +59,18 @@ export interface IPaginationContextValue {
 /**
  * Содержимое кнопки «назад» или «вперёд».
  *
- * - без `label` и без `icon` — только стрелка
+ * - без `label` — только шеврон
  * - `label` без `icon` — только текст
- * - `label` и `icon` — текст и стрелка
+ * - `label` и `icon` — текст и шеврон
  */
 export interface IPaginationStepProps {
   /** Текст кнопки. */
   label?: string;
   /**
-   * Стрелка.
-   * `true` — шеврон по умолчанию, элемент — своя иконка.
-   * Если `label` нет, стрелка показывается и без этого пропа.
+   * Показывает шеврон рядом с текстом.
+   * Без `label` шеврон показывается всегда.
    */
-  icon?: ReactElement<SVGProps<SVGSVGElement>> | true;
+  icon?: boolean;
   /**
    * Имя для скринридера.
    * Имеет смысл для кнопки без текста: у текстовой имя берётся из `label`.
