@@ -47,57 +47,56 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {
-  render: function PlaygroundRender(args) {
-    const [, updateArgs] = useArgs();
+const renderInteractive: Story["render"] = function Render(args) {
+  const [, updateArgs] = useArgs();
 
-    return (
-      <Pagination
-        {...args}
-        onPageChange={(nextPage) => {
-          updateArgs({ page: nextPage });
-          args.onPageChange(nextPage);
-        }}
-      >
-        <Pagination.Prev />
-        <Pagination.Pages />
-        <Pagination.Next />
-      </Pagination>
-    );
-  },
+  return (
+    <Pagination
+      {...args}
+      onPageChange={(nextPage) => {
+        updateArgs({ page: nextPage });
+        args.onPageChange(nextPage);
+      }}
+    >
+      <Pagination.Prev />
+      <Pagination.Pages />
+      <Pagination.Next />
+    </Pagination>
+  );
+};
+
+export const Playground: Story = {
+  render: renderInteractive,
 };
 
 export const Range: Story = {
   argTypes: {
     page: { table: { disable: true } },
     pageCount: { table: { disable: true } },
-    siblingCount: { table: { disable: true } },
-    disabled: { table: { disable: true } },
     onPageChange: { table: { disable: true } },
   },
-  render: () => (
+  render: (args) => (
     <div style={{ display: "grid", gap: 16 }}>
-      <Pagination page={1} pageCount={12} onPageChange={() => {}} />
-      <Pagination page={6} pageCount={12} onPageChange={() => {}} />
-      <Pagination page={12} pageCount={12} onPageChange={() => {}} />
-      <Pagination page={3} pageCount={5} onPageChange={() => {}} />
+      <Pagination {...args} page={1} pageCount={12} onPageChange={() => {}} />
+      <Pagination {...args} page={6} pageCount={12} onPageChange={() => {}} />
+      <Pagination {...args} page={12} pageCount={12} onPageChange={() => {}} />
+      <Pagination {...args} page={3} pageCount={5} onPageChange={() => {}} />
     </div>
   ),
 };
 
 export const Sizes: Story = {
+  args: {
+    page: 3,
+  },
   argTypes: {
-    page: { table: { disable: true } },
-    pageCount: { table: { disable: true } },
-    siblingCount: { table: { disable: true } },
     size: { table: { disable: true } },
-    disabled: { table: { disable: true } },
     onPageChange: { table: { disable: true } },
   },
-  render: () => (
+  render: (args) => (
     <div style={{ display: "grid", gap: 24 }}>
-      <Pagination size="s" page={3} pageCount={12} onPageChange={() => {}} />
-      <Pagination size="m" page={3} pageCount={12} onPageChange={() => {}} />
+      <Pagination {...args} size="s" onPageChange={() => {}} />
+      <Pagination {...args} size="m" onPageChange={() => {}} />
     </div>
   ),
 };
@@ -108,21 +107,24 @@ export const Disabled: Story = {
     pageCount: 12,
     disabled: true,
   },
+  render: renderInteractive,
 };
 
 export const Controls: Story = {
   argTypes: {
     page: { table: { disable: true } },
-    pageCount: { table: { disable: true } },
-    siblingCount: { table: { disable: true } },
-    disabled: { table: { disable: true } },
     onPageChange: { table: { disable: true } },
   },
-  render: () => (
+  render: (args) => (
     <div style={{ display: "grid", gap: 24 }}>
-      <PaginationExample />
-      <PaginationExample prev={{ label: "Назад" }} next={{ label: "Вперёд" }} />
+      <PaginationExample {...args} />
       <PaginationExample
+        {...args}
+        prev={{ label: "Назад" }}
+        next={{ label: "Вперёд" }}
+      />
+      <PaginationExample
+        {...args}
         prev={{ label: "Назад", icon: true }}
         next={{ label: "Вперёд", icon: true }}
       />
@@ -133,14 +135,28 @@ export const Controls: Story = {
 const PaginationExample = ({
   prev,
   next,
+  pageCount,
+  siblingCount,
+  size,
+  disabled,
 }: {
   prev?: IPaginationStepProps;
   next?: IPaginationStepProps;
-}) => {
+} & Pick<
+  IPaginationProps,
+  "pageCount" | "siblingCount" | "size" | "disabled"
+>) => {
   const [page, setPage] = useState(3);
 
   return (
-    <Pagination page={page} pageCount={12} onPageChange={setPage}>
+    <Pagination
+      page={page}
+      pageCount={pageCount}
+      siblingCount={siblingCount}
+      size={size}
+      disabled={disabled}
+      onPageChange={setPage}
+    >
       <Pagination.Prev {...prev} />
       <Pagination.Pages />
       <Pagination.Next {...next} />
