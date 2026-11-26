@@ -1,0 +1,27 @@
+import "./styles";
+
+import "./components/Accordion/accordion.less";
+import "./components/Avatar/avatar.less";
+import "./components/Avatar/AvatarStatus/avatar-status.less";
+import "./components/Badge/badge.less";
+import "./components/Breadcrumbs/breadcrumbs.less";
+import "./components/Button/button.less";
+import "./components/Cell/cell.less";
+import "./components/Checkbox/checkbox.less";
+import "./components/Counter/counter.less";
+import "./components/Divider/divider.less";
+import "./components/IconButton/icon-button.less";
+import "./components/Input/input.less";
+import "./components/Link/link.less";
+import "./components/Modal/modal.less";
+import "./components/Modal/modal-body.less";
+import "./components/Modal/modal-footer.less";
+import "./components/Modal/modal-header.less";
+import "./components/Radio/radio.less";
+import "./components/Snackbar/snackbar.less";
+import "./components/Switch/switch.less";
+import "./components/Tabbar/tabbar.less";
+import "./components/TabsButton/tabs-button.less";
+import "./components/TertiaryBanner/tertiary-banner.less";
+import "./components/Textarea/textarea.less";
+import "./components/Typography/typography.less";
