@@ -217,6 +217,15 @@ import IconUser24Outline from "./objects/User-24-Outline.svg?react";
 import IconUser32Fill from "./objects/User-32-Fill.svg?react";
 import IconUser32Outline from "./objects/User-32-Outline.svg?react";
 
+// systems
+import IconDots16Fill from "./systems/Dots-16-Fill.svg?react";
+import IconDots16Outline from "./systems/Dots-16-Outline.svg?react";
+import IconDots20Fill from "./systems/Dots-20-Fill.svg?react";
+import IconDots20Outline from "./systems/Dots-20-Outline.svg?react";
+import IconDots24Fill from "./systems/Dots-24-Fill.svg?react";
+import IconDots24Outline from "./systems/Dots-24-Outline.svg?react";
+import IconDots32Fill from "./systems/Dots-32-Fill.svg?react";
+import IconDots32Outline from "./systems/Dots-32-Outline.svg?react";
 
 export {
     //actions
@@ -437,4 +446,14 @@ export {
     IconUser24Outline,
     IconUser32Fill,
     IconUser32Outline,
+
+    // systems
+    IconDots16Fill,
+    IconDots16Outline,
+    IconDots20Fill,
+    IconDots20Outline,
+    IconDots24Fill,
+    IconDots24Outline,
+    IconDots32Fill,
+    IconDots32Outline,
 };
