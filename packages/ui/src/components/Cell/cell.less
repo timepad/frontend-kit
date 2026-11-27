@@ -25,6 +25,32 @@
     }
   });
 
+  &--with-hover {
+    position: relative;
+    cursor: pointer;
+
+    &::after {
+      position: absolute;
+      content: "";
+      inset: 0;
+      border-radius: inherit;
+      background-color: var(--fk-control-hover);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.1s ease-out;
+      z-index: 0;
+    }
+
+    &:hover::after {
+      opacity: 1;
+    }
+
+    .fk-ccell__body {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
   &__body {
     display: grid;
     grid-template-columns: max-content minmax(0, 1fr);
