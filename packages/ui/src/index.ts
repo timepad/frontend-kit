@@ -29,6 +29,7 @@ export {
 } from "./primitives/Layer";
 export { Link } from "./components/Link";
 export { Modal } from "./components/Modal";
+export { Pagination } from "./components/Pagination";
 export { Radio } from "./components/Radio";
 export { Snackbar } from "./components/Snackbar";
 export { Switch } from "./components/Switch";

@@ -72,6 +72,10 @@ const meta = {
       control: "boolean",
       table: { disable: true },
     },
+    withHover: {
+      name: "Hover",
+      control: "boolean",
+    },
     tag: {
       name: "Label",
       control: "select",
@@ -84,6 +88,7 @@ const meta = {
     horizontalPadding: 0,
     verticalPadding: 0,
     backgroundColor: "var(--fk-bg-primary)",
+    withHover: false,
   },
 } satisfies Meta<CellStoryArgs>;
 
@@ -120,12 +125,14 @@ const cellStoryProps = ({
   verticalPadding,
   backgroundColor,
   withSeparator,
+  withHover,
 }: ICellProps): ICellProps => ({
   align,
   horizontalPadding,
   verticalPadding,
   backgroundColor: resolveCellBackground(backgroundColor),
   withSeparator,
+  withHover,
 });
 
 export const Default: Story = {
@@ -288,13 +295,48 @@ export const WithAvatar: Story = {
   },
 };
 
+export const WithHover: Story = {
+  args: {
+    withHover: true,
+    withSeparator: false,
+    tag: "P3 REGULAR",
+  },
+  argTypes: {
+    align: { table: { disable: true } },
+    withSeparator: {
+      table: { disable: false },
+    },
+    tag: labelArgType,
+  },
+  render: (args) => {
+    const { withSeparator = false, tag = "P3 REGULAR", ...cellArgs } = args as CellStoryArgs;
+
+    return (
+      <Cell {...cellStoryProps({ ...cellArgs, withSeparator })}>
+        <Cell.Left>
+          <Avatar text="Алексей Ветров" size={40} />
+        </Cell.Left>
+        <Cell.Content>
+          <Cell.Content.Text>
+            <Cell.Content.Text.Label tag={tag}>Алексей Ветров</Cell.Content.Text.Label>
+            <Cell.Content.Text.Caption>Наведите курсор на ячейку</Cell.Content.Text.Caption>
+          </Cell.Content.Text>
+          <Cell.Content.Right>
+            <IconChevronRight16Outline aria-hidden="true" />
+          </Cell.Content.Right>
+        </Cell.Content>
+      </Cell>
+    );
+  },
+};
+
 export const List: Story = {
   parameters: {
     controls: { disable: true },
   },
   render: () => (
     <div>
-      <Cell {...listCellProps} withSeparator>
+      <Cell {...listCellProps} withHover withSeparator>
         <Cell.Left>
           <span style={leftIconBgStyle}>
             <IconHeart24Outline />
@@ -314,7 +356,7 @@ export const List: Story = {
         </Cell.Content>
       </Cell>
 
-      <Cell {...listCellProps} withSeparator>
+      <Cell {...listCellProps} withHover withSeparator>
         <Cell.Left>
           <span style={leftIconBgStyle}>
             <IconHeart24Outline />
@@ -344,7 +386,7 @@ export const List: Story = {
         </Cell.Content>
       </Cell>
 
-      <Cell {...listCellProps} withSeparator>
+      <Cell {...listCellProps} withHover withSeparator>
         <Cell.Left>
           <span style={leftIconBgStyle}>
             <IconHeart24Outline />
@@ -366,7 +408,7 @@ export const List: Story = {
         </Cell.Content>
       </Cell>
 
-      <Cell {...listCellProps}>
+      <Cell {...listCellProps} withHover>
         <Cell.Left>
           <span style={leftIconBgStyle}>
             <IconHeart24Outline />

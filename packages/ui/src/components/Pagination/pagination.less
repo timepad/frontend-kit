@@ -1,0 +1,41 @@
+@import (reference) "../../assets/tokens/index.less";
+
+.fk-cpagination {
+  &__list {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    &--size-s {
+      gap: var(--fk-space-4);
+    }
+
+    &--size-m {
+      gap: var(--fk-space-6);
+    }
+  }
+
+  &__item {
+    display: inline-flex;
+  }
+
+  &__ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fk-text-secondary);
+    user-select: none;
+
+    &--size-s {
+      width: 32px;
+      height: 32px;
+    }
+
+    &--size-m {
+      width: 40px;
+      height: 40px;
+    }
+  }
+}

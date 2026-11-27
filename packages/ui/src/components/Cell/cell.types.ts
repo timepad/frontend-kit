@@ -14,6 +14,7 @@ export interface ICellProps extends HTMLAttributes<HTMLDivElement> {
   align?: CellAlign;
   backgroundColor?: string;
   withSeparator?: boolean;
+  withHover?: boolean;
 }
 
 export type ICellBaseProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;

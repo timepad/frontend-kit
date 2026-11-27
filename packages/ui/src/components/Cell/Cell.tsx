@@ -13,6 +13,7 @@ const CellComponent: FC<ICellProps> = ({
   align = "center",
   backgroundColor,
   withSeparator = false,
+  withHover = false,
   style,
   children,
   ...rest
@@ -22,6 +23,7 @@ const CellComponent: FC<ICellProps> = ({
       [`padding-${horizontalPadding}`]: true,
       [`padding-vertical-${verticalPadding}`]: true,
       [`align-${align}`]: true,
+      "with-hover": withHover,
     }),
     className,
   );
